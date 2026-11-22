@@ -89,6 +89,7 @@ class CmcClient:
     timeout: float = 20.0
     credits_used: int = 0
     calls: list[CmcResponse] = field(default_factory=list)
+    deadline: float | None = None  # time.monotonic() by which the whole lookup must finish (a2a r03)
     _client: httpx.AsyncClient | None = None
 
     def __post_init__(self) -> None:
@@ -103,6 +104,10 @@ class CmcClient:
         if self._client:
             await self._client.aclose()
 
+    def _retry_fits(self, need: float) -> bool:
+        """A retry runs only when the lookup deadline still leaves room for it."""
+        return self.deadline is None or self.deadline - time.monotonic() > need + 2.0
+
     async def get(
         self, path: str, params: dict[str, Any] | None = None, *, strict: bool = False
     ) -> CmcResponse:
@@ -113,18 +118,23 @@ class CmcClient:
         t0 = time.perf_counter()
         try:
             for attempt in (0, 1):  # one backoff retry on 429 / 5xx / timeout, then the error stands
+                left = None if self.deadline is None else self.deadline - time.monotonic()
+                if left is not None and left < 2.0:
+                    raise httpx.TimeoutException(f"lookup deadline reached before {path} was called")
+                per_try = self.timeout if left is None else min(self.timeout, left - 1.0)
                 try:
                     r = await client.get(
                         path,
                         params=params,
                         headers={"X-CMC_PRO_API_KEY": self.key, "Accept": "application/json"},
+                        timeout=per_try,
                     )
                 except httpx.TimeoutException:
-                    if attempt:
+                    if attempt or not self._retry_fits(per_try):
                         raise
                     await asyncio.sleep(1.0)
                     continue
-                if (r.status_code == 429 or r.status_code >= 500) and not attempt:
+                if (r.status_code == 429 or r.status_code >= 500) and not attempt and self._retry_fits(5.0):
                     await asyncio.sleep(1.5)
                     continue
                 break

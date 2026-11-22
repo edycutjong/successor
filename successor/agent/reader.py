@@ -243,6 +243,7 @@ FOLLOW_LINK_TOOL = {
 PAGE_CHARS = 24_000
 MAX_CALLS = 3
 MAX_LINKS = 2
+READER_BUDGET_S = 45.0
 _daily: dict[str, int] = {}
 
 
@@ -291,7 +292,7 @@ class ReaderSession:
         fetch: Fetch,
         *,
         chat: Chat | None = None,
-        budget_s: float = 45.0,
+        budget_s: float = READER_BUDGET_S,
         per_call_s: float = 25.0,
         thinking: bool = True,
     ) -> None:
@@ -389,8 +390,8 @@ class ReaderSession:
                 self.format_repaired = True
                 self.messages.append({"role": "user", "content": "Call submit_proposal or follow_link."})
                 continue
-            links = [c for c in calls if c["function"]["name"] == "follow_link"]
-            submits = [c for c in calls if c["function"]["name"] == "submit_proposal"]
+            links = [c for c in calls if (c.get("function") or {}).get("name") == "follow_link"]
+            submits = [c for c in calls if (c.get("function") or {}).get("name") == "submit_proposal"]
             others = [c for c in calls if c not in links and c not in submits]
             err = ""
             for tc in links:  # parallel fetches in one turn: one LLM call, several pages
@@ -493,8 +494,8 @@ class ReaderSession:
 
 def _args(tc: dict) -> Any:
     try:
-        return unwrap_args(json.loads(tc["function"].get("arguments") or "{}"))
-    except ValueError:
+        return unwrap_args(json.loads((tc.get("function") or {}).get("arguments") or "{}"))
+    except (ValueError, TypeError, AttributeError):
         return None
 
 

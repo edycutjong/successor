@@ -50,3 +50,57 @@ def test_missing_quote_row_trips_the_guard():
         now=now,
     )
     assert len(stale) == 2
+
+
+# --- a2a r03: lookup deadline, terminal event, credit probe ------------------------------------------------
+def test_cmc_call_past_the_lookup_deadline_raises_before_any_request():
+    import asyncio
+    import time
+
+    import httpx
+    import pytest
+
+    from successor.cmc import CmcClient
+
+    c = CmcClient(key="k", deadline=time.monotonic() - 1)
+    with pytest.raises(httpx.TimeoutException, match="deadline"):
+        asyncio.run(c.get("/v1/key/info"))
+    assert c._retry_fits(1.0) is False and CmcClient(key="k")._retry_fits(1e9) is True
+
+
+def test_unexpected_exception_still_ends_the_stream_with_an_error_event():
+    import asyncio
+
+    from successor.cmc import CmcClient
+    from successor.flow import lookup_stream
+
+    class Boom(CmcClient):
+        async def get(self, path, params=None, *, strict=False):
+            raise KeyError("data")
+
+    async def run():
+        return [e async for e in lookup_stream("CPOOL", cmc=Boom(key="k"), guard_credits=False)]
+
+    evs = asyncio.run(run())
+    assert evs[-1]["type"] == "error" and evs[-1]["step"] == "internal" and "KeyError" in evs[-1]["error"]
+
+
+def test_unknown_credit_balance_is_not_cached():
+    import asyncio
+
+    from successor import flow
+    from successor.cmc import CmcClient
+
+    class NoUsage(CmcClient):
+        n = 0
+
+        async def get(self, path, params=None, *, strict=False):
+            NoUsage.n += 1
+            self.calls.append(CmcResponse(path, {}, 500, {}, 0, "t"))
+            return self.calls[-1]
+
+    flow._credit_cache.clear()
+    c = NoUsage(key="k")
+    assert asyncio.run(flow._credits_ok(c)) == (True, None)
+    asyncio.run(flow._credits_ok(c))
+    assert NoUsage.n == 2 and "v" not in flow._credit_cache and c.calls == []

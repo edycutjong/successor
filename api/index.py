@@ -81,7 +81,14 @@ async def lookup(
         final = None
         async for ev in lookup_stream(q, qty, id, fresh):
             final = ev
-        status = 200 if final and final["type"] != "error" else (final or {}).get("http_status") or 502
+        if final is None:  # a2a r03: never answer `null`
+            final = {
+                "type": "error",
+                "step": "stream",
+                "error": "the lookup produced no event",
+                "http_status": 502,
+            }
+        status = 200 if final["type"] != "error" else final.get("http_status") or 502
         return JSONResponse(final, status_code=status if status >= 400 or status == 200 else 502)
 
     async def gen():

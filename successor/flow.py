@@ -31,6 +31,8 @@ from successor.verify.successor import C2Result, addr_eq, check_successor, has_c
 from successor.verify.verdict import Facts, decide
 
 CREDIT_FLOOR = 5_000
+LOOKUP_BUDGET_S = 52.0  # Vercel maxDuration is 60 s (vercel.json); 8 s margin for cold start + last event
+POST_READER_S = 10.0
 SWAP_WORDS = re.compile(r"\bswap|migrat|redenominat|new contract|/token/|/address/|contract address", re.I)
 _credit_cache: dict[str, Any] = {}
 
@@ -99,12 +101,16 @@ def _check(cid: str, label: str, state: str, value: str, rows: list[str]) -> dic
 async def _credits_ok(cmc: CmcClient) -> tuple[bool, int | None]:
     hit = _credit_cache.get("v")
     if hit and time.monotonic() - hit[0] < 600:
-        return hit[1] is None or hit[1] >= CREDIT_FLOOR, hit[1]
+        return hit[1] >= CREDIT_FLOOR, hit[1]
     r = await cmc.key_info()
-    left = (((r.data or {}).get("usage") or {}).get("current_month") or {}).get("credits_left")
-    _credit_cache["v"] = (time.monotonic(), left)
     cmc.calls.pop()  # key/info is a health probe, not a verdict row
-    return left is None or left >= CREDIT_FLOOR, left
+    left = (((r.data or {}).get("usage") or {}).get("current_month") or {}).get("credits_left")
+    if not isinstance(left, int):
+        # unknown is not cached (a2a r03): the next lookup probes again. The lookup itself proceeds: CMC
+        # refuses calls once credits run out, and that refusal surfaces as a handled error event
+        return True, None
+    _credit_cache["v"] = (time.monotonic(), left)
+    return left >= CREDIT_FLOOR, left
 
 
 async def _history(cmc: CmcClient, cid: int, start: date, end: date) -> tuple[list[dict], str | None]:
@@ -137,6 +143,9 @@ async def lookup_stream(
     own = cmc is None
     client = cmc or CmcClient()
     if own:
+        # one deadline for the whole lookup, inside Vercel's maxDuration 60 (a2a r03): CMC retries and the Reader
+        # budget shrink to fit, so the stream always ends with a verdict or a handled error event
+        client.deadline = time.monotonic() + LOOKUP_BUDGET_S
         await client.__aenter__()
     try:
         async for e in _run(
@@ -161,6 +170,8 @@ async def lookup_stream(
         yield ev("error", step="network", error=f"{type(exc).__name__}: {exc}"[:300], http_status=None)
     except RuntimeError as exc:  # missing key etc.
         yield ev("error", step="config", error=str(exc), http_status=None)
+    except Exception as exc:  # noqa: BLE001 - last resort: the stream must end with a terminal event (a2a r03)
+        yield ev("error", step="internal", error=f"{type(exc).__name__}: {exc}"[:300], http_status=None)
     finally:
         if own:
             await client.__aexit__(None, None, None)
@@ -284,7 +295,11 @@ async def _run(
                 "step", step="follow_link", url=le.get("url"), ok=False, error=le.get("error"), recorded=True
             )
     else:
-        session = rd.ReaderSession(notice, label, fetch or _fetch, chat=chat)
+        budget = rd.READER_BUDGET_S
+        if getattr(cmc, "deadline", None) is not None:
+            # leave ~10 s for the CMC calls after the Reader (history, pairs) inside the lookup deadline
+            budget = max(5.0, min(budget, cmc.deadline - time.monotonic() - POST_READER_S))
+        session = rd.ReaderSession(notice, label, fetch or _fetch, chat=chat, budget_s=budget)
         yield ev("step", step="reader", cache="miss", model=session.model, live=True, fresh=fresh)
         try:
             await session.propose()
