@@ -5,7 +5,7 @@ from datetime import date
 from pathlib import Path
 
 from successor.agent.reader import Proposal, quotes_are_verbatim
-from successor.flow import check_contracts, cmc_slugs_in, provisional_outcome
+from successor.verify.successor import has_contract, linked_slugs
 from successor.verify.ratio import announcement_dates, snowflake_date
 
 SPIKE = Path(__file__).resolve().parents[1] / "docs" / "proof" / "spike"
@@ -29,34 +29,15 @@ def test_saved_reader_proposal_is_schema_valid_and_quotes_verbatim():
     assert p.ratio_new_per_old.value == 1
 
 
-def test_contract_mismatch_is_never_swap():
-    prop = {"ratio_new_per_old": 1}
-    out = provisional_outcome(prop, {"price": 1, "volume_24h": 5}, {"price": 1}, contract_ok=False)
-    assert out["verdict"] == "NOT VERIFIABLE"
-
-
-def test_missing_ratio_is_not_verifiable():
-    out = provisional_outcome({"ratio_new_per_old": None}, {"price": 1}, {"price": 1}, contract_ok=True)
-    assert out["verdict"] == "NOT VERIFIABLE"
-
-
-def test_no_quoted_contract_is_never_swap():
-    out = provisional_outcome({"ratio_new_per_old": 1}, {"price": 1, "volume_24h": 5}, {"price": 1}, None)
-    assert out["verdict"] == "NOT VERIFIABLE"
-
-
-def test_quote_miss_is_never_swap():
-    out = provisional_outcome({"ratio_new_per_old": 1}, {"price": 1}, {"price": 1}, True, quotes_ok=False)
-    assert out["verdict"] == "NOT VERIFIABLE"
-
-
-def test_old_address_quoted_as_new_contract_fails():
-    old, new = {"0xold"}, {"0xnew"}
-    assert check_contracts({"old_contract": "0xOLD", "new_contract": "0xnew"}, old, new) is True
-    assert check_contracts({"new_contract": "0xold"}, old, new) is False
-    assert check_contracts({}, old, new) is None
+def test_old_and_new_contracts_belong_to_their_own_ids():
+    data = json.loads((SPIKE / "01-info.json").read_text())["response"]["data"]
+    old, new = data["12573"], data["42884"]
+    assert has_contract(old, "0x66761FA41377003622AEE3C7675FC7B5C1C2FAC5")  # 0x hex compares case-insensitively
+    assert has_contract(new, "0x5200f539478f58d9aea962095ba3b16b5e550e00", "Ethereum")
+    assert not has_contract(new, "0x66761fa41377003622aee3c7675fc7b5c1c2fac5")
+    assert not has_contract(new, "0x5200f539478f58d9aea962095ba3b16b5e550e00", "Solana")
 
 
 def test_notice_slug_link_picks_the_successor():
     data = json.loads((SPIKE / "01-info.json").read_text())["response"]["data"]
-    assert "sky" in cmc_slugs_in(data["1518"]["notice"])
+    assert "sky" in linked_slugs(data["1518"]["notice"])

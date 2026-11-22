@@ -7,6 +7,7 @@ The API key is read from `CMC_API_KEY` (production: Vercel env) and is never wri
 
 from __future__ import annotations
 
+import asyncio
 import json
 import os
 import time
@@ -111,9 +112,22 @@ class CmcClient:
         client = self._client or httpx.AsyncClient(base_url=BASE_URL, timeout=self.timeout)
         t0 = time.perf_counter()
         try:
-            r = await client.get(
-                path, params=params, headers={"X-CMC_PRO_API_KEY": self.key, "Accept": "application/json"}
-            )
+            for attempt in (0, 1):  # one backoff retry on 429 / 5xx / timeout, then the error stands
+                try:
+                    r = await client.get(
+                        path,
+                        params=params,
+                        headers={"X-CMC_PRO_API_KEY": self.key, "Accept": "application/json"},
+                    )
+                except httpx.TimeoutException:
+                    if attempt:
+                        raise
+                    await asyncio.sleep(1.0)
+                    continue
+                if (r.status_code == 429 or r.status_code >= 500) and not attempt:
+                    await asyncio.sleep(1.5)
+                    continue
+                break
         finally:
             if client is not self._client:
                 await client.aclose()
@@ -137,10 +151,18 @@ class CmcClient:
 
     # --- the six endpoints Successor reads -------------------------------------------------------
 
-    async def info(self, ids: list[int] | None = None, address: str | None = None) -> CmcResponse:
-        params: dict[str, Any] = {"aux": "urls,logo,description,tags,platform,date_added,notice,status"}
+    async def info(
+        self,
+        ids: list[int] | None = None,
+        address: str | None = None,
+        slugs: list[str] | None = None,
+        aux: str = "urls,platform,date_added,notice,status",
+    ) -> CmcResponse:
+        params: dict[str, Any] = {"aux": aux}
         if ids:
             params["id"] = ",".join(map(str, ids))
+        if slugs:
+            params["slug"] = ",".join(slugs)
         if address:
             params["address"] = address
         return await self.get("/v2/cryptocurrency/info", params)

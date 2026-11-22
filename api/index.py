@@ -47,18 +47,23 @@ async def health() -> JSONResponse:
 
 @app.get("/api/lookup")
 async def lookup(
-    request: Request, q: str = Query(..., min_length=1, max_length=80), qty: float = Query(1.0, ge=0)
+    request: Request,
+    q: str = Query(..., min_length=1, max_length=80),
+    qty: float = Query(1.0, ge=0, le=1e15),
+    id: int | None = Query(None, ge=1),  # noqa: A002 - CMC id picked from the candidates
+    fresh: bool = Query(False),
 ):
     if "application/json" in request.headers.get("accept", "") and "ndjson" not in request.headers.get(
         "accept", ""
     ):
         final = None
-        async for ev in lookup_stream(q, qty):
+        async for ev in lookup_stream(q, qty, id, fresh):
             final = ev
-        return JSONResponse(final, status_code=200 if final and final["type"] != "error" else 502)
+        status = 200 if final and final["type"] != "error" else (final or {}).get("http_status") or 502
+        return JSONResponse(final, status_code=status if status >= 400 or status == 200 else 502)
 
     async def gen():
-        async for ev in lookup_stream(q, qty):
+        async for ev in lookup_stream(q, qty, id, fresh):
             yield json.dumps(ev, ensure_ascii=False) + "\n"
 
     return StreamingResponse(
