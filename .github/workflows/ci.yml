@@ -163,6 +163,7 @@ jobs:
             --collect.url="$TARGET/" --collect.url="$TARGET/judge" \
             --collect.settings.extraHeaders="{\"x-vercel-protection-bypass\":\"$BYPASS\"}"
       - uses: actions/upload-artifact@v7
+        if: ${{ always() }}
         with:
           name: perf
           path: |
