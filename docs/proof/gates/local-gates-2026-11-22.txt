@@ -1,4 +1,4 @@
-# P3 local gates (what CI runs), 2026-11-22T04:51:44Z, HEAD 6ff0d63
+# P3 local gates (what CI runs), 2026-11-22T05:22:57Z, HEAD 9ccedf6
 
 $ ruff check . && ruff format --check .
 All checks passed!
@@ -8,20 +8,19 @@ $ mypy
 Success: no issues found in 20 source files
 
 $ pytest -q --cov (fail_under 70)
----------------------------------------------------
 TOTAL                            1722    306    82%
 Required test coverage of 70.0% reached. Total coverage: 82.23%
-83 passed, 1 warning in 2.11s
+83 passed, 1 warning in 2.42s
 
 $ make unplug
-4 passed, 1 warning in 0.16s
+4 passed, 1 warning in 0.17s
 
 $ pip-audit --skip-editable
 No known vulnerabilities found
 
 $ gitleaks detect --log-opts=--all
-11:51AM INF scanned ~5471667 bytes (5.47 MB) in 743ms
-11:51AM INF no leaks found
+12:23PM INF scanned ~5483810 bytes (5.48 MB) in 712ms
+12:23PM INF no leaks found
 
 $ python scripts/run_evals.py
 evals: 10/10 counted cases pass; variants 4/4
