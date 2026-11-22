@@ -65,6 +65,7 @@ jobs:
         uses: gitleaks/gitleaks-action@v3
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          GITLEAKS_VERSION: 8.30.1 # the action's default (8.24) predates [[allowlists]] used in .gitleaks.toml
       - name: No kitchen files in the repo
         run: |
           if git ls-files | grep -iE '(^|/)(specs|_ideas|_specs|_notes|\.claude)/|(^|/)(CLAUDE|AGENTS|PRODUCT|progress)\.md$|predict|radar|\.env$|\.pem$'; then
