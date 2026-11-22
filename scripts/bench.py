@@ -3,6 +3,7 @@
   python scripts/bench.py https://successor.edycu.dev CPOOL 12                 # cached Reader read (CMC calls are live)
   python scripts/bench.py https://successor.edycu.dev CPOOL 6 --fresh          # cold: Reader re-reads the notice live
   python scripts/bench.py https://successor.edycu.dev CPOOL 12 --gate-p95 3    # exit 1 if p95 > 3 s (performance gate in CI)
+  add --warmup to discard one untimed call first (CI does: a fresh deployment's first request is a function cold start)
 
 Writes docs/proof/bench/bench-<kind>-<date>.json (every sample, p50/p95, verdicts seen). Cold reads cost one Qwen call each and
 are limited to 3 per 10 min per IP, so --fresh runs in batches of 3 with a 10 min pause between them.
@@ -50,6 +51,11 @@ def main() -> int:
         args.remove(str(sys.argv[sys.argv.index("--gate-p95") + 1]))
     base, q, n = args[0].rstrip("/"), args[1], int(args[2])
     samples, seen = [], []
+    if (
+        "--warmup" in sys.argv and not fresh
+    ):  # one untimed call: a just-created deployment pays a function cold start
+        one(base, q, fresh)
+        time.sleep(4)
     for i in range(n):
         if fresh and i and i % COLD_BATCH == 0:
             time.sleep(COLD_PAUSE_S)  # stay under 3 fresh reads / 10 min / IP

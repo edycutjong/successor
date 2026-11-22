@@ -153,7 +153,7 @@ jobs:
       - name: "Cached lookup p50/p95, gate p95 <= 3 s"
         env:
           BENCH_BYPASS_SECRET: ${{ secrets.VERCEL_AUTOMATION_BYPASS_SECRET }}
-        run: python scripts/bench.py "$TARGET" CPOOL 12 --gate-p95 3
+        run: python scripts/bench.py "$TARGET" CPOOL 12 --gate-p95 3 --warmup
       - uses: actions/setup-node@v7
         with:
           node-version: "22"
