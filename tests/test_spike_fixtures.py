@@ -5,7 +5,7 @@ from datetime import date
 from pathlib import Path
 
 from successor.agent.reader import Proposal, quotes_are_verbatim
-from successor.flow import provisional_outcome
+from successor.flow import check_contracts, cmc_slugs_in, provisional_outcome
 from successor.verify.ratio import announcement_dates, snowflake_date
 
 SPIKE = Path(__file__).resolve().parents[1] / "docs" / "proof" / "spike"
@@ -38,3 +38,25 @@ def test_contract_mismatch_is_never_swap():
 def test_missing_ratio_is_not_verifiable():
     out = provisional_outcome({"ratio_new_per_old": None}, {"price": 1}, {"price": 1}, contract_ok=True)
     assert out["verdict"] == "NOT VERIFIABLE"
+
+
+def test_no_quoted_contract_is_never_swap():
+    out = provisional_outcome({"ratio_new_per_old": 1}, {"price": 1, "volume_24h": 5}, {"price": 1}, None)
+    assert out["verdict"] == "NOT VERIFIABLE"
+
+
+def test_quote_miss_is_never_swap():
+    out = provisional_outcome({"ratio_new_per_old": 1}, {"price": 1}, {"price": 1}, True, quotes_ok=False)
+    assert out["verdict"] == "NOT VERIFIABLE"
+
+
+def test_old_address_quoted_as_new_contract_fails():
+    old, new = {"0xold"}, {"0xnew"}
+    assert check_contracts({"old_contract": "0xOLD", "new_contract": "0xnew"}, old, new) is True
+    assert check_contracts({"new_contract": "0xold"}, old, new) is False
+    assert check_contracts({}, old, new) is None
+
+
+def test_notice_slug_link_picks_the_successor():
+    data = json.loads((SPIKE / "01-info.json").read_text())["response"]["data"]
+    assert "sky" in cmc_slugs_in(data["1518"]["notice"])
