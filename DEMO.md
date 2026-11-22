@@ -7,9 +7,9 @@ the time they were captured; run the commands again and the live figures will di
 ## 1. The hero lookup (about 1 s, cached Reader read, live CMC calls)
 
 1. Open https://successor.edycu.dev. The first screen streams `/api/lookup` for CPOOL (`/api/hero` is the same flow on its own rate bucket).
-2. Watch the board: the CMC notice (prose) appears, the Reader proposes CLEAR, the three lamps go green one by one
-   (C2 contract, C5 markets, C4 ratio), the successor column flaps to CLEAR, and the status column settles on
-   **SELL OLD**. On 2026-11-22 03:49 UTC the old token was worth 15.7% more than a 1:1 swap into the new one.
+2. Watch the board: the CMC notice (prose) appears, the Reader proposes CLEAR, the trace streams each check as it runs
+   (C2 contract, C5 markets, C4 ratio), the successor column flaps to CLEAR, the status column settles on
+   **SELL OLD**, and seven check rows light (C1 to C6, C5 once per token). On 2026-11-22 03:49 UTC the old token was worth 15.7% more than a 1:1 swap into the new one.
 3. Open the receipt drawer: every CMC endpoint, params, timestamp, credit cost, the verbatim rows, the Reader's prompt
    and raw output, and a `curl` with a placeholder for the key.
 
@@ -27,7 +27,7 @@ curl -N 'https://successor.edycu.dev/api/lookup?q=AGIX&qty=10000'
 
 The notice is prose and links `fetch.ai`. The Reader opens that link, reads the ratio **0.43335**, and proposes the
 successor as `$ASI`; code maps it to FET through CMC's own link and confirms the ratio with CMC prices on the event date.
-Verdict **SWAP** (rule R9). On 2026-11-22 03:49 UTC: 10,000 AGIX is $5,924.93 at the old price, $463.42 as FET after the swap.
+Verdict **SWAP** (rule R9). On 2026-11-22 03:49 UTC: 10,000 AGIX is $5,924.93 at the old price, which is stale ($0 traded in 24 h), and $463.42 as FET after the swap.
 
 ## 3. Code catches the Reader
 

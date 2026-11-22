@@ -27,12 +27,14 @@
 
   <h2>The 30-second path (no login, no keys, nothing to install)</h2>
   <ol>
-    <li>Open <a href="/">successor.edycu.dev</a> and click the <strong>CPOOL</strong> chip. The board streams the CMC notice, the Reader's proposal, the code checks and the verdict. Expected when this page was written (2026-11-22): <strong>SELL OLD</strong> (rule R8), because CMC's quotes put the old token above the 1:1 swap. Verdicts follow the market, so the capture time is on screen.</li>
+    <li>Open <a href="/">successor.edycu.dev</a>: it runs <strong>CPOOL</strong> on load (the CPOOL chip re-runs it). The board streams the CMC notice, the Reader's proposal, the code checks and the verdict. Expected when this page was written (2026-11-22): <strong>SELL OLD</strong> (rule R8), because CMC's quotes put the old token above the 1:1 swap. Verdicts follow the market, so the capture time is on screen.</li>
     <li>Click <strong>Receipt</strong>: the CMC calls behind the verdict, with a copyable curl.</li>
     <li>Click the <strong>AGIX</strong> chip: the Reader follows the notice's link, code confirms the ratio against CMC prices on the event date, verdict <strong>SWAP</strong> (R9).</li>
+    <li>Type <strong>GAS</strong>: its notice quotes a contract (<code>0xd2a4…76cf</code>) that no CMC coin carries. Code finds no CMC coin with that contract, so check C2 fails and the verdict is <strong>NOT VERIFIABLE</strong> (R5), not a guess (live, 2026-11-22 07:01 UTC).</li>
     <li>Scroll to the <strong>census</strong>: every notice in CMC's top 2000, with the verdict code gives each. Most end NOT VERIFIABLE, and the page says why.</li>
     <li>Prefer a terminal? <code>curl -N 'https://successor.edycu.dev/api/lookup?q=CPOOL&amp;qty=10000'</code></li>
   </ol>
+  <p>If a live lookup errors or runs long (CMC or the model slow), the board says so and shows no verdict. <a href="/about">The landing page</a> replays a captured CPOOL lookup, labelled with its capture time (2026-11-22 03:49 UTC); the raw streams are in <code>docs/proof/assets/</code>.</p>
 
   <h2>Receipts</h2>
   <table>

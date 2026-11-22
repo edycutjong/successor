@@ -158,7 +158,9 @@ function onEvent(ev) {
     stopTick();
     state.final = ev;
     flaps($("f-verdict"), "NO VERDICT", "verdict NOT_VERIFIABLE");
-    $("reason").textContent = `Error at ${ev.step}${ev.http_status ? ` (HTTP ${ev.http_status})` : ""}: ${ev.error}. No verdict is shown.`;
+    $("reason").textContent = `Error at ${ev.step}${ev.http_status ? ` (HTTP ${ev.http_status})` : ""}: ${ev.error}. No verdict is shown. `;
+    const rp = document.createElement("a"); rp.href = "/about#demo"; rp.textContent = "See a captured run (labelled replay)";
+    $("reason").append(rp);
     trace(t, `error at ${esc(ev.step)}: ${esc(ev.error)}`, "err");
   }
 }
