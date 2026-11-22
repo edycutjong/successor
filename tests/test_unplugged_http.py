@@ -1,5 +1,7 @@
 """Unplug the keys at the HTTP layer: /api/lookup must answer an error, never a canned verdict."""
 
+import json
+
 import pytest
 from fastapi.testclient import TestClient
 
@@ -24,4 +26,8 @@ def test_lookup_without_keys_is_an_error_not_a_verdict(unplugged):
 
 def test_streamed_lookup_without_keys_never_emits_a_verdict(unplugged):
     r = TestClient(app).get("/api/lookup", params={"q": "CPOOL"})
-    assert '"type": "verdict"' not in r.text
+    events = [
+        json.loads(line) for line in r.text.splitlines() if line.strip()
+    ]  # every line must be an NDJSON event
+    assert any(e.get("type") == "error" for e in events), "the unplugged stream must say what failed"
+    assert not any(e.get("type") == "verdict" or "verdict" in e for e in events)

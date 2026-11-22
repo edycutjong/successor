@@ -33,9 +33,10 @@ def test_cpool_returns_a_verdict_with_checks_and_a_capture_time(page, base_url):
     assert page.locator("#checks li").count() >= 5, "the code checks did not render"
     assert page.locator("#reason").inner_text().strip(), "verdict has no stated reason"
     assert re.search(r"captured \d{4}-\d\d-\d\dT", page.locator("#captured").inner_text())
-    assert re.search(r"sell old: \$[\d,.]+", page.locator("#figures").inner_text()), (
-        "no CMC-derived dollar figure"
-    )
+    # verdict-agnostic: CPOOL's verdict moves with the market; NOT VERIFIABLE labels the same figure "market value, no verdict"
+    assert re.search(
+        r"(sell old|market value, no verdict): \$[\d,.]+", page.locator("#figures").inner_text()
+    ), "no CMC-derived dollar figure"
 
 
 def test_the_receipt_opens_and_names_cmc_endpoints(page, base_url):

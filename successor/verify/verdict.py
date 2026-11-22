@@ -156,7 +156,9 @@ def decide(f: Facts) -> Decision:
         return Decision(
             SELL_OLD, "R7", f"the swap window closed ({f.deadline_text}); the old token still trades"
         )
-    priced = r is not None and f.old_price and f.new_price
+    priced = (
+        r is not None and r > 0 and f.old_price and f.new_price
+    )  # r > 0 is upstream-guaranteed for P/Q (bind_ratio); kept so no path divides by it
     # typed copies for the arithmetic below; only read when `priced` is truthy (all three are set)
     rr, op, np_ = r or 0.0, f.old_price or 0.0, f.new_price or 0.0
     if alive_old and alive_new and f.ratio_state in ("P", "Q") and priced and op >= rr * np_ * PREMIUM:
