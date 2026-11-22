@@ -25,13 +25,13 @@
   <h2>The claim</h2>
   <p id="claim">CoinMarketCap says a coin migrated, but only in prose. Successor reads the notice, finds the successor token, checks it against CMC's own rows, and gives the holder one verdict: SWAP, SELL OLD, WRITE OFF, or NOT VERIFIABLE.</p>
 
-  <h2>The 30-second path (no login, no keys, nothing to install)</h2>
+  <h2>The 2-minute path (steps 1–3 take 30 seconds; no login, no keys, nothing to install)</h2>
   <ol>
     <li>Open <a href="/">successor.edycu.dev</a>: it runs <strong>CPOOL</strong> on load (the CPOOL chip re-runs it). The board streams the CMC notice, the Reader's proposal, the code checks and the verdict. Expected when this page was written (2026-11-22): <strong>SELL OLD</strong> (rule R8), because CMC's quotes put the old token above the 1:1 swap. Verdicts follow the market, so the capture time is on screen.</li>
     <li>Click <strong>Receipt</strong>: the CMC calls behind the verdict, with a copyable curl.</li>
     <li>Click the <strong>AGIX</strong> chip: the trace shows the Reader's recorded run (the trace labels it "recorded extraction") following the notice's link to fetch.ai; code confirms the ratio against CMC prices on the event date, live, verdict <strong>SWAP</strong> (R9).</li>
-    <li>Type <strong>GAS</strong>: its notice quotes a contract (<code>0xd2a4…76cf</code>) that no CMC coin carries. Code finds no CMC coin with that contract, so check C2 fails and the verdict is <strong>NOT VERIFIABLE</strong> (R5), not a guess. The notice may be right; CMC's <code>info?address=</code> knows that hash in neither byte order, so CMC's data cannot confirm it (captured 2026-11-22 07:11 UTC; raw stream <code>docs/proof/assets/lookup-GAS-2026-11-22T0711Z.ndjson</code>).</li>
-    <li>Optional, the agent live: on AGIX press <strong>Re-read live</strong>. The Reader runs now (qwen4-max, live), not from the recording. Three fresh runs on 2026-11-22 each ended <strong>SWAP</strong> (R9) in 18 to 26 s server time. Fresh reads are limited to 3 per 10 minutes per client; if it errors, the replay below is the same flow.</li>
+    <li>Open <a href="/?q=GAS&amp;id=1785">/?q=GAS&amp;id=1785</a> (Neo's GAS; the symbol also matches another coin): its notice quotes a contract (<code>0xd2a4…76cf</code>) that no CMC coin carries. Code finds no CMC coin with that contract, so check C2 fails and the verdict is <strong>NOT VERIFIABLE</strong> (R5), not a guess. The notice may be right; CMC's <code>info?address=</code> knows that hash in neither byte order, so CMC's data cannot confirm it (captured 2026-11-22 07:11 UTC; raw stream <code>docs/proof/assets/lookup-GAS-2026-11-22T0711Z.ndjson</code>).</li>
+    <li>Optional, the agent live: on AGIX press <strong>Re-read live</strong>. The Reader runs now (qwen4-max, live), not from the recording. Three fresh runs on 2026-11-22 each ended <strong>SWAP</strong> (R9) in 18 to 26 s server time. Fresh reads are limited to 3 per 10 minutes per client; if it errors, the demo video shows a fresh run (real wait about 21 s, labelled speed-up) and <code>docs/proof/assets/agix-fresh-runs-2026-11-22.json</code> holds all three.</li>
     <li>Scroll to the <strong>census</strong>: every notice in CMC's top 2000, with the verdict code gives each. Most end NOT VERIFIABLE, and the page says why.</li>
     <li>Prefer a terminal? <code>curl -N 'https://successor.edycu.dev/api/lookup?q=CPOOL&amp;qty=10000'</code></li>
   </ol>
@@ -42,8 +42,8 @@
     <tr><th>What</th><th>Value</th><th>Where it comes from</th></tr>
     <tr><td>Live health</td><td><a href="/api/health">/api/health</a></td><td>CMC key status, LLM model, cache size, build SHA, all with timestamps</td></tr>
     <tr><td>Census</td><td><a href="/api/census">/api/census</a></td><td>161 notices in the top 2000; verdicts, buckets and capture time live</td></tr>
-    <tr><td>Lookup latency (cached Reader read, live CMC calls)</td><td>see <code>docs/proof/bench/</code> in the repo</td><td><code>python scripts/bench.py https://successor.edycu.dev CPOOL 12</code></td></tr>
-    <tr><td>Tests and evals</td><td>see the README "Engineering Rigor" table</td><td><code>pytest -q</code>, <code>python scripts/run_evals.py</code></td></tr>
+    <tr><td>Lookup latency (cached Reader read, live CMC calls)</td><td>cached p50 1.007 s / p95 1.454 s (n=12); cold p50 15.44 s (n=6), 2026-11-22, <code>docs/proof/bench/</code></td><td><code>python scripts/bench.py https://successor.edycu.dev CPOOL 12</code></td></tr>
+    <tr><td>Tests and evals</td><td>83 tests (82 % coverage); evals 10/10 counted + 4/4 variants</td><td><code>pytest -q</code>, <code>python scripts/run_evals.py</code></td></tr>
     <tr><td>Live-URL browser tests</td><td>open, click a coin, assert a verdict and receipt</td><td><code>e2e/</code>, <code>make e2e</code></td></tr>
     <tr><td>Unplug test</td><td>no CMC key: an error and no verdict</td><td><code>tests/test_unplugged.py</code>, <code>tests/test_unplugged_http.py</code>, <code>make unplug-e2e</code></td></tr>
   </table>

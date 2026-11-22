@@ -6,13 +6,13 @@ Mirror of the live page **https://successor.edycu.dev/judge** (no login, no keys
 
 CoinMarketCap says a coin migrated, but only in prose. Successor reads the notice, finds the successor token, checks it against CMC's own rows, and gives the holder one verdict: SWAP, SELL OLD, WRITE OFF, or NOT VERIFIABLE.
 
-## The 30-second path
+## The 2-minute path (steps 1–3 take 30 seconds)
 
 1. Open https://successor.edycu.dev: it runs **CPOOL** on load (the CPOOL chip re-runs it). The board streams the CMC notice, the Reader's proposal, the code checks and the verdict. When this was written (2026-11-22): **SELL OLD** (rule R8). Verdicts follow the market, so the capture time is on screen.
 2. Click **Receipt**: the CMC calls behind the verdict.
 3. Click **AGIX**: the trace shows the Reader's recorded run (the trace labels it "recorded extraction") following the notice's link to fetch.ai; code confirms the ratio against CMC prices on the event date, live, verdict **SWAP** (R9).
-4. Type **GAS**: its notice quotes a contract (`0xd2a4…76cf`) that no CMC coin carries. Code finds no CMC coin with that contract, so check C2 fails and the verdict is **NOT VERIFIABLE** (R5), not a guess. The notice may be right; CMC's `info?address=` knows that hash in neither byte order (`docs/proof/spike/09-address-gas-n3.json`), so CMC's data cannot confirm it (captured 2026-11-22 07:11 UTC, `docs/proof/assets/lookup-GAS-2026-11-22T0711Z.ndjson`). Offline, `python scripts/run_evals.py` shows the same refusal for a contract one hex digit off (`cpool-bad-contract`).
-5. Optional, the agent live: on AGIX press **Re-read live**. The Reader runs now (qwen4-max, live), not from the recording. Three fresh runs on 2026-11-22 each ended **SWAP** (R9) in 18 to 26 s server time (`docs/proof/assets/agix-fresh-runs-2026-11-22.json`). Fresh reads are limited to 3 per 10 minutes per client; if it errors, the replay below is the same flow.
+4. Open `/?q=GAS&id=1785` (Neo's GAS; the symbol also matches another coin): its notice quotes a contract (`0xd2a4…76cf`) that no CMC coin carries. Code finds no CMC coin with that contract, so check C2 fails and the verdict is **NOT VERIFIABLE** (R5), not a guess. The notice may be right; CMC's `info?address=` knows that hash in neither byte order (`docs/proof/spike/09-address-gas-n3.json`), so CMC's data cannot confirm it (captured 2026-11-22 07:11 UTC, `docs/proof/assets/lookup-GAS-2026-11-22T0711Z.ndjson`). Offline, `python scripts/run_evals.py` shows the same refusal for a contract one hex digit off (`cpool-bad-contract`).
+5. Optional, the agent live: on AGIX press **Re-read live**. The Reader runs now (qwen4-max, live), not from the recording. Three fresh runs on 2026-11-22 each ended **SWAP** (R9) in 18 to 26 s server time (`docs/proof/assets/agix-fresh-runs-2026-11-22.json`). Fresh reads are limited to 3 per 10 minutes per client; if it errors, the demo video shows a fresh run (real wait about 21 s, labelled speed-up) and `docs/proof/assets/agix-fresh-runs-2026-11-22.json` holds all three.
 6. Scroll to the **census**: every notice in CMC's top 2000 and the verdict code gives each. Most end NOT VERIFIABLE; the page says why.
 7. Terminal: `curl -N 'https://successor.edycu.dev/api/lookup?q=CPOOL&qty=10000'`
 

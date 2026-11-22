@@ -1,6 +1,6 @@
 # Successor: demo walkthrough
 
-Everything below runs against the live deployment, https://successor.edycu.dev. All figures are from captures dated
+Sections 1, 2 and 4 run against the live deployment, https://successor.edycu.dev; sections 3 and 5 add offline and local checks. All figures are from captures dated
 2026-11-22 (raw streams in `docs/proof/assets/`, bench in `docs/proof/bench/`). Market-sensitive verdicts are shown with
 the time they were captured; run the commands again and the live figures will differ slightly.
 
@@ -9,7 +9,7 @@ the time they were captured; run the commands again and the live figures will di
 1. Open https://successor.edycu.dev. The first screen streams `/api/lookup` for CPOOL (`/api/hero` is the same flow on its own rate bucket).
 2. Watch the board: the CMC notice (prose) appears, the Reader proposes CLEAR, the trace streams each check as it runs
    (C2 contract, C5 markets, C4 ratio), the successor column flaps to CLEAR, the status column settles on
-   **SELL OLD**, and seven check rows light (C1 to C6, C5 once per token). On 2026-11-22 03:49 UTC the old token was worth 15.7% more than a 1:1 swap into the new one.
+   **SELL OLD**, and seven check rows light (C1 holding resolved · C2 successor and contract match CMC · C3 every kept field quoted verbatim · C4 swap ratio · C5 market, once per token · C6 price integrity). On 2026-11-22 03:49 UTC the old token was worth 15.7% more than a 1:1 swap into the new one.
 3. Open the receipt drawer: every CMC endpoint, params, timestamp, credit cost, the verbatim rows, the Reader's prompt
    and raw output, and a `curl` with a placeholder for the key.
 
