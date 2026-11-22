@@ -16,6 +16,7 @@
   ![Vercel](https://img.shields.io/badge/Vercel-black?style=flat&logo=vercel)
   ![Qwen](https://img.shields.io/badge/Qwen_qwen4--max-615CED?style=flat)
   ![CoinMarketCap API](https://img.shields.io/badge/CoinMarketCap_Pro_API-17181B?style=flat)
+  [![CI](https://github.com/edycutjong/successor/actions/workflows/ci.yml/badge.svg?branch=main)](https://github.com/edycutjong/successor/actions/workflows/ci.yml)
   [![Release](https://img.shields.io/github/v/release/edycutjong/successor?style=flat)](https://github.com/edycutjong/successor/releases)
   [![License](https://img.shields.io/badge/License-MIT-yellow)](https://opensource.org/licenses/MIT)
 
@@ -138,7 +139,7 @@ copied from old to new coin, `convert=EUR` scaling supply, and the notice being 
 
 | Metric | Value | How to reproduce |
 |---|---|---|
-| Tests | **83 passed**, 82 % line coverage (gate 70 %), mypy clean | `make test-coverage`, `make typecheck` |
+| Tests | **87 passed**, 82 % line coverage (gate 70 %), mypy clean | `make test-coverage`, `make typecheck` |
 | Evals | **10/10** counted cases + 4/4 variants (a variant re-runs a case with a field stripped or a second capture; reported, not counted) | `python scripts/run_evals.py` (replays real saved CMC rows and recorded Reader output) |
 | Lookup latency, cached Reader read, live CMC calls | **p50 1.007 s · p95 1.454 s (= max at n=12)** (n=12, 2026-11-22 04:29 UTC). Re-measured on HEAD 0f2e719, 2026-11-22 11:16 UTC: p50 0.796 s · p95 1.363 s (n=12, `docs/proof/bench/bench-cached-2026-11-22T1116Z.json`); an earlier run that hour hit one slow call (p95 5.148 s, n not recorded, file overwritten), so the p95 is network-dependent. | `python scripts/bench.py https://successor.edycu.dev CPOOL 12`, samples in `docs/proof/bench/` |
 | Lookup latency, cold Reader read (`fresh=1`, one Qwen call, live CMC calls) | **p50 15.44 s · p95 21.45 s (= max at n=6)** (n=6, CPOOL, 2026-11-22 05:22 UTC); earlier single samples 16.89 s (CPOOL), 8.79 s (MKR) on the day-one engine | `make bench-cold`, samples in `docs/proof/bench/bench-cold-2026-11-22.json`, `docs/proof/deploy/` |
@@ -183,7 +184,7 @@ names no successor, 10: no ratio or announcement unfetchable, 11 more: no live s
 - **We expected a second proposal for AGIX and it never happened.** We planned for the Reader to "change its mind" on AGIX. In the real run the Reader opens the `fetch.ai` link before its first proposal, proposes `$ASI`, and code maps it to FET through CMC's own `/currencies/fetch/` link. One proposal, so we do not claim a repair turn.
 - **We expected RZUSD to be WRITE OFF and then watched it flip** when the old token traded again (limit 2). Evals pin the recorded WRITE OFF outcome; the SELL OLD (R7) branch is covered by `tests/test_never_swap_on_fail.py`, not by an RZUSD eval.
 - **The spec assumed the checksummed contract address would work in `info?address=`.** It returns HTTP 400 `Invalid value for 'slug'`; we lowercase `0x` addresses (`docs/DX-REPORT.md`).
-- **We added CI and could not run it.** The repository was private and its GitHub Actions jobs never started (a billing limit on the account), so the workflows are linted (actionlint) but have no green run behind them; the gates were run by hand and recorded in `docs/proof/gates/`.
+- **We added CI and could not run it until the repository went public.** While it was private, GitHub Actions jobs never started (a billing limit on the account), so for that time the gates were only run by hand (`docs/proof/gates/`). The first full green pipeline run, all six stages plus release, is [this run](https://github.com/edycutjong/successor/actions/runs/45068463385); its first attempts failed (Python setup, a Deployment Protection bypass for the browser tests, an old gitleaks in the action) and were fixed before it passed.
 - **"Agent needed" was the wrong label** for the 99 notices where the Reader opened or tried a link. That counts attempts, not necessity, and the census now says so.
 
 ## 🚀 Getting Started
@@ -215,11 +216,11 @@ make lighthouse                # accessibility >= 0.9 is a hard gate
 python scripts/run_evals.py    # 10/10 counted cases, 4/4 variants (offline replay of recorded rows; an eval, not the product)
 ```
 
-`.github/workflows/` defines the same gates in six stages (quality, security, build, deploy, live-URL E2E, performance) plus CodeQL
-(`python`, `javascript-typescript`, `actions`), gitleaks over the full history, a release workflow on `v*.*.*` tags, a daily
-live check, a nightly notice snapshot (`snapshot.yml` writes `data/snapshots/census-<date>.json` and stops at the submission deadline; `data/census.json` and the figures in this README stay pinned to the 2026-11-22 capture), and Dependabot (pip + actions, monthly, grouped, no major bumps). Every gate also ran locally on 2026-11-22; the
-outputs are in `docs/proof/gates/` (local gates, live E2E run, Lighthouse scores). GitHub Actions did not start jobs while the repository was private (an account billing
-limit), so no workflow run is claimed here; see "What we got wrong".
+`.github/workflows/ci.yml` runs six stages: 1 Quality (ruff, mypy, tests, unplug) and 2 Security (pip-audit, gitleaks, kitchen-file guard) in parallel,
+3 Build (evals, import check) plus a Vercel deployment that is not yet on the production domain, 4 E2E and 5 Performance (p95 gate, Lighthouse) against that
+deployment, then 6 Deploy Gate (main only), which promotes that same deployment to production and checks `/api/health` reports the pushed commit. CodeQL
+(`python`, `javascript-typescript`, `actions`), gitleaks over the full history, a daily live check, a nightly notice snapshot (`snapshot.yml` writes `data/snapshots/census-<date>.json` and stops at the submission deadline; `data/census.json` and the figures in this README stay pinned to the 2026-11-22 capture), and Dependabot (pip + actions, monthly, grouped, no major bumps) run alongside. Releases are automatic: after Stage 6 is green, Conventional Commits since the last tag set the semver bump (`scripts/release.py`), and the job commits, tags and publishes the GitHub release with no manual step.
+The pipeline is green on main: [run](https://github.com/edycutjong/successor/actions/runs/45068463385). The local gate outputs are in `docs/proof/gates/` (local gates, live E2E run, Lighthouse scores).
 
 ## 📁 Project Structure
 
