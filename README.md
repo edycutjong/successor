@@ -26,7 +26,7 @@
 
 **No wallet needed anywhere. Every lookup is a read-only call to CoinMarketCap and, when a notice is new, one Qwen call.**
 Why it matters, in one example (CMC quotes, 2026-11-22 03:49 UTC): a tracker shows **$5,924.93** for 10,000 AGIX, which has traded $0 in 24 h; swapped into FET at the ratio the agent found and code price-confirmed, the same coins are **$463.42**.
-Try it: https://successor.edycu.dev (judges: [/judge](https://successor.edycu.dev/judge), the 30-second path), or `curl -N 'https://successor.edycu.dev/api/lookup?q=CPOOL&qty=10000'`.
+Try it: https://successor.edycu.dev (judges: [/judge](https://successor.edycu.dev/judge), a 2-minute path whose first three steps take 30 seconds), or `curl -N 'https://successor.edycu.dev/api/lookup?q=CPOOL&qty=10000'`.
 
 ## 📸 See it in Action
 
@@ -71,6 +71,7 @@ An agent with a hard split of roles:
 The LLM never decides the verdict. SWAP is only produced when the successor is verified against CMC's data (its contract
 matches, the notice links its CMC page, or it is the only CMC id with that exact name and symbol) and the ratio is
 price-confirmed; a contract the Reader quoted that fails to match blocks SWAP. Otherwise SWAP is withheld, and a claim that fails a check ends as NOT VERIFIABLE, SELL OLD or WRITE OFF as the table says.
+SELL OLD (R8) needs the old token to trade at least 5% above the swap value at CMC's quotes (`PREMIUM` in `successor/verify/verdict.py`); under that margin a confirmed swap stays SWAP (R9), and its reason states the margin. CPOOL sits near that line and has shown both verdicts.
 The four verdicts are **SWAP · SELL OLD · WRITE OFF · NOT VERIFIABLE**, plus NOTHING TO DO when the coin you hold is already
 the successor. The wording is "what CMC's data supports", not advice. Fees, gas and slippage are excluded and said so on screen.
 
@@ -168,7 +169,7 @@ names no successor, 10: no ratio or announcement unfetchable, 11 more: no live s
 
 ### Honest limits (9)
 
-1. **Most notices end NOT VERIFIABLE** (130 of 161, 2026-11-22). The 161-coin census has 0 SELL OLD and only 2 SWAP; SELL OLD is demonstrated by the featured coins CPOOL (R8) and RZUSD (R7).
+1. **Most notices end NOT VERIFIABLE** (130 of 161, 2026-11-22). The 161-coin census has 0 SELL OLD and only 2 SWAP; SELL OLD is demonstrated by the featured coins CPOOL (R8, in the 03:49 UTC capture; it reads SWAP when the margin falls under 5%) and RZUSD (R7).
 2. **Verdicts are market-sensitive and flip between runs.** RZUSD was WRITE OFF in one census run and SELL OLD live a short while later because the old token still trades; RAMP moved from WRITE OFF to NOT VERIFIABLE in a re-run. Every verdict on screen carries its capture time.
 3. **The Reader is slow.** `qwen4-max` takes a median 8.6 s per call (p90 16.5 s, max 25 s, over the 297 recorded calls in `data/extractions/`); a cold lookup took 15.44 s median and 21.45 s at worst (n=6, `docs/proof/bench/`); the lookup deadline is 52 s and a hard cancel ends the stream at 55 s. Cached notices answer in about a second. Un-cached coins clicked live can end NOT VERIFIABLE with "agent unavailable".
 4. **The census scope is the active top 2000** by rank. The four featured demo coins (CPOOL, AGIX, RZUSD, BIT) sit outside it and are marked and kept out of every count. Notice classification is a regex over CMC's field, not an LLM.
@@ -234,7 +235,7 @@ data/                     cached Reader extractions, notices, census
 evals/ tests/ e2e/        10 eval cases, 88 unit tests, 12 live-URL browser/API tests
 scripts/                  census, evals, bench (cached + cold), unplug E2E
 .github/                  CI/CD, CodeQL, gitleaks, Dependabot, release, community files
-JUDGE.md, /judge         the 30-second path for a judge, no login
+JUDGE.md, /judge         the 2-minute path for a judge, no login
 docs/proof/               verbatim CMC + Qwen responses, lookup captures, deploy and bench proof
 docs/DX-REPORT.md         what made the CMC API possible, what got in the way
 docs/architecture.html    the architecture diagram above (self-contained HTML + SVG; PNG in docs/assets/)

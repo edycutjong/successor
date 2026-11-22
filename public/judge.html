@@ -4,7 +4,7 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>Successor: for judges</title>
-<meta name="description" content="Thirty seconds, no login, no keys: what Successor claims, the clicks that prove it, and the receipts.">
+<meta name="description" content="Two minutes, no login, no keys: what Successor claims, the clicks that prove it, and the receipts.">
 <link rel="icon" href="/icon.svg" type="image/svg+xml">
 <meta name="theme-color" content="#130E14">
 <link rel="preload" href="/fonts/sofia-sans-extra-condensed-latin.woff2" as="font" type="font/woff2" crossorigin>
@@ -65,15 +65,17 @@
   <p id="claim">CoinMarketCap says a coin migrated, but only in prose. Successor reads the notice, finds the successor token, checks it against CMC's own rows, and gives the holder one verdict: SWAP, SELL OLD, WRITE OFF, or NOT VERIFIABLE.</p>
 
   <h2>The 2-minute path (steps 1–3 take 30 seconds; no login, no keys, nothing to install)</h2>
+  <p>Only ten seconds? Click <strong>AGIX</strong> on the board, then <strong>Receipt</strong>: the agent follows the notice's link, code confirms the ratio against CMC's prices, and the receipt shows CMC's own rows.</p>
   <ol>
-    <li>Open <a href="/">successor.edycu.dev</a>: it runs <strong>CPOOL</strong> on load (the CPOOL chip re-runs it). The board streams the CMC notice, the Reader's proposal, the code checks and the verdict. Expected when this page was written (2026-11-22): <strong>SELL OLD</strong> (rule R8), because CMC's quotes put the old token above the 1:1 swap. Verdicts follow the market, so the capture time is on screen.</li>
+    <li>Open <a href="/">successor.edycu.dev</a>: it runs <strong>CPOOL</strong> on load (the CPOOL chip re-runs it). The board streams the CMC notice, the Reader's proposal, the code checks and the verdict. On 2026-11-22 03:49 UTC it read <strong>SELL OLD</strong> (rule R8): CMC's quotes put the old token 15.7% above the 1:1 swap. R8 needs at least 5%; under that margin the same lookup reads <strong>SWAP</strong> (R9), and its reason gives the margin. CPOOL has shown both, so read the verdict with the capture time on screen.</li>
     <li>Click <strong>Receipt</strong>: the CMC calls behind the verdict, with a copyable curl.</li>
     <li>Click the <strong>AGIX</strong> chip: the trace shows the Reader's recorded run (the trace labels it "recorded extraction") following the notice's link to fetch.ai; code confirms the ratio against CMC prices on the event date, live, verdict <strong>SWAP</strong> (R9).</li>
-    <li>Open <a href="/?q=GAS&amp;id=1785">/?q=GAS&amp;id=1785</a> (Neo's GAS; the symbol also matches another coin): its notice quotes a contract (<code>0xd2a4…76cf</code>) that no CMC coin carries. Code finds no CMC coin with that contract, so check C2 fails and the verdict is <strong>NOT VERIFIABLE</strong> (R5), not a guess. The notice may be right; CMC's <code>info?address=</code> knows that hash in neither byte order, so CMC's data cannot confirm it (captured 2026-11-22 07:11 UTC; raw stream <code>docs/proof/assets/lookup-GAS-2026-11-22T0711Z.ndjson</code>; captures and the census from before a 2026-11-22 wording change say &quot;successor refuted by CMC's data&quot;, the live board says &quot;fails a check against CMC's data&quot;: same rule, same verdict).</li>
+    <li>Open <a href="/?q=GAS&amp;id=1785">/?q=GAS&amp;id=1785</a> (Neo's GAS): its notice quotes a contract (<code>0xd2a4…76cf</code>) that no CMC coin carries, so check C2 fails and the verdict is <strong>NOT VERIFIABLE</strong> (R5), not a guess.<sup>1</sup></li>
     <li>Optional, the agent live: on AGIX press <strong>Re-read live</strong>. The Reader runs now (qwen4-max, live), not from the recording. Three fresh runs on 2026-11-22 each ended <strong>SWAP</strong> (R9) in 18 to 26 s server time. Fresh reads are limited to 3 per 10 minutes per client; if it errors, the demo video shows a fresh run (real wait about 21 s, labelled speed-up) and <code>docs/proof/assets/agix-fresh-runs-2026-11-22.json</code> holds all three.</li>
     <li>Scroll to the <strong>census</strong>: every notice in CMC's top 2000, with the verdict code gives each. Most end NOT VERIFIABLE, and the page says why.</li>
     <li>Prefer a terminal? <code>curl -N 'https://successor.edycu.dev/api/lookup?q=CPOOL&amp;qty=10000'</code></li>
   </ol>
+  <p><small><sup>1</sup> The id is needed because the symbol GAS also matches another coin. The notice may be right: CMC's <code>info?address=</code> knows that hash in neither byte order (<code>docs/proof/spike/09-address-gas-n3.json</code>), so CMC's data cannot confirm it. Raw stream captured 2026-11-22 07:11 UTC: <code>docs/proof/assets/lookup-GAS-2026-11-22T0711Z.ndjson</code>. Captures and the census from before a 2026-11-22 wording change say &quot;successor refuted by CMC's data&quot;; the live board says &quot;fails a check against CMC's data&quot;: same rule, same verdict.</small></p>
   <p>If a live lookup errors or runs long (CMC or the model slow), the board says so and shows no verdict. <a href="/about">The landing page</a> replays a captured CPOOL lookup, labelled with its capture time (2026-11-22 03:49 UTC); the raw streams are in <code>docs/proof/assets/</code>.</p>
 
   <h2>Receipts</h2>
