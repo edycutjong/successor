@@ -57,7 +57,8 @@ def host(u: str) -> str:
 def classify(notice: str) -> dict:
     links = URL.findall(notice)
     hosts = sorted({host(u) for u in links})
-    non_cmc = [h for h in hosts if not h.endswith("coinmarketcap.com")]
+    # exact host or a subdomain: a bare suffix test would count "notcoinmarketcap.com" as CMC (CodeQL py/incomplete-url-substring-sanitization)
+    non_cmc = [h for h in hosts if h != "coinmarketcap.com" and not h.endswith(".coinmarketcap.com")]
     only_unfetchable = bool(non_cmc) and all(
         any(h == b or h.endswith("." + b) for b in UNFETCHABLE) for h in non_cmc
     )
