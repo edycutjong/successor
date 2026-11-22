@@ -7,7 +7,7 @@ license = { text = "MIT" }
 dependencies = ["fastapi>=0.165,<1", "starlette>=1.10.0", "httpx>=0.28.1,<0.29", "pydantic>=2.14.4,<3"]
 
 [project.optional-dependencies]
-dev = ["pytest>=8", "pytest-asyncio>=1.5.0", "pytest-cov>=7.1.0", "respx>=0.23.1", "ruff>=0.7", "mypy>=2.4.1", "pip-audit>=2.7", "uvicorn>=0.32"]
+dev = ["pytest>=8", "pytest-asyncio>=1.5.0", "pytest-cov>=7.1.0", "respx>=0.23.1", "ruff>=0.7", "mypy>=2.4.1", "pip-audit>=2.7", "uvicorn>=0.54.0"]
 e2e = ["playwright>=1.47"]
 
 [tool.ruff]
