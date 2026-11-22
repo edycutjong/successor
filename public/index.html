@@ -3,14 +3,67 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>Successor — what happened to your coin</title>
-<style>body{background:#15130F;color:#EDE6D6;font:16px/1.5 system-ui,sans-serif;margin:0;display:grid;place-items:center;min-height:100vh}main{max-width:40rem;padding:2rem}code{color:#F2B33D}</style>
+<title>Successor: what happened to your coin</title>
+<meta name="description" content="Your coin was renamed, migrated or redenominated and CoinMarketCap says so only in a free-text notice. Successor reads the notice, verifies the successor against CMC's own data and returns one verdict with the rows that prove it.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Big+Shoulders+Display:wght@600;800&family=Atkinson+Hyperlegible+Next:wght@400;700&family=Fragment+Mono&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="/board.css">
 </head>
 <body>
+<header class="top">
+  <a class="mark" href="/">SUCCESSOR</a>
+  <p class="tag">CMC tells you a coin migrated, but only in prose. An agent reads the notice; code checks every field against CMC's own rows.</p>
+  <button class="health" id="health" type="button" aria-label="API health: checking"><span class="dot"></span><span class="health-text">health</span></button>
+</header>
+
 <main>
-<h1>Successor</h1>
-<p>Your coin was renamed, migrated or redenominated, and CoinMarketCap says so only in a free-text notice. Successor reads the notice, finds the successor token, checks it against CMC's own data and returns one verdict with the rows that prove it.</p>
-<p>The board is in progress. The API is live: <code>/api/lookup?q=CPOOL</code> · <code>/api/health</code></p>
+  <section class="board" aria-label="Departure board">
+    <div class="cols" aria-hidden="true"><span>Old</span><span></span><span>Successor</span><span>Verdict</span><label class="qty">qty <input id="qty" type="number" min="0" step="any" value="10000" aria-label="Quantity held"></label></div>
+    <div class="row" id="row">
+      <div class="flaps" id="f-old" aria-label="Old token"></div>
+      <div class="arrow" aria-hidden="true">→</div>
+      <div class="flaps" id="f-new" aria-label="Successor token"></div>
+      <div class="flaps verdict" id="f-verdict" aria-live="polite" aria-label="Verdict"></div>
+    </div>
+    <p class="figures" id="figures"></p>
+    <p class="reason" id="reason"></p>
+    <div class="notice" id="notice" aria-label="CMC notice"></div>
+    <ol class="checks" id="checks" aria-label="Checks"></ol>
+    <details class="trace" id="trace-wrap" open>
+      <summary>Agent trace</summary>
+      <ol class="trace-lines" id="trace" aria-live="polite"></ol>
+    </details>
+    <div class="actions">
+      <button type="button" id="receipt-btn" class="ghost" disabled>Receipt ▾</button>
+      <button type="button" id="reread" class="ghost" disabled title="Re-run the Reader live on this notice (fresh=1)">Re-read live</button>
+      <span class="captured" id="captured"></span>
+    </div>
+  </section>
+
+  <form class="lookup" id="form" role="search">
+    <label for="q" class="sr">Look up a coin, slug or contract</label>
+    <input id="q" name="q" autocomplete="off" spellcheck="false" placeholder="look up a coin, slug or contract …" maxlength="80">
+    <button type="submit" id="go">Look up</button>
+  </form>
+  <p class="chips" id="chips">coins with a notice:
+    <button type="button" data-q="CPOOL" data-id="12573">CPOOL</button>
+    <button type="button" data-q="AGIX" data-id="2424">AGIX</button>
+    <button type="button" data-q="RZUSD" data-id="35716">RZUSD</button>
+    <button type="button" data-q="BIT" data-id="11221">BIT</button>
+    <button type="button" data-q="EPS" data-id="8938">EPS</button>
+    <button type="button" data-q="DAI" data-id="4943">DAI</button>
+    <button type="button" data-q="BDX" data-id="3987">BDX</button>
+    <button type="button" data-q="ONE" data-id="37166">ONE</button>
+  </p>
+  <div class="pick" id="pick" hidden></div>
+  <p class="foot">Verdicts state what CMC's data supports, not what you should do. Figures exclude fees, gas and slippage. Data: CoinMarketCap Pro API, read live. Agent: Qwen (DashScope); it proposes fields, code decides.</p>
 </main>
+
+<aside class="drawer" id="drawer" hidden aria-label="Receipt">
+  <div class="drawer-head"><h2>Receipt</h2><button type="button" id="copy" class="ghost">Copy JSON</button><button type="button" id="close" class="ghost" aria-label="Close receipt">Close ✕</button></div>
+  <div id="receipt"></div>
+</aside>
+<script src="/app.js" defer></script>
 </body>
 </html>

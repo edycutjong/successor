@@ -85,3 +85,9 @@ async def stream_probe(n: int = Query(5, ge=1, le=20), gap: float = Query(1.0, g
             await asyncio.sleep(gap)
 
     return StreamingResponse(gen(), media_type="application/x-ndjson", headers={"Cache-Control": "no-store"})
+
+
+if os.environ.get("SERVE_STATIC") == "1":  # local development only; Vercel serves public/ itself
+    from fastapi.staticfiles import StaticFiles
+
+    app.mount("/", StaticFiles(directory=str(Path(__file__).resolve().parents[1] / "public"), html=True))

@@ -235,6 +235,22 @@ async def _run(
             llm_calls=len(llm),
             note=f"recorded extraction of this exact notice ({rd.cache_key(hold['id'], notice)})",
         )
+        for f in fetches:  # the links the agent followed when it read this notice, labelled as recorded
+            yield ev(
+                "step",
+                step="follow_link",
+                url=f.get("url"),
+                ok=True,
+                host=f.get("host"),
+                chars=len(f.get("text") or ""),
+                sha256=f.get("sha256"),
+                fetched_at=f.get("fetched_at"),
+                recorded=True,
+            )
+        for le in cached.get("link_errors") or []:
+            yield ev(
+                "step", step="follow_link", url=le.get("url"), ok=False, error=le.get("error"), recorded=True
+            )
     else:
         session = rd.ReaderSession(notice, label, fetch or _fetch, chat=chat)
         yield ev("step", step="reader", cache="miss", model=session.model, live=True, fresh=fresh)
@@ -425,6 +441,9 @@ async def _run(
                 new_row1, rp.data if rp.ok else None, new_closes, pairs_denied=denied or not rp.ok
             )
         yield ev("step", step="market_new", check="C5", coin=succ["symbol"], **new_m.as_dict(), rows=rows_new)
+        checks.append(
+            _check("C5", f"successor {succ['symbol']} market", _lamp(new_m.state), new_m.reason, rows_new)
+        )
 
     # C4 ratio
     stated = c3.value("ratio_new_per_old")
@@ -578,6 +597,7 @@ async def _run(
         if deadline
         else "not stated"
     )
+    checks.sort(key=lambda c: c["id"])  # stable: C5 old before C5 successor
     receipt = build_receipt(cmc.calls, llm, fetches, recorded=bool(cached))
     yield ev(
         "verdict",
