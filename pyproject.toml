@@ -4,7 +4,7 @@ version = "1.0.0"
 description = "Reads CoinMarketCap migration notices, verifies the successor token against CMC data, returns one verdict with the proving rows."
 requires-python = ">=3.11"
 license = { text = "MIT" }
-dependencies = ["fastapi>=0.165,<1", "starlette>=1.3.1", "httpx>=0.28.1,<0.29", "pydantic>=2,<3"]
+dependencies = ["fastapi>=0.165,<1", "starlette>=1.10.0", "httpx>=0.28.1,<0.29", "pydantic>=2,<3"]
 
 [project.optional-dependencies]
 dev = ["pytest>=8", "pytest-asyncio>=1.5.0", "pytest-cov>=7.1.0", "respx>=0.23.1", "ruff>=0.7", "mypy>=2.4.1", "pip-audit>=2.7", "uvicorn>=0.32"]
