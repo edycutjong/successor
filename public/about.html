@@ -658,14 +658,14 @@ footer nav { display: flex; gap: 18px; flex-wrap: wrap; }
 
   async function onEvent(e, ctx) {
     if (ctx.id !== runId) return;
-    const s = e.step || e.type;
+    const s = e.type && e.type !== 'step' ? e.type : e.step;  // server errors carry a step too; the type decides
     if (s === 'resolve' && ctx.live) { setFlaps(hOld, (e.chosen && e.chosen.symbol) || ctx.q, true); }
     else if (s === 'notice' && ctx.live) {
       const txt = (e.notice || 'no notice on this coin').replace(/\[([^\]]+)\]\([^)]+\)/g, '$1');
       $('h-notice').innerHTML = '<span class="src">1 · CMC notice, read by qwen4-max</span>' + txt.replace(/[<>&]/g, (c) => ({ '<': '&lt;', '>': '&gt;', '&': '&amp;' }[c]));
       $('h-say').textContent = 'the Reader is reading the notice';
     }
-    else if (s === 'follow_link') { $('h-say').textContent = 'the Reader opened ' + (e.host || 'a link') + ' (a host CMC lists)'; }
+    else if (s === 'follow_link') { $('h-say').textContent = e.ok === false ? 'a link was refused: ' + (e.error || 'not a host CMC lists') : 'the Reader opened ' + (e.host || 'a link') + ' (a host CMC lists)'; }
     else if (s === 'proposal') {
       $('h-say').textContent = 'proposal #' + (e.n || 1) + ' in · code is checking it';
       field('sym', 'prop'); field('ratio', 'prop'); field('contract', 'prop');
@@ -695,7 +695,12 @@ footer nav { display: flex; gap: 18px; flex-wrap: wrap; }
       hVd.setAttribute('aria-label', 'Verdict ' + w); $('h-live').textContent = 'Verdict: ' + w;
       const so = e.value_sell_old_usd, sw = e.value_swap_usd, tr = e.tracker_value_usd;
       const qty = Number(e.qty || 10000).toLocaleString('en-US');
-      if (so != null && sw != null && sw > 0) {
+      ctx.done = true;
+      if (e.verdict === 'NOT_VERIFIABLE') {
+        $('h-big').textContent = e.rule_id || '';
+        $('h-say').textContent = e.reason || '';
+        $('h-vals').textContent = so != null ? qty + ' ' + ctx.sym + ' · market value ' + money(so) + ', no verdict · excludes fees and gas' : '';
+      } else if (so != null && sw != null && sw > 0) {
         const pct = (so / sw - 1) * 100;
         $('h-big').textContent = (pct >= 0 ? '+' : '') + pct.toFixed(1) + '%';
         $('h-say').textContent = pct >= 0 ? 'the old token is worth more than the swap, at CMC\'s quotes' : 'the swap is worth more than the old token, at CMC\'s quotes';
@@ -713,7 +718,17 @@ footer nav { display: flex; gap: 18px; flex-wrap: wrap; }
       const when = (e.captured_at || '').replace('T', ' ').replace(/:\d\dZ$/, ' UTC');
       $('h-cap').textContent = (ctx.live ? 'live · ' : 'replay · ') + 'lookup captured ' + when + ' · ' + (e.credits_used ?? '?') + ' CMC credits · ' + (ctx.live ? Math.round(performance.now() - ctx.t0) + ' ms in your browser' : e.t_ms + ' ms');
     }
-    else if (s === 'error') { $('h-say').textContent = 'error: ' + (e.message || e.error || 'lookup failed'); }
+    else if (s === 'outcome') {
+      ctx.done = true; hl.classList.remove('run');
+      $('h-big').textContent = e.outcome === 'no_notice' ? 'no notice' : 'pick a coin';
+      $('h-say').textContent = e.message || '';
+      $('h-cap').textContent = (ctx.live ? 'live · ' : 'replay · ') + 'no verdict to give · ' + (e.outcome || 'outcome');
+    }
+    else if (s === 'error') {
+      ctx.done = true; hl.classList.remove('run');
+      $('h-big').textContent = '✗'; $('h-say').textContent = 'error: ' + (e.message || e.error || 'lookup failed');
+      $('h-cap').textContent = (ctx.live ? 'live' : 'replay') + ' · error · press Replay for the captured run';
+    }
   }
 
   // the captured 2026-11-22 03:49 UTC CPOOL stream (docs/proof/assets/lookup-CPOOL-2026-11-22T0349Z.ndjson), condensed
@@ -729,10 +744,14 @@ footer nav { display: flex; gap: 18px; flex-wrap: wrap; }
   ];
   const GAP = { resolve: 300, notice: 500, reader: 500, proposal: 700, successor: 250, market_old: 380, market_new: 380, ratio: 420, verdict: 200 };
   let runId = 0;
+  const CAP_NOTICE = $('h-notice').innerHTML;  // the captured CPOOL notice; a live run replaces it, replay must restore it
   async function replay() {
     const id = ++runId; const ctx = { id, sym: 'CPOOL', live: false };
     document.querySelectorAll('.runs button[data-q]').forEach((b) => b.setAttribute('aria-pressed', 'false'));
-    resetBoard('CPOOL');
+    resetBoard('CPOOL', CAP_NOTICE.replace(/^<span class="src">[^<]*<\/span>/, ''));
+    document.querySelectorAll('#h-notice u').forEach((u) => { u.className = ''; });
+    $('h-cap').textContent = 'replay · playing the lookup captured 2026-11-22 03:49 UTC …';
+    hVd.setAttribute('aria-label', 'Verdict pending'); $('h-live').textContent = 'Playing the captured CPOOL lookup';
     await sleep(500);
     for (const e of CAPTURED) { if (id !== runId) return; await sleep(GAP[e.step || e.type] || 300); if (id !== runId) return; await onEvent(e, ctx); }
   }
@@ -744,7 +763,8 @@ footer nav { display: flex; gap: 18px; flex-wrap: wrap; }
     resetBoard(q, '');
     $('h-cap').textContent = 'live · streaming GET /api/lookup?q=' + q + ' …';
     try {
-      const r = await fetch('/api/lookup?q=' + encodeURIComponent(q) + '&qty=10000');
+      const ac = new AbortController(); ctx.timer = setTimeout(() => ac.abort(), 75000);  // the server gives up at 52 s
+      const r = await fetch('/api/lookup?q=' + encodeURIComponent(q) + '&qty=10000', { signal: ac.signal });
       if (!r.ok || !r.body) throw new Error('HTTP ' + r.status);
       const rd = r.body.getReader(); const dec = new TextDecoder(); let buf = '';
       for (;;) {
@@ -753,10 +773,13 @@ footer nav { display: flex; gap: 18px; flex-wrap: wrap; }
         let nl; while ((nl = buf.indexOf('\n')) >= 0) { const line = buf.slice(0, nl).trim(); buf = buf.slice(nl + 1); if (line && id === runId) await onEvent(JSON.parse(line), ctx); }
       }
       if (buf.trim() && id === runId) await onEvent(JSON.parse(buf), ctx);
+      if (id === runId && !ctx.done) throw new Error('the stream ended without a verdict');
     } catch (err) {
+      if (id !== runId) return;
+      hl.classList.remove('run'); $('h-big').textContent = '✗';
       $('h-say').textContent = 'live lookup failed (' + err.message + '); the replay still shows a real captured run';
       $('h-cap').textContent = 'live · failed · press Replay for the captured run';
-    } finally { all.forEach((b) => { b.disabled = false; }); }
+    } finally { clearTimeout(ctx.timer); all.forEach((b) => { b.disabled = false; }); }
   }
   document.querySelectorAll('.runs button[data-q]').forEach((b) => b.addEventListener('click', () => live(b.dataset.q, b)));
   $('replay').addEventListener('click', replay);
