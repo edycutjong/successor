@@ -83,7 +83,7 @@ the successor. The wording is "what CMC's data supports", not advice. Fees, gas 
 
 | Layer | Choice |
 |---|---|
-| Runtime | Python 3.12 on Vercel (3.11+ supported), FastAPI as one Vercel serverless function (`api/index.py`, `maxDuration` 60), streaming NDJSON |
+| Runtime | Python 3.12 on Vercel and in CI (`requires-python >=3.11`), FastAPI as one Vercel serverless function (`api/index.py`, `maxDuration` 60), streaming NDJSON |
 | Front end | Plain HTML/CSS/JS in `public/` (a departure board: split-flap names, lamps, trace, receipt drawer). No build step |
 | LLM | Qwen `qwen4-max` on Alibaba Cloud DashScope (intl); `QWEN_MODEL` overrides it (the day-one spike script `scripts/spike_llm.py` fell back to `qwen3.8-max-0902`; the product has no fallback). The Reader's extraction for a notice is cached by coin and notice hash in `data/extractions/` |
 | Data | CoinMarketCap Pro API only. Prices, contracts and notices are never taken from the LLM |
@@ -184,7 +184,7 @@ names no successor, 10: no ratio or announcement unfetchable, 11 more: no live s
 - **We expected a second proposal for AGIX and it never happened.** We planned for the Reader to "change its mind" on AGIX. In the real run the Reader opens the `fetch.ai` link before its first proposal, proposes `$ASI`, and code maps it to FET through CMC's own `/currencies/fetch/` link. One proposal, so we do not claim a repair turn.
 - **We expected RZUSD to be WRITE OFF and then watched it flip** when the old token traded again (limit 2). Evals pin the recorded WRITE OFF outcome; the SELL OLD (R7) branch is covered by `tests/test_never_swap_on_fail.py`, not by an RZUSD eval.
 - **The spec assumed the checksummed contract address would work in `info?address=`.** It returns HTTP 400 `Invalid value for 'slug'`; we lowercase `0x` addresses (`docs/DX-REPORT.md`).
-- **We added CI and could not run it until the repository went public.** While it was private, GitHub Actions jobs never started (a billing limit on the account), so for that time the gates were only run by hand (`docs/proof/gates/`). The first full green pipeline run, all six stages plus release, is [this run](https://github.com/edycutjong/successor/actions/runs/45068463385); its first attempts failed (Python setup, a Deployment Protection bypass for the browser tests, an old gitleaks in the action) and were fixed before it passed.
+- **We added CI and could not run it until the repository went public.** While it was private, GitHub Actions jobs never started (a billing limit on the account), so for that time the gates were only run by hand (`docs/proof/gates/`). The first full green pipeline run, all six stages plus release, is [this run](https://github.com/edycutjong/successor/actions/runs/45066344086); the two attempts before it failed (Python setup, then a Deployment Protection bypass for the browser tests) and were fixed before it passed.
 - **"Agent needed" was the wrong label** for the 99 notices where the Reader opened or tried a link. That counts attempts, not necessity, and the census now says so.
 
 ## 🚀 Getting Started
@@ -220,7 +220,7 @@ python scripts/run_evals.py    # 10/10 counted cases, 4/4 variants (offline repl
 3 Build (evals, import check) plus a Vercel deployment that is not yet on the production domain, 4 E2E and 5 Performance (cached-lookup p95 <= 3 s over 20 calls, nearest rank, a latency-only miss re-measured once with both batches kept; Lighthouse) against that
 deployment, then 6 Deploy Gate (main only), which promotes that same deployment to production and checks `/api/health` reports the pushed commit. CodeQL
 (`python`, `javascript-typescript`, `actions`), gitleaks over the full history, a daily live check, a nightly notice snapshot (`snapshot.yml` writes `data/snapshots/census-<date>.json` and stops at the submission deadline; `data/census.json` and the figures in this README stay pinned to the 2026-11-22 capture), and Dependabot (pip + actions, monthly, grouped, no major bumps) run alongside. Releases are automatic: after Stage 6 is green, Conventional Commits since the last tag set the semver bump (`scripts/release.py`), and the job commits, tags and publishes the GitHub release with no manual step. Only the commit the pipeline tested is released (if main has moved on, the newer run releases), and Stage 3 stamps that version into the deployment, so `/api/health` reports the release it belongs to.
-The CI badge at the top shows the state of main; the first fully green run is [this one](https://github.com/edycutjong/successor/actions/runs/45068463385). The local gate outputs are in `docs/proof/gates/` (local gates, live E2E run, Lighthouse scores).
+The CI badge at the top shows the state of main; the first fully green run is [this one](https://github.com/edycutjong/successor/actions/runs/45066344086). The local gate outputs are in `docs/proof/gates/` (local gates, live E2E run, Lighthouse scores).
 
 ## 📁 Project Structure
 
