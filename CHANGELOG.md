@@ -2,6 +2,14 @@
 
 Generated from Conventional Commits by scripts/release.py.
 
+## v1.1.1 (2026-11-22)
+
+### Bug fixes
+
+- QA round 2: orange only where something lit, quieter headline, stepped rail on slide 5 (0a41a58)
+
+Generated from Conventional Commits by scripts/release.py.
+
 ## v1.1.0 (2026-11-22)
 
 ### Features
