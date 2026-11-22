@@ -1,0 +1,121 @@
+{
+ "CLEAR": {
+  "model": "qwen4-max",
+  "latency_ms": 17345,
+  "usage": {
+   "prompt_tokens": 1454,
+   "total_tokens": 2497,
+   "completion_tokens": 1043,
+   "prompt_tokens_details": {
+    "cached_tokens": 0,
+    "text_tokens": 1454
+   },
+   "completion_tokens_details": {
+    "reasoning_tokens": 496
+   }
+  },
+  "event_type": "contract_swap",
+  "successor": "CLEAR",
+  "ratio": 1.0,
+  "contracts": {
+   "old_contract": "0x66761fa41377003622aee3c7675fc7b5c1c2fac5",
+   "new_contract": "0x5200f539478f58d9aea962095ba3b16b5e550e00"
+  },
+  "quotes_verbatim": {
+   "successor_name": true,
+   "successor_symbol": true,
+   "new_contract": true,
+   "old_contract": true,
+   "ratio_new_per_old": true
+  },
+  "contracts_match_cmc": {
+   "old_contract": true,
+   "new_contract": true
+  },
+  "unstated": [
+   "new_chain",
+   "effective_date",
+   "deadline"
+  ],
+  "links_to_follow": [
+   "https://x.com/ClearpoolFin/status/2122523453270180117"
+  ],
+  "ok": true
+ },
+ "FET": {
+  "model": "qwen4-max",
+  "latency_ms": 9810,
+  "usage": {
+   "prompt_tokens": 1416,
+   "total_tokens": 2087,
+   "completion_tokens": 671,
+   "prompt_tokens_details": {
+    "cached_tokens": 1024,
+    "text_tokens": 1416
+   },
+   "completion_tokens_details": {
+    "reasoning_tokens": 277
+   }
+  },
+  "event_type": "merger",
+  "successor": "ASI",
+  "ratio": null,
+  "contracts": {},
+  "quotes_verbatim": {
+   "successor_symbol": true
+  },
+  "contracts_match_cmc": {},
+  "unstated": [
+   "successor_name",
+   "new_chain",
+   "new_contract",
+   "old_contract",
+   "ratio_new_per_old",
+   "effective_date",
+   "deadline"
+  ],
+  "links_to_follow": [
+   "https://fetch.ai/blog/artificial-superintelligence-alliance-token-merger-approved",
+   "https://docs.superintelligence.io/artificial-superintelligence-alliance/artificial-superintelligence-alliance-unveil-token-with-migration-dapp-tools-now-live"
+  ],
+  "ok": true
+ },
+ "SKY": {
+  "model": "qwen4-max",
+  "latency_ms": 9027,
+  "usage": {
+   "prompt_tokens": 1395,
+   "total_tokens": 1946,
+   "completion_tokens": 551,
+   "prompt_tokens_details": {
+    "cached_tokens": 1024,
+    "text_tokens": 1395
+   },
+   "completion_tokens_details": {
+    "reasoning_tokens": 134
+   }
+  },
+  "event_type": "rename",
+  "successor": "SKY",
+  "ratio": null,
+  "contracts": {},
+  "quotes_verbatim": {
+   "successor_name": true,
+   "successor_symbol": true
+  },
+  "contracts_match_cmc": {},
+  "unstated": [
+   "new_chain",
+   "new_contract",
+   "old_contract",
+   "ratio_new_per_old",
+   "effective_date",
+   "deadline"
+  ],
+  "links_to_follow": [
+   "https://forum.makerdao.com/t/sky-has-arrived/24959",
+   "https://x.com/SkyEcosystem/status/1828405625828843710"
+  ],
+  "ok": true
+ }
+}
