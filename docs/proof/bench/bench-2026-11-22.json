@@ -1,0 +1,27 @@
+{
+  "url": "https://successor.edycu.dev",
+  "query": "CPOOL",
+  "n": 12,
+  "kind": "cached Reader read, live CMC calls, full JSON answer",
+  "captured_at": "2026-11-22T04:29:37Z",
+  "samples_s": [
+    1.023,
+    1.263,
+    0.77,
+    1.184,
+    1.245,
+    0.673,
+    0.991,
+    0.878,
+    0.75,
+    1.036,
+    0.76,
+    1.454
+  ],
+  "p50_s": 1.007,
+  "p95_s": 1.454,
+  "max_s": 1.454,
+  "outcomes": [
+    "200 verdict SELL_OLD/None"
+  ]
+}
