@@ -13,7 +13,7 @@ jobs:
       - uses: actions/setup-python@v7
         with:
           python-version: "3.12"
-      - uses: astral-sh/setup-uv@v7
+      - uses: astral-sh/setup-uv@37802adc94f370d6bfd71619e3f0bf239e1f3b78 # v7.6.0
       - run: uv pip install --system -e .
       - name: deadline freeze (no bot commits after the 2026-12-09 23:59 UTC submission deadline)
         id: gate

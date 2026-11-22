@@ -30,7 +30,7 @@ jobs:
       - uses: actions/setup-python@v7
         with:
           python-version: "3.12"
-      - uses: astral-sh/setup-uv@v7
+      - uses: astral-sh/setup-uv@37802adc94f370d6bfd71619e3f0bf239e1f3b78 # v7.6.0
         with:
           enable-cache: true
       - run: uv pip install --system -e '.[dev]'
@@ -58,11 +58,11 @@ jobs:
       - uses: actions/setup-python@v7
         with:
           python-version: "3.12"
-      - uses: astral-sh/setup-uv@v7
+      - uses: astral-sh/setup-uv@37802adc94f370d6bfd71619e3f0bf239e1f3b78 # v7.6.0
       - name: Dependency audit (pip-audit)
         run: uv pip install --system -e . pip-audit && pip-audit --skip-editable
       - name: Secret scan, full history (gitleaks)
-        uses: gitleaks/gitleaks-action@v3
+        uses: gitleaks/gitleaks-action@e0c47f4f8be36e29cdc102c57e68cb5cbf0e8d1e # v3.0.0
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
           GITLEAKS_VERSION: 8.30.1 # the action's default (8.24) predates [[allowlists]] used in .gitleaks.toml
@@ -89,7 +89,7 @@ jobs:
       - uses: actions/setup-python@v7
         with:
           python-version: "3.12"
-      - uses: astral-sh/setup-uv@v7
+      - uses: astral-sh/setup-uv@37802adc94f370d6bfd71619e3f0bf239e1f3b78 # v7.6.0
       - run: uv pip install --system -e '.[dev]'
       - name: Offline eval replay (10 counted cases + variants; an eval, not the product)
         run: python scripts/run_evals.py
@@ -126,7 +126,7 @@ jobs:
       - uses: actions/setup-python@v7
         with:
           python-version: "3.12"
-      - uses: astral-sh/setup-uv@v7
+      - uses: astral-sh/setup-uv@37802adc94f370d6bfd71619e3f0bf239e1f3b78 # v7.6.0
       - run: uv pip install --system -e '.[dev,e2e]'
       - run: playwright install --with-deps chromium
       - name: Browser tests against the deployment
@@ -148,7 +148,7 @@ jobs:
       - uses: actions/setup-python@v7
         with:
           python-version: "3.12"
-      - uses: astral-sh/setup-uv@v7
+      - uses: astral-sh/setup-uv@37802adc94f370d6bfd71619e3f0bf239e1f3b78 # v7.6.0
       - run: uv pip install --system httpx
       - name: "Cached lookup p50/p95, gate p95 <= 3 s"
         env:
