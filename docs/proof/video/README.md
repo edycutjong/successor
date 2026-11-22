@@ -1,6 +1,7 @@
 # Demo video receipts (2026-11-22)
 
-Each file is the verbatim event stream (`/api/lookup` NDJSON, as the board received it) of one lookup shown in the demo video,
+Each file is the event stream (`/api/lookup` NDJSON) of one lookup shown in the demo video, dumped from the board's own
+`state.events` right after the shot (one JSON object per line, in arrival order),
 recorded against https://successor.edycu.dev (build a09efb9; the Re-read and GAS shots at build 4277add, after the tick and
 'market value, no verdict' fixes). Every number on screen in those shots comes from these files.
 
@@ -9,7 +10,7 @@ recorded against https://successor.edycu.dev (build a09efb9; the Re-read and GAS
 | `lookup-AGIX-20261122T092421Z.ndjson` | AGIX typed on the board | SWAP (R9) | recorded extraction (cache) |
 | `lookup-AGIX-fresh-20261122T095743Z.ndjson` | Re-read live (`fresh=1`; verdict at 21.0 s, shown sped up ×4.8) | SWAP (R9) | live qwen4-max |
 | `lookup-AGIX-receipt-20261122T092054Z.ndjson` | Receipt drawer (12 calls, 10 credits) | SWAP (R9) | recorded extraction (cache) |
-| `lookup-GAS-20261122T095823Z.ndjson` | GAS typed on the board (old token shown as 'market value, no verdict') | NOT VERIFIABLE (R5) | recorded extraction (cache) |
+| `lookup-GAS-20261122T100747Z.ndjson` | GAS typed on the board (old token shown as 'market value, no verdict') | NOT VERIFIABLE (R5) | recorded extraction (cache) |
 | `lookup-CPOOL-20261122T094352Z.ndjson` | CPOOL chip (old token worth 15.4% more than the 1:1 swap) | SELL OLD (R8) | recorded extraction (cache) |
 
 The opening card uses the same capture as the AGIX board shot (`lookup-AGIX-20261122T092421Z.ndjson`, verdict event):
