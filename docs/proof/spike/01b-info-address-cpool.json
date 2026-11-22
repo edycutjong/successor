@@ -1,0 +1,129 @@
+{
+ "request": {
+  "method": "GET",
+  "url": "https://pro-api.coinmarketcap.com/v2/cryptocurrency/info?aux=urls,logo,description,tags,platform,date_added,notice,status&address=0x66761fa41377003622aee3c7675fc7b5c1c2fac5",
+  "headers": {
+   "X-CMC_PRO_API_KEY": "$CMC_API_KEY"
+  }
+ },
+ "http_status": 200,
+ "elapsed_ms": 714,
+ "captured_at": "2026-11-22T01:24:24Z",
+ "credit_count": 1,
+ "response": {
+  "data": {
+   "12573": {
+    "id": 12573,
+    "name": "Clearpool",
+    "symbol": "CPOOL",
+    "category": "token",
+    "description": "Clearpool (CPOOL) is a cryptocurrency and operates on the Ethereum platform. Clearpool has a current supply of 993,627,634.645902 with 0 in circulation. The last known price of Clearpool is 0.02457546 USD and is down -4.69 over the last 24 hours. It is currently trading on 113 active market(s) with $3,230,746.19 traded over the last 24 hours. More information can be found at https://clearpool.finance/.",
+    "slug": "clearpool",
+    "logo": "https://s2.coinmarketcap.com/static/img/coins/64x64/12573.png",
+    "subreddit": "",
+    "notice": "Clearpool (CPOOL) has rebranded to Clearpool (CLEAR) and undergone a 1:1 swap from the [old contract](https://etherscan.io/token/0x66761fa41377003622aee3c7675fc7b5c1c2fac5) to [new contract](https://etherscan.io/token/0x5200f539478f58d9aea962095ba3b16b5e550e00). For more details, please [click here](https://x.com/ClearpoolFin/status/2122523453270180117).",
+    "tags": [
+     "defi",
+     "ethereum-ecosystem",
+     "solana-ecosystem",
+     "xdc-ecosystem",
+     "real-world-assets-protocols",
+     "cmc-crypto-yearbook-2024-2025"
+    ],
+    "tag-names": [
+     "DeFi",
+     "Ethereum Ecosystem",
+     "Solana Ecosystem",
+     "XDC Ecosystem",
+     "Real World Assets Protocols",
+     "CMC Crypto Yearbook 2024-25"
+    ],
+    "tag-groups": [
+     "CATEGORY",
+     "PLATFORM",
+     "PLATFORM",
+     "PLATFORM",
+     "CATEGORY",
+     "CATEGORY"
+    ],
+    "urls": {
+     "website": [
+      "https://clearpool.finance/"
+     ],
+     "twitter": [
+      "https://twitter.com/ClearpoolFin"
+     ],
+     "message_board": [
+      "https://clearpool.medium.com/"
+     ],
+     "chat": [
+      "https://t.me/clearpoolofficial",
+      "https://t.me/clearpoolannounce"
+     ],
+     "facebook": [],
+     "explorer": [
+      "https://etherscan.io/token/0x66761fa41377003622aee3c7675fc7b5c1c2fac5",
+      "https://solscan.io/token/AeXrLftu8chuY4ctc6oDeG4dUx6Yr4aqeakUMFNvACdg"
+     ],
+     "reddit": [],
+     "technical_doc": [],
+     "source_code": [
+      "https://github.com/clearpool-finance"
+     ],
+     "announcement": []
+    },
+    "platform": {
+     "id": "1027",
+     "name": "Ethereum",
+     "symbol": "ETH",
+     "slug": "ethereum",
+     "token_address": "0x66761fa41377003622aee3c7675fc7b5c1c2fac5"
+    },
+    "date_added": "2021-10-10T08:04:07.000Z",
+    "twitter_username": "ClearpoolFin",
+    "is_hidden": 0,
+    "contract_address": [
+     {
+      "contract_address": "0x66761fa41377003622aee3c7675fc7b5c1c2fac5",
+      "platform": {
+       "name": "Ethereum",
+       "coin": {
+        "id": "1027",
+        "name": "Ethereum",
+        "symbol": "ETH",
+        "slug": "ethereum"
+       }
+      }
+     },
+     {
+      "contract_address": "AeXrLftu8chuY4ctc6oDeG4dUx6Yr4aqeakUMFNvACdg",
+      "platform": {
+       "name": "Solana",
+       "coin": {
+        "id": "5426",
+        "name": "Solana",
+        "symbol": "SOL",
+        "slug": "solana"
+       }
+      }
+     }
+    ],
+    "self_reported_circulating_supply": 993627634.65,
+    "self_reported_tags": [
+     "DeFi"
+    ],
+    "self_reported_market_cap": 24474596.99835897,
+    "infinite_supply": false,
+    "status": "active"
+   }
+  },
+  "status": {
+   "timestamp": "2026-11-22T01:24:24.442Z",
+   "error_code": 0,
+   "error_message": null,
+   "elapsed": 9,
+   "credit_count": 1,
+   "notice": null
+  }
+ }
+}

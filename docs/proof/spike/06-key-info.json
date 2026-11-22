@@ -1,0 +1,44 @@
+{
+ "request": {
+  "method": "GET",
+  "url": "https://pro-api.coinmarketcap.com/v1/key/info",
+  "headers": {
+   "X-CMC_PRO_API_KEY": "$CMC_API_KEY"
+  }
+ },
+ "http_status": 200,
+ "elapsed_ms": 288,
+ "captured_at": "2026-11-22T01:24:18Z",
+ "credit_count": 0,
+ "response": {
+  "data": {
+   "plan": {
+    "credit_limit_monthly": 2000000,
+    "credit_limit_monthly_reset": "In 1 days, 1 hours, 36 minutes",
+    "credit_limit_monthly_reset_timestamp": "2026-11-23T03:00:37.000Z",
+    "rate_limit_minute": 750
+   },
+   "usage": {
+    "current_minute": {
+     "requests_made": 2,
+     "requests_left": 748
+    },
+    "current_day": {
+     "credits_used": 600
+    },
+    "current_month": {
+     "credits_used": 16088,
+     "credits_left": 1983912
+    }
+   }
+  },
+  "status": {
+   "timestamp": "2026-11-22T01:24:18.242Z",
+   "error_code": 0,
+   "error_message": null,
+   "elapsed": 6,
+   "credit_count": 0,
+   "notice": null
+  }
+ }
+}

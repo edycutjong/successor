@@ -1,0 +1,268 @@
+{
+ "captured_by": "scripts/spike_cmc.py",
+ "ids": {
+  "CPOOL": 12573,
+  "CLEAR": 42884,
+  "AGIX": 2424,
+  "FET": 3773,
+  "MKR": 1518,
+  "SKY": 33038
+ },
+ "credits_used": 14,
+ "calls": 16,
+ "checks": {
+  "key_info.plan": {
+   "ok": true,
+   "detail": {
+    "credit_limit_monthly": 2000000,
+    "credits_left": 1983912
+   }
+  },
+  "map.resolve": {
+   "ok": true,
+   "detail": {
+    "ids": {
+     "CPOOL": 12573,
+     "CLEAR": 42884,
+     "AGIX": 2424,
+     "FET": 3773,
+     "MKR": 1518,
+     "SKY": 33038
+    },
+    "collisions": {
+     "CPOOL": 1,
+     "CLEAR": 2,
+     "AGIX": 1,
+     "FET": 1,
+     "MKR": 1,
+     "SKY": 5
+    }
+   }
+  },
+  "info.notice": {
+   "ok": true,
+   "detail": {
+    "CPOOL": true,
+    "CLEAR": true,
+    "AGIX": true,
+    "FET": true,
+    "MKR": true,
+    "SKY": true
+   }
+  },
+  "info.contract_address[]": {
+   "ok": true,
+   "detail": {
+    "eth": {
+     "CPOOL": "0x66761fa41377003622aee3c7675fc7b5c1c2fac5",
+     "CLEAR": "0x5200f539478f58d9aea962095ba3b16b5e550e00",
+     "AGIX": "0x5B7533812759B45C2B44C19e320ba2cD2681b542",
+     "FET": "0xaea46A60368A7bD060eec7DF8CBa43b7EF41Ad85",
+     "MKR": "0x9f8f72aa9304c8b593d555f12ef6589cc3a579a2",
+     "SKY": "0x56072C95FAA701256059aa122697B133aDEd9279"
+    },
+    "array_len": {
+     "CPOOL": 2,
+     "CLEAR": 1,
+     "AGIX": 2,
+     "FET": 4,
+     "MKR": 3,
+     "SKY": 1
+    }
+   }
+  },
+  "info.date_added": {
+   "ok": true,
+   "detail": {
+    "CPOOL": "2021-10-10T08:04:07.000Z",
+    "CLEAR": "2021-10-10T08:04:07.000Z",
+    "AGIX": "2018-01-18T00:00:00.000Z",
+    "FET": "2019-03-02T00:00:00.000Z",
+    "MKR": "2017-01-29T00:00:00.000Z",
+    "SKY": "2024-09-18T13:25:16.000Z"
+   }
+  },
+  "quotes_latest.price": {
+   "ok": true,
+   "detail": {
+    "CPOOL": {
+     "price": 0.024631558286902933,
+     "volume_24h": 3221485.0946063777,
+     "last_updated": "2026-11-22T01:23:02.000Z"
+    },
+    "CLEAR": {
+     "price": 0.021037797405142937,
+     "volume_24h": 728255.8810171036,
+     "last_updated": "2026-11-22T01:23:02.000Z"
+    },
+    "AGIX": {
+     "price": 0.5925155619450833,
+     "volume_24h": 0,
+     "last_updated": "2026-11-22T01:23:02.000Z"
+    },
+    "FET": {
+     "price": 0.10867526208564912,
+     "volume_24h": 141575419.98130405,
+     "last_updated": "2026-11-22T01:23:02.000Z"
+    },
+    "MKR": {
+     "price": 1439.5513741147624,
+     "volume_24h": 249.20559838094456,
+     "last_updated": "2026-11-22T01:23:02.000Z"
+    },
+    "SKY": {
+     "price": 0.0439457013418286,
+     "volume_24h": 19710715.349485096,
+     "last_updated": "2026-11-22T01:23:02.000Z"
+    }
+   }
+  },
+  "quotes_historical.merger_rows": {
+   "ok": true,
+   "detail": {
+    "AGIX": {
+     "http": 200,
+     "rows": 6,
+     "within_1d": [
+      "2024-06-30",
+      "2024-07-01",
+      "2024-07-02"
+     ],
+     "error": null
+    },
+    "FET": {
+     "http": 200,
+     "rows": 6,
+     "within_1d": [
+      "2024-06-30",
+      "2024-07-01",
+      "2024-07-02"
+     ],
+     "error": null
+    }
+   }
+  },
+  "info.date_added_inherited": {
+   "ok": true,
+   "detail": {
+    "clear_equals_cpool": true,
+    "snowflake_event_date": "2026-11-17"
+   }
+  },
+  "quotes_historical.clear_event_date": {
+   "ok": true,
+   "detail": {
+    "event_date": "2026-11-17",
+    "CPOOL": [
+     [
+      "2026-11-16",
+      0.024312
+     ],
+     [
+      "2026-11-17",
+      0.025085
+     ],
+     [
+      "2026-11-18",
+      0.025627
+     ],
+     [
+      "2026-11-19",
+      0.025996
+     ],
+     [
+      "2026-11-20",
+      0.024871
+     ]
+    ],
+    "CLEAR": [
+     [
+      "2026-11-19",
+      0.024914
+     ],
+     [
+      "2026-11-20",
+      0.024136
+     ]
+    ]
+   }
+  },
+  "market_pairs.spot": {
+   "ok": true,
+   "detail": {
+    "CPOOL": {
+     "http": 200,
+     "num_market_pairs": 20,
+     "returned": 20,
+     "error": null
+    },
+    "CLEAR": {
+     "http": 200,
+     "num_market_pairs": 9,
+     "returned": 9,
+     "error": null
+    },
+    "AGIX": {
+     "http": 200,
+     "num_market_pairs": 3,
+     "returned": 3,
+     "error": null
+    }
+   }
+  },
+  "old_contracts.resolve": {
+   "ok": true,
+   "detail": {
+    "from_info_contract_array": {
+     "CPOOL": true,
+     "AGIX": true,
+     "MKR": true
+    },
+    "info_by_address": {
+     "CPOOL": {
+      "address": "0x66761fa41377003622aee3c7675fc7b5c1c2fac5",
+      "http": 200,
+      "resolved_ids": [
+       "12573"
+      ],
+      "expected_id": 12573,
+      "error": null
+     },
+     "AGIX": {
+      "address": "0x5B7533812759B45C2B44C19e320ba2cD2681b542",
+      "http": 200,
+      "resolved_ids": [
+       "2424"
+      ],
+      "expected_id": 2424,
+      "error": null
+     },
+     "MKR": {
+      "address": "0x9f8f72aa9304c8b593d555f12ef6589cc3a579a2",
+      "http": 200,
+      "resolved_ids": [
+       "1518"
+      ],
+      "expected_id": 1518,
+      "error": null
+     }
+    }
+   }
+  },
+  "convert_recheck": {
+   "ok": true,
+   "detail": {
+    "usd_price": 0.16186483945475838,
+    "eur_price": 0.14508431154848367,
+    "usd_pct24h": 1.483415032775,
+    "eur_pct24h": 1.3296293963272166,
+    "usd_circ": 2429181577.64,
+    "eur_circ": 2177348323.4860625,
+    "usd_mcap": 393199086.07115525,
+    "eur_mcap": 352436136.81815886
+   }
+  }
+ },
+ "passed": 12,
+ "total": 12
+}

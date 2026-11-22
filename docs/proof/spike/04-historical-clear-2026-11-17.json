@@ -1,0 +1,66 @@
+{
+ "request": {
+  "method": "GET",
+  "url": "https://pro-api.coinmarketcap.com/v2/cryptocurrency/quotes/historical?id=42884&time_start=2026-11-15&time_end=2026-11-20&interval=daily",
+  "headers": {
+   "X-CMC_PRO_API_KEY": "$CMC_API_KEY"
+  }
+ },
+ "http_status": 200,
+ "elapsed_ms": 736,
+ "captured_at": "2026-11-22T01:24:22Z",
+ "credit_count": 1,
+ "response": {
+  "data": {
+   "id": 42884,
+   "name": "Clearpool",
+   "symbol": "CLEAR",
+   "is_active": 1,
+   "is_fiat": 0,
+   "quotes": [
+    {
+     "timestamp": "2026-11-19T00:00:00.000Z",
+     "quote": {
+      "USD": {
+       "price": 0.024913930776973736,
+       "percent_change_1h": -0.014513971879,
+       "percent_change_24h": -4.049561225695,
+       "percent_change_7d": -4.049561225695,
+       "percent_change_30d": -4.049561225695,
+       "volume_24h": 9755.3,
+       "market_cap": 35591329.69206845,
+       "circulating_supply": 1428571429,
+       "total_supply": 1428571429,
+       "timestamp": "2026-11-19T00:00:00.000Z"
+      }
+     }
+    },
+    {
+     "timestamp": "2026-11-20T00:00:00.000Z",
+     "quote": {
+      "USD": {
+       "price": 0.02413582267114853,
+       "percent_change_1h": 0,
+       "percent_change_24h": -3.123184826958,
+       "percent_change_7d": -7.098653757021,
+       "percent_change_30d": -7.098653757021,
+       "volume_24h": 0,
+       "market_cap": 34479746.68341325,
+       "circulating_supply": 1428571429,
+       "total_supply": 1428571429,
+       "timestamp": "2026-11-20T00:00:00.000Z"
+      }
+     }
+    }
+   ]
+  },
+  "status": {
+   "timestamp": "2026-11-22T01:24:22.446Z",
+   "error_code": 0,
+   "error_message": null,
+   "elapsed": 6,
+   "credit_count": 1,
+   "notice": null
+  }
+ }
+}

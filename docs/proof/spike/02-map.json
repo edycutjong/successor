@@ -1,0 +1,186 @@
+{
+ "request": {
+  "method": "GET",
+  "url": "https://pro-api.coinmarketcap.com/v1/cryptocurrency/map?listing_status=active,inactive,untracked&symbol=CPOOL,CLEAR,AGIX,FET,MKR,SKY",
+  "headers": {
+   "X-CMC_PRO_API_KEY": "$CMC_API_KEY"
+  }
+ },
+ "http_status": 200,
+ "elapsed_ms": 697,
+ "captured_at": "2026-11-22T01:24:19Z",
+ "credit_count": 0,
+ "response": {
+  "data": [
+   {
+    "id": 12573,
+    "name": "Clearpool",
+    "symbol": "CPOOL",
+    "slug": "clearpool",
+    "rank": 4058,
+    "is_active": 1,
+    "first_historical_data": "2021-10-28T02:20:00.000Z",
+    "last_historical_data": "2026-11-22T01:20:00.000Z",
+    "platform": {
+     "id": 1,
+     "name": "Ethereum",
+     "symbol": "ETH",
+     "slug": "ethereum",
+     "token_address": "0x66761fa41377003622aee3c7675fc7b5c1c2fac5"
+    }
+   },
+   {
+    "id": 42884,
+    "name": "Clearpool",
+    "symbol": "CLEAR",
+    "slug": "clearpool-finance",
+    "rank": 524,
+    "is_active": 1,
+    "first_historical_data": "2026-11-18T11:10:00.000Z",
+    "last_historical_data": "2026-11-22T01:20:00.000Z",
+    "platform": {
+     "id": 1,
+     "name": "Ethereum",
+     "symbol": "ETH",
+     "slug": "ethereum",
+     "token_address": "0x5200f539478f58d9aea962095ba3b16b5e550e00"
+    }
+   },
+   {
+    "id": 34512,
+    "name": "Everclear",
+    "symbol": "CLEAR",
+    "slug": "everclear",
+    "rank": null,
+    "is_active": 0,
+    "platform": {
+     "id": 1,
+     "name": "Ethereum",
+     "symbol": "ETH",
+     "slug": "ethereum",
+     "token_address": "0x58b9cB810A68a7f3e1E4f8Cb45D1B9B3c79705E8"
+    }
+   },
+   {
+    "id": 2424,
+    "name": "SingularityNET",
+    "symbol": "AGIX",
+    "slug": "singularitynet",
+    "rank": 5343,
+    "is_active": 1,
+    "first_historical_data": "2018-01-19T01:40:00.000Z",
+    "last_historical_data": "2026-11-22T01:20:00.000Z",
+    "platform": {
+     "id": 1,
+     "name": "Ethereum",
+     "symbol": "ETH",
+     "slug": "ethereum",
+     "token_address": "0x5B7533812759B45C2B44C19e320ba2cD2681b542"
+    }
+   },
+   {
+    "id": 3773,
+    "name": "Artificial Superintelligence Alliance",
+    "symbol": "FET",
+    "slug": "artificial-superintelligence-alliance",
+    "rank": 100,
+    "is_active": 1,
+    "first_historical_data": "2019-03-02T23:50:00.000Z",
+    "last_historical_data": "2026-11-22T01:20:00.000Z",
+    "platform": null
+   },
+   {
+    "id": 1518,
+    "name": "Maker",
+    "symbol": "MKR",
+    "slug": "maker",
+    "rank": 4935,
+    "is_active": 1,
+    "first_historical_data": "2017-01-29T19:15:00.000Z",
+    "last_historical_data": "2026-11-22T01:20:00.000Z",
+    "platform": {
+     "id": 1,
+     "name": "Ethereum",
+     "symbol": "ETH",
+     "slug": "ethereum",
+     "token_address": "0x9f8f72aa9304c8b593d555f12ef6589cc3a579a2"
+    }
+   },
+   {
+    "id": 33038,
+    "name": "Sky",
+    "symbol": "SKY",
+    "slug": "sky",
+    "rank": 55,
+    "is_active": 1,
+    "first_historical_data": "2024-09-24T07:10:00.000Z",
+    "last_historical_data": "2026-11-22T01:20:00.000Z",
+    "platform": {
+     "id": 1,
+     "name": "Ethereum",
+     "symbol": "ETH",
+     "slug": "ethereum",
+     "token_address": "0x56072C95FAA701256059aa122697B133aDEd9279"
+    }
+   },
+   {
+    "id": 1619,
+    "name": "Skycoin",
+    "symbol": "SKY",
+    "slug": "skycoin",
+    "rank": 5302,
+    "is_active": 1,
+    "first_historical_data": "2017-04-17T17:55:00.000Z",
+    "last_historical_data": "2026-11-22T01:20:00.000Z",
+    "platform": null
+   },
+   {
+    "id": 3862,
+    "name": "Scopuly",
+    "symbol": "SKY",
+    "slug": "scopuly",
+    "rank": null,
+    "is_active": 0,
+    "platform": null
+   },
+   {
+    "id": 14415,
+    "name": "Skywalker",
+    "symbol": "SKY",
+    "slug": "skywalker",
+    "rank": null,
+    "is_active": 0,
+    "platform": {
+     "id": 1,
+     "name": "Ethereum",
+     "symbol": "ETH",
+     "slug": "ethereum",
+     "token_address": "0xd4ff0c24285c48f748fcfff926f52a824f1df834"
+    }
+   },
+   {
+    "id": 24054,
+    "name": "Skypath Token",
+    "symbol": "SKY",
+    "slug": "the-skytoken",
+    "rank": null,
+    "is_active": 0,
+    "platform": {
+     "id": 28,
+     "name": "Avalanche C-Chain",
+     "symbol": "AVAX",
+     "slug": "avalanche",
+     "token_address": "0x239c1d2fb158113dc4b10133b66d7516207879c5"
+    }
+   }
+  ],
+  "status": {
+   "timestamp": "2026-11-22T01:24:18.943Z",
+   "error_code": 0,
+   "error_message": null,
+   "elapsed": 1,
+   "credit_count": 0,
+   "notice": null
+  }
+ }
+}

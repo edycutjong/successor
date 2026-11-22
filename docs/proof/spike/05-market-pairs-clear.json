@@ -1,0 +1,388 @@
+{
+ "request": {
+  "method": "GET",
+  "url": "https://pro-api.coinmarketcap.com/v2/cryptocurrency/market-pairs/latest?id=42884&category=spot&limit=20",
+  "headers": {
+   "X-CMC_PRO_API_KEY": "$CMC_API_KEY"
+  }
+ },
+ "http_status": 200,
+ "elapsed_ms": 264,
+ "captured_at": "2026-11-22T01:24:23Z",
+ "credit_count": 1,
+ "response": {
+  "data": {
+   "id": 42884,
+   "name": "Clearpool",
+   "symbol": "CLEAR",
+   "num_market_pairs": 9,
+   "market_pairs": [
+    {
+     "market_id": 1712782,
+     "market_pair": "CLEAR/USDC",
+     "category": "spot",
+     "fee_type": "percentage",
+     "outlier_detected": 0,
+     "exclusions": null,
+     "exchange": {
+      "id": 11955,
+      "name": "Uniswap v4 (Ethereum)",
+      "slug": "uniswap-v4"
+     },
+     "market_pair_base": {
+      "currency_id": 42884,
+      "currency_symbol": "CLEAR",
+      "exchange_symbol": "CLEAR",
+      "currency_type": "cryptocurrency"
+     },
+     "market_pair_quote": {
+      "currency_id": 3408,
+      "currency_symbol": "USDC",
+      "exchange_symbol": "USDC",
+      "currency_type": "cryptocurrency"
+     },
+     "quote": {
+      "exchange_reported": {
+       "price": 0.02103042,
+       "volume_24h_base": 10723048.02482354,
+       "volume_24h_quote": 212626.680574,
+       "last_updated": "2026-11-22T01:20:11.000Z"
+      },
+      "USD": {
+       "price": 0.02102706,
+       "volume_24h": 212598.83117955,
+       "last_updated": "2026-11-22T01:20:11.000Z"
+      }
+     }
+    },
+    {
+     "market_id": 1712871,
+     "market_pair": "CLEAR/USDT",
+     "category": "spot",
+     "fee_type": "percentage",
+     "outlier_detected": 0,
+     "exclusions": null,
+     "exchange": {
+      "id": 521,
+      "name": "Bybit",
+      "slug": "bybit"
+     },
+     "market_pair_base": {
+      "currency_id": 42884,
+      "currency_symbol": "CLEAR",
+      "exchange_symbol": "CLEAR",
+      "currency_type": "cryptocurrency"
+     },
+     "market_pair_quote": {
+      "currency_id": 825,
+      "currency_symbol": "USDT",
+      "exchange_symbol": "USDT",
+      "currency_type": "cryptocurrency"
+     },
+     "quote": {
+      "exchange_reported": {
+       "price": 0.02103,
+       "volume_24h_base": 9517744.57636709,
+       "volume_24h_quote": 200158.168441,
+       "last_updated": "2026-11-22T01:18:08.000Z"
+      },
+      "USD": {
+       "price": 0.02098444,
+       "volume_24h": 199724.49553238,
+       "depth_negative_two": 1148.52043815,
+       "depth_positive_two": 657.51527896,
+       "last_updated": "2026-11-22T01:18:08.000Z"
+      }
+     }
+    },
+    {
+     "market_id": 1713406,
+     "market_pair": "CLEAR/USDT",
+     "category": "spot",
+     "fee_type": "percentage",
+     "outlier_detected": 0,
+     "exclusions": null,
+     "exchange": {
+      "id": 10153,
+      "name": "Ourbit",
+      "slug": "ourbit"
+     },
+     "market_pair_base": {
+      "currency_id": 42884,
+      "currency_symbol": "CLEAR",
+      "exchange_symbol": "CLEAR",
+      "currency_type": "cryptocurrency"
+     },
+     "market_pair_quote": {
+      "currency_id": 825,
+      "currency_symbol": "USDT",
+      "exchange_symbol": "USDT",
+      "currency_type": "cryptocurrency"
+     },
+     "quote": {
+      "exchange_reported": {
+       "price": 0.02116,
+       "volume_24h_base": 4886484.51701323,
+       "volume_24h_quote": 103398.01238,
+       "last_updated": "2026-11-22T01:06:11.000Z"
+      },
+      "USD": {
+       "price": 0.02111321,
+       "volume_24h": 103169.38186606,
+       "depth_negative_two": 8410.414663,
+       "depth_positive_two": 651.30126166,
+       "last_updated": "2026-11-22T01:06:11.000Z"
+      }
+     }
+    },
+    {
+     "market_id": 1713355,
+     "market_pair": "CLEAR/USDT",
+     "category": "spot",
+     "fee_type": "percentage",
+     "outlier_detected": 0,
+     "exclusions": null,
+     "exchange": {
+      "id": 513,
+      "name": "Bitget",
+      "slug": "bitget"
+     },
+     "market_pair_base": {
+      "currency_id": 42884,
+      "currency_symbol": "CLEAR",
+      "exchange_symbol": "CLEAR",
+      "currency_type": "cryptocurrency"
+     },
+     "market_pair_quote": {
+      "currency_id": 825,
+      "currency_symbol": "USDT",
+      "exchange_symbol": "USDT",
+      "currency_type": "cryptocurrency"
+     },
+     "quote": {
+      "exchange_reported": {
+       "price": 0.02114,
+       "volume_24h_base": 4755322.13812677,
+       "volume_24h_quote": 100527.51,
+       "last_updated": "2026-11-22T01:19:08.000Z"
+      },
+      "USD": {
+       "price": 0.02109702,
+       "volume_24h": 100323.13467195,
+       "depth_negative_two": 6404.82434964,
+       "depth_positive_two": 350.76930572,
+       "last_updated": "2026-11-22T01:19:08.000Z"
+      }
+     }
+    },
+    {
+     "market_id": 1713443,
+     "market_pair": "CLEAR/USDT",
+     "category": "spot",
+     "fee_type": "percentage",
+     "outlier_detected": 0,
+     "exclusions": null,
+     "exchange": {
+      "id": 8125,
+      "name": "OrangeX",
+      "slug": "orangex"
+     },
+     "market_pair_base": {
+      "currency_id": 42884,
+      "currency_symbol": "CLEAR",
+      "exchange_symbol": "CLEAR",
+      "currency_type": "cryptocurrency"
+     },
+     "market_pair_quote": {
+      "currency_id": 825,
+      "currency_symbol": "USDT",
+      "exchange_symbol": "USDT",
+      "currency_type": "cryptocurrency"
+     },
+     "quote": {
+      "exchange_reported": {
+       "price": 0.02123,
+       "volume_24h_base": 2863124.62317475,
+       "volume_24h_quote": 60784.13575,
+       "last_updated": "2026-11-22T01:18:07.000Z"
+      },
+      "USD": {
+       "price": 0.021184,
+       "volume_24h": 60652.4377376,
+       "depth_negative_two": 612990.50875896,
+       "depth_positive_two": 469598.16042416,
+       "last_updated": "2026-11-22T01:18:07.000Z"
+      }
+     }
+    },
+    {
+     "market_id": 1713356,
+     "market_pair": "CLEAR/USDT",
+     "category": "spot",
+     "fee_type": "percentage",
+     "outlier_detected": 0,
+     "exclusions": null,
+     "exchange": {
+      "id": 544,
+      "name": "MEXC",
+      "slug": "mexc"
+     },
+     "market_pair_base": {
+      "currency_id": 42884,
+      "currency_symbol": "CLEAR",
+      "exchange_symbol": "CLEAR",
+      "currency_type": "cryptocurrency"
+     },
+     "market_pair_quote": {
+      "currency_id": 825,
+      "currency_symbol": "USDT",
+      "exchange_symbol": "USDT",
+      "currency_type": "cryptocurrency"
+     },
+     "quote": {
+      "exchange_reported": {
+       "price": 0.02122,
+       "volume_24h_base": 2446180.07964185,
+       "volume_24h_quote": 51907.94129,
+       "last_updated": "2026-11-22T01:15:11.000Z"
+      },
+      "USD": {
+       "price": 0.02117501,
+       "volume_24h": 51797.87787623,
+       "depth_negative_two": 1215.86509306,
+       "depth_positive_two": 466.27111942,
+       "last_updated": "2026-11-22T01:15:11.000Z"
+      }
+     }
+    },
+    {
+     "market_id": 1713396,
+     "market_pair": "CLEAR/USDT",
+     "category": "spot",
+     "fee_type": "percentage",
+     "outlier_detected": 0,
+     "exclusions": [
+      "price",
+      "volume"
+     ],
+     "exchange": {
+      "id": 12779,
+      "name": "Cofinex",
+      "slug": "cofinex"
+     },
+     "market_pair_base": {
+      "currency_id": 42884,
+      "currency_symbol": "CLEAR",
+      "exchange_symbol": "CLEAR",
+      "currency_type": "cryptocurrency"
+     },
+     "market_pair_quote": {
+      "currency_id": 825,
+      "currency_symbol": "USDT",
+      "exchange_symbol": "USDT",
+      "currency_type": "cryptocurrency"
+     },
+     "quote": {
+      "exchange_reported": {
+       "price": 0.0211,
+       "volume_24h_base": 2412548.20473934,
+       "volume_24h_quote": 50904.76712,
+       "last_updated": "2026-11-22T01:18:07.000Z"
+      },
+      "USD": {
+       "price": 0.02105428,
+       "volume_24h": 50794.47425216,
+       "depth_negative_two": 5066.59555252,
+       "depth_positive_two": 5989.06351285,
+       "last_updated": "2026-11-22T01:18:07.000Z"
+      }
+     }
+    },
+    {
+     "market_id": 1713313,
+     "market_pair": "CLEAR/USDT",
+     "category": "spot",
+     "fee_type": "percentage",
+     "outlier_detected": 0,
+     "exclusions": null,
+     "exchange": {
+      "id": 12524,
+      "name": "Binance Alpha",
+      "slug": "binance-alpha"
+     },
+     "market_pair_base": {
+      "currency_id": 42884,
+      "currency_symbol": "CLEAR",
+      "exchange_symbol": "CLEAR",
+      "currency_type": "cryptocurrency"
+     },
+     "market_pair_quote": {
+      "currency_id": 825,
+      "currency_symbol": "USDT",
+      "exchange_symbol": "USDT",
+      "currency_type": "cryptocurrency"
+     },
+     "quote": {
+      "exchange_reported": {
+       "price": 0.02166,
+       "volume_24h_base": 1478740.83639566,
+       "volume_24h_quote": 32029.52651633,
+       "last_updated": "2026-11-22T01:20:54.000Z"
+      },
+      "USD": {
+       "price": 0.0216129,
+       "volume_24h": 31691.31924253,
+       "last_updated": "2026-11-22T01:20:54.000Z"
+      }
+     }
+    },
+    {
+     "market_id": 1713312,
+     "market_pair": "CLEAR/USDC",
+     "category": "spot",
+     "fee_type": "percentage",
+     "outlier_detected": 0,
+     "exclusions": null,
+     "exchange": {
+      "id": 12524,
+      "name": "Binance Alpha",
+      "slug": "binance-alpha"
+     },
+     "market_pair_base": {
+      "currency_id": 42884,
+      "currency_symbol": "CLEAR",
+      "exchange_symbol": "CLEAR",
+      "currency_type": "cryptocurrency"
+     },
+     "market_pair_quote": {
+      "currency_id": 3408,
+      "currency_symbol": "USDC",
+      "exchange_symbol": "USDC",
+      "currency_type": "cryptocurrency"
+     },
+     "quote": {
+      "exchange_reported": {
+       "price": 0.02017296,
+       "volume_24h_base": 212925.63913873,
+       "volume_24h_quote": 4295.34040132,
+       "last_updated": "2026-11-22T01:20:54.000Z"
+      },
+      "USD": {
+       "price": 0.02017003,
+       "volume_24h": 4563.27047903,
+       "last_updated": "2026-11-22T01:20:54.000Z"
+      }
+     }
+    }
+   ]
+  },
+  "status": {
+   "timestamp": "2026-11-22T01:24:23.005Z",
+   "error_code": 0,
+   "error_message": null,
+   "elapsed": 20,
+   "credit_count": 1,
+   "notice": null
+  }
+ }
+}

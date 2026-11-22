@@ -1,0 +1,151 @@
+{
+ "request": {
+  "method": "GET",
+  "url": "https://pro-api.coinmarketcap.com/v2/cryptocurrency/market-pairs/latest?id=2424&category=spot&limit=20",
+  "headers": {
+   "X-CMC_PRO_API_KEY": "$CMC_API_KEY"
+  }
+ },
+ "http_status": 200,
+ "elapsed_ms": 718,
+ "captured_at": "2026-11-22T01:24:23Z",
+ "credit_count": 1,
+ "response": {
+  "data": {
+   "id": 2424,
+   "name": "SingularityNET",
+   "symbol": "AGIX",
+   "num_market_pairs": 3,
+   "market_pairs": [
+    {
+     "market_id": 1339965,
+     "market_pair": "AGIX/BTC",
+     "category": "spot",
+     "fee_type": "percentage",
+     "outlier_detected": 0,
+     "exclusions": [
+      "price",
+      "volume"
+     ],
+     "exchange": {
+      "id": 9108,
+      "name": "ChangeNOW",
+      "slug": "changenow"
+     },
+     "market_pair_base": {
+      "currency_id": 2424,
+      "currency_symbol": "AGIX",
+      "exchange_symbol": "AGIX",
+      "currency_type": "cryptocurrency"
+     },
+     "market_pair_quote": {
+      "currency_id": 1,
+      "currency_symbol": "BTC",
+      "exchange_symbol": "BTC",
+      "currency_type": "cryptocurrency"
+     },
+     "quote": {
+      "exchange_reported": {
+       "price": 9.83e-06,
+       "volume_24h_base": 46131.36959366,
+       "volume_24h_quote": 0.45350539,
+       "last_updated": "2026-11-22T01:18:07.000Z"
+      },
+      "USD": {
+       "price": 0.59059071,
+       "volume_24h": 27244.75850909,
+       "last_updated": "2026-11-22T01:18:07.000Z"
+      }
+     }
+    },
+    {
+     "market_id": 1365706,
+     "market_pair": "ADA/AGIX",
+     "category": "spot",
+     "fee_type": "percentage",
+     "outlier_detected": 0,
+     "exclusions": [
+      "price",
+      "volume"
+     ],
+     "exchange": {
+      "id": 11208,
+      "name": "Minswap v2",
+      "slug": "minswap-v2"
+     },
+     "market_pair_base": {
+      "currency_id": 2010,
+      "currency_symbol": "ADA",
+      "exchange_symbol": "ADA",
+      "currency_type": "cryptocurrency"
+     },
+     "market_pair_quote": {
+      "currency_id": 2424,
+      "currency_symbol": "AGIX",
+      "exchange_symbol": "AGIX",
+      "currency_type": "cryptocurrency"
+     },
+     "quote": {
+      "exchange_reported": {
+       "price": 11.68415805,
+       "volume_24h_base": 8.558597,
+       "volume_24h_quote": 100,
+       "last_updated": "2026-11-20T18:44:12.000Z"
+      },
+      "USD": {
+       "price": 0.1401,
+       "volume_24h": 1.20535876,
+       "last_updated": "2026-11-20T18:44:12.000Z"
+      }
+     }
+    },
+    {
+     "market_id": 1233136,
+     "market_pair": "AGIX/USDT",
+     "category": "spot",
+     "fee_type": "percentage",
+     "outlier_detected": 0,
+     "exclusions": null,
+     "exchange": {
+      "id": 16,
+      "name": "Poloniex",
+      "slug": "poloniex"
+     },
+     "market_pair_base": {
+      "currency_id": 2424,
+      "currency_symbol": "AGIX",
+      "exchange_symbol": "AGIX",
+      "currency_type": "cryptocurrency"
+     },
+     "market_pair_quote": {
+      "currency_id": 825,
+      "currency_symbol": "USDT",
+      "exchange_symbol": "USDT",
+      "currency_type": "cryptocurrency"
+     },
+     "quote": {
+      "exchange_reported": {
+       "price": 0.5938,
+       "volume_24h_base": 0,
+       "volume_24h_quote": 0,
+       "last_updated": "2026-11-22T01:23:53.000Z"
+      },
+      "USD": {
+       "price": 0.59250736,
+       "volume_24h": 0,
+       "last_updated": "2026-11-22T01:23:53.000Z"
+      }
+     }
+    }
+   ]
+  },
+  "status": {
+   "timestamp": "2026-11-22T01:24:23.725Z",
+   "error_code": 0,
+   "error_message": null,
+   "elapsed": 17,
+   "credit_count": 1,
+   "notice": null
+  }
+ }
+}

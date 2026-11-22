@@ -1,0 +1,188 @@
+{
+ "request": {
+  "method": "GET",
+  "url": "https://pro-api.coinmarketcap.com/v2/cryptocurrency/info?aux=urls,logo,description,tags,platform,date_added,notice,status&address=0x9f8f72aa9304c8b593d555f12ef6589cc3a579a2",
+  "headers": {
+   "X-CMC_PRO_API_KEY": "$CMC_API_KEY"
+  }
+ },
+ "http_status": 200,
+ "elapsed_ms": 809,
+ "captured_at": "2026-11-22T01:24:26Z",
+ "credit_count": 1,
+ "response": {
+  "data": {
+   "1518": {
+    "id": 1518,
+    "name": "Maker",
+    "symbol": "MKR",
+    "category": "token",
+    "description": "Maker (MKR) is a cryptocurrency and operates on the Ethereum platform. Maker has a current supply of 870,827.47 with 0 in circulation. The last known price of Maker is 1,439.55137411 USD and is up 4.10 over the last 24 hours. It is currently trading on 600 active market(s) with $249.00 traded over the last 24 hours. More information can be found at https://makerdao.com/.",
+    "slug": "maker",
+    "logo": "https://s2.coinmarketcap.com/static/img/coins/64x64/1518.png",
+    "subreddit": "MakerDAO",
+    "notice": "[Maker (MKR)](https://coinmarketcap.com/currencies/maker/) has been rebranded to [Sky (SKY)](https://coinmarketcap.com/currencies/sky/). For more information, please refer to this [article](https://forum.makerdao.com/t/sky-has-arrived/24959) and [post](https://x.com/SkyEcosystem/status/1828405625828843710).",
+    "tags": [
+     "store-of-value",
+     "defi",
+     "dao",
+     "ethereum-ecosystem",
+     "polychain-capital-portfolio",
+     "governance",
+     "avalanche-ecosystem",
+     "lending-borowing",
+     "dragonfly-capital-portfolio",
+     "electric-capital-portfolio",
+     "a16z-portfolio",
+     "1confirmation-portfolio",
+     "placeholder-ventures-portfolio",
+     "pantera-capital-portfolio",
+     "paradigm-portfolio",
+     "near-protocol-ecosystem",
+     "arbitrum-ecosystem",
+     "spartan-group",
+     "bitcoin-ecosystem",
+     "real-world-assets-protocols",
+     "standard-crypto-portfolio",
+     "made-in-america"
+    ],
+    "tag-names": [
+     "Store Of Value",
+     "DeFi",
+     "DAO",
+     "Ethereum Ecosystem",
+     "Polychain Capital Portfolio",
+     "Governance",
+     "Avalanche Ecosystem",
+     "Lending & Borrowing",
+     "DragonFly Capital Portfolio",
+     "Electric Capital Portfolio",
+     "a16z Portfolio",
+     "1Confirmation Portfolio",
+     "Placeholder Ventures Portfolio",
+     "Pantera Capital Portfolio",
+     "Paradigm Portfolio",
+     "Near Protocol Ecosystem",
+     "Arbitrum Ecosystem",
+     "Spartan Group",
+     "Bitcoin Ecosystem",
+     "Real World Assets Protocols",
+     "Standard Crypto Portfolio",
+     "Made in America"
+    ],
+    "tag-groups": [
+     "CATEGORY",
+     "CATEGORY",
+     "CATEGORY",
+     "PLATFORM",
+     "CATEGORY",
+     "CATEGORY",
+     "PLATFORM",
+     "CATEGORY",
+     "CATEGORY",
+     "CATEGORY",
+     "CATEGORY",
+     "CATEGORY",
+     "CATEGORY",
+     "CATEGORY",
+     "CATEGORY",
+     "PLATFORM",
+     "PLATFORM",
+     "CATEGORY",
+     "PLATFORM",
+     "CATEGORY",
+     "CATEGORY",
+     "CATEGORY"
+    ],
+    "urls": {
+     "website": [
+      "https://makerdao.com/"
+     ],
+     "twitter": [
+      "https://twitter.com/MakerDAO"
+     ],
+     "message_board": [],
+     "chat": [
+      "https://t.me/makerdaoOfficial"
+     ],
+     "facebook": [],
+     "explorer": [
+      "https://etherscan.io/token/0x9f8f72aa9304c8b593d555f12ef6589cc3a579a2",
+      "https://etherscan.io/token/Maker",
+      "https://www.oklink.com/eth/token/0x9f8f72aa9304c8b593d555f12ef6589cc3a579a2"
+     ],
+     "reddit": [
+      "https://reddit.com/r/MakerDAO"
+     ],
+     "technical_doc": [
+      "https://makerdao.com/en/whitepaper/#overview-of-the-dai-stablecoin-system"
+     ],
+     "source_code": [
+      "https://github.com/makerdao"
+     ],
+     "announcement": []
+    },
+    "platform": {
+     "id": "1027",
+     "name": "Ethereum",
+     "symbol": "ETH",
+     "slug": "ethereum",
+     "token_address": "0x9f8f72aa9304c8b593d555f12ef6589cc3a579a2"
+    },
+    "date_added": "2017-01-29T00:00:00.000Z",
+    "twitter_username": "MakerDAO",
+    "is_hidden": 0,
+    "contract_address": [
+     {
+      "contract_address": "0x9f8f72aa9304c8b593d555f12ef6589cc3a579a2",
+      "platform": {
+       "name": "Ethereum",
+       "coin": {
+        "id": "1027",
+        "name": "Ethereum",
+        "symbol": "ETH",
+        "slug": "ethereum"
+       }
+      }
+     },
+     {
+      "contract_address": "0x5f0da599bb2cccfcf6fdfd7d81743b6020864350",
+      "platform": {
+       "name": "BNB Smart Chain (BEP20)",
+       "coin": {
+        "id": "1839",
+        "name": "BNB",
+        "symbol": "BNB",
+        "slug": "bnb"
+       }
+      }
+     },
+     {
+      "contract_address": "0x88128fd4b259552A9A1D457f435a6527AAb72d42",
+      "platform": {
+       "name": "Avalanche C-Chain",
+       "coin": {
+        "id": "5805",
+        "name": "Avalanche",
+        "symbol": "AVAX",
+        "slug": "avalanche"
+       }
+      }
+     }
+    ],
+    "self_reported_circulating_supply": 847225.42,
+    "self_reported_market_cap": 1219624517.5459566,
+    "infinite_supply": false,
+    "status": "active"
+   }
+  },
+  "status": {
+   "timestamp": "2026-11-22T01:24:25.983Z",
+   "error_code": 0,
+   "error_message": null,
+   "elapsed": 120,
+   "credit_count": 1,
+   "notice": null
+  }
+ }
+}

@@ -1,0 +1,136 @@
+{
+ "request": {
+  "method": "GET",
+  "url": "https://pro-api.coinmarketcap.com/v2/cryptocurrency/info?address=0x5b7533812759b45c2b44c19e320ba2cd2681b542",
+  "headers": {
+   "X-CMC_PRO_API_KEY": "$CMC_API_KEY"
+  }
+ },
+ "http_status": 200,
+ "elapsed_ms": 337,
+ "captured_at": "2026-11-22T01:24:41Z",
+ "credit_count": 1,
+ "response": {
+  "data": {
+   "2424": {
+    "id": 2424,
+    "name": "SingularityNET",
+    "symbol": "AGIX",
+    "category": "token",
+    "description": "SingularityNET (AGIX) is a cryptocurrency and operates on the Ethereum platform. SingularityNET has a current supply of 1,376,451,173.9665115 with 0 in circulation. The last known price of SingularityNET is 0.59253458 USD and is up 0.00 over the last 24 hours. It is currently trading on 272 active market(s) with $0.00 traded over the last 24 hours. More information can be found at https://singularitynet.io/.",
+    "slug": "singularitynet",
+    "logo": "https://s2.coinmarketcap.com/static/img/coins/64x64/2424.png",
+    "subreddit": "SingularityNet",
+    "notice": "[Fetch.ai](https://coinmarketcap.com/currencies/fetch/), SingularityNet, and [Ocean Protocol](https://coinmarketcap.com/currencies/ocean-protocol/) have collaborated to establish the Superintelligence Alliance. All tokens will be consolidated to create a universal AI token, the $ASI. Find more details in their [announcement](https://fetch.ai/blog/artificial-superintelligence-alliance-token-merger-approved) and the latest article [here](https://docs.superintelligence.io/artificial-superintelligence-alliance/artificial-superintelligence-alliance-unveil-token-with-migration-dapp-tools-now-live).",
+    "tags": [
+     "marketplace",
+     "ai-big-data",
+     "payments",
+     "ethereum-ecosystem",
+     "cross-chain-dex-aggregator",
+     "cardano-ecosystem",
+     "generative-ai",
+     "ai-agents"
+    ],
+    "tag-names": [
+     "Marketplace",
+     "AI & Big Data",
+     "Payments",
+     "Ethereum Ecosystem",
+     "Cross-Chain DEX Aggregator",
+     "Cardano Ecosystem",
+     "Generative AI",
+     "AI Agents"
+    ],
+    "tag-groups": [
+     "INDUSTRY",
+     "INDUSTRY",
+     "INDUSTRY",
+     "PLATFORM",
+     "CATEGORY",
+     "PLATFORM",
+     "CATEGORY",
+     "CATEGORY"
+    ],
+    "urls": {
+     "website": [
+      "https://singularitynet.io/"
+     ],
+     "twitter": [
+      "https://twitter.com/singularitynet"
+     ],
+     "message_board": [
+      "https://blog.singularitynet.io/",
+      "https://community.singularitynet.io/"
+     ],
+     "chat": [
+      "https://t.me/singularitynet",
+      "https://discord.gg/snet"
+     ],
+     "facebook": [],
+     "explorer": [
+      "https://etherscan.io/token/0x5B7533812759B45C2B44C19e320ba2cD2681b542",
+      "https://www.oklink.com/eth/token/0x5B7533812759B45C2B44C19e320ba2cD2681b542"
+     ],
+     "reddit": [
+      "https://reddit.com/r/SingularityNet"
+     ],
+     "technical_doc": [
+      "https://public.singularitynet.io/whitepaper.pdf"
+     ],
+     "source_code": [
+      "https://github.com/singnet/"
+     ],
+     "announcement": []
+    },
+    "platform": {
+     "id": "1027",
+     "name": "Ethereum",
+     "symbol": "ETH",
+     "slug": "ethereum",
+     "token_address": "0x5B7533812759B45C2B44C19e320ba2cD2681b542"
+    },
+    "date_added": "2018-01-18T00:00:00.000Z",
+    "twitter_username": "singularitynet",
+    "is_hidden": 0,
+    "contract_address": [
+     {
+      "contract_address": "0x5B7533812759B45C2B44C19e320ba2cD2681b542",
+      "platform": {
+       "name": "Ethereum",
+       "coin": {
+        "id": "1027",
+        "name": "Ethereum",
+        "symbol": "ETH",
+        "slug": "ethereum"
+       }
+      }
+     },
+     {
+      "contract_address": "f43a62fdc3965df486de8a0d32fe800963589c41b38946602a0dc53541474958",
+      "platform": {
+       "name": "Cardano",
+       "coin": {
+        "id": "2010",
+        "name": "Cardano",
+        "symbol": "ADA",
+        "slug": "cardano"
+       }
+      }
+     }
+    ],
+    "self_reported_circulating_supply": 1211306168.62,
+    "self_reported_market_cap": 717666986.336699,
+    "infinite_supply": false
+   }
+  },
+  "status": {
+   "timestamp": "2026-11-22T01:24:41.427Z",
+   "error_code": 0,
+   "error_message": null,
+   "elapsed": 80,
+   "credit_count": 1,
+   "notice": null
+  }
+ }
+}

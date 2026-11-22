@@ -1,0 +1,117 @@
+{
+ "request": {
+  "method": "GET",
+  "url": "https://pro-api.coinmarketcap.com/v2/cryptocurrency/quotes/historical?id=12573&time_start=2026-11-15&time_end=2026-11-20&interval=daily",
+  "headers": {
+   "X-CMC_PRO_API_KEY": "$CMC_API_KEY"
+  }
+ },
+ "http_status": 200,
+ "elapsed_ms": 724,
+ "captured_at": "2026-11-22T01:24:21Z",
+ "credit_count": 1,
+ "response": {
+  "data": {
+   "id": 12573,
+   "name": "Clearpool",
+   "symbol": "CPOOL",
+   "is_active": 1,
+   "is_fiat": 0,
+   "quotes": [
+    {
+     "timestamp": "2026-11-16T00:00:00.000Z",
+     "quote": {
+      "USD": {
+       "price": 0.024311660501996818,
+       "percent_change_1h": 0.572282635436,
+       "percent_change_24h": 6.035675679715,
+       "percent_change_7d": -4.094127354957,
+       "percent_change_30d": -13.298108659217,
+       "volume_24h": 2236333.67,
+       "market_cap": 24156737.71901293,
+       "circulating_supply": 993627634.65,
+       "total_supply": 993627634.65,
+       "timestamp": "2026-11-16T00:00:00.000Z"
+      }
+     }
+    },
+    {
+     "timestamp": "2026-11-17T00:00:00.000Z",
+     "quote": {
+      "USD": {
+       "price": 0.025084508636246526,
+       "percent_change_1h": 0.155429339033,
+       "percent_change_24h": 3.178919573125,
+       "percent_change_7d": -3.194835976463,
+       "percent_change_30d": -14.17192346023,
+       "volume_24h": 2252647.76,
+       "market_cap": 24924660.982591134,
+       "circulating_supply": 993627634.65,
+       "total_supply": 993627634.65,
+       "timestamp": "2026-11-17T00:00:00.000Z"
+      }
+     }
+    },
+    {
+     "timestamp": "2026-11-18T00:00:00.000Z",
+     "quote": {
+      "USD": {
+       "price": 0.02562662366207566,
+       "percent_change_1h": -0.496396272581,
+       "percent_change_24h": 2.161154654015,
+       "percent_change_7d": -2.16343025138,
+       "percent_change_30d": -7.631066649451,
+       "volume_24h": 1223050.45,
+       "market_cap": 25463321.45341396,
+       "circulating_supply": 993627634.65,
+       "total_supply": 993627634.65,
+       "timestamp": "2026-11-18T00:00:00.000Z"
+      }
+     }
+    },
+    {
+     "timestamp": "2026-11-19T00:00:00.000Z",
+     "quote": {
+      "USD": {
+       "price": 0.025995711104896433,
+       "percent_change_1h": -0.440255829734,
+       "percent_change_24h": 1.440249982548,
+       "percent_change_7d": 1.610716934778,
+       "percent_change_30d": -6.039632123762,
+       "volume_24h": 457855.46,
+       "market_cap": 25830056.93620298,
+       "circulating_supply": 993627634.65,
+       "total_supply": 993627634.65,
+       "timestamp": "2026-11-19T00:00:00.000Z"
+      }
+     }
+    },
+    {
+     "timestamp": "2026-11-20T00:00:00.000Z",
+     "quote": {
+      "USD": {
+       "price": 0.024870633685963428,
+       "percent_change_1h": -0.342133519094,
+       "percent_change_24h": -4.327934767367,
+       "percent_change_7d": -4.047762649648,
+       "percent_change_30d": -11.933133435685,
+       "volume_24h": 415823.1,
+       "market_cap": 24712148.921630453,
+       "circulating_supply": 993627634.65,
+       "total_supply": 993627634.65,
+       "timestamp": "2026-11-20T00:00:00.000Z"
+      }
+     }
+    }
+   ]
+  },
+  "status": {
+   "timestamp": "2026-11-22T01:24:21.709Z",
+   "error_code": 0,
+   "error_message": null,
+   "elapsed": 7,
+   "credit_count": 1,
+   "notice": null
+  }
+ }
+}

@@ -1,0 +1,134 @@
+{
+ "request": {
+  "method": "GET",
+  "url": "https://pro-api.coinmarketcap.com/v2/cryptocurrency/quotes/historical?id=2424&time_start=2024-06-28&time_end=2024-07-04&interval=daily",
+  "headers": {
+   "X-CMC_PRO_API_KEY": "$CMC_API_KEY"
+  }
+ },
+ "http_status": 200,
+ "elapsed_ms": 346,
+ "captured_at": "2026-11-22T01:24:20Z",
+ "credit_count": 1,
+ "response": {
+  "data": {
+   "id": 2424,
+   "name": "SingularityNET",
+   "symbol": "AGIX",
+   "is_active": 1,
+   "is_fiat": 0,
+   "quotes": [
+    {
+     "timestamp": "2024-06-29T00:00:00.000Z",
+     "quote": {
+      "USD": {
+       "price": 0.5948298113439927,
+       "percent_change_1h": 0.087967805729,
+       "percent_change_24h": -7.844611762,
+       "percent_change_7d": -10.080543791581,
+       "percent_change_30d": -35.060819267408,
+       "volume_24h": 42185074.47,
+       "market_cap": 765846225.1836984,
+       "circulating_supply": 1287504779.65,
+       "total_supply": 1419566631.19,
+       "timestamp": "2024-06-29T00:00:00.000Z"
+      }
+     }
+    },
+    {
+     "timestamp": "2024-06-30T00:00:00.000Z",
+     "quote": {
+      "USD": {
+       "price": 0.5759324093564694,
+       "percent_change_1h": -0.230336749627,
+       "percent_change_24h": -3.176942652693,
+       "percent_change_7d": -6.961995739276,
+       "percent_change_30d": -36.916723025847,
+       "volume_24h": 24427005.83,
+       "market_cap": 741515253.6208787,
+       "circulating_supply": 1287503952.85,
+       "total_supply": 1419565804.39,
+       "timestamp": "2024-06-30T00:00:00.000Z"
+      }
+     }
+    },
+    {
+     "timestamp": "2024-07-01T00:00:00.000Z",
+     "quote": {
+      "USD": {
+       "price": 0.616130745245415,
+       "percent_change_1h": 0.902829885161,
+       "percent_change_24h": 6.979696790091,
+       "percent_change_7d": 4.126480879629,
+       "percent_change_30d": -31.294911964496,
+       "volume_24h": 39074997.36,
+       "market_cap": 793270769.9758881,
+       "circulating_supply": 1287503952.85,
+       "total_supply": 1419565804.39,
+       "timestamp": "2024-07-01T00:00:00.000Z"
+      }
+     }
+    },
+    {
+     "timestamp": "2024-07-02T00:00:00.000Z",
+     "quote": {
+      "USD": {
+       "price": 0.6145198983873409,
+       "percent_change_1h": 0.255581135465,
+       "percent_change_24h": -0.261445621811,
+       "percent_change_7d": -8.217826791436,
+       "percent_change_30d": -31.0154740993,
+       "volume_24h": 19362880.26,
+       "market_cap": 764916597.874942,
+       "circulating_supply": 1244738534.72,
+       "total_supply": 1376800386.27,
+       "timestamp": "2024-07-02T00:00:00.000Z"
+      }
+     }
+    },
+    {
+     "timestamp": "2024-07-03T00:00:00.000Z",
+     "quote": {
+      "USD": {
+       "price": 0.6139589984537959,
+       "percent_change_1h": -0.041629077998,
+       "percent_change_24h": -0.091274494938,
+       "percent_change_7d": -7.144418570527,
+       "percent_change_30d": -29.980272451936,
+       "volume_24h": 15478216.87,
+       "market_cap": 845084584.1911728,
+       "circulating_supply": 1376451173.97,
+       "total_supply": 1376451173.97,
+       "timestamp": "2024-07-03T00:00:00.000Z"
+      }
+     }
+    },
+    {
+     "timestamp": "2024-07-04T00:00:00.000Z",
+     "quote": {
+      "USD": {
+       "price": 0.60793896538357,
+       "percent_change_1h": 0.064795468807,
+       "percent_change_24h": -0.980526889481,
+       "percent_change_7d": -16.130073271081,
+       "percent_change_30d": -31.565088238279,
+       "volume_24h": 5914610.55,
+       "market_cap": 836798302.6043221,
+       "circulating_supply": 1376451173.97,
+       "total_supply": 1376451173.97,
+       "timestamp": "2024-07-04T00:00:00.000Z"
+      }
+     }
+    }
+   ]
+  },
+  "status": {
+   "timestamp": "2026-11-22T01:24:20.261Z",
+   "error_code": 0,
+   "error_message": null,
+   "elapsed": 8,
+   "credit_count": 1,
+   "notice": null
+  }
+ }
+}

@@ -1,0 +1,843 @@
+{
+ "request": {
+  "method": "GET",
+  "url": "https://pro-api.coinmarketcap.com/v2/cryptocurrency/market-pairs/latest?id=12573&category=spot&limit=20",
+  "headers": {
+   "X-CMC_PRO_API_KEY": "$CMC_API_KEY"
+  }
+ },
+ "http_status": 200,
+ "elapsed_ms": 283,
+ "captured_at": "2026-11-22T01:24:22Z",
+ "credit_count": 1,
+ "response": {
+  "data": {
+   "id": 12573,
+   "name": "Clearpool",
+   "symbol": "CPOOL",
+   "num_market_pairs": 20,
+   "market_pairs": [
+    {
+     "market_id": 1460446,
+     "market_pair": "CPOOL/KRW",
+     "category": "spot",
+     "fee_type": "percentage",
+     "outlier_detected": 0,
+     "exclusions": null,
+     "exchange": {
+      "id": 351,
+      "name": "Upbit",
+      "slug": "upbit"
+     },
+     "market_pair_base": {
+      "currency_id": 12573,
+      "currency_symbol": "CPOOL",
+      "exchange_symbol": "CPOOL",
+      "currency_type": "cryptocurrency"
+     },
+     "market_pair_quote": {
+      "currency_id": 2798,
+      "currency_symbol": "KRW",
+      "exchange_symbol": "KRW",
+      "currency_type": "fiat"
+     },
+     "quote": {
+      "exchange_reported": {
+       "price": 33.1,
+       "volume_24h_base": 116298312.5135474,
+       "volume_24h_quote": 3849474144.198419,
+       "last_updated": "2026-11-22T01:20:53.000Z"
+      },
+      "USD": {
+       "price": 0.02459312,
+       "volume_24h": 2860138.08123152,
+       "depth_negative_two": 38034.90121663,
+       "depth_positive_two": 7263.26240973,
+       "last_updated": "2026-11-22T01:20:53.000Z"
+      }
+     }
+    },
+    {
+     "market_id": 1415691,
+     "market_pair": "CPOOL/USDC",
+     "category": "spot",
+     "fee_type": "percentage",
+     "outlier_detected": 0,
+     "exclusions": null,
+     "exchange": {
+      "id": 1348,
+      "name": "Uniswap v3 (Ethereum)",
+      "slug": "uniswap-v3"
+     },
+     "market_pair_base": {
+      "currency_id": 12573,
+      "currency_symbol": "CPOOL",
+      "exchange_symbol": "CPOOL",
+      "currency_type": "cryptocurrency"
+     },
+     "market_pair_quote": {
+      "currency_id": 3408,
+      "currency_symbol": "USDC",
+      "exchange_symbol": "USDC",
+      "currency_type": "cryptocurrency"
+     },
+     "quote": {
+      "exchange_reported": {
+       "price": 0.02423,
+       "volume_24h_base": 6131776.79867607,
+       "volume_24h_quote": 145480.705205,
+       "last_updated": "2026-11-22T00:48:23.000Z"
+      },
+      "USD": {
+       "price": 0.02422475,
+       "volume_24h": 145463.71708354,
+       "last_updated": "2026-11-22T00:48:23.000Z"
+      }
+     }
+    },
+    {
+     "market_id": 1460454,
+     "market_pair": "CPOOL/KRW",
+     "category": "spot",
+     "fee_type": "percentage",
+     "outlier_detected": 0,
+     "exclusions": null,
+     "exchange": {
+      "id": 200,
+      "name": "Bithumb",
+      "slug": "bithumb"
+     },
+     "market_pair_base": {
+      "currency_id": 12573,
+      "currency_symbol": "CPOOL",
+      "exchange_symbol": "CPOOL",
+      "currency_type": "cryptocurrency"
+     },
+     "market_pair_quote": {
+      "currency_id": 2798,
+      "currency_symbol": "KRW",
+      "exchange_symbol": "KRW",
+      "currency_type": "fiat"
+     },
+     "quote": {
+      "exchange_reported": {
+       "price": 33.15,
+       "volume_24h_base": 4299632.47752717,
+       "volume_24h_quote": 142532816.6300258,
+       "last_updated": "2026-11-22T01:20:53.000Z"
+      },
+      "USD": {
+       "price": 0.02463027,
+       "volume_24h": 105901.09750006,
+       "depth_negative_two": 3756.59438951,
+       "depth_positive_two": 125.16358484,
+       "last_updated": "2026-11-22T01:20:53.000Z"
+      }
+     }
+    },
+    {
+     "market_id": 1304917,
+     "market_pair": "CPOOL/USDT",
+     "category": "spot",
+     "fee_type": "percentage",
+     "outlier_detected": 0,
+     "exclusions": [
+      "price",
+      "volume"
+     ],
+     "exchange": {
+      "id": 521,
+      "name": "Bybit",
+      "slug": "bybit"
+     },
+     "market_pair_base": {
+      "currency_id": 12573,
+      "currency_symbol": "CPOOL",
+      "exchange_symbol": "CPOOL",
+      "currency_type": "cryptocurrency"
+     },
+     "market_pair_quote": {
+      "currency_id": 825,
+      "currency_symbol": "USDT",
+      "exchange_symbol": "USDT",
+      "currency_type": "cryptocurrency"
+     },
+     "quote": {
+      "exchange_reported": {
+       "price": 0.02573,
+       "volume_24h_base": 4107762.02781967,
+       "volume_24h_quote": 105692.7169758,
+       "last_updated": "2026-11-18T08:03:08.000Z"
+      },
+      "USD": {
+       "price": 0.02570439,
+       "volume_24h": 105587.53495817,
+       "last_updated": "2026-11-18T08:03:08.000Z"
+      }
+     }
+    },
+    {
+     "market_id": 371283,
+     "market_pair": "CPOOL/USDT",
+     "category": "spot",
+     "fee_type": "percentage",
+     "outlier_detected": 0,
+     "exclusions": [
+      "price",
+      "volume"
+     ],
+     "exchange": {
+      "id": 311,
+      "name": "KuCoin",
+      "slug": "kucoin"
+     },
+     "market_pair_base": {
+      "currency_id": 12573,
+      "currency_symbol": "CPOOL",
+      "exchange_symbol": "CPOOL",
+      "currency_type": "cryptocurrency"
+     },
+     "market_pair_quote": {
+      "currency_id": 825,
+      "currency_symbol": "USDT",
+      "exchange_symbol": "USDT",
+      "currency_type": "cryptocurrency"
+     },
+     "quote": {
+      "exchange_reported": {
+       "price": 0.0253,
+       "volume_24h_base": 4109931.5362,
+       "volume_24h_quote": 103981.26786586,
+       "last_updated": "2026-11-16T08:03:08.000Z"
+      },
+      "USD": {
+       "price": 0.02527371,
+       "volume_24h": 103873.21981121,
+       "last_updated": "2026-11-16T08:03:08.000Z"
+      }
+     }
+    },
+    {
+     "market_id": 1350992,
+     "market_pair": "CPOOL/USD",
+     "category": "spot",
+     "fee_type": "percentage",
+     "outlier_detected": 0,
+     "exclusions": null,
+     "exchange": {
+      "id": 24,
+      "name": "Kraken",
+      "slug": "kraken"
+     },
+     "market_pair_base": {
+      "currency_id": 12573,
+      "currency_symbol": "CPOOL",
+      "exchange_symbol": "CPOOL",
+      "currency_type": "cryptocurrency"
+     },
+     "market_pair_quote": {
+      "currency_id": 2781,
+      "currency_symbol": "USD",
+      "exchange_symbol": "USD",
+      "currency_type": "fiat"
+     },
+     "quote": {
+      "exchange_reported": {
+       "price": 0.02428,
+       "volume_24h_base": 4234282.63701,
+       "volume_24h_quote": 102808.3824266,
+       "last_updated": "2026-11-22T01:20:55.000Z"
+      },
+      "USD": {
+       "price": 0.02428,
+       "volume_24h": 102846.25422971,
+       "depth_negative_two": 247.59073291,
+       "depth_positive_two": 382.23774202,
+       "last_updated": "2026-11-22T01:20:55.000Z"
+      }
+     }
+    },
+    {
+     "market_id": 1640304,
+     "market_pair": "CPOOL/USDT",
+     "category": "spot",
+     "fee_type": "percentage",
+     "outlier_detected": 0,
+     "exclusions": [
+      "price",
+      "volume"
+     ],
+     "exchange": {
+      "id": 1188,
+      "name": "BYDFi",
+      "slug": "bydfi"
+     },
+     "market_pair_base": {
+      "currency_id": 12573,
+      "currency_symbol": "CPOOL",
+      "exchange_symbol": "CPOOL",
+      "currency_type": "cryptocurrency"
+     },
+     "market_pair_quote": {
+      "currency_id": 825,
+      "currency_symbol": "USDT",
+      "exchange_symbol": "USDT",
+      "currency_type": "cryptocurrency"
+     },
+     "quote": {
+      "exchange_reported": {
+       "price": 0.02516,
+       "volume_24h_base": 2697082.90262321,
+       "volume_24h_quote": 67858.60583,
+       "last_updated": "2026-11-17T07:00:08.000Z"
+      },
+      "USD": {
+       "price": 0.02513427,
+       "volume_24h": 67789.22044801,
+       "last_updated": "2026-11-17T07:00:08.000Z"
+      }
+     }
+    },
+    {
+     "market_id": 1354948,
+     "market_pair": "CPOOL/USDT",
+     "category": "spot",
+     "fee_type": "percentage",
+     "outlier_detected": 0,
+     "exclusions": [
+      "price",
+      "volume"
+     ],
+     "exchange": {
+      "id": 513,
+      "name": "Bitget",
+      "slug": "bitget"
+     },
+     "market_pair_base": {
+      "currency_id": 12573,
+      "currency_symbol": "CPOOL",
+      "exchange_symbol": "CPOOL",
+      "currency_type": "cryptocurrency"
+     },
+     "market_pair_quote": {
+      "currency_id": 825,
+      "currency_symbol": "USDT",
+      "exchange_symbol": "USDT",
+      "currency_type": "cryptocurrency"
+     },
+     "quote": {
+      "exchange_reported": {
+       "price": 0.02562,
+       "volume_24h_base": 2215176.03434817,
+       "volume_24h_quote": 56752.81,
+       "last_updated": "2026-11-18T04:01:09.000Z"
+      },
+      "USD": {
+       "price": 0.02559018,
+       "volume_24h": 56686.74541937,
+       "last_updated": "2026-11-18T04:01:09.000Z"
+      }
+     }
+    },
+    {
+     "market_id": 1442618,
+     "market_pair": "CPOOL/USDT",
+     "category": "spot",
+     "fee_type": "percentage",
+     "outlier_detected": 0,
+     "exclusions": [
+      "price",
+      "volume"
+     ],
+     "exchange": {
+      "id": 12779,
+      "name": "Cofinex",
+      "slug": "cofinex"
+     },
+     "market_pair_base": {
+      "currency_id": 12573,
+      "currency_symbol": "CPOOL",
+      "exchange_symbol": "CPOOL",
+      "currency_type": "cryptocurrency"
+     },
+     "market_pair_quote": {
+      "currency_id": 825,
+      "currency_symbol": "USDT",
+      "exchange_symbol": "USDT",
+      "currency_type": "cryptocurrency"
+     },
+     "quote": {
+      "exchange_reported": {
+       "price": 0.02569,
+       "volume_24h_base": 1966068.20864149,
+       "volume_24h_quote": 50508.29228,
+       "last_updated": "2026-11-18T04:00:10.000Z"
+      },
+      "USD": {
+       "price": 0.02565647,
+       "volume_24h": 50442.36865493,
+       "last_updated": "2026-11-18T04:00:10.000Z"
+      }
+     }
+    },
+    {
+     "market_id": 1418904,
+     "market_pair": "CPOOL/USDT",
+     "category": "spot",
+     "fee_type": "percentage",
+     "outlier_detected": 0,
+     "exclusions": [
+      "price",
+      "volume"
+     ],
+     "exchange": {
+      "id": 12218,
+      "name": "XXKK",
+      "slug": "xxkk"
+     },
+     "market_pair_base": {
+      "currency_id": 12573,
+      "currency_symbol": "CPOOL",
+      "exchange_symbol": "CPOOL",
+      "currency_type": "cryptocurrency"
+     },
+     "market_pair_quote": {
+      "currency_id": 825,
+      "currency_symbol": "USDT",
+      "exchange_symbol": "USDT",
+      "currency_type": "cryptocurrency"
+     },
+     "quote": {
+      "exchange_reported": {
+       "price": 0.0253,
+       "volume_24h_base": 1854998.3349,
+       "volume_24h_quote": 46931.45787297,
+       "last_updated": "2026-11-17T03:57:08.000Z"
+      },
+      "USD": {
+       "price": 0.02527775,
+       "volume_24h": 46890.17940917,
+       "last_updated": "2026-11-17T03:57:08.000Z"
+      }
+     }
+    },
+    {
+     "market_id": 1649409,
+     "market_pair": "CPOOL/USDT",
+     "category": "spot",
+     "fee_type": "percentage",
+     "outlier_detected": 0,
+     "exclusions": [
+      "price",
+      "volume"
+     ],
+     "exchange": {
+      "id": 33355,
+      "name": "idax exchange",
+      "slug": "idax-exchange"
+     },
+     "market_pair_base": {
+      "currency_id": 12573,
+      "currency_symbol": "CPOOL",
+      "exchange_symbol": "CPOOL",
+      "currency_type": "cryptocurrency"
+     },
+     "market_pair_quote": {
+      "currency_id": 825,
+      "currency_symbol": "USDT",
+      "exchange_symbol": "USDT",
+      "currency_type": "cryptocurrency"
+     },
+     "quote": {
+      "exchange_reported": {
+       "price": 0.02556,
+       "volume_24h_base": 1193137.08450704,
+       "volume_24h_quote": 30496.58388,
+       "last_updated": "2026-11-18T06:00:09.000Z"
+      },
+      "USD": {
+       "price": 0.02553232,
+       "volume_24h": 30463.55996669,
+       "last_updated": "2026-11-18T06:00:09.000Z"
+      }
+     }
+    },
+    {
+     "market_id": 1627871,
+     "market_pair": "CPOOL/USDT",
+     "category": "spot",
+     "fee_type": "percentage",
+     "outlier_detected": 0,
+     "exclusions": [
+      "price",
+      "volume"
+     ],
+     "exchange": {
+      "id": 407,
+      "name": "DigiFinex",
+      "slug": "digifinex"
+     },
+     "market_pair_base": {
+      "currency_id": 12573,
+      "currency_symbol": "CPOOL",
+      "exchange_symbol": "CPOOL",
+      "currency_type": "cryptocurrency"
+     },
+     "market_pair_quote": {
+      "currency_id": 825,
+      "currency_symbol": "USDT",
+      "exchange_symbol": "USDT",
+      "currency_type": "cryptocurrency"
+     },
+     "quote": {
+      "exchange_reported": {
+       "price": 0.0248,
+       "volume_24h_base": 1139813.35644758,
+       "volume_24h_quote": 28267.3712399,
+       "last_updated": "2026-11-16T09:57:11.000Z"
+      },
+      "USD": {
+       "price": 0.02477653,
+       "volume_24h": 28240.62246797,
+       "last_updated": "2026-11-16T09:57:11.000Z"
+      }
+     }
+    },
+    {
+     "market_id": 1460481,
+     "market_pair": "CPOOL/USDT",
+     "category": "spot",
+     "fee_type": "percentage",
+     "outlier_detected": 0,
+     "exclusions": [
+      "price",
+      "volume"
+     ],
+     "exchange": {
+      "id": 10153,
+      "name": "Ourbit",
+      "slug": "ourbit"
+     },
+     "market_pair_base": {
+      "currency_id": 12573,
+      "currency_symbol": "CPOOL",
+      "exchange_symbol": "CPOOL",
+      "currency_type": "cryptocurrency"
+     },
+     "market_pair_quote": {
+      "currency_id": 825,
+      "currency_symbol": "USDT",
+      "exchange_symbol": "USDT",
+      "currency_type": "cryptocurrency"
+     },
+     "quote": {
+      "exchange_reported": {
+       "price": 0.02564,
+       "volume_24h_base": 1098664.60452418,
+       "volume_24h_quote": 28169.76046,
+       "last_updated": "2026-11-18T04:00:11.000Z"
+      },
+      "USD": {
+       "price": 0.02561051,
+       "volume_24h": 28137.3582307,
+       "last_updated": "2026-11-18T04:00:11.000Z"
+      }
+     }
+    },
+    {
+     "market_id": 1354597,
+     "market_pair": "CPOOL/USD",
+     "category": "spot",
+     "fee_type": "percentage",
+     "outlier_detected": 0,
+     "exclusions": [
+      "price",
+      "volume"
+     ],
+     "exchange": {
+      "id": 10109,
+      "name": "Niza.io",
+      "slug": "niza-global"
+     },
+     "market_pair_base": {
+      "currency_id": 12573,
+      "currency_symbol": "CPOOL",
+      "exchange_symbol": "CPOOL",
+      "currency_type": "cryptocurrency"
+     },
+     "market_pair_quote": {
+      "currency_id": 2781,
+      "currency_symbol": "USD",
+      "exchange_symbol": "USD",
+      "currency_type": "fiat"
+     },
+     "quote": {
+      "exchange_reported": {
+       "price": 0.02429,
+       "volume_24h_base": 1019998.53637951,
+       "volume_24h_quote": 24775.76444866,
+       "last_updated": "2026-11-22T01:15:08.000Z"
+      },
+      "USD": {
+       "price": 0.02429,
+       "volume_24h": 24783.6049076,
+       "depth_negative_two": 142.02427696,
+       "depth_positive_two": 191.10382648,
+       "last_updated": "2026-11-22T01:15:08.000Z"
+      }
+     }
+    },
+    {
+     "market_id": 1391671,
+     "market_pair": "CPOOL/EUR",
+     "category": "spot",
+     "fee_type": "percentage",
+     "outlier_detected": 0,
+     "exclusions": [
+      "price",
+      "volume"
+     ],
+     "exchange": {
+      "id": 520,
+      "name": "Bitvavo",
+      "slug": "bitvavo"
+     },
+     "market_pair_base": {
+      "currency_id": 12573,
+      "currency_symbol": "CPOOL",
+      "exchange_symbol": "CPOOL",
+      "currency_type": "cryptocurrency"
+     },
+     "market_pair_quote": {
+      "currency_id": 2790,
+      "currency_symbol": "EUR",
+      "exchange_symbol": "EUR",
+      "currency_type": "fiat"
+     },
+     "quote": {
+      "exchange_reported": {
+       "price": 0.020875,
+       "volume_24h_base": 590717.17394399,
+       "volume_24h_quote": 12331.22100608,
+       "last_updated": "2026-11-19T13:03:09.000Z"
+      },
+      "USD": {
+       "price": 0.02295275,
+       "volume_24h": 13558.58477573,
+       "last_updated": "2026-11-19T13:03:09.000Z"
+      }
+     }
+    },
+    {
+     "market_id": 1351123,
+     "market_pair": "CPOOL/EUR",
+     "category": "spot",
+     "fee_type": "percentage",
+     "outlier_detected": 0,
+     "exclusions": null,
+     "exchange": {
+      "id": 24,
+      "name": "Kraken",
+      "slug": "kraken"
+     },
+     "market_pair_base": {
+      "currency_id": 12573,
+      "currency_symbol": "CPOOL",
+      "exchange_symbol": "CPOOL",
+      "currency_type": "cryptocurrency"
+     },
+     "market_pair_quote": {
+      "currency_id": 2790,
+      "currency_symbol": "EUR",
+      "exchange_symbol": "EUR",
+      "currency_type": "fiat"
+     },
+     "quote": {
+      "exchange_reported": {
+       "price": 0.02221,
+       "volume_24h_base": 533475.75996,
+       "volume_24h_quote": 11848.49662871,
+       "last_updated": "2026-11-22T01:20:55.000Z"
+      },
+      "USD": {
+       "price": 0.02435993,
+       "volume_24h": 12957.5629068,
+       "last_updated": "2026-11-22T01:20:55.000Z"
+      }
+     }
+    },
+    {
+     "market_id": 1407707,
+     "market_pair": "CPOOL/EUR",
+     "category": "spot",
+     "fee_type": "percentage",
+     "outlier_detected": 0,
+     "exclusions": [
+      "price",
+      "volume"
+     ],
+     "exchange": {
+      "id": 1561,
+      "name": "Bit2Me",
+      "slug": "bit2me"
+     },
+     "market_pair_base": {
+      "currency_id": 12573,
+      "currency_symbol": "CPOOL",
+      "exchange_symbol": "CPOOL",
+      "currency_type": "cryptocurrency"
+     },
+     "market_pair_quote": {
+      "currency_id": 2790,
+      "currency_symbol": "EUR",
+      "exchange_symbol": "EUR",
+      "currency_type": "fiat"
+     },
+     "quote": {
+      "exchange_reported": {
+       "price": 0.02221,
+       "volume_24h_base": 493852.99482583,
+       "volume_24h_quote": 10968.47501508,
+       "last_updated": "2026-11-22T01:21:07.000Z"
+      },
+      "USD": {
+       "price": 0.02435993,
+       "volume_24h": 12030.22673613,
+       "last_updated": "2026-11-22T01:21:07.000Z"
+      }
+     }
+    },
+    {
+     "market_id": 1460781,
+     "market_pair": "CPOOL/USDT",
+     "category": "spot",
+     "fee_type": "percentage",
+     "outlier_detected": 0,
+     "exclusions": [
+      "price",
+      "volume"
+     ],
+     "exchange": {
+      "id": 8125,
+      "name": "OrangeX",
+      "slug": "orangex"
+     },
+     "market_pair_base": {
+      "currency_id": 12573,
+      "currency_symbol": "CPOOL",
+      "exchange_symbol": "CPOOL",
+      "currency_type": "cryptocurrency"
+     },
+     "market_pair_quote": {
+      "currency_id": 825,
+      "currency_symbol": "USDT",
+      "exchange_symbol": "USDT",
+      "currency_type": "cryptocurrency"
+     },
+     "quote": {
+      "exchange_reported": {
+       "price": 0.02571,
+       "volume_24h_base": 320934.7277324,
+       "volume_24h_quote": 8251.23185,
+       "last_updated": "2026-11-20T04:15:12.000Z"
+      },
+      "USD": {
+       "price": 0.02568164,
+       "volume_24h": 8242.12892871,
+       "depth_negative_two": 3556.54493066,
+       "depth_positive_two": 6416.37001381,
+       "last_updated": "2026-11-20T04:15:12.000Z"
+      }
+     }
+    },
+    {
+     "market_id": 1620562,
+     "market_pair": "ETH/CPOOL",
+     "category": "spot",
+     "fee_type": "percentage",
+     "outlier_detected": 0,
+     "exclusions": null,
+     "exchange": {
+      "id": 11955,
+      "name": "Uniswap v4 (Ethereum)",
+      "slug": "uniswap-v4"
+     },
+     "market_pair_base": {
+      "currency_id": 1027,
+      "currency_symbol": "ETH",
+      "exchange_symbol": "ETH",
+      "currency_type": "cryptocurrency"
+     },
+     "market_pair_quote": {
+      "currency_id": 12573,
+      "currency_symbol": "CPOOL",
+      "exchange_symbol": "CPOOL",
+      "currency_type": "cryptocurrency"
+     },
+     "quote": {
+      "exchange_reported": {
+       "price": 68793.09963157,
+       "volume_24h_base": 2.81760643,
+       "volume_24h_quote": 195350.43937235,
+       "last_updated": "2026-11-21T23:48:47.000Z"
+      },
+      "USD": {
+       "price": 1667.14248944,
+       "volume_24h": 4632.02561715,
+       "last_updated": "2026-11-21T23:48:47.000Z"
+      }
+     }
+    },
+    {
+     "market_id": 1354861,
+     "market_pair": "CPOOL/EUR",
+     "category": "spot",
+     "fee_type": "percentage",
+     "outlier_detected": 0,
+     "exclusions": [
+      "price",
+      "volume"
+     ],
+     "exchange": {
+      "id": 10109,
+      "name": "Niza.io",
+      "slug": "niza-global"
+     },
+     "market_pair_base": {
+      "currency_id": 12573,
+      "currency_symbol": "CPOOL",
+      "exchange_symbol": "CPOOL",
+      "currency_type": "cryptocurrency"
+     },
+     "market_pair_quote": {
+      "currency_id": 2790,
+      "currency_symbol": "EUR",
+      "exchange_symbol": "EUR",
+      "currency_type": "fiat"
+     },
+     "quote": {
+      "exchange_reported": {
+       "price": 0.02221,
+       "volume_24h_base": 125955.14016262,
+       "volume_24h_quote": 2797.46366301,
+       "last_updated": "2026-11-22T01:15:08.000Z"
+      },
+      "USD": {
+       "price": 0.02435993,
+       "volume_24h": 3060.4185384,
+       "last_updated": "2026-11-22T01:15:08.000Z"
+      }
+     }
+    }
+   ]
+  },
+  "status": {
+   "timestamp": "2026-11-22T01:24:22.727Z",
+   "error_code": 0,
+   "error_message": null,
+   "elapsed": 27,
+   "credit_count": 1,
+   "notice": null
+  }
+ }
+}

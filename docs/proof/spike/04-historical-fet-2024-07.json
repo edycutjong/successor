@@ -1,0 +1,134 @@
+{
+ "request": {
+  "method": "GET",
+  "url": "https://pro-api.coinmarketcap.com/v2/cryptocurrency/quotes/historical?id=3773&time_start=2024-06-28&time_end=2024-07-04&interval=daily",
+  "headers": {
+   "X-CMC_PRO_API_KEY": "$CMC_API_KEY"
+  }
+ },
+ "http_status": 200,
+ "elapsed_ms": 726,
+ "captured_at": "2026-11-22T01:24:21Z",
+ "credit_count": 1,
+ "response": {
+  "data": {
+   "id": 3773,
+   "name": "Artificial Superintelligence Alliance",
+   "symbol": "FET",
+   "is_active": 1,
+   "is_fiat": 0,
+   "quotes": [
+    {
+     "timestamp": "2024-06-29T00:00:00.000Z",
+     "quote": {
+      "USD": {
+       "price": 1.40534757469652,
+       "percent_change_1h": 0.169414736594,
+       "percent_change_24h": -8.984451671062,
+       "percent_change_7d": -11.368071002421,
+       "percent_change_30d": -35.847242546859,
+       "volume_24h": 189983005.25,
+       "market_cap": 1192007234.489511,
+       "circulating_supply": 848193895.91,
+       "total_supply": 2630547141,
+       "timestamp": "2024-06-29T00:00:00.000Z"
+      }
+     }
+    },
+    {
+     "timestamp": "2024-06-30T00:00:00.000Z",
+     "quote": {
+      "USD": {
+       "price": 1.3436582511645139,
+       "percent_change_1h": -0.528118756806,
+       "percent_change_24h": -4.389613263134,
+       "percent_change_7d": -8.616552620524,
+       "percent_change_30d": -38.526919004226,
+       "volume_24h": 94260439.59,
+       "market_cap": 1139682726.8268464,
+       "circulating_supply": 848193895.91,
+       "total_supply": 2630547141,
+       "timestamp": "2024-06-30T00:00:00.000Z"
+      }
+     }
+    },
+    {
+     "timestamp": "2024-07-01T00:00:00.000Z",
+     "quote": {
+      "USD": {
+       "price": 1.430358519396334,
+       "percent_change_1h": 0.159204029225,
+       "percent_change_24h": 6.452553553456,
+       "percent_change_7d": 2.039043116291,
+       "percent_change_30d": -33.183638023451,
+       "volume_24h": 137248630.75,
+       "market_cap": 1213221365.1148357,
+       "circulating_supply": 848193895.91,
+       "total_supply": 2630547141,
+       "timestamp": "2024-07-01T00:00:00.000Z"
+      }
+     }
+    },
+    {
+     "timestamp": "2024-07-02T00:00:00.000Z",
+     "quote": {
+      "USD": {
+       "price": 1.2938709846357406,
+       "percent_change_1h": -1.334486611712,
+       "percent_change_24h": -9.542190500477,
+       "percent_change_7d": -20.778514735828,
+       "percent_change_30d": -38.604921845544,
+       "volume_24h": 144466397.16,
+       "market_cap": 3260554881.2820663,
+       "circulating_supply": 2520000000,
+       "total_supply": 2630547141,
+       "timestamp": "2024-07-02T00:00:00.000Z"
+      }
+     }
+    },
+    {
+     "timestamp": "2024-07-03T00:00:00.000Z",
+     "quote": {
+      "USD": {
+       "price": 1.3181647571909325,
+       "percent_change_1h": -0.819738567855,
+       "percent_change_24h": 1.877603937616,
+       "percent_change_7d": -17.021566562256,
+       "percent_change_30d": -36.783077100863,
+       "volume_24h": 114395019.78,
+       "market_cap": 3321775188.12115,
+       "circulating_supply": 2520000000,
+       "total_supply": 2630547141,
+       "timestamp": "2024-07-03T00:00:00.000Z"
+      }
+     }
+    },
+    {
+     "timestamp": "2024-07-04T00:00:00.000Z",
+     "quote": {
+      "USD": {
+       "price": 1.2502418404343136,
+       "percent_change_1h": 0.207524232394,
+       "percent_change_24h": -5.15283968761,
+       "percent_change_7d": -29.515275981952,
+       "percent_change_30d": -41.554940772721,
+       "volume_24h": 119419525.32,
+       "market_cap": 3150609437.89447,
+       "circulating_supply": 2520000000,
+       "total_supply": 2630547141,
+       "timestamp": "2024-07-04T00:00:00.000Z"
+      }
+     }
+    }
+   ]
+  },
+  "status": {
+   "timestamp": "2026-11-22T01:24:20.991Z",
+   "error_code": 0,
+   "error_message": null,
+   "elapsed": 7,
+   "credit_count": 1,
+   "notice": null
+  }
+ }
+}

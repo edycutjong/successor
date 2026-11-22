@@ -1,0 +1,783 @@
+{
+ "request": {
+  "method": "GET",
+  "url": "https://pro-api.coinmarketcap.com/v2/cryptocurrency/info?aux=urls,logo,description,tags,platform,date_added,notice,status&id=12573,42884,2424,3773,1518,33038",
+  "headers": {
+   "X-CMC_PRO_API_KEY": "$CMC_API_KEY"
+  }
+ },
+ "http_status": 200,
+ "elapsed_ms": 259,
+ "captured_at": "2026-11-22T01:24:19Z",
+ "credit_count": 1,
+ "response": {
+  "data": {
+   "42884": {
+    "id": 42884,
+    "name": "Clearpool",
+    "symbol": "CLEAR",
+    "category": "token",
+    "description": "Clearpool (CLEAR) is a cryptocurrency and operates on the Ethereum platform. Clearpool has a current supply of 1,424,007,002.18 with 1,120,435,573.6085716 in circulation. The last known price of Clearpool is 0.02106 USD and is down -0.44 over the last 24 hours. It is currently trading on 9 active market(s) with $764,520.75 traded over the last 24 hours. More information can be found at https://clearpool.finance/.",
+    "slug": "clearpool-finance",
+    "logo": "https://s2.coinmarketcap.com/static/img/coins/64x64/42884.png",
+    "subreddit": "",
+    "notice": "Clearpool (CPOOL) has rebranded to Clearpool (CLEAR) and undergone a 1:1 swap from the [old contract](https://etherscan.io/token/0x66761fa41377003622aee3c7675fc7b5c1c2fac5) to [new contract](https://etherscan.io/token/0x5200f539478f58d9aea962095ba3b16b5e550e00). For more details, please [click here](https://x.com/ClearpoolFin/status/2122523453270180117).",
+    "tags": [
+     "ethereum-ecosystem",
+     "real-world-assets-protocols",
+     "binance-alpha",
+     "binance-ecosystem"
+    ],
+    "tag-names": [
+     "Ethereum Ecosystem",
+     "Real World Assets Protocols",
+     "Binance Alpha",
+     "Binance Ecosystem"
+    ],
+    "tag-groups": [
+     "PLATFORM",
+     "CATEGORY",
+     "CATEGORY",
+     "CATEGORY"
+    ],
+    "urls": {
+     "website": [
+      "https://clearpool.finance/"
+     ],
+     "twitter": [
+      "https://twitter.com/ClearpoolFin"
+     ],
+     "message_board": [
+      "https://clearpool.medium.com/"
+     ],
+     "chat": [
+      "https://t.me/clearpoolofficial",
+      "https://t.me/clearpoolannounce"
+     ],
+     "facebook": [],
+     "explorer": [
+      "https://etherscan.io/token/0x5200f539478f58d9aea962095ba3b16b5e550e00"
+     ],
+     "reddit": [],
+     "technical_doc": [],
+     "source_code": [
+      "https://github.com/clearpool-finance"
+     ],
+     "announcement": []
+    },
+    "platform": {
+     "id": "1027",
+     "name": "Ethereum",
+     "symbol": "ETH",
+     "slug": "ethereum",
+     "token_address": "0x5200f539478f58d9aea962095ba3b16b5e550e00"
+    },
+    "date_added": "2021-10-10T08:04:07.000Z",
+    "twitter_username": "ClearpoolFin",
+    "is_hidden": 0,
+    "contract_address": [
+     {
+      "contract_address": "0x5200f539478f58d9aea962095ba3b16b5e550e00",
+      "platform": {
+       "name": "Ethereum",
+       "coin": {
+        "id": "1027",
+        "name": "Ethereum",
+        "symbol": "ETH",
+        "slug": "ethereum"
+       }
+      }
+     }
+    ],
+    "self_reported_circulating_supply": 1125000000,
+    "self_reported_market_cap": 23667522.080785803,
+    "infinite_supply": true,
+    "status": "active"
+   },
+   "2424": {
+    "id": 2424,
+    "name": "SingularityNET",
+    "symbol": "AGIX",
+    "category": "token",
+    "description": "SingularityNET (AGIX) is a cryptocurrency and operates on the Ethereum platform. SingularityNET has a current supply of 1,376,451,173.9665115 with 0 in circulation. The last known price of SingularityNET is 0.59253458 USD and is up 0.00 over the last 24 hours. It is currently trading on 272 active market(s) with $0.00 traded over the last 24 hours. More information can be found at https://singularitynet.io/.",
+    "slug": "singularitynet",
+    "logo": "https://s2.coinmarketcap.com/static/img/coins/64x64/2424.png",
+    "subreddit": "SingularityNet",
+    "notice": "[Fetch.ai](https://coinmarketcap.com/currencies/fetch/), SingularityNet, and [Ocean Protocol](https://coinmarketcap.com/currencies/ocean-protocol/) have collaborated to establish the Superintelligence Alliance. All tokens will be consolidated to create a universal AI token, the $ASI. Find more details in their [announcement](https://fetch.ai/blog/artificial-superintelligence-alliance-token-merger-approved) and the latest article [here](https://docs.superintelligence.io/artificial-superintelligence-alliance/artificial-superintelligence-alliance-unveil-token-with-migration-dapp-tools-now-live).",
+    "tags": [
+     "marketplace",
+     "ai-big-data",
+     "payments",
+     "ethereum-ecosystem",
+     "cross-chain-dex-aggregator",
+     "cardano-ecosystem",
+     "generative-ai",
+     "ai-agents"
+    ],
+    "tag-names": [
+     "Marketplace",
+     "AI & Big Data",
+     "Payments",
+     "Ethereum Ecosystem",
+     "Cross-Chain DEX Aggregator",
+     "Cardano Ecosystem",
+     "Generative AI",
+     "AI Agents"
+    ],
+    "tag-groups": [
+     "INDUSTRY",
+     "INDUSTRY",
+     "INDUSTRY",
+     "PLATFORM",
+     "CATEGORY",
+     "PLATFORM",
+     "CATEGORY",
+     "CATEGORY"
+    ],
+    "urls": {
+     "website": [
+      "https://singularitynet.io/"
+     ],
+     "twitter": [
+      "https://twitter.com/singularitynet"
+     ],
+     "message_board": [
+      "https://blog.singularitynet.io/",
+      "https://community.singularitynet.io/"
+     ],
+     "chat": [
+      "https://t.me/singularitynet",
+      "https://discord.gg/snet"
+     ],
+     "facebook": [],
+     "explorer": [
+      "https://etherscan.io/token/0x5B7533812759B45C2B44C19e320ba2cD2681b542",
+      "https://www.oklink.com/eth/token/0x5B7533812759B45C2B44C19e320ba2cD2681b542"
+     ],
+     "reddit": [
+      "https://reddit.com/r/SingularityNet"
+     ],
+     "technical_doc": [
+      "https://public.singularitynet.io/whitepaper.pdf"
+     ],
+     "source_code": [
+      "https://github.com/singnet/"
+     ],
+     "announcement": []
+    },
+    "platform": {
+     "id": "1027",
+     "name": "Ethereum",
+     "symbol": "ETH",
+     "slug": "ethereum",
+     "token_address": "0x5B7533812759B45C2B44C19e320ba2cD2681b542"
+    },
+    "date_added": "2018-01-18T00:00:00.000Z",
+    "twitter_username": "singularitynet",
+    "is_hidden": 0,
+    "contract_address": [
+     {
+      "contract_address": "0x5B7533812759B45C2B44C19e320ba2cD2681b542",
+      "platform": {
+       "name": "Ethereum",
+       "coin": {
+        "id": "1027",
+        "name": "Ethereum",
+        "symbol": "ETH",
+        "slug": "ethereum"
+       }
+      }
+     },
+     {
+      "contract_address": "f43a62fdc3965df486de8a0d32fe800963589c41b38946602a0dc53541474958",
+      "platform": {
+       "name": "Cardano",
+       "coin": {
+        "id": "2010",
+        "name": "Cardano",
+        "symbol": "ADA",
+        "slug": "cardano"
+       }
+      }
+     }
+    ],
+    "self_reported_circulating_supply": 1211306168.62,
+    "self_reported_market_cap": 717717755.1874251,
+    "infinite_supply": false,
+    "status": "active"
+   },
+   "12573": {
+    "id": 12573,
+    "name": "Clearpool",
+    "symbol": "CPOOL",
+    "category": "token",
+    "description": "Clearpool (CPOOL) is a cryptocurrency and operates on the Ethereum platform. Clearpool has a current supply of 993,627,634.645902 with 0 in circulation. The last known price of Clearpool is 0.02457546 USD and is down -4.69 over the last 24 hours. It is currently trading on 113 active market(s) with $3,230,746.19 traded over the last 24 hours. More information can be found at https://clearpool.finance/.",
+    "slug": "clearpool",
+    "logo": "https://s2.coinmarketcap.com/static/img/coins/64x64/12573.png",
+    "subreddit": "",
+    "notice": "Clearpool (CPOOL) has rebranded to Clearpool (CLEAR) and undergone a 1:1 swap from the [old contract](https://etherscan.io/token/0x66761fa41377003622aee3c7675fc7b5c1c2fac5) to [new contract](https://etherscan.io/token/0x5200f539478f58d9aea962095ba3b16b5e550e00). For more details, please [click here](https://x.com/ClearpoolFin/status/2122523453270180117).",
+    "tags": [
+     "defi",
+     "ethereum-ecosystem",
+     "solana-ecosystem",
+     "xdc-ecosystem",
+     "real-world-assets-protocols",
+     "cmc-crypto-yearbook-2024-2025"
+    ],
+    "tag-names": [
+     "DeFi",
+     "Ethereum Ecosystem",
+     "Solana Ecosystem",
+     "XDC Ecosystem",
+     "Real World Assets Protocols",
+     "CMC Crypto Yearbook 2024-25"
+    ],
+    "tag-groups": [
+     "CATEGORY",
+     "PLATFORM",
+     "PLATFORM",
+     "PLATFORM",
+     "CATEGORY",
+     "CATEGORY"
+    ],
+    "urls": {
+     "website": [
+      "https://clearpool.finance/"
+     ],
+     "twitter": [
+      "https://twitter.com/ClearpoolFin"
+     ],
+     "message_board": [
+      "https://clearpool.medium.com/"
+     ],
+     "chat": [
+      "https://t.me/clearpoolofficial",
+      "https://t.me/clearpoolannounce"
+     ],
+     "facebook": [],
+     "explorer": [
+      "https://etherscan.io/token/0x66761fa41377003622aee3c7675fc7b5c1c2fac5",
+      "https://solscan.io/token/AeXrLftu8chuY4ctc6oDeG4dUx6Yr4aqeakUMFNvACdg"
+     ],
+     "reddit": [],
+     "technical_doc": [],
+     "source_code": [
+      "https://github.com/clearpool-finance"
+     ],
+     "announcement": []
+    },
+    "platform": {
+     "id": "1027",
+     "name": "Ethereum",
+     "symbol": "ETH",
+     "slug": "ethereum",
+     "token_address": "0x66761fa41377003622aee3c7675fc7b5c1c2fac5"
+    },
+    "date_added": "2021-10-10T08:04:07.000Z",
+    "twitter_username": "ClearpoolFin",
+    "is_hidden": 0,
+    "contract_address": [
+     {
+      "contract_address": "0x66761fa41377003622aee3c7675fc7b5c1c2fac5",
+      "platform": {
+       "name": "Ethereum",
+       "coin": {
+        "id": "1027",
+        "name": "Ethereum",
+        "symbol": "ETH",
+        "slug": "ethereum"
+       }
+      }
+     },
+     {
+      "contract_address": "AeXrLftu8chuY4ctc6oDeG4dUx6Yr4aqeakUMFNvACdg",
+      "platform": {
+       "name": "Solana",
+       "coin": {
+        "id": "5426",
+        "name": "Solana",
+        "symbol": "SOL",
+        "slug": "solana"
+       }
+      }
+     }
+    ],
+    "self_reported_circulating_supply": 993627634.65,
+    "self_reported_tags": [
+     "DeFi"
+    ],
+    "self_reported_market_cap": 24474596.99835897,
+    "infinite_supply": false,
+    "status": "active"
+   },
+   "3773": {
+    "id": 3773,
+    "name": "Artificial Superintelligence Alliance",
+    "symbol": "FET",
+    "category": "coin",
+    "description": "Artificial Superintelligence Alliance (FET) is a cryptocurrency launched in 2018. Artificial Superintelligence Alliance has a current supply of 2,714,384,546.672 with 2,469,063,714.564946 in circulation. The last known price of Artificial Superintelligence Alliance is 0.10876979 USD and is down -3.99 over the last 24 hours. It is currently trading on 593 active market(s) with $141,528,081.98 traded over the last 24 hours. More information can be found at https://superintelligence.io/.",
+    "slug": "artificial-superintelligence-alliance",
+    "logo": "https://s2.coinmarketcap.com/static/img/coins/64x64/3773.png",
+    "subreddit": "",
+    "notice": "Fetch.ai, [SingularityNet](https://coinmarketcap.com/currencies/singularitynet/) and [Cudos](https://coinmarketcap.com/currencies/cudos/) have collaborated to establish the Superintelligence Alliance. All tokens will be consolidated to create a universal AI token, the $ASI. Find more details in their [announcement](https://fetch.ai/blog/artificial-superintelligence-alliance-token-merger-approved) and the latest article [here](https://docs.superintelligence.io/artificial-superintelligence-alliance/artificial-superintelligence-alliance-unveil-token-with-migration-dapp-tools-now-live).",
+    "tags": [
+     "cosmos-ecosystem",
+     "ai-big-data",
+     "collectibles-nfts",
+     "iot",
+     "ethereum-ecosystem",
+     "binance-launchpad",
+     "web3",
+     "injective-ecosystem",
+     "osmosis-ecosystem",
+     "generative-ai",
+     "dwf-labs-portfolio",
+     "ai-agents",
+     "binance-ecosystem",
+     "binance-listing"
+    ],
+    "tag-names": [
+     "Cosmos Ecosystem",
+     "AI & Big Data",
+     "Collectibles & NFTs",
+     "IoT",
+     "Ethereum Ecosystem",
+     "Binance Launchpad",
+     "Web3",
+     "Injective Ecosystem",
+     "Osmosis Ecosystem",
+     "Generative AI",
+     "DWF Labs Portfolio",
+     "AI Agents",
+     "Binance Ecosystem",
+     "Binance Listing"
+    ],
+    "tag-groups": [
+     "PLATFORM",
+     "INDUSTRY",
+     "CATEGORY",
+     "INDUSTRY",
+     "PLATFORM",
+     "CATEGORY",
+     "INDUSTRY",
+     "PLATFORM",
+     "PLATFORM",
+     "CATEGORY",
+     "CATEGORY",
+     "CATEGORY",
+     "CATEGORY",
+     "CATEGORY"
+    ],
+    "urls": {
+     "website": [
+      "https://superintelligence.io/",
+      "https://docs.superintelligence.io/artificial-superintelligence-alliance"
+     ],
+     "twitter": [
+      "https://twitter.com/ASI_Alliance"
+     ],
+     "message_board": [
+      "https://x.com/ASI_Alliance"
+     ],
+     "chat": [
+      "https://t.me/ASI_Alliance"
+     ],
+     "facebook": [],
+     "explorer": [
+      "https://etherscan.io/token/0xaea46A60368A7bD060eec7DF8CBa43b7EF41Ad85",
+      "https://www.mintscan.io/fetchai",
+      "https://explore-fetchhub.fetch.ai/",
+      "https://bscscan.com/token/0x031b41e504677879370e9dbcf937283a8691fa7f"
+     ],
+     "reddit": [],
+     "technical_doc": [
+      "https://docs.superintelligence.io/artificial-superintelligence-alliance/vision-paper"
+     ],
+     "source_code": [
+      "https://github.com/fetchai"
+     ],
+     "announcement": [
+      "https://superintelligence.io/"
+     ]
+    },
+    "platform": {
+     "id": "1027",
+     "name": "Ethereum",
+     "symbol": "ETH",
+     "slug": "ethereum",
+     "token_address": "0xaea46A60368A7bD060eec7DF8CBa43b7EF41Ad85"
+    },
+    "date_added": "2019-03-02T00:00:00.000Z",
+    "twitter_username": "ASI_Alliance",
+    "is_hidden": 0,
+    "date_launched": "2018-03-01T00:00:00.000Z",
+    "contract_address": [
+     {
+      "contract_address": "0xaea46A60368A7bD060eec7DF8CBa43b7EF41Ad85",
+      "platform": {
+       "name": "Ethereum",
+       "coin": {
+        "id": "1027",
+        "name": "Ethereum",
+        "symbol": "ETH",
+        "slug": "ethereum"
+       }
+      }
+     },
+     {
+      "contract_address": "0x031b41e504677879370e9dbcf937283a8691fa7f",
+      "platform": {
+       "name": "BNB Smart Chain (BEP20)",
+       "coin": {
+        "id": "1839",
+        "name": "BNB",
+        "symbol": "BNB",
+        "slug": "bnb"
+       }
+      }
+     },
+     {
+      "contract_address": "fetch1qxxlalvsdjd07p07y3rc5fu6ll8k4tmetpha8n",
+      "platform": {
+       "name": "Cosmos",
+       "coin": {
+        "id": "3794",
+        "name": "Cosmos",
+        "symbol": "ATOM",
+        "slug": "cosmos"
+       }
+      }
+     },
+     {
+      "contract_address": "ibc/5D1F516200EE8C6B2354102143B78A2DEDA25EDE771AC0F8DC3C1837C8FD4447",
+      "platform": {
+       "name": "Osmosis",
+       "coin": {
+        "id": "12220",
+        "name": "Osmosis",
+        "symbol": "OSMO",
+        "slug": "osmosis"
+       }
+      }
+     }
+    ],
+    "self_reported_circulating_supply": 2389296911,
+    "self_reported_tags": [
+     "PoS",
+     "Platform",
+     "Cosmos Ecosystem",
+     "AI & Big Data",
+     "Distributed Computing",
+     "Ethereum Ecosystem",
+     "Cosmos",
+     "Web3"
+    ],
+    "self_reported_market_cap": 259657468.00335687,
+    "infinite_supply": false,
+    "status": "active"
+   },
+   "1518": {
+    "id": 1518,
+    "name": "Maker",
+    "symbol": "MKR",
+    "category": "token",
+    "description": "Maker (MKR) is a cryptocurrency and operates on the Ethereum platform. Maker has a current supply of 870,827.47 with 0 in circulation. The last known price of Maker is 1,439.55137411 USD and is up 4.10 over the last 24 hours. It is currently trading on 600 active market(s) with $249.00 traded over the last 24 hours. More information can be found at https://makerdao.com/.",
+    "slug": "maker",
+    "logo": "https://s2.coinmarketcap.com/static/img/coins/64x64/1518.png",
+    "subreddit": "MakerDAO",
+    "notice": "[Maker (MKR)](https://coinmarketcap.com/currencies/maker/) has been rebranded to [Sky (SKY)](https://coinmarketcap.com/currencies/sky/). For more information, please refer to this [article](https://forum.makerdao.com/t/sky-has-arrived/24959) and [post](https://x.com/SkyEcosystem/status/1828405625828843710).",
+    "tags": [
+     "store-of-value",
+     "defi",
+     "dao",
+     "ethereum-ecosystem",
+     "polychain-capital-portfolio",
+     "governance",
+     "avalanche-ecosystem",
+     "lending-borowing",
+     "dragonfly-capital-portfolio",
+     "electric-capital-portfolio",
+     "a16z-portfolio",
+     "1confirmation-portfolio",
+     "placeholder-ventures-portfolio",
+     "pantera-capital-portfolio",
+     "paradigm-portfolio",
+     "near-protocol-ecosystem",
+     "arbitrum-ecosystem",
+     "spartan-group",
+     "bitcoin-ecosystem",
+     "real-world-assets-protocols",
+     "standard-crypto-portfolio",
+     "made-in-america"
+    ],
+    "tag-names": [
+     "Store Of Value",
+     "DeFi",
+     "DAO",
+     "Ethereum Ecosystem",
+     "Polychain Capital Portfolio",
+     "Governance",
+     "Avalanche Ecosystem",
+     "Lending & Borrowing",
+     "DragonFly Capital Portfolio",
+     "Electric Capital Portfolio",
+     "a16z Portfolio",
+     "1Confirmation Portfolio",
+     "Placeholder Ventures Portfolio",
+     "Pantera Capital Portfolio",
+     "Paradigm Portfolio",
+     "Near Protocol Ecosystem",
+     "Arbitrum Ecosystem",
+     "Spartan Group",
+     "Bitcoin Ecosystem",
+     "Real World Assets Protocols",
+     "Standard Crypto Portfolio",
+     "Made in America"
+    ],
+    "tag-groups": [
+     "CATEGORY",
+     "CATEGORY",
+     "CATEGORY",
+     "PLATFORM",
+     "CATEGORY",
+     "CATEGORY",
+     "PLATFORM",
+     "CATEGORY",
+     "CATEGORY",
+     "CATEGORY",
+     "CATEGORY",
+     "CATEGORY",
+     "CATEGORY",
+     "CATEGORY",
+     "CATEGORY",
+     "PLATFORM",
+     "PLATFORM",
+     "CATEGORY",
+     "PLATFORM",
+     "CATEGORY",
+     "CATEGORY",
+     "CATEGORY"
+    ],
+    "urls": {
+     "website": [
+      "https://makerdao.com/"
+     ],
+     "twitter": [
+      "https://twitter.com/MakerDAO"
+     ],
+     "message_board": [],
+     "chat": [
+      "https://t.me/makerdaoOfficial"
+     ],
+     "facebook": [],
+     "explorer": [
+      "https://etherscan.io/token/0x9f8f72aa9304c8b593d555f12ef6589cc3a579a2",
+      "https://etherscan.io/token/Maker",
+      "https://www.oklink.com/eth/token/0x9f8f72aa9304c8b593d555f12ef6589cc3a579a2"
+     ],
+     "reddit": [
+      "https://reddit.com/r/MakerDAO"
+     ],
+     "technical_doc": [
+      "https://makerdao.com/en/whitepaper/#overview-of-the-dai-stablecoin-system"
+     ],
+     "source_code": [
+      "https://github.com/makerdao"
+     ],
+     "announcement": []
+    },
+    "platform": {
+     "id": "1027",
+     "name": "Ethereum",
+     "symbol": "ETH",
+     "slug": "ethereum",
+     "token_address": "0x9f8f72aa9304c8b593d555f12ef6589cc3a579a2"
+    },
+    "date_added": "2017-01-29T00:00:00.000Z",
+    "twitter_username": "MakerDAO",
+    "is_hidden": 0,
+    "contract_address": [
+     {
+      "contract_address": "0x9f8f72aa9304c8b593d555f12ef6589cc3a579a2",
+      "platform": {
+       "name": "Ethereum",
+       "coin": {
+        "id": "1027",
+        "name": "Ethereum",
+        "symbol": "ETH",
+        "slug": "ethereum"
+       }
+      }
+     },
+     {
+      "contract_address": "0x5f0da599bb2cccfcf6fdfd7d81743b6020864350",
+      "platform": {
+       "name": "BNB Smart Chain (BEP20)",
+       "coin": {
+        "id": "1839",
+        "name": "BNB",
+        "symbol": "BNB",
+        "slug": "bnb"
+       }
+      }
+     },
+     {
+      "contract_address": "0x88128fd4b259552A9A1D457f435a6527AAb72d42",
+      "platform": {
+       "name": "Avalanche C-Chain",
+       "coin": {
+        "id": "5805",
+        "name": "Avalanche",
+        "symbol": "AVAX",
+        "slug": "avalanche"
+       }
+      }
+     }
+    ],
+    "self_reported_circulating_supply": 847225.42,
+    "self_reported_market_cap": 1219624517.5459566,
+    "infinite_supply": false,
+    "status": "active"
+   },
+   "33038": {
+    "id": 33038,
+    "name": "Sky",
+    "symbol": "SKY",
+    "category": "token",
+    "description": "Sky (SKY) is a cryptocurrency and operates on the Ethereum platform. Sky has a current supply of 23,452,431,915.60596656 with 23,375,031,879.79938059 in circulation. The last known price of Sky is 0.04392405 USD and is down -0.60 over the last 24 hours. It is currently trading on 263 active market(s) with $19,708,339.44 traded over the last 24 hours. More information can be found at https://sky.money/.",
+    "slug": "sky",
+    "logo": "https://s2.coinmarketcap.com/static/img/coins/64x64/33038.png",
+    "subreddit": "",
+    "notice": "[Maker (MKR)](https://coinmarketcap.com/currencies/maker/) has been rebranded to [Sky (SKY)](https://coinmarketcap.com/currencies/sky/). For more information, please refer to this [article](https://forum.makerdao.com/t/sky-has-arrived/24959) and [post](https://x.com/SkyEcosystem/status/1828405625828843710).",
+    "tags": [
+     "store-of-value",
+     "defi",
+     "dao",
+     "ethereum-ecosystem",
+     "polychain-capital-portfolio",
+     "governance",
+     "lending-borowing",
+     "dragonfly-capital-portfolio",
+     "electric-capital-portfolio",
+     "a16z-portfolio",
+     "1confirmation-portfolio",
+     "placeholder-ventures-portfolio",
+     "pantera-capital-portfolio",
+     "paradigm-portfolio",
+     "near-protocol-ecosystem",
+     "arbitrum-ecosystem",
+     "spartan-group",
+     "bnb-chain-ecosystem",
+     "bitcoin-ecosystem",
+     "real-world-assets-protocols",
+     "standard-crypto-portfolio",
+     "binance-ecosystem",
+     "binance-listing"
+    ],
+    "tag-names": [
+     "Store Of Value",
+     "DeFi",
+     "DAO",
+     "Ethereum Ecosystem",
+     "Polychain Capital Portfolio",
+     "Governance",
+     "Lending & Borrowing",
+     "DragonFly Capital Portfolio",
+     "Electric Capital Portfolio",
+     "a16z Portfolio",
+     "1Confirmation Portfolio",
+     "Placeholder Ventures Portfolio",
+     "Pantera Capital Portfolio",
+     "Paradigm Portfolio",
+     "Near Protocol Ecosystem",
+     "Arbitrum Ecosystem",
+     "Spartan Group",
+     "BNB Chain Ecosystem",
+     "Bitcoin Ecosystem",
+     "Real World Assets Protocols",
+     "Standard Crypto Portfolio",
+     "Binance Ecosystem",
+     "Binance Listing"
+    ],
+    "tag-groups": [
+     "CATEGORY",
+     "CATEGORY",
+     "CATEGORY",
+     "PLATFORM",
+     "CATEGORY",
+     "CATEGORY",
+     "CATEGORY",
+     "CATEGORY",
+     "CATEGORY",
+     "CATEGORY",
+     "CATEGORY",
+     "CATEGORY",
+     "CATEGORY",
+     "CATEGORY",
+     "PLATFORM",
+     "PLATFORM",
+     "CATEGORY",
+     "PLATFORM",
+     "PLATFORM",
+     "CATEGORY",
+     "CATEGORY",
+     "CATEGORY",
+     "CATEGORY"
+    ],
+    "urls": {
+     "website": [
+      "https://sky.money/"
+     ],
+     "twitter": [
+      "https://twitter.com/SkyEcosystem"
+     ],
+     "message_board": [],
+     "chat": [],
+     "facebook": [],
+     "explorer": [
+      "https://etherscan.io/token/0x56072C95FAA701256059aa122697B133aDEd9279",
+      "https://etherscan.io/address/0x56072c95faa701256059aa122697b133aded9279"
+     ],
+     "reddit": [],
+     "technical_doc": [],
+     "source_code": [],
+     "announcement": []
+    },
+    "platform": {
+     "id": "1027",
+     "name": "Ethereum",
+     "symbol": "ETH",
+     "slug": "ethereum",
+     "token_address": "0x56072C95FAA701256059aa122697B133aDEd9279"
+    },
+    "date_added": "2024-09-18T13:25:16.000Z",
+    "twitter_username": "SkyEcosystem",
+    "is_hidden": 0,
+    "contract_address": [
+     {
+      "contract_address": "0x56072C95FAA701256059aa122697B133aDEd9279",
+      "platform": {
+       "name": "Ethereum",
+       "coin": {
+        "id": "1027",
+        "name": "Ethereum",
+        "symbol": "ETH",
+        "slug": "ethereum"
+       }
+      }
+     }
+    ],
+    "infinite_supply": false,
+    "status": "active"
+   }
+  },
+  "status": {
+   "timestamp": "2026-11-22T01:24:19.200Z",
+   "error_code": 0,
+   "error_message": null,
+   "elapsed": 8,
+   "credit_count": 1,
+   "notice": null
+  }
+ }
+}

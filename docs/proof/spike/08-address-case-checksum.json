@@ -1,0 +1,23 @@
+{
+ "request": {
+  "method": "GET",
+  "url": "https://pro-api.coinmarketcap.com/v2/cryptocurrency/info?address=0x5B7533812759B45C2B44C19e320ba2cD2681b542",
+  "headers": {
+   "X-CMC_PRO_API_KEY": "$CMC_API_KEY"
+  }
+ },
+ "http_status": 400,
+ "elapsed_ms": 306,
+ "captured_at": "2026-11-22T01:24:41Z",
+ "credit_count": 0,
+ "response": {
+  "status": {
+   "timestamp": "2026-11-22T01:24:41.089Z",
+   "error_code": 400,
+   "error_message": "Invalid value for 'slug': 'null'",
+   "elapsed": 10,
+   "credit_count": 0,
+   "notice": null
+  }
+ }
+}

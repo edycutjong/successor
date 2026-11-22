@@ -1,0 +1,49 @@
+{
+ "request": {
+  "method": "GET",
+  "url": "https://pro-api.coinmarketcap.com/v2/cryptocurrency/quotes/historical?id=3773&time_start=2026-11-01&time_end=2026-11-02&interval=daily&convert=EUR",
+  "headers": {
+   "X-CMC_PRO_API_KEY": "$CMC_API_KEY"
+  }
+ },
+ "http_status": 200,
+ "elapsed_ms": 690,
+ "captured_at": "2026-11-22T01:24:27Z",
+ "credit_count": 1,
+ "response": {
+  "data": {
+   "id": 3773,
+   "name": "Artificial Superintelligence Alliance",
+   "symbol": "FET",
+   "is_active": 1,
+   "is_fiat": 0,
+   "quotes": [
+    {
+     "timestamp": "2026-11-02T00:00:00.000Z",
+     "quote": {
+      "EUR": {
+       "price": 0.14508431154848367,
+       "percent_change_1h": 0.780610642777981,
+       "percent_change_24h": 1.3296293963272166,
+       "percent_change_7d": -6.6377805507791825,
+       "percent_change_30d": -23.39457853816884,
+       "volume_24h": 107547115.98746647,
+       "market_cap": 352436136.81815886,
+       "circulating_supply": 2177348323.4860625,
+       "total_supply": 2432984300.716723,
+       "timestamp": "2026-11-02T00:00:00.000Z"
+      }
+     }
+    }
+   ]
+  },
+  "status": {
+   "timestamp": "2026-11-22T01:24:27.407Z",
+   "error_code": 0,
+   "error_message": null,
+   "elapsed": 6,
+   "credit_count": 1,
+   "notice": null
+  }
+ }
+}
