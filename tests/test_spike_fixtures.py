@@ -5,8 +5,8 @@ from datetime import date
 from pathlib import Path
 
 from successor.agent.reader import Proposal, quotes_are_verbatim
-from successor.verify.successor import has_contract, linked_slugs
 from successor.verify.ratio import announcement_dates, snowflake_date
+from successor.verify.successor import has_contract, linked_slugs
 
 SPIKE = Path(__file__).resolve().parents[1] / "docs" / "proof" / "spike"
 
@@ -32,7 +32,9 @@ def test_saved_reader_proposal_is_schema_valid_and_quotes_verbatim():
 def test_old_and_new_contracts_belong_to_their_own_ids():
     data = json.loads((SPIKE / "01-info.json").read_text())["response"]["data"]
     old, new = data["12573"], data["42884"]
-    assert has_contract(old, "0x66761FA41377003622AEE3C7675FC7B5C1C2FAC5")  # 0x hex compares case-insensitively
+    assert has_contract(
+        old, "0x66761FA41377003622AEE3C7675FC7B5C1C2FAC5"
+    )  # 0x hex compares case-insensitively
     assert has_contract(new, "0x5200f539478f58d9aea962095ba3b16b5e550e00", "Ethereum")
     assert not has_contract(new, "0x66761fa41377003622aee3c7675fc7b5c1c2fac5")
     assert not has_contract(new, "0x5200f539478f58d9aea962095ba3b16b5e550e00", "Solana")

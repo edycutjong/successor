@@ -105,6 +105,7 @@ async def lookup_stream(
     use_cache: bool = True,
     write_cache: bool = True,
     guard_credits: bool = True,
+    extraction: dict | None = None,
 ) -> AsyncIterator[dict[str, Any]]:
     t0 = time.perf_counter()
 
@@ -117,7 +118,19 @@ async def lookup_stream(
         await client.__aenter__()
     try:
         async for e in _run(
-            client, q, qty, cmc_id, fresh, now, chat, fetch, use_cache, write_cache, guard_credits, ev
+            client,
+            q,
+            qty,
+            cmc_id,
+            fresh,
+            now,
+            chat,
+            fetch,
+            use_cache,
+            write_cache,
+            guard_credits,
+            extraction,
+            ev,
         ):
             yield e
     except FlowError as exc:
@@ -129,7 +142,9 @@ async def lookup_stream(
             await client.__aexit__(None, None, None)
 
 
-async def _run(cmc, q, qty, cmc_id, fresh, now, chat, fetch, use_cache, write_cache, guard_credits, ev):
+async def _run(
+    cmc, q, qty, cmc_id, fresh, now, chat, fetch, use_cache, write_cache, guard_credits, extraction, ev
+):
     now = now or datetime.now(UTC)
     q = q.strip()
     checks: list[dict] = []
@@ -205,7 +220,9 @@ async def _run(cmc, q, qty, cmc_id, fresh, now, chat, fetch, use_cache, write_ca
 
     # --- Reader -----------------------------------------------------------------------------------
     label = f"{hrow.get('name')} ({hrow.get('symbol')})"
-    cached = rd.load_cached(hold["id"], notice) if use_cache and not fresh else None
+    cached = extraction or (rd.load_cached(hold["id"], notice) if use_cache and not fresh else None)
+    if cached and cached.get("notice_sha256") not in (None, rd.notice_sha(notice)):
+        cached = None  # a recorded extraction is only ever used for the exact notice it read
     session: rd.ReaderSession | None = None
     if cached:
         proposals, fetches, llm = cached["proposals"], cached.get("fetches", []), cached.get("llm", [])
