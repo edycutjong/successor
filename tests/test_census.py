@@ -69,3 +69,17 @@ def test_committed_census_has_a_verdict_for_every_notice() -> None:
         pytest.skip("no census committed yet")
     bad = [c["symbol"] for c in doc["coins"] if c.get("verdict") in (None, "ERROR")]
     assert not bad, f"unwarmed or errored: {bad[:10]}"
+
+
+def test_reason_groups_and_zero_volume() -> None:
+    doc = json.loads(json.dumps(DOC))
+    doc["coins"][0]["reason"] = "merged CMC page: the old contract has no CMC id of its own"
+    doc["coins"][0]["old_volume_24h_usd"] = 0
+    doc["coins"][1]["old_volume_24h_usd"] = 1234.5
+    s = cn.summary(doc)
+    assert s["not_verifiable_reasons"] == {
+        "old and new token share one CMC page; the ratio could not be confirmed": 1
+    }
+    assert (s["old_zero_volume"], s["market_checked"]) == (1, 2)
+    assert cn.reason_group("successor not named in the notice") == "the notice names no successor"
+    assert all("reason" in r for r in cn.notices(doc)[:1])

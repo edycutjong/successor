@@ -16,6 +16,24 @@ HERO_Q = "CPOOL"
 VERDICTS = ("SWAP", "SELL_OLD", "WRITE_OFF", "NOT_VERIFIABLE", "NOTHING_TO_DO")
 
 
+def reason_group(reason: str) -> str:
+    """Plain-language bucket for a recorded NOT_VERIFIABLE reason (the full reason stays in the row)."""
+    r = (reason or "").lower()
+    if "merged cmc page" in r:
+        return "old and new token share one CMC page; the ratio could not be confirmed"
+    if "successor not named" in r:
+        return "the notice names no successor"
+    if "refuted" in r:
+        return "CMC's data refutes what the notice says"
+    if "no live market" in r:
+        return "the successor has no live market to compare"
+    if "agent" in r:
+        return "the agent did not finish in budget"
+    if "ratio" in r:
+        return "no swap ratio stated, or the linked announcement could not be fetched"
+    return "other"
+
+
 def load() -> dict[str, Any]:
     if not CENSUS_FILE.exists():
         return {"captured_at": None, "scope": None, "coins_scanned": 0, "coins": []}
@@ -27,7 +45,7 @@ def notices(doc: dict[str, Any] | None = None) -> list[dict[str, Any]]:
     doc = doc or load()
     keep = (
         "id", "symbol", "name", "rank", "type", "prose_only", "names_contract", "names_ratio",
-        "only_unfetchable_hosts", "featured", "verdict", "rule_id", "successor", "verdict_captured_at", "agent_needed",
+        "only_unfetchable_hosts", "featured", "verdict", "rule_id", "reason", "successor", "verdict_captured_at", "agent_needed",
     )  # fmt: skip
     rows = sorted(doc["coins"], key=lambda c: (not c.get("featured"), c.get("rank") or 0))  # demo coins first
     return [{k: c[k] for k in keep if k in c} for c in rows]
@@ -56,7 +74,14 @@ def summary(doc: dict[str, Any] | None = None) -> dict[str, Any]:
         "verdicts_total": len(warmed),
         "verdicts_errors": sum(1 for c in cs if c.get("verdict") == "ERROR"),
         "verdicts_captured": max((c["verdict_captured_at"] for c in warmed), default=None),
-        "agent_needed": sum(1 for c in warmed if c.get("agent_needed")),
+        "reader_opened_link": sum(1 for c in warmed if c.get("agent_needed")),
+        "not_verifiable_reasons": dict(
+            Counter(
+                reason_group(c.get("reason", "")) for c in warmed if c["verdict"] == "NOT_VERIFIABLE"
+            ).most_common()
+        ),
+        "old_zero_volume": sum(1 for c in warmed if c.get("old_volume_24h_usd") == 0),
+        "market_checked": sum(1 for c in warmed if c.get("old_volume_24h_usd") is not None),
         "method": "regex over CMC's own `notice` field (no LLM); verdicts = the real lookup flow at qty 1, cached reads, one run per coin",
     }
 

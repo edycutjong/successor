@@ -89,6 +89,7 @@ function figures() {
   if (sell != null && v.old_volume_24h_usd && sell > 0.01 * v.old_volume_24h_usd) {
     notes.push(`size caveat: ${usd(sell)} is over 1% of the old token's 24 h volume (${usd(v.old_volume_24h_usd)}); the sell figure may not be achievable at that size`);
   }
+  if (v.verdict === "SWAP" && !/open|until/i.test(v.swap_window || "")) notes.push("swap window not stated: SWAP holds only if the issuer's swap is still open");
   $("caveats").textContent = notes.join(" · ");
 }
 
@@ -266,7 +267,9 @@ function censusRows() {
   $("cbody").innerHTML = census.rows.filter(keep).map((r) => {
     const flags = [r.prose_only ? "prose only" : "names a contract", r.names_ratio ? "ratio named" : "no ratio", r.only_unfetchable_hosts ? "links not fetchable" : ""].filter(Boolean).join(" · ");
     const v = r.verdict && r.verdict !== "ERROR" ? `<span class="vd ${esc(r.verdict)}">${esc(VLABEL[r.verdict] || r.verdict)}</span>` : `<span class="vd none">not read yet</span>`;
-    return `<tr><td class="num">${r.featured ? "★" : esc(r.rank)}</td><td><span class="sym">${esc(r.symbol)}</span> <span class="why">${esc(r.name)}${r.featured ? " · demo coin, outside the top-2000 scan" : ""}</span></td><td class="why hide-s">${esc(r.type)} · ${esc(flags)}</td><td>${v}</td><td><button type="button" data-q="${esc(r.symbol)}" data-id="${esc(r.id)}" aria-label="Look up ${esc(r.symbol)} live">Look up</button></td></tr>`;
+    const when = r.verdict_captured_at ? `<span class="why when">${esc(r.rule_id || "")} · read ${esc(r.verdict_captured_at.replace("T", " ").replace("Z", " UTC"))}</span>` : "";
+    const why = r.reason ? `<span class="why block">${esc(r.reason)}</span>` : "";
+    return `<tr><td class="num">${r.featured ? "★" : esc(r.rank)}</td><td><span class="sym">${esc(r.symbol)}</span> <span class="why">${esc(r.name)}${r.featured ? " · demo coin, listed apart from the counts" : ""}</span><span class="why block show-s">${esc(r.type)} · ${esc(flags)}</span></td><td class="why hide-s">${esc(r.type)} · ${esc(flags)}</td><td>${v}${when}${why}</td><td><button type="button" data-q="${esc(r.symbol)}" data-id="${esc(r.id)}" aria-label="Look up ${esc(r.symbol)} live">Look up</button></td></tr>`;
   }).join("") || `<tr><td colspan="5" class="why">no coins match this filter</td></tr>`;
 }
 
@@ -279,14 +282,17 @@ async function loadCensus() {
     $("tiles").innerHTML = [
       tile(c.notices, `coins carry a notice (of ${c.coins_scanned} scanned)`),
       tile(`${c.prose_only} / ${c.migration_type}`, "migration-type notices state the successor only in prose"),
-      tile(c.no_ratio_named, "name no swap ratio"),
-      tile(c.only_unfetchable_hosts, "link only to hosts the agent cannot fetch"),
+      tile(`${c.no_ratio_named} / ${c.migration_type}`, "migration-type notices name no swap ratio"),
+      tile(`${c.only_unfetchable_hosts} / ${c.migration_type}`, "link only to hosts the agent cannot fetch (x.com, t.me, …)"),
+      tile(`${c.old_zero_volume} / ${c.market_checked}`, "old tokens CMC still prices on $0 24 h volume (of lookups that reached the market check)"),
       tile(`${c.verdicts.NOT_VERIFIABLE} / ${c.verdicts_total}`, `verdicts are Not verifiable (read ${c.verdicts_captured || "n/a"})`),
     ].join("");
+    $("reasons").innerHTML = `<b>Why ${c.verdicts.NOT_VERIFIABLE} are Not verifiable:</b> ` + Object.entries(c.not_verifiable_reasons).map(([k, v]) => `${esc(v)} · ${esc(k)}`).join(" | ") + `. Not verifiable means CMC's data cannot support a verdict, not that the page failed to load.`;
+    $("census-note").textContent = `${census.rows.length} rows listed = ${c.notices} counted + ${census.rows.length - c.notices} starred demo coins (CPOOL, AGIX, RZUSD, BIT) that sit outside the active top 2000. Each verdict is one run of the live flow at the time shown on its row; market-sensitive verdicts can differ on a later run.`;
     const tot = Math.max(c.verdicts_total, 1);
     $("dist").innerHTML = Object.entries(c.verdicts).filter(([, k]) => k).map(([k, v]) => `<i class="${esc(k)}" style="width:${(v / tot) * 100}%" title="${esc(VLABEL[k])}: ${v}"></i>`).join("");
     $("dist").setAttribute("aria-label", "Verdict distribution: " + Object.entries(c.verdicts).map(([k, v]) => `${VLABEL[k]} ${v}`).join(", "));
-    $("dist").insertAdjacentHTML("afterend", `<p class="legend">${Object.entries(c.verdicts).map(([k, v]) => `${esc(VLABEL[k])} ${v}`).join(" · ")} · agent needed to follow a link: ${c.agent_needed}</p>`);
+    $("dist").insertAdjacentHTML("afterend", `<p class="legend">${Object.entries(c.verdicts).map(([k, v]) => `${esc(VLABEL[k])} ${v}`).join(" · ")} · Reader opened or tried a link while reading: ${c.reader_opened_link}</p>`);
     censusRows();
   } catch { $("census-meta").textContent = "Census unavailable right now."; }
 }

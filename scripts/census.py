@@ -190,6 +190,8 @@ async def warm(workers: int, only: set[int] | None, redo: bool) -> None:
                     c["reason"] = (final.get("reason") or "")[:300]
                     succ = final.get("successor") or {}
                     c["successor"] = succ.get("symbol") if isinstance(succ, dict) else None
+                    c["old_volume_24h_usd"] = final.get("old_volume_24h_usd")
+                    c["old_price_usd"] = final.get("old_price_usd")
                 else:
                     c["verdict"] = "ERROR"
                     c["rule_id"] = None

@@ -146,3 +146,6 @@ main { max-width: 1180px; margin: 0 auto; padding: 1.5rem clamp(1rem, 4vw, 3rem)
 @media (prefers-reduced-motion: reduce) { .filt, .ctable button { transition: none; } }
 
 .mark { transition: color .15s; } .mark:hover { color: var(--before); } .mark:active { transform: translateY(1px); }
+.ctable .block { display: block; } .ctable .when { display: block; font-family: var(--font-data); font-size: .72rem; }
+.ctable .show-s { display: none; } .reasons { color: var(--ink); font-size: .92rem; max-width: 110ch; margin: 1rem 0 .4rem; }
+@media (max-width: 720px) { .ctable .show-s { display: block; } }
