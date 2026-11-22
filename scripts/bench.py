@@ -40,7 +40,10 @@ def one(base: str, q: str, fresh: bool) -> tuple[float, str, dict]:
     if os.environ.get("BENCH_BYPASS_SECRET"):  # Vercel Deployment Protection bypass for CI previews
         headers["x-vercel-protection-bypass"] = os.environ["BENCH_BYPASS_SECRET"]
     t0 = time.perf_counter()
-    r = httpx.get(f"{base}/api/lookup", params=params, headers=headers, timeout=70)
+    try:
+        r = httpx.get(f"{base}/api/lookup", params=params, headers=headers, timeout=70)
+    except httpx.HTTPError as exc:  # a timeout or reset is a failed sample, recorded like any other
+        return time.perf_counter() - t0, f"0 network-error {type(exc).__name__}", {"server_ms": None}
     dt = time.perf_counter() - t0
     try:
         body = r.json()
@@ -95,8 +98,11 @@ def batch(base: str, q: str, n: int, fresh: bool) -> dict:
 
 def save(out: dict, kind: str) -> None:
     OUT.mkdir(parents=True, exist_ok=True)
-    name = f"bench-{kind}-{time.strftime('%Y-%m-%dT%H%MZ', time.gmtime())}.json"
-    (OUT / name).write_text(json.dumps(out, indent=2) + "\n")
+    stem = f"bench-{kind}-{time.strftime('%Y-%m-%dT%H%MZ', time.gmtime())}"
+    path, k = OUT / f"{stem}.json", 2
+    while path.exists():  # two runs in the same minute: suffix, never overwrite
+        path, k = OUT / f"{stem}-{k}.json", k + 1
+    path.write_text(json.dumps(out, indent=2) + "\n")
     print(
         json.dumps(
             {k: v for k, v in out.items() if k not in ("samples_s", "server", "first_batch")}, indent=2
