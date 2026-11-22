@@ -2,6 +2,13 @@
 
 Generated from Conventional Commits by scripts/release.py.
 
+## v1.1.4 (2026-11-22)
+
+### Bug fixes
+
+- a live SWAP on the landing whose old token is above the swap says it is under the 5% margin R8 needs, instead of 'the old token is worth more' beside a lit SWAP (a2a r11) (481d9ec)
+- when the old token is above the swap but under R8's 5% margin, the R9 SWAP reason says so (CPOOL read SWAP with the old token 4.8% above the swap and nothing on screen said why it was not SELL OLD) (a2a r11) (adb8475)
+
 ## v1.1.3 (2026-11-22)
 
 ### Bug fixes
