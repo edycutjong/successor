@@ -1,0 +1,6 @@
+# local gates, 2026-11-22T21:16:55Z, HEAD d8bee9e (pytest + coverage, the same command CI's quality stage runs)
+
+$ pytest -q --cov (fail_under 70)
+TOTAL                            1729    310    82%
+Required test coverage of 70.0% reached. Total coverage: 82.07%
+88 passed, 1 warning in 2.13s

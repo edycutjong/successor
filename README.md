@@ -139,7 +139,7 @@ copied from old to new coin, `convert=EUR` scaling supply, and the notice being 
 
 | Metric | Value | How to reproduce |
 |---|---|---|
-| Tests | **87 passed**, 82 % line coverage (gate 70 %), mypy clean | `make test-coverage`, `make typecheck` |
+| Tests | **88 passed**, 82 % line coverage (gate 70 %; run 2026-11-22 21:16 UTC, `docs/proof/gates/local-gates-2026-11-22T2116Z.txt`), mypy clean | `make test-coverage`, `make typecheck` |
 | Evals | **10/10** counted cases + 4/4 variants (a variant re-runs a case with a field stripped or a second capture; reported, not counted) | `python scripts/run_evals.py` (replays real saved CMC rows and recorded Reader output) |
 | Lookup latency, cached Reader read, live CMC calls | **p50 1.007 s · p95 1.454 s (= max at n=12)** (n=12, 2026-11-22 04:29 UTC). Re-measured on HEAD 0f2e719, 2026-11-22 11:16 UTC: p50 0.796 s · p95 1.363 s (n=12, `docs/proof/bench/bench-cached-2026-11-22T1116Z.json`); an earlier run that hour hit one slow call (p95 5.148 s, n not recorded, file overwritten), so the p95 is network-dependent. | `python scripts/bench.py https://successor.edycu.dev CPOOL 12`, samples in `docs/proof/bench/` |
 | Lookup latency, cold Reader read (`fresh=1`, one Qwen call, live CMC calls) | **p50 15.44 s · p95 21.45 s (= max at n=6)** (n=6, CPOOL, 2026-11-22 05:22 UTC); earlier single samples 16.89 s (CPOOL), 8.79 s (MKR) on the day-one engine | `make bench-cold`, samples in `docs/proof/bench/bench-cold-2026-11-22.json`, `docs/proof/deploy/` |
@@ -231,7 +231,7 @@ successor/verify/         resolve, successor (C2), quotes, ratio (C4), market (C
 successor/flow.py         stream orchestrator; receipt.py builds the proof drawer
 public/                   the board (index.html, board.css, app.js)
 data/                     cached Reader extractions, notices, census
-evals/ tests/ e2e/        10 eval cases, 87 unit tests, 12 live-URL browser/API tests
+evals/ tests/ e2e/        10 eval cases, 88 unit tests, 12 live-URL browser/API tests
 scripts/                  census, evals, bench (cached + cold), unplug E2E
 .github/                  CI/CD, CodeQL, gitleaks, Dependabot, release, community files
 JUDGE.md, /judge         the 30-second path for a judge, no login
