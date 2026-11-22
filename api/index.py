@@ -2,10 +2,12 @@
 
 from __future__ import annotations
 
+import asyncio
 import json
 import os
 import sys
 import time
+import weakref
 from collections import defaultdict, deque
 from pathlib import Path
 from typing import Any
@@ -78,13 +80,19 @@ def _limited(request: Request, fresh: bool, kind: str = "lookup") -> JSONRespons
 
 HEALTH_TTL_S = 60.0
 _HEALTH_CMC: dict[str, Any] = {"at": 0.0, "part": None}
+# one lock per running event loop: a module-level asyncio.Lock would raise if the runtime ever served requests on two loops
+_HEALTH_LOCKS: weakref.WeakKeyDictionary[asyncio.AbstractEventLoop, asyncio.Lock] = (
+    weakref.WeakKeyDictionary()
+)
 
 
-@app.get("/api/health")
-async def health() -> JSONResponse:
-    # /api/health is public and unthrottled: CMC key/info is asked at most once a minute per instance (checked_at says when)
-    now = time.monotonic()
-    if _HEALTH_CMC["part"] is None or now - _HEALTH_CMC["at"] > HEALTH_TTL_S:
+async def _cmc_health() -> dict[str, object]:
+    # /api/health is public and unthrottled: CMC key/info is asked at most once a minute per instance (checked_at says
+    # when). The lock makes concurrent requests on an empty or expired cache wait for one refresh (a2a r09).
+    lock = _HEALTH_LOCKS.setdefault(asyncio.get_running_loop(), asyncio.Lock())
+    async with lock:
+        if _HEALTH_CMC["part"] is not None and time.monotonic() - _HEALTH_CMC["at"] <= HEALTH_TTL_S:
+            return _HEALTH_CMC["part"]
         async with CmcClient() as cmc:
             try:
                 r = await cmc.key_info()
@@ -97,8 +105,13 @@ async def health() -> JSONResponse:
                 }
             except (RuntimeError, httpx.HTTPError) as exc:
                 part = {"ok": False, "error": f"{type(exc).__name__}: {exc}"[:200]}
-        _HEALTH_CMC.update(at=now, part=part)
-    cmc_part = _HEALTH_CMC["part"]
+        _HEALTH_CMC.update(at=time.monotonic(), part=part)
+        return part
+
+
+@app.get("/api/health")
+async def health() -> JSONResponse:
+    cmc_part = await _cmc_health()
     llm = load_config()
     return JSONResponse(
         {
