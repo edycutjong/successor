@@ -408,12 +408,12 @@ footer nav { display: flex; gap: 18px; flex-wrap: wrap; }
   <div class="wrap">
     <p class="eyebrow">Platform 1 · the demo</p>
     <h2 id="demo-h">One lookup, shown twice.</h2>
-    <p class="sub">Left, the live board, captured 100 minutes after the stream on the right. Same coin, same verdict, a different margin: the market moved. That is why every verdict carries its capture time.</p>
+    <p class="sub">Left, the live board, captured about two hours after the stream on the right. Same coin, same verdict, a different margin: the market moved. That is why every verdict carries its capture time.</p>
     <div class="pair">
       <figure class="browser" style="margin:0">
         <div class="bar" aria-hidden="true"><i></i><i></i><i></i><span>successor.edycu.dev/?q=CPOOL</span></div>
-        <img src="/assets/shot-cpool.webp" width="1620" height="960" loading="lazy" alt="The live Successor board after a CPOOL lookup: CPOOL flaps to CLEAR, verdict SELL OLD, seven checks C1 to C6 lit green, the CMC notice underlined, and the agent trace below (captured 2026-11-22 05:29 UTC).">
-        <figcaption>The live board, 2026-11-22 05:29 UTC: SELL OLD, old token 11.3% above the swap. Raw stream: <code>docs/proof/landing/</code>.</figcaption>
+        <img src="/assets/shot-cpool.webp" width="1626" height="968" loading="lazy" alt="The live Successor board after a CPOOL lookup: CPOOL flaps to CLEAR, verdict SELL OLD, the CMC notice underlined, and seven checks C1 to C6 lit green (captured 2026-11-22 05:58 UTC).">
+        <figcaption>The live board, 2026-11-22 05:58 UTC: SELL OLD, old token 7.3% above the swap. Raw stream: <code>docs/proof/landing/</code>.</figcaption>
       </figure>
       <div class="term" aria-label="Terminal replay of the captured CPOOL lookup stream">
         <div class="bar"><span>zsh · /api/lookup · NDJSON</span><button type="button" id="term-replay">replay</button></div>
@@ -469,7 +469,7 @@ footer nav { display: flex; gap: 18px; flex-wrap: wrap; }
       </div>
       <figure class="browser" style="margin:0">
         <div class="bar" aria-hidden="true"><i></i><i></i><i></i><span>successor.edycu.dev/?q=AGIX</span></div>
-        <img src="/assets/shot-agix.webp" width="1620" height="960" loading="lazy" alt="The live Successor board after an AGIX lookup: AGIX flaps to FET, verdict SWAP, checks lit, and the trace showing the agent opened fetch.ai (captured 2026-11-22 05:29 UTC).">
+        <img src="/assets/shot-agix.webp" width="1626" height="1004" loading="lazy" alt="The live Successor board after an AGIX lookup: AGIX flaps to FET, verdict SWAP if the issuer's swap is still open, the notice linking fetch.ai, and the checks with the old market marked stale (captured 2026-11-22 05:58 UTC).">
       </figure>
     </div>
   </div>
@@ -656,7 +656,7 @@ footer nav { display: flex; gap: 18px; flex-wrap: wrap; }
     if (key !== undefined) li.querySelector('.k').innerHTML = key;
   }
   function field(f, st) { document.querySelectorAll('#h-notice u[data-f="' + f + '"]').forEach((u) => { u.className = st; }); }
-  const okState = (s) => ['verified', 'alive', 'P', 'confirmed'].includes(s) ? 'ok' : ['refuted', 'dead', 'R', 'failed', 'mismatch'].includes(s) ? 'bad' : 'prop';
+  const okState = (s) => ['verified', 'alive', 'P', 'confirmed'].includes(s) ? 'ok' : ['refuted', 'R', 'failed', 'mismatch'].includes(s) ? 'bad' : 'prop';
   const money = (v) => v == null ? null : '$' + Number(v).toLocaleString('en-US', { minimumFractionDigits: 2, maximumFractionDigits: 2 });
   const VWORD = { SELL_OLD: 'SELL OLD', SWAP: 'SWAP', WRITE_OFF: 'WRITE OFF', NOT_VERIFIABLE: 'NOT VERIFIABLE', NOTHING_TO_DO: 'NOTHING TO DO' };
 

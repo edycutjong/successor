@@ -36,7 +36,7 @@ html, body { margin: 0; height: 100%; background: var(--hinge); color: var(--ink
 ::selection { background: var(--before); color: var(--hinge); }
 .stage { position: absolute; left: 50%; top: 50%; width: 1920px; height: 1080px; transform-origin: 0 0; }
 .slide { position: absolute; inset: 0; background: var(--bg); padding: 96px 120px 110px; display: none; overflow: hidden; }
-.slide.on { display: block; }
+.slide.on { display: flex; flex-direction: column; justify-content: center; }
 .slide::before { content: ""; position: absolute; inset: 0; pointer-events: none; opacity: .55;
   background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='160' height='72'%3E%3Cpath d='M0 71.5H160' stroke='%23221E18' stroke-width='1'/%3E%3C/svg%3E"); }
 .slide > * { position: relative; }
@@ -49,7 +49,11 @@ h2 { font-size: 104px; margin-bottom: 30px; max-width: 15em; }
 .body { font-size: 34px; line-height: 1.45; color: #CFC8BA; max-width: 30em; margin: 0; }
 .body b { color: var(--ink); }
 code, .mono { font-family: var(--font-data); }
-.hl { color: var(--after); }
+.hl { text-decoration: underline; text-decoration-color: var(--after); text-decoration-thickness: .085em; text-underline-offset: .09em; text-decoration-skip-ink: none; }
+.hl.prop { text-decoration-color: var(--before); }
+.lamps { display: flex; gap: 28px; margin-top: 24px; font: 800 30px/1 var(--font-display); letter-spacing: .06em; }
+.lamps span { display: flex; gap: 12px; align-items: center; }
+.lamps .lamp { width: 36px; height: 36px; font-size: 21px; }
 
 /* flaps */
 .flaps { display: flex; gap: var(--g, 8px); }
@@ -94,7 +98,7 @@ code, .mono { font-family: var(--font-data); }
 .pane { border: 2px solid var(--rule); border-radius: 10px; padding: 44px 48px; background: var(--steel); }
 .pane .k { font: 700 24px/1 var(--font-display); letter-spacing: .18em; color: var(--muted); text-transform: uppercase; }
 .pane strong { display: block; font: 900 190px/1 var(--font-display); margin: 26px 0 14px; letter-spacing: -.005em; }
-.pane strong.x { text-decoration: line-through; text-decoration-color: var(--refuted); text-decoration-thickness: 10px; color: var(--muted); }
+.pane strong.x { text-decoration: line-through; text-decoration-color: var(--muted); text-decoration-thickness: 10px; color: var(--muted); }
 .pane p { font-size: 28px; color: #CFC8BA; margin: 0; line-height: 1.4; }
 
 /* frames */
@@ -107,18 +111,19 @@ code, .mono { font-family: var(--font-data); }
 
 /* 5 flow */
 .flow { display: grid; grid-template-columns: repeat(4, 1fr); gap: 0; margin-top: 50px; border: 2px solid var(--rule); border-radius: 10px; overflow: hidden; }
-.flow > div { padding: 38px 34px 40px; border-right: 2px solid var(--rule); background: var(--steel); min-height: 470px; display: flex; flex-direction: column; gap: 18px; }
+.flow > div { padding: 44px 38px 44px; border-right: 2px solid var(--rule); background: var(--steel); min-height: 420px; display: flex; flex-direction: column; gap: 18px; }
 .flow > div:last-child { border-right: 0; background: var(--flap); }
 .flow .n { font: 800 24px/1 var(--font-display); letter-spacing: .14em; color: var(--muted); text-transform: uppercase; }
-.flow h3 { font: 900 50px/.95 var(--font-display); text-transform: uppercase; margin: 0; }
-.flow p { font-size: 25px; color: #CFC8BA; line-height: 1.4; margin: 0; }
-.flow .chip { margin-top: auto; align-self: flex-start; font: 400 19px/1.3 var(--font-data); color: var(--muted); border: 1px solid var(--rule); border-radius: 4px; padding: 8px 12px; }
-.flow .st { display: flex; gap: 12px; align-items: center; font-size: 25px; }
+.flow h3 { font: 900 62px/.95 var(--font-display); text-transform: uppercase; margin: 0; }
+.flow p { font-size: 30px; color: #CFC8BA; line-height: 1.4; margin: 0; }
+.flow .chip { margin-top: auto; align-self: flex-start; font: 400 22px/1.3 var(--font-data); color: var(--muted); border: 1px solid var(--rule); border-radius: 4px; padding: 8px 12px; }
+.flow .st { display: flex; gap: 14px; align-items: center; font-size: 30px; }
 .flow .st .lamp { width: 34px; height: 34px; font-size: 20px; }
 
 /* 6 demo */
 .demo2 { display: grid; grid-template-columns: 1fr 1fr; gap: 40px; margin-top: 34px; }
-.demo2 figure { margin: 0; position: relative; }
+.demo2 figure { margin: 0; }
+.shot { position: relative; }
 .demo2 figcaption { font-size: 24px; color: #CFC8BA; margin-top: 18px; line-height: 1.35; }
 .demo2 figcaption b { font: 800 30px/1 var(--font-display); letter-spacing: .06em; color: var(--ink); }
 .box { position: absolute; border: 3px solid var(--ink); border-radius: 6px; pointer-events: none; }
@@ -180,6 +185,20 @@ body.ui .hud, .hud:focus-within { opacity: 1; }
 #presenter { position: fixed; left: 0; right: 0; bottom: 0; z-index: 6; background: rgba(13,12,10,.96); border-top: 1px solid var(--rule); padding: 18px 24px 58px; font-size: 18px; line-height: 1.5; color: var(--ink); display: none; }
 #presenter.on { display: block; }
 #presenter small { display: block; color: var(--muted); font-family: var(--font-data); font-size: 12px; margin-bottom: 6px; }
+body.portrait { overflow: auto; height: auto; }
+body.portrait .stage { position: static; width: 1080px; height: auto; transform: none !important; }
+body.portrait .slide, body.portrait .slide.on { display: block; position: relative; height: auto; padding: 84px 64px 150px; border-bottom: 2px solid var(--rule); }
+body.portrait .cover, body.portrait .sol, body.portrait .ask, body.portrait .pair2, body.portrait .demo2, body.portrait .guards, body.portrait .census, body.portrait .flow { grid-template-columns: 1fr !important; height: auto; gap: 40px; }
+body.portrait .hook { height: auto; }
+body.portrait .guards { grid-template-rows: auto; height: auto; }
+body.portrait .g.big { grid-row: auto; }
+body.portrait .flow > div { border-right: 0; border-bottom: 2px solid var(--rule); min-height: 0; }
+body.portrait .rcpt { grid-template-columns: 1fr 1fr; }
+body.portrait .crow { grid-template-columns: 1fr 120px; }
+body.portrait .crow .u { display: none; }
+body.portrait .body, body.portrait .cover .sub, body.portrait .pane p, body.portrait .demo2 figcaption, body.portrait .legend { font-size: 40px; }
+body.portrait .foot { left: 64px; right: 64px; bottom: 56px; }
+body.portrait .hud { display: none; }
 @media print {
   @page { size: 1920px 1080px; margin: 0; }
   html, body { overflow: visible; height: auto; background: var(--bg); }
@@ -206,7 +225,8 @@ body.ui .hud, .hud:focus-within { opacity: 1; }
       <p class="vl">Verdict</p>
       <div class="flaps" data-f="SELL OLD" style="--tw:78px;--g:7px"></div>
       <div class="fig"><strong>+15.7%</strong><span>vs 1:1 swap</span></div>
-      <div class="term"><span class="ok">2026-11-22 03:49 UTC · R8 SELL_OLD · 8 credits</span></div>
+      <div class="lamps"><span><i class="lamp ok"></i>C2</span><span><i class="lamp ok"></i>C4</span><span><i class="lamp ok"></i>C5</span></div>
+      <div class="term"><span class="c">03:49 UTC · 8 credits</span></div>
     </div>
   </div>
   <div class="foot"><b>SUCCESSOR</b><span>v1.0.0 · 01/10</span></div>
@@ -217,7 +237,7 @@ body.ui .hud, .hud:focus-within { opacity: 1; }
 <section class="slide" data-n="2" aria-label="Hook">
   <div class="hook">
     <div class="big"><div class="flaps" data-f="80" style="--tw:210px;--g:14px"></div><span class="of">of 161</span></div>
-    <p>notices name the successor <span class="hl">only in prose.</span></p>
+    <p>notices name the successor <span class="hl prop">only in prose.</span></p>
     <small>CMC top 2000 by rank, active · scan 2026-11-22T02:32:34Z · GET /api/census</small>
   </div>
   <div class="foot"><b>SUCCESSOR</b><span>02/10</span></div>
@@ -229,11 +249,11 @@ body.ui .hud, .hud:focus-within { opacity: 1; }
   <p class="label">Rafi's old wallet</p>
   <h2>Same coins. Two answers.</h2>
   <div class="pair2">
-    <div class="pane"><span class="k">10,000 AGIX, tracker</span><strong class="x">$5,924.93</strong><p>The old ticker's price.</p></div>
-    <div class="pane"><span class="k">Swapped to FET</span><strong>$463.42</strong><p>Ratio 0.43335, code-confirmed. CMC, 2026-11-22.</p></div>
+    <div class="pane"><span class="k">10,000 AGIX, tracker</span><strong class="x">$5,924.93</strong><p>Stale: $0 traded in 24 h.</p></div>
+    <div class="pane"><span class="k">Swapped to FET</span><strong>$463.42</strong><p>Ratio 0.43335, if the issuer's swap is open.</p></div>
   </div>
-  <div class="foot"><b>SUCCESSOR</b><span>03/10</span></div>
-  <aside class="notes">This is the slide to remember. AGIX merged into FET. A tracker still values the old ticker. The real value after the swap is a fraction of it. Rafi needs to know which number is true before he acts.</aside>
+  <div class="foot"><b>SUCCESSOR</b><span>CMC quotes 2026-11-22 03:49 UTC · 03/10</span></div>
+  <aside class="notes">This is the slide to remember. AGIX merged into FET. A tracker still shows the old ticker at a stale price nobody trades at. At the code-confirmed ratio the same coins are worth a fraction of that, if the issuer's swap is still open.</aside>
 </section>
 
 <!-- 4 SOLUTION -->
@@ -244,9 +264,9 @@ body.ui .hud, .hud:focus-within { opacity: 1; }
       <h2>Reads the notice. Checks the rows.</h2>
       <p class="body">One coin in. <b>SWAP</b>, <b>SELL OLD</b>, <b>WRITE OFF</b> or <b>NOT VERIFIABLE</b> out, with its proof.</p>
     </div>
-    <div class="frame"><div class="bar"><i></i><i></i><i></i><span>successor.edycu.dev/?q=CPOOL</span></div><img src="/assets/shot-cpool.webp" width="1620" height="960" alt="The live Successor board: CPOOL to CLEAR, verdict SELL OLD, seven checks lit (captured 2026-11-22 05:29 UTC)"></div>
+    <div class="frame"><div class="bar"><i></i><i></i><i></i><span>successor.edycu.dev/?q=CPOOL</span></div><img src="/assets/shot-cpool.webp" width="1626" height="968" alt="The live Successor board: CPOOL to CLEAR, verdict SELL OLD, seven checks lit (captured 2026-11-22 05:58 UTC)"></div>
   </div>
-  <div class="foot"><b>SUCCESSOR</b><span>04/10</span></div>
+  <div class="foot"><b>SUCCESSOR</b><span>live board · 2026-11-22 05:58 UTC · 04/10</span></div>
   <aside class="notes">One input, one verdict, and the receipts behind it. The verdict is market-sensitive, so every board carries its capture time.</aside>
 </section>
 
@@ -268,15 +288,13 @@ body.ui .hud, .hud:focus-within { opacity: 1; }
 <section class="slide" data-n="6" aria-label="Live demo">
   <p class="label">Two real lookups</p>
   <div class="demo2">
-    <figure><div class="frame"><div class="bar"><i></i><i></i><i></i><span>?q=CPOOL</span></div><img src="/assets/shot-cpool.webp" width="1620" height="960" alt="CPOOL board: SELL OLD"></div>
-      <span class="box" style="left:12px;top:106px;width:424px;height:56px"><i class="co">1</i></span><span class="box" style="left:508px;top:106px;width:230px;height:56px"><i class="co">2</i></span><span class="box" style="left:10px;top:292px;width:350px;height:258px"><i class="co">3</i></span>
+    <figure><div class="frame"><div class="bar"><i></i><i></i><i></i><span>?q=CPOOL</span></div><div class="shot"><img src="/assets/shot-cpool.webp" width="1626" height="968" alt="CPOOL board: SELL OLD"><span class="box" style="left:1.41%;top:8.33%;width:61.04%;height:10.22%"><i class="co">1</i></span><span class="box" style="left:62.12%;top:8.33%;width:36.47%;height:10.22%"><i class="co">2</i></span><span class="box" style="left:1.41%;top:46.49%;width:3.09%;height:51.00%"><i class="co">3</i></span></div></div>
       <figcaption><b>CPOOL → CLEAR · SELL OLD</b></figcaption></figure>
-    <figure><div class="frame"><div class="bar"><i></i><i></i><i></i><span>?q=AGIX</span></div><img src="/assets/shot-agix.webp" width="1620" height="960" alt="AGIX board: SWAP"></div>
-      <span class="box" style="left:12px;top:106px;width:424px;height:56px"><i class="co">1</i></span><span class="box" style="left:508px;top:106px;width:230px;height:56px"><i class="co">2</i></span><span class="box" style="left:10px;top:306px;width:350px;height:258px"><i class="co">3</i></span>
+    <figure><div class="frame"><div class="bar"><i></i><i></i><i></i><span>?q=AGIX</span></div><div class="shot"><img src="/assets/shot-agix.webp" width="1626" height="1004" alt="AGIX board: SWAP if the issuer's swap is still open"><span class="box" style="left:1.41%;top:8.00%;width:61.04%;height:9.92%"><i class="co">1</i></span><span class="box" style="left:62.12%;top:8.00%;width:36.47%;height:9.92%"><i class="co">2</i></span><span class="box" style="left:1.41%;top:48.37%;width:3.09%;height:49.24%"><i class="co">3</i></span></div></div>
       <figcaption><b>AGIX → FET · SWAP</b> · ratio read from fetch.ai</figcaption></figure>
   </div>
   <div class="legend"><span><i class="co">1</i>flaps turn once verified</span><span><i class="co">2</i>verdict</span><span><i class="co">3</i>one lamp per check</span></div>
-  <div class="foot"><b>SUCCESSOR</b><span>06/10</span></div>
+  <div class="foot"><b>SUCCESSOR</b><span>captured 2026-11-22 05:58 UTC · 06/10</span></div>
   <aside class="notes">Left: SELL OLD, the old token still trades above the swap. Right: AGIX's notice has no ratio, so the Reader opened fetch.ai, a host CMC lists, and code confirmed the ratio on the event date.</aside>
 </section>
 
@@ -304,6 +322,7 @@ body.ui .hud, .hud:focus-within { opacity: 1; }
       <div class="crow"><div class="flaps" data-f="NOTHING TO DO" data-pad="14"></div><span class="c">26</span><span class="u"></span></div>
       <div class="crow"><div class="flaps" data-f="WRITE OFF" data-pad="14"></div><span class="c">3</span><span class="u"></span></div>
       <div class="crow"><div class="flaps" data-f="SWAP" data-pad="14"></div><span class="c">2</span><span class="u"></span></div>
+      <div class="crow"><div class="flaps" data-f="SELL OLD" data-pad="14"></div><span class="c">0</span><span class="u">CPOOL is outside</span></div>
     </div>
     <ol class="reasons">
       <li><b>61</b>share one CMC page</li>
@@ -323,9 +342,9 @@ body.ui .hud, .hud:focus-within { opacity: 1; }
   <div class="rcpt">
     <div><strong>83</strong><span>tests pass</span></div>
     <div><strong>10/10</strong><span>evals</span></div>
-    <div><strong>1.007 s</strong><span>p50 lookup</span></div>
-    <div><strong>12</strong><span>live browser tests</span></div>
-    <div><strong>6</strong><span>CMC endpoints</span></div>
+    <div><strong>1.007 s</strong><span>p50, cached read</span></div>
+    <div><strong>15.44 s</strong><span>p50, cold read</span></div>
+    <div><strong>12</strong><span>live-URL tests</span></div>
     <div><strong>161</strong><span>notices looked up</span></div>
   </div>
   <div class="foot"><b>SUCCESSOR</b><span>09/10</span></div>
@@ -363,7 +382,12 @@ body.ui .hud, .hud:focus-within { opacity: 1; }
   });
   const slides = [...document.querySelectorAll('.slide')]; const stage = document.getElementById('stage');
   let i = Math.max(0, Math.min(slides.length - 1, (parseInt(location.hash.slice(1), 10) || 1) - 1));
-  function fit() { const k = Math.min(innerWidth / 1920, innerHeight / 1080); stage.style.transformOrigin = 'center center'; stage.style.transform = 'translate(-50%, -50%) scale(' + k + ')'; }
+  function fit() {
+    const portrait = innerWidth < 820 && innerHeight > innerWidth;
+    document.body.classList.toggle('portrait', portrait);
+    if (portrait) { stage.style.transform = ''; stage.style.zoom = innerWidth / 1080; return; }
+    stage.style.zoom = ''; const k = Math.min(innerWidth / 1920, innerHeight / 1080); stage.style.transformOrigin = 'center center'; stage.style.transform = 'translate(-50%, -50%) scale(' + k + ')';
+  }
   function show(n) {
     i = (n + slides.length) % slides.length;
     slides.forEach((s, k) => s.classList.toggle('on', k === i));
