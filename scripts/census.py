@@ -19,6 +19,7 @@ import sys
 from collections import Counter
 from datetime import UTC, datetime
 from pathlib import Path
+from urllib.parse import urlsplit
 
 ROOT = Path(__file__).resolve().parents[1]
 sys.path.insert(0, str(ROOT))
@@ -50,8 +51,12 @@ def now() -> str:
 
 
 def host(u: str) -> str:
-    m = re.match(r"https?://([^/]+)", u)
-    return (m.group(1).lower() if m else "").removeprefix("www.")
+    """The parsed hostname (no port, no user info), lowercased, without a leading www."""
+    try:
+        h = (urlsplit(u).hostname or "").rstrip(".")
+    except ValueError:
+        return ""
+    return h.removeprefix("www.")
 
 
 def classify(notice: str) -> dict:
