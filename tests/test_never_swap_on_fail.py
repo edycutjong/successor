@@ -13,7 +13,7 @@ PRICES = [(1.0, 1.0), (1.2, 1.0), (0.8, 1.0)]  # parity, old premium 20%, old di
 
 
 def all_facts():
-    for c2, old, new, rs, deadline, same, changed, trips, prices, dropped in itertools.product(
+    for c2, old, new, rs, deadline, same, changed, trips, prices, dropped, label in itertools.product(
         C2,
         MARKET,
         NEW,
@@ -24,6 +24,7 @@ def all_facts():
         [[], ["guard"]],
         PRICES,
         [[], ["new_contract"]],
+        [False, True],
     ):
         for route in ROUTE[rs]:
             yield Facts(
@@ -42,6 +43,7 @@ def all_facts():
                 deadline_passed=deadline,
                 deadline_text="2025-01-01" if deadline else None,
                 c3_dropped=dropped,
+                swap_label_only=label,
             )
 
 
@@ -56,6 +58,7 @@ def test_properties_hold_for_every_combination():
             assert not (f.old_market == "alive" and f.old_price < 0.95 * f.ratio * f.new_price), f
             assert not f.sanity_trips
             assert not f.c3_dropped, f  # a2a r03: a contract the notice does not quote never reaches SWAP
+            assert not f.swap_label_only, f  # a2a r04: the Reader's label alone never reaches SWAP
         if d.verdict == "SELL_OLD":
             assert f.old_market == "alive", f
         if d.verdict == "WRITE_OFF":

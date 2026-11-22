@@ -19,6 +19,12 @@ VERDICTS = ("SWAP", "SELL_OLD", "WRITE_OFF", "NOT_VERIFIABLE", "NOTHING_TO_DO")
 def reason_group(reason: str) -> str:
     """Plain-language bucket for a recorded NOT_VERIFIABLE reason (the full reason stays in the row)."""
     r = (reason or "").lower()
+    if "labelled this a swap" in r:
+        return "the Reader called it a swap, but the notice text shows none"
+    if r.startswith("c3 dropped"):
+        return "the Reader quoted a contract, ratio or name the notice does not contain"
+    if "returned no price or volume" in r:
+        return "CMC returned no price or volume for the successor"
     if "merged cmc page" in r:
         return "old and new token share one CMC page; the ratio could not be confirmed"
     if "successor not named" in r:

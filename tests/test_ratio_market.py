@@ -97,7 +97,16 @@ def test_flat_price_is_live_when_valid_pairs_trade_it_and_dead_without_a_pair_ch
     # a2a r03: a traded peg must never read as a dead market (R6 would write it off)
     flat = [{"date": f"d{i}", "price": 0.5, "volume_24h": 1} for i in range(30)]
     row = {"quote": {"USD": {"price": 0.5, "volume_24h": 100}}}
-    pairs = {"market_pairs": [{"outlier_detected": 0, "exclusions": None, "exchange": {"name": "X"}}]}
+    pairs = {
+        "market_pairs": [
+            {
+                "outlier_detected": 0,
+                "exclusions": None,
+                "exchange": {"name": "X"},
+                "quote": {"USD": {"volume_24h": 50}},
+            }
+        ]
+    }
     m = mk.assess(row, pairs, flat)
     assert m.state == "alive" and any("peg" in n for n in m.notes)
     assert mk.assess(row, None, flat, pairs_denied=True).state == "dead"

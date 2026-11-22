@@ -83,6 +83,10 @@ class CmcError(RuntimeError):
         super().__init__(f"CMC {resp.path}: {msg}")
 
 
+class LookupDeadline(httpx.TimeoutException):
+    """The whole lookup is out of time (not one slow CMC read)."""
+
+
 @dataclass
 class CmcClient:
     key: str | None = None
@@ -120,7 +124,7 @@ class CmcClient:
             for attempt in (0, 1):  # one backoff retry on 429 / 5xx / timeout, then the error stands
                 left = None if self.deadline is None else self.deadline - time.monotonic()
                 if left is not None and left < 2.0:
-                    raise httpx.TimeoutException(f"lookup deadline reached before {path} was called")
+                    raise LookupDeadline(f"lookup deadline reached before {path} was called")
                 per_try = self.timeout if left is None else min(self.timeout, left - 1.0)
                 try:
                     r = await client.get(

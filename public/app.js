@@ -167,6 +167,7 @@ function startTick() { const t0 = Date.now(); stopTick(); state.ticking = setInt
 function stopTick() { if (state.ticking) clearInterval(state.ticking); state.ticking = null; const el = $("tick"); if (el) el.removeAttribute("id"); }
 
 function reset(q) {
+  stopTick();  // a superseded lookup's tick must not keep running
   state.events = []; state.final = null; state.quotes = {};
   flaps($("f-old"), q); flaps($("f-new"), ""); flaps($("f-verdict"), "", "verdict");
   ["figures", "caveats", "reason", "notice", "checks", "trace", "captured"].forEach((id) => ($(id).innerHTML = ""));

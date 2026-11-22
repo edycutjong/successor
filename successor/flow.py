@@ -20,7 +20,7 @@ import httpx
 
 from successor.agent import reader as rd
 from successor.agent.fetch_link import allowed_hosts, follow_link
-from successor.cmc import CmcClient
+from successor.cmc import CmcClient, LookupDeadline
 from successor.receipt import build as build_receipt
 from successor.receipt import call_id
 from successor.verify import market as mk
@@ -174,14 +174,20 @@ async def lookup_stream(
                     else:
                         # a2a r04: httpx timeouts bound each read, not a response that trickles in; this cancels
                         # whatever is awaited (CMC, Qwen, a fetched page) once the lookup is out of time
-                        async with asyncio.timeout(max(0.01, dl + DEADLINE_GRACE_S - time.monotonic())):
-                            e = await agen.__anext__()
+                        cm = asyncio.timeout(max(0.01, dl + DEADLINE_GRACE_S - time.monotonic()))
+                        try:
+                            async with cm:
+                                e = await agen.__anext__()
+                        except TimeoutError:
+                            if cm.expired():
+                                raise LookupDeadline("hard cancel at the lookup deadline") from None
+                            raise
                 except StopAsyncIteration:
                     break
                 yield e
         finally:
             await agen.aclose()
-    except TimeoutError:
+    except LookupDeadline:  # only the lookup budget, never an unrelated socket TimeoutError (P1d QA r2)
         yield ev(
             "error",
             step="deadline",

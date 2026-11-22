@@ -77,6 +77,10 @@ def _missing(f: Facts) -> str:
     """R10: name what is missing, most fundamental first."""
     if f.agent_unavailable:
         return f"agent unavailable: {f.agent_unavailable}"
+    if not f.successor_named:
+        return "successor not named in the notice" + (
+            "; the linked announcement was not fetchable" if f.announcement_unfetchable else ""
+        )
     if f.swap_label_only and not [n for n in f.c3_dropped if n in SWAP_CRITICAL]:
         return (
             "the Reader labelled this a swap, but the notice has no swap wording, contract change or ratio, and the "
@@ -88,10 +92,6 @@ def _missing(f: Facts) -> str:
             + ", ".join(n for n in f.c3_dropped if n in SWAP_CRITICAL)
             + ": the Reader proposed it without a verbatim quote that contains it,"
             " so SWAP is withheld"
-        )
-    if not f.successor_named:
-        return "successor not named in the notice" + (
-            "; the linked announcement was not fetchable" if f.announcement_unfetchable else ""
         )
     if f.c2 != "verified":
         return f"successor not verified against CMC: {f.c2_reason}"

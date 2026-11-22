@@ -235,3 +235,81 @@ def test_hard_deadline_cancels_a_hung_await_and_ends_with_an_error_event():
     t0 = time.monotonic()
     evs = asyncio.run(run(0.3))
     assert time.monotonic() - t0 < 5 and evs[-1]["step"] == "deadline" and evs[-1]["http_status"] == 504
+
+
+# --- P1d loop QA round 2 ----------------------------------------------------------------------------------
+def test_label_only_swap_through_the_real_flow_ends_r10():
+    """Production path: ONE (ticker change on one CMC id, recorded CMC rows) replayed with the Reader's label
+    switched to token_swap. No swap wording in the notice, so the label alone must not reach SWAP or R4."""
+    import asyncio
+    import copy
+    import json
+    from pathlib import Path
+
+    from successor.evals import replay
+
+    fx = json.loads((Path(__file__).parent / "fixtures/cases/one.json").read_text())
+    base = asyncio.run(replay(fx))[-1]
+    assert (base["verdict"], base["rule_id"]) == ("NOTHING_TO_DO", "R4")
+    fx2 = copy.deepcopy(fx)
+    fx2["extraction"]["proposals"][-1]["event_type"] = "token_swap"
+    final = asyncio.run(replay(fx2))[-1]
+    assert (final["verdict"], final["rule_id"]) == ("NOT_VERIFIABLE", "R10"), final
+    assert "labelled this a swap" in final["reason"]
+
+
+def test_timeout_retry_is_skipped_when_it_would_not_fit_the_deadline():
+    import asyncio
+    import time
+
+    import httpx
+    import pytest
+
+    from successor.cmc import BASE_URL, CmcClient
+
+    seen = []
+
+    def handler(request):
+        seen.append(request.url.path)
+        raise httpx.ReadTimeout("slow", request=request)
+
+    async def run(left):
+        c = CmcClient(key="k", deadline=time.monotonic() + left)
+        c._client = httpx.AsyncClient(base_url=BASE_URL, transport=httpx.MockTransport(handler))
+        try:
+            await c.get("/v1/key/info")
+        finally:
+            await c._client.aclose()
+
+    with pytest.raises(httpx.TimeoutException):
+        asyncio.run(run(3.5))  # per_try 2.5 s; a retry needs > 4.5 s left -> exactly one request
+    assert len(seen) == 1
+    seen.clear()
+    with pytest.raises(httpx.TimeoutException):
+        asyncio.run(run(60))  # room for the retry -> two requests
+    assert len(seen) == 2
+
+
+def test_census_buckets_cover_the_new_r10_reasons():
+    from successor.census import reason_group
+
+    assert "swap" in reason_group(
+        "the Reader labelled this a swap, but the notice has no swap wording, contract change or ratio"
+    )
+    assert "does not contain" in reason_group(
+        "C3 dropped new_contract: the Reader proposed it without a verbatim quote"
+    )
+    assert "no price or volume" in reason_group(
+        "CMC returned no price or volume for the successor; no swap value"
+    )
+
+
+def test_flat_price_needs_a_pair_with_its_own_volume():
+    from successor.verify import market as mk
+
+    flat = [{"date": f"d{i}", "price": 0.5, "volume_24h": 1} for i in range(30)]
+    row = {"quote": {"USD": {"price": 0.5, "volume_24h": 100}}}
+    leftover = {
+        "market_pairs": [{"outlier_detected": 0, "exclusions": None, "quote": {"USD": {"volume_24h": 0}}}]
+    }
+    assert mk.assess(row, leftover, flat).state == "dead"

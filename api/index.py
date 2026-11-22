@@ -25,7 +25,7 @@ app = FastAPI(title="Successor", version=__version__, docs_url="/api/docs", open
 # --- abuse gate (a2a r03) ------------------------------------------------------------------------------------
 # Every lookup calls CMC live; fresh=1 forces a paid Reader call. Windows are per serverless instance, so this
 # bounds a burst from one client, not the deployment (the Reader's daily cap is per instance too).
-LIMITS = {"lookup": (20, 60.0), "fresh": (3, 600.0), "fresh_all": (30, 3600.0)}
+LIMITS = {"lookup": (20, 60.0), "hero": (60, 60.0), "fresh": (3, 600.0), "fresh_all": (30, 3600.0)}
 _hits: dict[str, deque[float]] = defaultdict(deque)
 
 
@@ -52,9 +52,10 @@ def _wait(bucket: str, kind: str, now: float) -> float | None:
     return win - (now - q[0]) if q is not None and len(q) >= n else None
 
 
-def _limited(request: Request, fresh: bool) -> JSONResponse | None:
+def _limited(request: Request, fresh: bool, kind: str = "lookup") -> JSONResponse | None:
     ip, now = _client_ip(request), time.monotonic()
-    checks = [(f"lookup:{ip}", "lookup")] + (
+    # the first-screen hero has its own wider bucket, so a shared-NAT room still sees it (P1d QA r2)
+    checks = [(f"{kind}:{ip}", kind)] + (
         [(f"fresh:{ip}", "fresh"), ("fresh:*", "fresh_all")] if fresh else []
     )
     for bucket, kind in checks:
@@ -117,7 +118,9 @@ async def census() -> JSONResponse:
 @app.get("/api/hero")
 async def hero(request: Request, qty: float = Query(10000.0, ge=0, le=1e15)):
     """The first-screen lookup (CPOOL): the same live flow as /api/lookup, cached extraction."""
-    return await lookup(request, q=cn.HERO_Q, qty=qty, id=cn.HERO_ID, fresh=False)
+    if (blocked := _limited(request, False, kind="hero")) is not None:
+        return blocked
+    return await _lookup(request, cn.HERO_Q, qty, cn.HERO_ID, False)
 
 
 @app.get("/api/lookup")
@@ -130,6 +133,10 @@ async def lookup(
 ):
     if (blocked := _limited(request, fresh)) is not None:
         return blocked
+    return await _lookup(request, q, qty, id, fresh)
+
+
+async def _lookup(request: Request, q: str, qty: float, id: int | None, fresh: bool):  # noqa: A002
     if "application/json" in request.headers.get("accept", "") and "ndjson" not in request.headers.get(
         "accept", ""
     ):

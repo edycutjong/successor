@@ -1,7 +1,7 @@
 """C5 market state: is there a real market to exit through? Pure functions over CMC rows.
 
 alive = volume_24h > 0 AND at least one spot pair with outlier_detected == 0 and no exclusions. A flat 30-day
-        price (a peg) stays alive when valid pairs back it, with a note.
+        price (a peg) stays alive only when a valid pair with its own 24 h volume backs it, with a note.
 dead  = volume_24h == 0, or no valid pair, or a flat price with no pair check. A dead price never enters a ratio
         or a sell figure.
 unknown = CMC returned no price or no volume field (missing is not $0), or the old contract has no CMC id of its
@@ -62,6 +62,7 @@ class Market:
     valid_pairs: int | None = None
     pairs_checked: bool = True
     flat: bool | None = None
+    traded_pairs: int | None = None
     notes: list[str] = field(default_factory=list)
 
     def as_dict(self) -> dict:
@@ -96,6 +97,9 @@ def assess(
             and not p.get("exclusions")
         ]
         m.valid_pairs = len(pairs)
+        m.traded_pairs = sum(
+            1 for p in pairs if ((((p.get("quote") or {}).get("USD") or {}).get("volume_24h")) or 0) > 0
+        )
         if pairs:
             top = max(pairs, key=lambda p: ((p.get("quote") or {}).get("USD") or {}).get("volume_24h") or 0)
             m.top_venue = (top.get("exchange") or {}).get("name")
@@ -107,9 +111,9 @@ def assess(
         m.reason = "24 h volume is $0: CMC's price for it is stale"
     elif m.pairs_checked and not m.valid_pairs:
         m.reason = "no spot pair CMC counts (every pair is an outlier or excluded)"
-    elif m.flat and not m.valid_pairs:
-        # a flat print counts as stale only when no valid spot pair backs it; a peg that trades on counted
-        # pairs is a live market (a2a r03: a traded stablecoin must never reach R6)
+    elif m.flat and not m.traded_pairs:
+        # a flat print counts as stale unless a valid spot pair with its own 24 h volume backs it; a peg that trades
+        # on counted pairs is a live market (a2a r03), leftover pair rows with no volume are not (P1d QA r2)
         m.reason = "price flat over 30 days (CMC carries a stale price)"
     elif price <= 0:
         m.reason = "no price"
