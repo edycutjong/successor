@@ -79,7 +79,8 @@ function figures() {
   const qty = Number($("qty").value || 0);
   const k = v.qty ? qty / v.qty : 0;
   const parts = [];
-  if (v.value_sell_old_usd != null) parts.push(`sell old: <b>${usd(v.value_sell_old_usd * k)}</b>`);
+  // NOT VERIFIABLE has no verdict to act on: the old token's value is shown as a market figure, not as "sell old"
+  if (v.value_sell_old_usd != null) parts.push(`${v.verdict === "NOT_VERIFIABLE" ? "market value, no verdict" : "sell old"}: <b>${usd(v.value_sell_old_usd * k)}</b>`);
   if (v.value_swap_usd != null) parts.push(`swap: <b>${usd(v.value_swap_usd * k)}</b>`);
   if (v.tracker_value_usd != null) parts.push(`<span class="tracker">tracker value (CMC price on a dead market): ${usd(v.tracker_value_usd * k)}</span>`);
   parts.push(`<span class="tracker">for ${qty.toLocaleString("en-US")} ${esc(v.holding?.symbol)} · window ${esc(v.swap_window || "not stated")}</span>`);
@@ -103,7 +104,7 @@ function onEvent(ev) {
     else if (s === "notice") { $("notice").innerHTML = ev.notice ? noticeHtml(ev.notice, {}, {}) : ""; trace(t, `${STEP[s]}: ${ev.has_notice ? "notice found" : "no notice"}`); }
     else if (s === "reader") {
       if (ev.cache === "hit") trace(t, `agent: recorded extraction of this exact notice (${esc(ev.model)}, ${ev.llm_calls} call(s), ${esc(String(ev.recorded_at || "").slice(0, 10))})`, "agent");
-      else { trace(t, `agent reading the notice live (${esc(ev.model)}), about 10–20 s on a cold notice <span id="tick">0 s</span>`, "agent"); startTick(); }
+      else { trace(t, `agent reading the notice live (${esc(ev.model)}), about 20 s on a cold notice <span id="tick">0 s</span>`, "agent"); startTick(); }
     } else if (s === "follow_link") {
       const when = ev.recorded ? ` · read ${esc(String(ev.fetched_at || "").slice(0, 10))}` : "";
       trace(t, ev.ok ? `agent follows link ${esc(ev.host)} (allow-listed: a domain in CMC's urls) · ${ev.chars} chars${when}` : `agent link refused: ${esc(ev.error)} (${esc(ev.url)})`, ev.ok ? "agent" : "err");
@@ -165,7 +166,7 @@ function onEvent(ev) {
   }
 }
 
-function startTick() { const t0 = Date.now(); stopTick(); state.ticking = setInterval(() => { const el = $("tick"); if (el) el.textContent = `${Math.round((Date.now() - t0) / 1000)} s`; }, 1000); }
+function startTick() { const t0 = Date.now(); if (state.ticking) clearInterval(state.ticking); state.ticking = setInterval(() => { const el = $("tick"); if (el) el.textContent = `${Math.round((Date.now() - t0) / 1000)} s`; }, 1000); }
 function stopTick() { if (state.ticking) clearInterval(state.ticking); state.ticking = null; const el = $("tick"); if (el) el.removeAttribute("id"); }
 
 function reset(q) {
