@@ -106,6 +106,11 @@ def test_a2a_counterexample_passed_deadline_on_merged_page_is_not_swap():
 def test_rule_order_examples():
     base = dict(c2="verified", new_market="alive", ratio=1.0, new_price=1.0)
     assert decide(Facts(**base, old_market="alive", ratio_state="Q", old_price=1.155)).rule_id == "R8"
+    # old 4.8 % above the swap: under R8's 5 % margin, so SWAP, and the reason says why it is not SELL OLD
+    near = decide(
+        Facts(**base, old_market="alive", ratio_state="P", ratio_route="event-date", old_price=1.048)
+    )
+    assert near.rule_id == "R9" and "4.8% above the swap, under the 5% R8 needs for SELL OLD" in near.reason
     assert decide(Facts(**base, old_market="dead", ratio_state="P", ratio_route="event-date")).rule_id == "R9"
     assert decide(Facts(c2="verified", old_market="dead", new_market="dead")).rule_id == "R6"
     assert decide(Facts(c2="verified", same_id=True)).rule_id == "R4"

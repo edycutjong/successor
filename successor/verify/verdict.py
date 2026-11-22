@@ -188,5 +188,13 @@ def decide(f: Facts) -> Decision:
             if f.deadline_quoted
             else "the notice states no window: SWAP, if the issuer's swap is still open"
         )
-        return Decision(SWAP, "R9", f"ratio {r:g} price-confirmed ({f.ratio_route}); {window}")
+        margin = ""
+        if (
+            alive_old and priced and op > rr * np_
+        ):  # old above the swap, but under R8's margin: say why it is not SELL OLD
+            margin = (
+                f"; at CMC's quotes the old token is {(op / (rr * np_) - 1) * 100:.1f}% above the swap, "
+                f"under the {(PREMIUM - 1) * 100:.0f}% R8 needs for SELL OLD"
+            )
+        return Decision(SWAP, "R9", f"ratio {r:g} price-confirmed ({f.ratio_route}); {window}{margin}")
     return Decision(NOT_VERIFIABLE, "R10", _missing(f))
