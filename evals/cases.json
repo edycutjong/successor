@@ -65,7 +65,7 @@
    "verdict": "SWAP",
    "rule_id": "R9"
   },
-  "why": "stated 1:1 ('BitDAO has migrated 1:1 on Mantle (MNT)'); P from the event-date check on MNT's CMC listing date 2023-07-17 (code-derived): old/new 0.9969. Spec variant 4b: the recorded fixture carries event-date rows. P0c saw BIT at $0 volume; on 2026-11-22 BIT trades $93 / 24 h (SushiSwap), so C5 is alive and the size caveat fires"
+  "why": "stated 1:1 ('BitDAO has migrated 1:1 on Mantle (MNT)'); P from the event-date check on MNT's CMC listing date 2023-07-17 (code-derived): old/new 0.9969. The recorded fixture carries event-date rows. An earlier capture saw BIT at $0 volume; on 2026-11-22 BIT trades $93 / 24 h (SushiSwap), so C5 is alive and the size caveat fires"
  },
  {
   "n": 5,
