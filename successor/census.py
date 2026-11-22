@@ -73,7 +73,7 @@ def summary(doc: dict[str, Any] | None = None) -> dict[str, Any]:
         "verdicts": {v: dist.get(v, 0) for v in VERDICTS},
         "verdicts_total": len(warmed),
         "verdicts_errors": sum(1 for c in cs if c.get("verdict") == "ERROR"),
-        "verdicts_captured": max((c["verdict_captured_at"] for c in warmed), default=None),
+        "verdicts_captured": max((c.get("verdict_captured_at") or "" for c in warmed), default="") or None,
         "reader_opened_link": sum(1 for c in warmed if c.get("agent_needed")),
         "not_verifiable_reasons": dict(
             Counter(
