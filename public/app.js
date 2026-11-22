@@ -88,7 +88,7 @@ function figures() {
   const notes = ["excludes fees, gas and slippage"];
   const sell = v.value_sell_old_usd != null ? v.value_sell_old_usd * k : null;
   if (sell != null && v.old_volume_24h_usd && sell > 0.01 * v.old_volume_24h_usd) {
-    notes.push(`size caveat: ${usd(sell)} is over 1% of the old token's 24 h volume (${usd(v.old_volume_24h_usd)}); the sell figure may not be achievable at that size`);
+    notes.push(`size caveat: ${usd(sell)} is over 1% of the old token's 24 h volume (${usd(v.old_volume_24h_usd)}); this figure may not be achievable at that size`);
   }
   if (v.verdict === "SWAP" && !/open|until/i.test(v.swap_window || "")) notes.push("swap window not stated: SWAP holds only if the issuer's swap is still open");
   $("caveats").textContent = notes.join(" · ");
