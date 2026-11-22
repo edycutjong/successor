@@ -1,12 +1,75 @@
-name: ci
+name: CI/CD Pipeline
+
 on:
   push:
     branches: [main]
   pull_request:
+    branches: [main]
+  workflow_dispatch:
+
 permissions:
   contents: read
+
+# one run per branch; a newer push cancels the older one
+concurrency:
+  group: ci-${{ github.ref }}
+  cancel-in-progress: true
+
+env:
+  LIVE_URL: https://successor.edycu.dev
+
 jobs:
-  test:
+  # Stage 1: quality (parallel with stage 2)
+  quality:
+    name: 1 · Quality
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: astral-sh/setup-uv@v5
+        with:
+          python-version: "3.12"
+          enable-cache: true
+      - run: uv pip install --system -e '.[dev]'
+      - name: Lint (ruff)
+        run: ruff check --output-format=github . && ruff format --check .
+      - name: Typecheck (mypy)
+        run: mypy
+      - name: Tests + coverage (fails under 70 %)
+        run: pytest -q --cov --cov-report=term-missing --cov-report=xml
+      - name: "Unplug the keys: the demo path must fail"
+        run: pytest -q tests/test_unplugged.py tests/test_unplugged_http.py
+      - uses: actions/upload-artifact@v4
+        with:
+          name: coverage
+          path: coverage.xml
+
+  # Stage 2: security (parallel with stage 1)
+  security:
+    name: 2 · Security
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0 # gitleaks scans the whole history
+      - uses: astral-sh/setup-uv@v5
+        with:
+          python-version: "3.12"
+      - name: Dependency audit (pip-audit)
+        run: uv pip install --system -e . pip-audit && pip-audit --skip-editable
+      - name: Secret scan, full history (gitleaks)
+        uses: gitleaks/gitleaks-action@v2
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+      - name: No kitchen files in the repo
+        run: |
+          if git ls-files | grep -iE '(^|/)(specs|_ideas|_specs|_notes|\.claude)/|(^|/)(CLAUDE|AGENTS|PRODUCT|progress)\.md$|predict|radar|\.env$|\.pem$'; then
+            echo "kitchen or secret file tracked"; exit 1
+          fi
+
+  # Stage 3: build (needs 1 + 2)
+  build:
+    name: 3 · Build
+    needs: [quality, security]
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
@@ -14,15 +77,74 @@ jobs:
         with:
           python-version: "3.12"
       - run: uv pip install --system -e '.[dev]'
-      - run: ruff check .
-      - run: ruff format --check .
-      - run: pytest -q
-  secrets-scan:
+      - name: Offline eval replay (10 counted cases + variants; an eval, not the product)
+        run: python scripts/run_evals.py
+      - name: App imports and serves its static pages
+        run: |
+          SERVE_STATIC=1 python -c "from api.index import app; print(len(app.routes), 'routes')"
+          test -s public/index.html && test -s public/judge.html
+
+  # Stage 4: deploy to Vercel (main only; needs 3)
+  deploy:
+    name: 4 · Deploy
+    if: github.event_name == 'push' && github.ref == 'refs/heads/main'
+    needs: build
+    runs-on: ubuntu-latest
+    env:
+      VERCEL_TOKEN: ${{ secrets.VERCEL_TOKEN }}
+      VERCEL_ORG_ID: ${{ secrets.VERCEL_ORG_ID }}
+      VERCEL_PROJECT_ID: ${{ secrets.VERCEL_PROJECT_ID }}
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: "22"
+      - run: npm i -g vercel@latest
+      - run: vercel pull --yes --environment=production --token="$VERCEL_TOKEN"
+      - run: vercel build --prod --token="$VERCEL_TOKEN"
+      - run: vercel deploy --prebuilt --prod --token="$VERCEL_TOKEN"
+
+  # Stage 5: E2E on the live URL (the judged flow, real CMC calls, no mocks)
+  e2e:
+    name: 5 · E2E (live URL)
+    needs: [build, deploy]
+    # run after a deploy; on pull requests (deploy skipped) run against the current production
+    if: ${{ !cancelled() && needs.build.result == 'success' && (needs.deploy.result == 'success' || needs.deploy.result == 'skipped') }}
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
+      - uses: astral-sh/setup-uv@v5
         with:
-          fetch-depth: 0
-      - uses: gitleaks/gitleaks-action@v2
-        env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          python-version: "3.12"
+      - run: uv pip install --system -e '.[dev,e2e]'
+      - run: playwright install --with-deps chromium
+      - name: Browser tests against ${{ env.LIVE_URL }}
+        run: E2E_BASE_URL="$LIVE_URL" pytest e2e -q -p no:cacheprovider --override-ini="norecursedirs="
+      - uses: actions/upload-artifact@v4
+        if: failure()
+        with:
+          name: e2e-report
+          path: test-results/
+
+  # Stage 6: performance gates on the live URL
+  perf:
+    name: 6 · Performance
+    needs: e2e
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: astral-sh/setup-uv@v5
+        with:
+          python-version: "3.12"
+      - run: uv pip install --system httpx
+      - name: "Cached lookup p50/p95, gate p95 <= 3 s"
+        run: python scripts/bench.py "$LIVE_URL" CPOOL 12 --gate-p95 3
+      - uses: actions/setup-node@v4
+        with:
+          node-version: "22"
+      - name: Lighthouse (accessibility is a hard gate)
+        run: npx --yes @lhci/cli@0.14 autorun --config=lighthouserc.json
+      - uses: actions/upload-artifact@v4
+        with:
+          name: bench
+          path: docs/proof/bench/

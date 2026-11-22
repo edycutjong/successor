@@ -1,6 +1,7 @@
 # secrets
 .env
 .env.*
+!.env.example
 *.pem
 *.key
 # tooling
@@ -29,3 +30,10 @@ progress.md
 predictions*
 radar*
 *.egg-info/
+# test / perf output
+playwright-report/
+test-results/
+.lighthouseci/
+coverage.xml
+.coverage
+.mypy_cache/

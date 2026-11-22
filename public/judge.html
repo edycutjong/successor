@@ -1,0 +1,71 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Successor: for judges</title>
+<meta name="description" content="Thirty seconds, no login, no keys: what Successor claims, the clicks that prove it, and the receipts.">
+<link rel="icon" href="/icon.svg" type="image/svg+xml">
+<link rel="stylesheet" href="/board.css">
+<style>
+  main.judge { max-width: 46rem; margin: 0 auto; padding: 1.5rem 1rem 4rem; line-height: 1.55; }
+  main.judge h1 { font-family: "Big Shoulders Display", sans-serif; letter-spacing: .02em; }
+  main.judge h2 { margin-top: 2rem; }
+  main.judge code, main.judge pre { font-family: "Fragment Mono", monospace; font-size: .9em; }
+  main.judge pre { overflow-x: auto; padding: .75rem 1rem; border: 1px solid currentColor; }
+  main.judge table { border-collapse: collapse; width: 100%; }
+  main.judge th, main.judge td { text-align: left; padding: .35rem .5rem; border-bottom: 1px solid rgba(128,128,128,.4); }
+</style>
+</head>
+<body>
+<header class="top"><a class="mark" href="/">SUCCESSOR</a></header>
+<main class="judge" id="judge">
+  <h1>For judges</h1>
+
+  <h2>The claim</h2>
+  <p id="claim">CoinMarketCap says a coin migrated, but only in prose. Successor reads the notice, finds the successor token, checks it against CMC's own rows, and gives the holder one verdict: SWAP, SELL OLD, WRITE OFF, or NOT VERIFIABLE.</p>
+
+  <h2>The 30-second path (no login, no keys, nothing to install)</h2>
+  <ol>
+    <li>Open <a href="/">successor.edycu.dev</a> and click the <strong>CPOOL</strong> chip. The board streams the CMC notice, the Reader's proposal, the code checks and the verdict. Expected when this page was written (2026-11-22): <strong>SELL OLD</strong> (rule R8), because CMC's quotes put the old token above the 1:1 swap. Verdicts follow the market, so the capture time is on screen.</li>
+    <li>Click <strong>Receipt</strong>: the CMC calls behind the verdict, with a copyable curl.</li>
+    <li>Click the <strong>AGIX</strong> chip: the Reader follows the notice's link, code confirms the ratio against CMC prices on the event date, verdict <strong>SWAP</strong> (R9).</li>
+    <li>Scroll to the <strong>census</strong>: every notice in CMC's top 2000, with the verdict code gives each. Most end NOT VERIFIABLE, and the page says why.</li>
+    <li>Prefer a terminal? <code>curl -N 'https://successor.edycu.dev/api/lookup?q=CPOOL&amp;qty=10000'</code></li>
+  </ol>
+
+  <h2>Receipts</h2>
+  <table>
+    <tr><th>What</th><th>Value</th><th>Where it comes from</th></tr>
+    <tr><td>Live health</td><td><a href="/api/health">/api/health</a></td><td>CMC key status, LLM model, cache size, build SHA, all with timestamps</td></tr>
+    <tr><td>Census</td><td><a href="/api/census">/api/census</a></td><td>161 notices in the top 2000; verdicts, buckets and capture time live</td></tr>
+    <tr><td>Lookup latency (cached Reader read, live CMC calls)</td><td>see <code>docs/proof/bench/</code> in the repo</td><td><code>python scripts/bench.py https://successor.edycu.dev CPOOL 12</code></td></tr>
+    <tr><td>Tests and evals</td><td>see the README "Engineering Rigor" table</td><td><code>pytest -q</code>, <code>python scripts/run_evals.py</code></td></tr>
+    <tr><td>Unplug test</td><td>no CMC key: an error and no verdict</td><td><code>tests/test_unplugged.py</code>, <code>tests/test_unplugged_http.py</code></td></tr>
+  </table>
+
+  <h2>Reproduce (the real path)</h2>
+  <pre>git clone https://github.com/edycutjong/successor &amp;&amp; cd successor
+pip install -e .
+export CMC_API_KEY=...  DASHSCOPE_API_KEY=...
+uvicorn api.index:app
+# open http://localhost:8000 and click CPOOL</pre>
+  <p>This path calls the real CoinMarketCap Pro API and Qwen. The deterministic offline replay (<code>python scripts/run_evals.py</code>) is a separate eval run over recorded rows, not the product.</p>
+
+  <h2>Honest limitations</h2>
+  <ul>
+    <li>Most notices cannot be confirmed from CMC's data alone and end NOT VERIFIABLE; the census page counts them.</li>
+    <li>Verdicts are market-sensitive and can flip between runs; each one carries its capture time.</li>
+    <li>The Reader is slow on a notice it has not seen (seconds, not milliseconds); cached notices answer in about a second.</li>
+  </ul>
+
+  <h2>Links</h2>
+  <ul>
+    <li><a href="https://github.com/edycutjong/successor">Repository</a> and its <a href="https://github.com/edycutjong/successor#readme">README</a></li>
+    <li><a href="/">Live app</a></li>
+    <li><a href="https://dorahacks.io/hackathon/coinmarketcap-api-202611/detail">CMC API Hackathon, Round 2</a></li>
+  </ul>
+  <p>Not financial advice. Values exclude fees, gas and slippage.</p>
+</main>
+</body>
+</html>

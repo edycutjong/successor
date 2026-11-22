@@ -1,0 +1,22 @@
+name: live-check
+
+# Daily proof that the judged URL still answers a real verdict (judging runs to 25 Dec 2026).
+on:
+  schedule:
+    - cron: "23 5 * * *"
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  live:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: astral-sh/setup-uv@v5
+        with:
+          python-version: "3.12"
+      - run: uv pip install --system -e '.[dev,e2e]'
+      - run: playwright install --with-deps chromium
+      - run: E2E_BASE_URL=https://successor.edycu.dev pytest e2e -q -p no:cacheprovider --override-ini="norecursedirs="
