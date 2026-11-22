@@ -143,7 +143,7 @@ Successor's own endpoints: `GET /api/lookup?q=&qty=&id=&fresh=` (NDJSON trace, o
 
 Why this is not "a plain API call": the information is not in a field. `info` returns prose; no endpoint returns "the
 successor of CPOOL is CLEAR, 1:1". The agent has to read, propose and then be checked by the endpoints above. `docs/DX-REPORT.md`
-lists what made this possible and what got in the way (`quotes/latest` stamps a fresh `last_updated` on a $0-volume coin, which is how a tracker ends up showing AGIX at full price (`docs/proof/assets/lookup-AGIX-2026-11-22T0349Z.ndjson`); a checksummed-address 400 with a misleading message, `date_added`
+lists what made this possible and what got in the way (`quotes/latest` stamps a fresh `last_updated` on a $0-volume coin, which is why a tracker-style last price can look current (AGIX: $0 of 24 h volume, `last_updated` a minute before the capture, `docs/proof/assets/lookup-AGIX-2026-11-22T0349Z.ndjson`); a checksummed-address 400 with a misleading message, `date_added`
 copied from old to new coin, `convert=EUR` scaling supply, and the notice being free text).
 
 ## 📊 Engineering Rigor
