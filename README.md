@@ -162,7 +162,7 @@ copied from old to new coin, `convert=EUR` scaling supply, and the notice being 
 
 The census numbers are the honest headline: **most notices cannot be confirmed from CMC's data alone.** 130 of 161 end in NOT
 VERIFIABLE, and the page says why (61: old and new token share one CMC page, 26: the proposed successor fails a check against CMC's records, such as a quoted contract no CMC coin carries, 22: the notice
-names no successor, 10: no ratio or announcement unfetchable). A tool that said SWAP for those would be guessing.
+names no successor, 10: no ratio or announcement unfetchable, 11 more: no live successor market 5, a "swap" the notice text does not show 3, a quote not in the notice 2, other 1). A tool that said SWAP for those would be guessing.
 
 ### Attacks defeated
 

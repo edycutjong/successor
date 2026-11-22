@@ -31,6 +31,7 @@
     <li>Click <strong>Receipt</strong>: the CMC calls behind the verdict, with a copyable curl.</li>
     <li>Click the <strong>AGIX</strong> chip: the trace shows the Reader's recorded run (the trace labels it "recorded extraction") following the notice's link to fetch.ai; code confirms the ratio against CMC prices on the event date, live, verdict <strong>SWAP</strong> (R9).</li>
     <li>Type <strong>GAS</strong>: its notice quotes a contract (<code>0xd2a4…76cf</code>) that no CMC coin carries. Code finds no CMC coin with that contract, so check C2 fails and the verdict is <strong>NOT VERIFIABLE</strong> (R5), not a guess. The notice may be right; CMC's <code>info?address=</code> knows that hash in neither byte order, so CMC's data cannot confirm it (captured 2026-11-22 07:11 UTC; raw stream <code>docs/proof/assets/lookup-GAS-2026-11-22T0711Z.ndjson</code>).</li>
+    <li>Optional, the agent live: on AGIX press <strong>Re-read live</strong>. The Reader runs now (qwen4-max, live), not from the recording. Three fresh runs on 2026-11-22 each ended <strong>SWAP</strong> (R9) in 18 to 26 s server time. Fresh reads are limited to 3 per 10 minutes per client; if it errors, the replay below is the same flow.</li>
     <li>Scroll to the <strong>census</strong>: every notice in CMC's top 2000, with the verdict code gives each. Most end NOT VERIFIABLE, and the page says why.</li>
     <li>Prefer a terminal? <code>curl -N 'https://successor.edycu.dev/api/lookup?q=CPOOL&amp;qty=10000'</code></li>
   </ol>

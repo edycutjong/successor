@@ -1,0 +1,216 @@
+{
+ "what": "Three fresh (uncached) AGIX lookups on the live deployment: GET /api/lookup?q=AGIX&qty=10000&fresh=1 with Accept: application/json. Each run calls qwen4-max live (Reader) and CMC live (Inspector).",
+ "runs": [
+  {
+   "captured_at": "2026-11-22T07:13:29Z",
+   "server_t_ms": 25635,
+   "verdict": "SWAP",
+   "rule_id": "R9",
+   "llm_source": "live",
+   "proposal": {
+    "event_type": "merger",
+    "successor_name": {
+     "value": "Artificial Superintelligence Alliance",
+     "evidence_quote": "FET trading remains uninterrupted as the project rebrands to Artificial Superintelligence Alliance across platforms including CoinMarketCap and CoinGecko.",
+     "source": "announcement"
+    },
+    "successor_symbol": {
+     "value": "FET",
+     "evidence_quote": "Today, SingularityNET's $AGIX and Ocean Protocol's $OCEAN tokens merge into $FET. FET trading remains uninterrupted as the project rebrands to Artificial Superintelligence Alliance across platforms including CoinMarketCap and CoinGecko.",
+     "source": "announcement"
+    },
+    "new_chain": {
+     "value": null,
+     "evidence_quote": null,
+     "source": "notice"
+    },
+    "new_contract": {
+     "value": null,
+     "evidence_quote": null,
+     "source": "notice"
+    },
+    "old_contract": {
+     "value": null,
+     "evidence_quote": null,
+     "source": "notice"
+    },
+    "ratio_new_per_old": {
+     "value": 0.43335,
+     "evidence_quote": "$AGIX tokens migrate to $ASI, at a conversion rate of 1 $AGIX to 0.433350 $ASI",
+     "source": "announcement"
+    },
+    "effective_date": {
+     "value": "2024-07-01",
+     "evidence_quote": "Zug and Singapore \u2013 July 1, 2024 \u2013The Artificial Superintelligence Alliance, comprising SingularityNET, Fetch.ai, and Ocean Protocol, has today announced the launch of the multi-coin merger, forming the unified token.",
+     "source": "announcement"
+    },
+    "deadline": {
+     "value": null,
+     "evidence_quote": null,
+     "source": "notice"
+    },
+    "links_to_follow": [],
+    "unstated": [
+     "new_chain",
+     "new_contract",
+     "old_contract",
+     "deadline"
+    ]
+   },
+   "c4": {
+    "id": "C4",
+    "label": "swap ratio",
+    "state": "verified",
+    "value": "P: event day 2024-07-01: old/new = 0.430753 vs stated 0.43335 (-0.6%) \u2192 confirms",
+    "rows": [
+     "r5",
+     "r10",
+     "r11"
+    ]
+   },
+   "reason": "ratio 0.43335 price-confirmed (event-date); the notice states no window: SWAP, if the issuer's swap is still open"
+  },
+  {
+   "captured_at": "2026-11-22T07:13:55Z",
+   "server_t_ms": 18101,
+   "verdict": "SWAP",
+   "rule_id": "R9",
+   "llm_source": "live",
+   "proposal": {
+    "event_type": "merger",
+    "successor_name": {
+     "value": "Artificial Superintelligence Alliance",
+     "evidence_quote": "Together, they form the new project name: Artificial Superintelligence Alliance",
+     "source": "announcement"
+    },
+    "successor_symbol": {
+     "value": "ASI",
+     "evidence_quote": "new token ticker: $ASI",
+     "source": "announcement"
+    },
+    "new_chain": {
+     "value": null,
+     "evidence_quote": null,
+     "source": "announcement"
+    },
+    "new_contract": {
+     "value": null,
+     "evidence_quote": null,
+     "source": "announcement"
+    },
+    "old_contract": {
+     "value": null,
+     "evidence_quote": null,
+     "source": "announcement"
+    },
+    "ratio_new_per_old": {
+     "value": 0.43335,
+     "evidence_quote": "$AGIX tokens migrate to $ASI, at a conversion rate of 1 $AGIX to 0.433350 $ASI",
+     "source": "announcement"
+    },
+    "effective_date": {
+     "value": "2024-07-01",
+     "evidence_quote": "Zug and Singapore \u2013 July 1, 2024 \u2013The Artificial Superintelligence Alliance, comprising SingularityNET, Fetch.ai, and Ocean Protocol, has today announced the launch of the multi-coin merger, forming the unified token.",
+     "source": "announcement"
+    },
+    "deadline": {
+     "value": null,
+     "evidence_quote": null,
+     "source": "announcement"
+    },
+    "links_to_follow": [
+     "https://fetch.ai/blog/artificial-superintelligence-alliance-token-merger-approved",
+     "https://docs.superintelligence.io/artificial-superintelligence-alliance/artificial-superintelligence-alliance-unveil-token-with-migration-dapp-tools-now-live"
+    ],
+    "unstated": [
+     "new_chain",
+     "new_contract",
+     "old_contract",
+     "deadline"
+    ]
+   },
+   "c4": {
+    "id": "C4",
+    "label": "swap ratio",
+    "state": "verified",
+    "value": "P: event day 2024-07-01: old/new = 0.430753 vs stated 0.43335 (-0.6%) \u2192 confirms",
+    "rows": [
+     "r6",
+     "r11",
+     "r12"
+    ]
+   },
+   "reason": "ratio 0.43335 price-confirmed (event-date); the notice states no window: SWAP, if the issuer's swap is still open"
+  },
+  {
+   "captured_at": "2026-11-22T07:23:57Z",
+   "server_t_ms": 20439,
+   "verdict": "SWAP",
+   "rule_id": "R9",
+   "llm_source": "live",
+   "proposal": {
+    "event_type": "merger",
+    "successor_name": {
+     "value": "Artificial Superintelligence Alliance",
+     "evidence_quote": "Together, they form the new project name: Artificial Superintelligence Alliance",
+     "source": "announcement"
+    },
+    "successor_symbol": {
+     "value": "ASI",
+     "evidence_quote": "the new project name: Artificial Superintelligence with new token ticker: $ASI",
+     "source": "announcement"
+    },
+    "new_chain": {
+     "value": null,
+     "evidence_quote": null,
+     "source": "announcement"
+    },
+    "new_contract": {
+     "value": null,
+     "evidence_quote": null,
+     "source": "announcement"
+    },
+    "old_contract": {
+     "value": null,
+     "evidence_quote": null,
+     "source": "announcement"
+    },
+    "ratio_new_per_old": {
+     "value": 0.43335,
+     "evidence_quote": "$AGIX tokens migrate to $ASI, at a conversion rate of 1 $AGIX to 0.433350 $ASI",
+     "source": "announcement"
+    },
+    "effective_date": {
+     "value": "2024-07-01",
+     "evidence_quote": "Zug and Singapore \u2013 July 1, 2024 \u2013The Artificial Superintelligence Alliance, comprising SingularityNET, Fetch.ai, and Ocean Protocol, has today announced the launch of the multi-coin merger",
+     "source": "announcement"
+    },
+    "deadline": {
+     "value": null,
+     "evidence_quote": null,
+     "source": "announcement"
+    },
+    "links_to_follow": [],
+    "unstated": [
+     "new_chain",
+     "new_contract",
+     "old_contract",
+     "deadline"
+    ]
+   },
+   "c4": {
+    "id": "C4",
+    "label": "swap ratio",
+    "state": "verified",
+    "value": "P: event day 2024-07-01: old/new = 0.430753 vs stated 0.43335 (-0.6%) \u2192 confirms",
+    "rows": [
+     "r6",
+     "r11",
+     "r12"
+    ]
+   },
+   "reason": "ratio 0.43335 price-confirmed (event-date); the notice states no window: SWAP, if the issuer's swap is still open"
+  }
+ ],
+ "full_response_of_run_3": "lookup-AGIX-fresh-2026-11-22T0723Z.json"
+}
