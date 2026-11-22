@@ -8,6 +8,7 @@ import sys
 import time
 from collections import defaultdict, deque
 from pathlib import Path
+from typing import Any
 
 import httpx
 from fastapi import FastAPI, Query, Request
@@ -75,20 +76,29 @@ def _limited(request: Request, fresh: bool, kind: str = "lookup") -> JSONRespons
     return None
 
 
+HEALTH_TTL_S = 60.0
+_HEALTH_CMC: dict[str, Any] = {"at": 0.0, "part": None}
+
+
 @app.get("/api/health")
 async def health() -> JSONResponse:
-    async with CmcClient() as cmc:
-        try:
-            r = await cmc.key_info()
-            d = r.data or {}
-            cmc_part = {
-                "ok": r.ok,
-                "plan_credit_limit_monthly": (d.get("plan") or {}).get("credit_limit_monthly"),
-                "credits_left": ((d.get("usage") or {}).get("current_month") or {}).get("credits_left"),
-                "checked_at": r.captured_at,
-            }
-        except (RuntimeError, httpx.HTTPError) as exc:
-            cmc_part = {"ok": False, "error": f"{type(exc).__name__}: {exc}"[:200]}
+    # /api/health is public and unthrottled: CMC key/info is asked at most once a minute per instance (checked_at says when)
+    now = time.monotonic()
+    if _HEALTH_CMC["part"] is None or now - _HEALTH_CMC["at"] > HEALTH_TTL_S:
+        async with CmcClient() as cmc:
+            try:
+                r = await cmc.key_info()
+                d = r.data or {}
+                part: dict[str, object] = {
+                    "ok": r.ok,
+                    "plan_credit_limit_monthly": (d.get("plan") or {}).get("credit_limit_monthly"),
+                    "credits_left": ((d.get("usage") or {}).get("current_month") or {}).get("credits_left"),
+                    "checked_at": r.captured_at,
+                }
+            except (RuntimeError, httpx.HTTPError) as exc:
+                part = {"ok": False, "error": f"{type(exc).__name__}: {exc}"[:200]}
+        _HEALTH_CMC.update(at=now, part=part)
+    cmc_part = _HEALTH_CMC["part"]
     llm = load_config()
     return JSONResponse(
         {
