@@ -6,20 +6,56 @@
 <title>Successor: for judges</title>
 <meta name="description" content="Thirty seconds, no login, no keys: what Successor claims, the clicks that prove it, and the receipts.">
 <link rel="icon" href="/icon.svg" type="image/svg+xml">
-<link rel="stylesheet" href="/board.css">
+<meta name="theme-color" content="#130E14">
+<link rel="preload" href="/fonts/sofia-sans-extra-condensed-latin.woff2" as="font" type="font/woff2" crossorigin>
+<link rel="preload" href="/fonts/sofia-sans-latin.woff2" as="font" type="font/woff2" crossorigin>
+<link rel="stylesheet" href="/cathode.css">
 <style>
-  main.judge { max-width: 46rem; margin: 0 auto; padding: 1.5rem 1rem 4rem; line-height: 1.55; }
-  main.judge h1 { font-family: "Big Shoulders Display", sans-serif; letter-spacing: .02em; }
-  main.judge h2 { margin-top: 2rem; }
-  main.judge code, main.judge pre { font-family: "Fragment Mono", monospace; font-size: .9em; }
-  main.judge pre { overflow-x: auto; padding: .75rem 1rem; border: 1px solid currentColor; }
-  main.judge table { border-collapse: collapse; width: 100%; }
-  main.judge th, main.judge td { text-align: left; padding: .35rem .5rem; border-bottom: 1px solid rgba(128,128,128,.4); }
+:root {
+  --bg: #130E14; --bench: #1B141B; --bench-2: #221922; --gauze: #8A6A45; --ghost: rgba(196, 160, 118, .2);
+  --bone: #EFE9DC; --muted: #9A9284; --lit: #FF7A2A; --lit-hot: #FFC08A; --after: #C98A4B; --refused: #F06A55;
+  --rule: rgba(138, 106, 69, .32);
+  --font-display: "Sofia Sans Extra Condensed", "Arial Narrow", sans-serif;
+  --font-body: "Sofia Sans", "Helvetica Neue", Arial, sans-serif;
+  --font-data: "Red Hat Mono", Menlo, monospace;
+  --glow: 0 0 2px #fff8, 0 0 8px rgba(255, 196, 140, .95), 0 0 22px rgba(255, 140, 60, .9), 0 0 52px rgba(255, 110, 30, .65);
+  --ink-deep: #0D0C0A;  /* shared with the board: terminal, socket and deck ground */
+  color-scheme: dark;
+}
+</style>
+<style>
+  main.judge { position: relative; z-index: 1; max-width: 50rem; margin: 0 auto; padding: 2.5rem 1rem 5rem; line-height: 1.6; }
+  main.judge h1 { font: 300 clamp(56px, 8vw, 96px)/.9 var(--font-display); text-transform: uppercase; margin: .4rem 0 1.6rem; }
+  main.judge h1 + h2 { margin-top: 0; }
+  main.judge h2 { font: 500 30px/1.05 var(--font-display); letter-spacing: .06em; text-transform: uppercase; margin: 2.6rem 0 .9rem; padding-top: 1.1rem; border-top: 1px solid var(--rule); }
+  main.judge #claim { font-size: 21px; line-height: 1.5; color: var(--bone); }
+  main.judge p, main.judge li, main.judge td { color: var(--bone); }
+  main.judge ol, main.judge ul { padding-left: 1.4rem; }
+  main.judge li { margin: .55rem 0; }
+  main.judge li::marker { color: var(--muted); font-family: var(--font-display); }
+  main.judge strong { color: #fff; font-weight: 700; }
+  main.judge a { color: var(--bone); text-decoration: underline; text-decoration-color: var(--gauze); text-underline-offset: 3px; text-decoration-thickness: 1.5px; transition: text-decoration-color .15s; }
+  main.judge a:hover { text-decoration-color: var(--bone); }
+  main.judge code, main.judge pre { font-family: var(--font-data); font-size: .88em; color: var(--bone); }
+  main.judge li code, main.judge p code { overflow-wrap: anywhere; }
+  main.judge pre { overflow-x: auto; padding: .9rem 1rem; border: 1px solid var(--rule); background: var(--ink-deep); line-height: 1.7; }
+  main.judge table { border-collapse: collapse; width: 100%; font-size: 15.5px; }
+  main.judge th { text-align: left; font: 600 14px var(--font-display); letter-spacing: .18em; text-transform: uppercase; color: var(--muted); padding: .5rem .5rem; border-bottom: 1px solid var(--gauze); }
+  main.judge td { text-align: left; vertical-align: top; padding: .55rem .5rem; border-bottom: 1px solid var(--rule); }
+  main.judge .tablewrap { overflow-x: auto; }
+  .eyebrow-j { margin: 0; font: 600 15px var(--font-display); letter-spacing: .3em; text-transform: uppercase; color: var(--muted); }
 </style>
 </head>
 <body>
-<header class="top"><a class="mark" href="/">SUCCESSOR</a></header>
+<a class="skip" href="#judge">Skip to content</a>
+<div class="ct-mesh" aria-hidden="true"></div>
+<header class="ct-top">
+  <a class="ct-mark" href="/about" aria-label="Successor, about"><img src="/icon.svg" alt="" width="30" height="30">SUCCESSOR</a>
+  <nav class="ct-nav" aria-label="Pages"><a href="/about">About</a><a href="/pitch">Pitch deck</a><a href="/architecture">Architecture</a></nav>
+  <a class="ct-btn solid" href="/">Live board</a>
+</header>
 <main class="judge" id="judge">
+  <p class="eyebrow-j">Judge path · no login, no keys</p>
   <h1>For judges</h1>
 
   <h2>The claim</h2>
@@ -38,7 +74,7 @@
   <p>If a live lookup errors or runs long (CMC or the model slow), the board says so and shows no verdict. <a href="/about">The landing page</a> replays a captured CPOOL lookup, labelled with its capture time (2026-11-22 03:49 UTC); the raw streams are in <code>docs/proof/assets/</code>.</p>
 
   <h2>Receipts</h2>
-  <table>
+  <div class="tablewrap"><table>
     <tr><th>What</th><th>Value</th><th>Where it comes from</th></tr>
     <tr><td>Live health</td><td><a href="/api/health">/api/health</a></td><td>CMC key status, LLM model, cache size, build SHA, all with timestamps</td></tr>
     <tr><td>Census</td><td><a href="/api/census">/api/census</a></td><td>161 notices in the top 2000; verdicts, buckets and capture time live</td></tr>
@@ -46,7 +82,7 @@
     <tr><td>Tests and evals</td><td>83 tests (82 % coverage); evals 10/10 counted + 4/4 variants</td><td><code>pytest -q</code>, <code>python scripts/run_evals.py</code></td></tr>
     <tr><td>Live-URL browser tests</td><td>open, click a coin, assert a verdict and receipt</td><td><code>e2e/</code>, <code>make e2e</code></td></tr>
     <tr><td>Unplug test</td><td>no CMC key: an error and no verdict</td><td><code>tests/test_unplugged.py</code>, <code>tests/test_unplugged_http.py</code>, <code>make unplug-e2e</code></td></tr>
-  </table>
+  </table></div>
 
   <h2>Reproduce (the real path)</h2>
   <pre>git clone https://github.com/edycutjong/successor &amp;&amp; cd successor
