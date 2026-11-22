@@ -1,6 +1,6 @@
-"""DX probe: /v2/cryptocurrency/info?address= with an EIP-55 checksummed address vs the same address lowercased.
+"""DX probe: info?address= with an EIP-55 checksummed address vs the same address lowercased.
 
-    python scripts/probe_address_case.py   # writes docs/proof/spike/08-address-case-{checksum,lower}.json
+python scripts/probe_address_case.py   # writes docs/proof/spike/08-address-case-{checksum,lower}.json
 """
 
 from __future__ import annotations
