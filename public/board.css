@@ -106,7 +106,10 @@ main { max-width: 1180px; margin: 0 auto; padding: 1.5rem clamp(1rem, 4vw, 3rem)
   .flap { width: 1.7rem; height: 2.6rem; font-size: 1.7rem; } .verdict .flap { width: 1.6rem; }
   .check { grid-template-columns: 1.2rem 1fr; } .check .value, .check .rows { grid-column: 2; }
   .drawer { height: 100vh; }
-  .lookup button, .chips button, .ghost { min-height: 44px; }
+  .lookup button, .chips button, .ghost, .health { min-height: 44px; }
+  .trace-lines, .trace-lines li, .trace-lines span { white-space: normal; overflow-wrap: anywhere; min-width: 0; }
+  .chip { min-height: 44px; min-width: 44px; padding: .3rem .6rem; }
+  .check .value, .check .rows, .check { overflow-wrap: anywhere; min-width: 0; }
 }
 @media (prefers-reduced-motion: reduce) { .flap.turn { animation: none; } * { transition: none !important; } }
 
@@ -141,3 +144,5 @@ main { max-width: 1180px; margin: 0 auto; padding: 1.5rem clamp(1rem, 4vw, 3rem)
 .ctable .why { color: var(--muted); font-size: .8rem; }
 @media (max-width: 720px) { .ctable .hide-s { display: none; } .ctable button, .filt { min-height: 44px; } }
 @media (prefers-reduced-motion: reduce) { .filt, .ctable button { transition: none; } }
+
+.mark { transition: color .15s; } .mark:hover { color: var(--before); } .mark:active { transform: translateY(1px); }
