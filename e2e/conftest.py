@@ -39,6 +39,22 @@ def browser_ctx():
 
     with sync_playwright() as p:
         browser = p.chromium.launch()
+        if (
+            BYPASS
+        ):  # every context, including ones tests open themselves, sends the bypass header to BASE only
+            _new_context = browser.new_context
+
+            def new_context(*args, **kwargs):
+                ctx = _new_context(*args, **kwargs)
+                ctx.route(
+                    f"{BASE}/**",
+                    lambda route: route.continue_(
+                        headers={**route.request.headers, "x-vercel-protection-bypass": BYPASS}
+                    ),
+                )
+                return ctx
+
+            browser.new_context = new_context
         yield browser
         browser.close()
 
