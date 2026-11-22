@@ -505,6 +505,8 @@ async def _run(
         olds = {str(n).upper() for n in old_names if n}
         new_names += [t for t in re.findall(r"\$([A-Z][A-Z0-9]{1,9})\b", succ_notice) if t not in olds]
     binding = bind_ratio(c3.quote("ratio_new_per_old"), stated, old_names, [str(n) for n in new_names if n])
+    if binding.state == "bound":
+        stated = binding.parsed  # the number parsed from the quote, never the Reader's float (a2a r03)
     eff = parse_iso_date(c3.value("effective_date"))
     eff_src = (c3.kept.get("effective_date") or {}).get("source")
     new_info = infos.get(str(succ["id"])) if succ else None
@@ -620,6 +622,7 @@ async def _run(
         announcement_unfetchable=bool(
             (cached or {}).get("link_errors") or (session.link_errors if session else [])
         ),
+        c3_dropped=list(c3.dropped),
     )
     d = decide(facts)
 

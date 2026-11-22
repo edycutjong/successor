@@ -1,13 +1,16 @@
 """C5 market state: is there a real market to exit through? Pure functions over CMC rows.
 
-alive = volume_24h > 0 AND at least one spot pair with outlier_detected == 0 and no exclusions AND the price
-        is not flat over 30 days.
-dead  = volume_24h == 0, or no valid pair, or a flat price. A dead price never enters a ratio or a sell figure.
-unknown = the old contract has no CMC id of its own (merged page), decided by the caller.
+alive = volume_24h > 0 AND at least one spot pair with outlier_detected == 0 and no exclusions. A flat 30-day
+        price (a peg) stays alive when valid pairs back it, with a note.
+dead  = volume_24h == 0, or no valid pair, or a flat price with no pair check. A dead price never enters a ratio
+        or a sell figure.
+unknown = CMC returned no price or no volume field (missing is not $0), or the old contract has no CMC id of its
+        own (merged page, decided by the caller).
 """
 
 from __future__ import annotations
 
+import math
 from dataclasses import dataclass, field
 from statistics import median
 
@@ -65,11 +68,20 @@ class Market:
         return {k: v for k, v in self.__dict__.items() if v is not None and v != []}
 
 
+def _num(v) -> float | None:
+    """Finite non-negative numbers only; anything else counts as missing."""
+    try:
+        f = float(v)
+    except (TypeError, ValueError):
+        return None
+    return f if math.isfinite(f) and f >= 0 else None
+
+
 def assess(
     quote_row: dict | None, pairs_data: dict | None, closes: list[dict], *, pairs_denied=False
 ) -> Market:
     u = usd(quote_row)
-    price, vol = u.get("price"), u.get("volume_24h")
+    price, vol = _num(u.get("price")), _num(u.get("volume_24h"))
     m = Market("dead", "", price=price, volume_24h=vol, last_updated=u.get("last_updated"))
     m.flat = is_flat(closes)
     if pairs_denied or pairs_data is None:
@@ -87,15 +99,25 @@ def assess(
         if pairs:
             top = max(pairs, key=lambda p: ((p.get("quote") or {}).get("USD") or {}).get("volume_24h") or 0)
             m.top_venue = (top.get("exchange") or {}).get("name")
-    if not vol:
+    if vol is None or price is None:
+        # a missing field is not an observed $0 (a2a r03): unknown keeps R6 (WRITE OFF) and R9 (SWAP) off
+        m.state = "unknown"
+        m.reason = "CMC returned no " + ("24 h volume" if vol is None else "price") + " for it"
+    elif not vol:
         m.reason = "24 h volume is $0: CMC's price for it is stale"
     elif m.pairs_checked and not m.valid_pairs:
         m.reason = "no spot pair CMC counts (every pair is an outlier or excluded)"
-    elif m.flat:
+    elif m.flat and not m.valid_pairs:
+        # a flat print counts as stale only when no valid spot pair backs it; a peg that trades on counted
+        # pairs is a live market (a2a r03: a traded stablecoin must never reach R6)
         m.reason = "price flat over 30 days (CMC carries a stale price)"
-    elif not price or price <= 0:
+    elif price <= 0:
         m.reason = "no price"
     else:
+        if m.flat:
+            m.notes.append(
+                "price flat over 30 days (a peg); counted as live because valid spot pairs trade it"
+            )
         m.state = "alive"
         venue = f", top venue {m.top_venue}" if m.top_venue else ""
         m.reason = f"trades ${vol:,.0f} / 24 h{venue}"

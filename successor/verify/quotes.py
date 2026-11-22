@@ -169,7 +169,9 @@ def bind_ratio(
             return Binding("unbound", None, "ratio quoted without a direction (which side is old?)")
         return Binding("unbound", None, "no ratio expression in the quote")
     for val, text in cands:
-        if abs(val - float(proposed)) <= 1e-6 * max(1.0, abs(val)):
+        if (
+            val > 0 and abs(val - float(proposed)) <= 1e-6 * val
+        ):  # relative only: 1e-9 vs 1e-6 is 1,000x (a2a r03)
             return Binding("bound", val, f'"{text}" gives {val:g} new per old')
     val, text = cands[0]
     return Binding(

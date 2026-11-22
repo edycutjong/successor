@@ -174,13 +174,13 @@ class CmcClient:
             "/v1/cryptocurrency/map", {"listing_status": listing_status, "symbol": symbol, **extra}
         )
 
-    async def quotes_latest(self, ids: list[int], convert: str | None = None) -> CmcResponse:
+    async def quotes_latest(self, ids: list[int], convert: str | None = "USD") -> CmcResponse:
         return await self.get(
             "/v2/cryptocurrency/quotes/latest", {"id": ",".join(map(str, ids)), "convert": convert}
         )
 
     async def quotes_historical(
-        self, cid: int, time_start: str, time_end: str, interval: str = "daily", convert: str | None = None
+        self, cid: int, time_start: str, time_end: str, interval: str = "daily", convert: str | None = "USD"
     ) -> CmcResponse:
         return await self.get(
             "/v2/cryptocurrency/quotes/historical",
@@ -193,7 +193,7 @@ class CmcClient:
             },
         )
 
-    async def market_pairs(self, cid: int, limit: int = 20) -> CmcResponse:
+    async def market_pairs(self, cid: int, limit: int = 100) -> CmcResponse:
         return await self.get(
             "/v2/cryptocurrency/market-pairs/latest", {"id": cid, "category": "spot", "limit": limit}
         )

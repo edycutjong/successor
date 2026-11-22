@@ -42,6 +42,9 @@ class Facts:
     ended_no_successor: bool = False
     announcement_unfetchable: bool = False
     agent_unavailable: str | None = None
+    # C3: identity / quantity fields the Reader quoted but the notice does not contain (a2a r03: a dropped
+    # contract must not read as "not stated" when the Reader asserted one)
+    c3_dropped: list[str] = field(default_factory=list)
 
 
 @dataclass
@@ -54,10 +57,31 @@ class Decision:
         return {"verdict": self.verdict, "rule_id": self.rule_id, "reason": self.reason}
 
 
+SWAP_CRITICAL = (
+    "old_contract",
+    "new_contract",
+    "ratio_new_per_old",
+    "successor_symbol",
+    "successor_name",
+    "new_chain",
+)
+
+
+def _swap_blocked(f: Facts) -> list[str]:
+    return [n for n in f.c3_dropped if n in SWAP_CRITICAL]
+
+
 def _missing(f: Facts) -> str:
     """R10: name what is missing, most fundamental first."""
     if f.agent_unavailable:
         return f"agent unavailable: {f.agent_unavailable}"
+    if _swap_blocked(f):
+        return (
+            "C3 dropped "
+            + ", ".join(_swap_blocked(f))
+            + ": the Reader proposed it without a verbatim quote that contains it,"
+            " so SWAP is withheld"
+        )
     if not f.successor_named:
         return "successor not named in the notice" + (
             "; the linked announcement was not fetchable" if f.announcement_unfetchable else ""
@@ -144,7 +168,14 @@ def decide(f: Facts) -> Decision:
         or f.old_market == "dead"
         or (f.old_market == "unknown" and f.ratio_route == "continuity")
     )
-    if f.c2 == "verified" and f.ratio_state == "P" and alive_new and old_ok and not f.deadline_passed:
+    if (
+        f.c2 == "verified"
+        and f.ratio_state == "P"
+        and alive_new
+        and old_ok
+        and not f.deadline_passed
+        and not _swap_blocked(f)
+    ):
         window = (
             f"the swap window is open until {f.deadline_text}"
             if f.deadline_quoted

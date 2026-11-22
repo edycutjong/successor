@@ -13,8 +13,17 @@ PRICES = [(1.0, 1.0), (1.2, 1.0), (0.8, 1.0)]  # parity, old premium 20%, old di
 
 
 def all_facts():
-    for c2, old, new, rs, deadline, same, changed, trips, prices in itertools.product(
-        C2, MARKET, NEW, RATIO, [False, True], [False, True], [False, True], [[], ["guard"]], PRICES
+    for c2, old, new, rs, deadline, same, changed, trips, prices, dropped in itertools.product(
+        C2,
+        MARKET,
+        NEW,
+        RATIO,
+        [False, True],
+        [False, True],
+        [False, True],
+        [[], ["guard"]],
+        PRICES,
+        [[], ["new_contract"]],
     ):
         for route in ROUTE[rs]:
             yield Facts(
@@ -32,6 +41,7 @@ def all_facts():
                 deadline_quoted=deadline,
                 deadline_passed=deadline,
                 deadline_text="2025-01-01" if deadline else None,
+                c3_dropped=dropped,
             )
 
 
@@ -45,6 +55,7 @@ def test_properties_hold_for_every_combination():
             assert not f.deadline_passed, f
             assert not (f.old_market == "alive" and f.old_price < 0.95 * f.ratio * f.new_price), f
             assert not f.sanity_trips
+            assert not f.c3_dropped, f  # a2a r03: a contract the notice does not quote never reaches SWAP
         if d.verdict == "SELL_OLD":
             assert f.old_market == "alive", f
         if d.verdict == "WRITE_OFF":
@@ -131,3 +142,30 @@ def test_rule_order_examples():
         Facts(c2="verified", old_market="alive", new_market="dead", ratio_state="Q", ratio=1.0, old_price=2.0)
     )
     assert d.rule_id == "R10" and "no live market" in d.reason
+
+
+def test_a2a_r03_dropped_contract_or_ratio_quote_blocks_swap():
+    base = dict(
+        c2="verified",
+        old_market="alive",
+        new_market="alive",
+        ratio_state="P",
+        ratio_route="market-now",
+        ratio=1.0,
+        old_price=1.0,
+        new_price=1.0,
+    )
+    assert decide(Facts(**base)).verdict == "SWAP"
+    for name in ("new_contract", "old_contract", "ratio_new_per_old", "successor_symbol"):
+        d = decide(Facts(**base, c3_dropped=[name]))
+        assert d.verdict == "NOT_VERIFIABLE" and d.rule_id == "R10" and name in d.reason
+    assert decide(Facts(**base, c3_dropped=["effective_date"])).verdict == "SWAP"
+
+
+def test_a2a_r03_tiny_ratio_binding_is_relative():
+    from successor.verify.quotes import bind_ratio
+
+    q = "1 OLD = 0.000000001 NEW"
+    assert bind_ratio(q, 0.000001, ["OLD"], ["NEW"]).state == "unbound"
+    b = bind_ratio(q, 0.000000001, ["OLD"], ["NEW"])
+    assert b.state == "bound" and b.parsed == 1e-9

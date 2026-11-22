@@ -93,9 +93,22 @@ def test_market_from_recorded_rows():
     assert mk.assess(q["12573"], None, [], pairs_denied=True).notes == ["spot pairs not checked: key plan"]
 
 
-def test_flat_price_is_dead_even_with_volume():
+def test_flat_price_is_live_when_valid_pairs_trade_it_and_dead_without_a_pair_check():
+    # a2a r03: a traded peg must never read as a dead market (R6 would write it off)
     flat = [{"date": f"d{i}", "price": 0.5, "volume_24h": 1} for i in range(30)]
     row = {"quote": {"USD": {"price": 0.5, "volume_24h": 100}}}
     pairs = {"market_pairs": [{"outlier_detected": 0, "exclusions": None, "exchange": {"name": "X"}}]}
-    assert mk.assess(row, pairs, flat).state == "dead"
+    m = mk.assess(row, pairs, flat)
+    assert m.state == "alive" and any("peg" in n for n in m.notes)
+    assert mk.assess(row, None, flat, pairs_denied=True).state == "dead"
     assert mk.is_flat(flat[:10]) is None
+
+
+def test_missing_price_or_volume_is_unknown_not_dead():
+    pairs = {"market_pairs": [{"outlier_detected": 0, "exclusions": None, "exchange": {"name": "X"}}]}
+    assert mk.assess({"quote": {"USD": {"price": 0.5}}}, pairs, []).state == "unknown"
+    assert mk.assess({"quote": {"USD": {"volume_24h": 10}}}, pairs, []).state == "unknown"
+    assert (
+        mk.assess({"quote": {"USD": {"price": float("nan"), "volume_24h": 10}}}, pairs, []).state == "unknown"
+    )
+    assert mk.assess({"quote": {"USD": {"price": 0.5, "volume_24h": 0}}}, pairs, []).state == "dead"

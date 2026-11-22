@@ -18,6 +18,13 @@ def _key(path: str, params: dict[str, Any]) -> str:
     return path + "?" + "&".join(f"{k}={params[k]}" for k in sorted(params))
 
 
+def _match_key(path: str, params: dict[str, Any]) -> str:
+    """Fixtures recorded before a2a r03 pinned convert=USD (CMC's default) and raised market-pairs limit 20 -> 100.
+    Both params are ignored when matching; the recorded body is served exactly as captured."""
+    p = {k: v for k, v in params.items() if not (k == "convert" and v == "USD") and k != "limit"}
+    return _key(path, p)
+
+
 class RecordingCmc(CmcClient):
     def __init__(self, mutate_notice: Callable[[int, str], str] | None = None, **kw: Any) -> None:
         super().__init__(**kw)
@@ -46,7 +53,7 @@ class RecordingCmc(CmcClient):
 class ReplayCmc(CmcClient):
     def __init__(self, log: list[dict]) -> None:
         super().__init__(key="replay")
-        self.recorded = {_key(e["path"], e["params"]): e for e in log}
+        self.recorded = {_match_key(e["path"], e["params"]): e for e in log}
 
     async def __aenter__(self) -> ReplayCmc:
         return self
@@ -56,7 +63,7 @@ class ReplayCmc(CmcClient):
 
     async def get(self, path, params=None, *, strict=False) -> CmcResponse:
         params = {k: v for k, v in (params or {}).items() if v is not None}
-        e = self.recorded.get(_key(path, params))
+        e = self.recorded.get(_match_key(path, params))
         if e is None:
             raise RuntimeError(f"replay: request not recorded: {_key(path, params)}")
         resp = CmcResponse(
