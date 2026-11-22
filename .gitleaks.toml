@@ -1,0 +1,9 @@
+# Extends the default rules. CMC responses in docs/proof/ contain public token contract addresses
+# under "token_address"; those are on-chain identifiers, not secrets.
+[extend]
+useDefault = true
+
+[allowlist]
+description = "public EVM token contract addresses in verbatim CMC responses"
+regexTarget = "match"
+regexes = ['''token_address"\s*:\s*"0x[0-9a-fA-F]{40}"''']
