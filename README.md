@@ -1,3 +1,7 @@
+<p align="center">
+  <img src="docs/assets/readme-hero-animated.svg" alt="Successor — CPOOL flaps turn to CLEAR, three lamps go green, and the status column settles: SELL OLD, +15.7%. An AI reader proposes the successor from CMC's prose notice; code checks it against CMC rows (CMC data 2026-11-22 03:49 UTC)." width="100%">
+</p>
+
 # Successor
 
 > CoinMarketCap tells you a coin migrated, but only in prose. Successor reads the notice, finds the successor

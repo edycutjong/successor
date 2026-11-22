@@ -1,0 +1,36 @@
+{
+ "captured_at": "2026-11-22T02:32:34Z",
+ "scope": "top 2000 by cmc_rank, listing_status=active",
+ "coins_scanned": 2000,
+ "notices": 161,
+ "featured_extra": 4,
+ "migration_type": 141,
+ "other_type": 20,
+ "prose_only": 80,
+ "no_ratio_named": 96,
+ "only_unfetchable_hosts": 35,
+ "verdicts": {
+  "SWAP": 2,
+  "SELL_OLD": 0,
+  "WRITE_OFF": 3,
+  "NOT_VERIFIABLE": 130,
+  "NOTHING_TO_DO": 26
+ },
+ "verdicts_total": 161,
+ "verdicts_errors": 0,
+ "verdicts_captured": "2026-11-22T03:45:14Z",
+ "reader_opened_link": 99,
+ "not_verifiable_reasons": {
+  "old and new token share one CMC page; the ratio could not be confirmed": 61,
+  "CMC's data refutes what the notice says": 26,
+  "the notice names no successor": 22,
+  "no swap ratio stated, or the linked announcement could not be fetched": 10,
+  "the successor has no live market to compare": 5,
+  "the Reader called it a swap, but the notice text shows none": 3,
+  "the Reader quoted a contract, ratio or name the notice does not contain": 2,
+  "other": 1
+ },
+ "old_zero_volume": 16,
+ "market_checked": 93,
+ "method": "regex over CMC's own `notice` field (no LLM); verdicts = the real lookup flow at qty 1, cached reads, one run per coin"
+}
