@@ -1,6 +1,6 @@
 [project]
 name = "successor"
-version = "1.0.0"
+dynamic = ["version"]
 description = "Reads CoinMarketCap migration notices, verifies the successor token against CMC data, returns one verdict with the proving rows."
 requires-python = ">=3.11"
 license = { text = "MIT" }
@@ -40,3 +40,6 @@ show_missing = false
 python_version = "3.11"
 ignore_missing_imports = true
 files = ["successor", "api"]
+
+[tool.setuptools.dynamic]
+version = { attr = "successor.__version__" }  # single source of truth; /api/health reads the same value

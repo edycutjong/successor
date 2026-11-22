@@ -5,6 +5,8 @@ updates:
     schedule:
       interval: "monthly"
     open-pull-requests-limit: 5
+    commit-message:
+      prefix: "deps"  # Conventional Commits: a dependency bump is a patch release
     groups:
       minor-and-patch:
         update-types: ["minor", "patch"]
@@ -17,6 +19,8 @@ updates:
     schedule:
       interval: "monthly"
     open-pull-requests-limit: 3
+    commit-message:
+      prefix: "ci"  # workflow-only change: no release
     groups:
       actions:
         patterns: ["*"]

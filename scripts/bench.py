@@ -11,6 +11,7 @@ are limited to 3 per 10 min per IP, so --fresh runs in batches of 3 with a 10 mi
 from __future__ import annotations
 
 import json
+import os
 import statistics
 import sys
 import time
@@ -26,8 +27,11 @@ def one(base: str, q: str, fresh: bool) -> tuple[float, str]:
     params: dict[str, str] = {"q": q}
     if fresh:
         params["fresh"] = "1"
+    headers = {"Accept": "application/json"}
+    if os.environ.get("BENCH_BYPASS_SECRET"):  # Vercel Deployment Protection bypass for CI previews
+        headers["x-vercel-protection-bypass"] = os.environ["BENCH_BYPASS_SECRET"]
     t0 = time.perf_counter()
-    r = httpx.get(f"{base}/api/lookup", params=params, headers={"Accept": "application/json"}, timeout=70)
+    r = httpx.get(f"{base}/api/lookup", params=params, headers=headers, timeout=70)
     dt = time.perf_counter() - t0
     body = r.json()
     return dt, f"{r.status_code} {body.get('type')} {body.get('verdict')}/{body.get('rule_id')}"

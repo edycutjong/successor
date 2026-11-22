@@ -10,18 +10,20 @@ on:
 permissions:
   contents: read
 
-# one run per branch; a newer push cancels the older one
+# one run per branch; a newer push cancels the older PR run (main runs queue, a deploy is never cut off midway)
 concurrency:
   group: ci-${{ github.ref }}
   cancel-in-progress: ${{ github.event_name == 'pull_request' }}
 
 env:
   LIVE_URL: https://successor.edycu.dev
+  # Pipeline: 1 Quality || 2 Security -> 3 Build + Vercel preview -> 4 E2E (preview) -> 5 Performance (preview)
+  #           -> 6 Deploy Gate (main only: promote that same deployment to production + live smoke) -> Release
 
 jobs:
   # Stage 1: quality (parallel with stage 2)
   quality:
-    name: 1 · Quality
+    name: Stage 1 · Quality
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v7
@@ -45,7 +47,7 @@ jobs:
 
   # Stage 2: security (parallel with stage 1)
   security:
-    name: 2 · Security
+    name: Stage 2 · Security
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v7
@@ -66,11 +68,18 @@ jobs:
             echo "kitchen or secret file tracked"; exit 1
           fi
 
-  # Stage 3: build (needs 1 + 2)
+  # Stage 3: build, then stage a Vercel deployment that the later stages test (main: staged production, PR: preview)
   build:
-    name: 3 · Build
+    name: Stage 3 · Build + Vercel deployment
     needs: [quality, security]
     runs-on: ubuntu-latest
+    outputs:
+      url: ${{ steps.deploy.outputs.url }}
+    env:
+      VERCEL_TOKEN: ${{ secrets.VERCEL_TOKEN }}
+      VERCEL_ORG_ID: ${{ secrets.VERCEL_ORG_ID }}
+      VERCEL_PROJECT_ID: ${{ secrets.VERCEL_PROJECT_ID }}
+      VERCEL_TARGET: ${{ github.event_name == 'push' && 'production' || 'preview' }}
     steps:
       - uses: actions/checkout@v7
       - uses: astral-sh/setup-uv@v7
@@ -83,33 +92,29 @@ jobs:
         run: |
           SERVE_STATIC=1 python -c "from api.index import app; print(len(app.routes), 'routes')"
           test -s public/index.html && test -s public/judge.html
-
-  # Stage 4: deploy to Vercel (main only; needs 3)
-  deploy:
-    name: 4 · Deploy
-    if: github.event_name == 'push' && github.ref == 'refs/heads/main'
-    needs: build
-    runs-on: ubuntu-latest
-    env:
-      VERCEL_TOKEN: ${{ secrets.VERCEL_TOKEN }}
-      VERCEL_ORG_ID: ${{ secrets.VERCEL_ORG_ID }}
-      VERCEL_PROJECT_ID: ${{ secrets.VERCEL_PROJECT_ID }}
-    steps:
-      - uses: actions/checkout@v7
       - uses: actions/setup-node@v7
         with:
           node-version: "22"
-      - run: npm i -g vercel@latest
-      - run: vercel pull --yes --environment=production --token="$VERCEL_TOKEN"
-      - run: vercel build --prod --token="$VERCEL_TOKEN"
-      - run: vercel deploy --prebuilt --prod --token="$VERCEL_TOKEN"
+      - name: Build and deploy to Vercel (not yet live on the production domain)
+        id: deploy
+        # Dependabot and fork PRs get no secrets: the build stage still ran above, the live stages are skipped for them.
+        if: ${{ env.VERCEL_TOKEN != '' }}
+        run: |
+          npm i -g vercel@latest
+          vercel pull --yes --environment="$VERCEL_TARGET" --token="$VERCEL_TOKEN"
+          vercel build --target="$VERCEL_TARGET" --token="$VERCEL_TOKEN"
+          # production target + --skip-domain = a production-grade deployment that is NOT yet aliased to the domain
+          flags=()
+          if [ "$VERCEL_TARGET" = production ]; then flags+=(--target=production --skip-domain); fi
+          url=$(vercel deploy --prebuilt "${flags[@]}" -e BUILD_SHA="$GITHUB_SHA" --token="$VERCEL_TOKEN")
+          echo "url=$url" >> "$GITHUB_OUTPUT"
+          echo "Deployment: $url" >> "$GITHUB_STEP_SUMMARY"
 
-  # Stage 5: E2E on the live URL (the judged flow, real CMC calls, no mocks)
+  # Stage 4: E2E against the deployment from stage 3 (the judged flow, real CMC calls, no mocks)
   e2e:
-    name: 5 · E2E (live URL; on a PR this smoke-tests current production)
-    needs: [build, deploy]
-    # run after a deploy; on pull requests (deploy skipped) run against the current production
-    if: ${{ !cancelled() && needs.build.result == 'success' && (needs.deploy.result == 'success' || needs.deploy.result == 'skipped') }}
+    name: Stage 4 · E2E (against the stage 3 deployment)
+    needs: build
+    if: ${{ needs.build.outputs.url != '' }}
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v7
@@ -118,14 +123,20 @@ jobs:
           python-version: "3.12"
       - run: uv pip install --system -e '.[dev,e2e]'
       - run: playwright install --with-deps chromium
-      - name: Browser tests against ${{ env.LIVE_URL }}
-        run: E2E_BASE_URL="$LIVE_URL" pytest e2e -q -p no:cacheprovider --override-ini="norecursedirs="
+      - name: Browser tests against the deployment
+        env:
+          E2E_BASE_URL: ${{ needs.build.outputs.url }}
+          E2E_BYPASS_SECRET: ${{ secrets.VERCEL_AUTOMATION_BYPASS_SECRET }}
+        run: pytest e2e -q -p no:cacheprovider --override-ini="norecursedirs="
 
-  # Stage 6: performance gates on the live URL
+  # Stage 5: performance gates against the same deployment
   perf:
-    name: 6 · Performance
-    needs: e2e
+    name: Stage 5 · Performance (against the stage 3 deployment)
+    needs: [build, e2e]
     runs-on: ubuntu-latest
+    env:
+      TARGET: ${{ needs.build.outputs.url }}
+      BYPASS: ${{ secrets.VERCEL_AUTOMATION_BYPASS_SECRET }}
     steps:
       - uses: actions/checkout@v7
       - uses: astral-sh/setup-uv@v7
@@ -133,15 +144,79 @@ jobs:
           python-version: "3.12"
       - run: uv pip install --system httpx
       - name: "Cached lookup p50/p95, gate p95 <= 3 s"
-        run: python scripts/bench.py "$LIVE_URL" CPOOL 12 --gate-p95 3
+        env:
+          BENCH_BYPASS_SECRET: ${{ secrets.VERCEL_AUTOMATION_BYPASS_SECRET }}
+        run: python scripts/bench.py "$TARGET" CPOOL 12 --gate-p95 3
       - uses: actions/setup-node@v7
         with:
           node-version: "22"
       - name: Lighthouse (accessibility is a hard gate)
-        run: npx --yes @lhci/cli@0.14 autorun --config=lighthouserc.json
+        run: |
+          npx --yes @lhci/cli@0.14 autorun --config=lighthouserc.json \
+            --collect.url="$TARGET/" --collect.url="$TARGET/judge" \
+            --collect.settings.extraHeaders="{\"x-vercel-protection-bypass\":\"$BYPASS\"}"
       - uses: actions/upload-artifact@v7
         with:
           name: perf
           path: |
             docs/proof/bench/
             .lighthouseci/
+
+  # Stage 6: deploy gate. Main pushes only; promotes the exact deployment stages 4 and 5 tested.
+  deploy:
+    name: Stage 6 · Deploy Gate (promote to production + live smoke)
+    if: ${{ github.event_name == 'push' && github.ref == 'refs/heads/main' }}
+    needs: [quality, security, build, e2e, perf]
+    runs-on: ubuntu-latest
+    env:
+      VERCEL_TOKEN: ${{ secrets.VERCEL_TOKEN }}
+      VERCEL_ORG_ID: ${{ secrets.VERCEL_ORG_ID }}
+      VERCEL_PROJECT_ID: ${{ secrets.VERCEL_PROJECT_ID }}
+    steps:
+      - uses: actions/setup-node@v7
+        with:
+          node-version: "22"
+      - name: Promote the tested deployment to production
+        env:
+          DEPLOYMENT: ${{ needs.build.outputs.url }}
+        run: |
+          npm i -g vercel@latest
+          vercel promote "$DEPLOYMENT" --yes --token="$VERCEL_TOKEN"
+      - name: Live smoke on the production domain
+        run: |
+          for i in 1 2 3 4 5 6; do
+            body=$(curl -fsS "$LIVE_URL/api/health" || true)
+            sha=$(printf '%s' "$body" | python3 -c 'import sys,json; print(json.load(sys.stdin).get("build_sha",""))' 2>/dev/null || true)
+            [ "$sha" = "$GITHUB_SHA" ] && { echo "live build_sha == $GITHUB_SHA"; exit 0; }
+            echo "attempt $i: live build_sha is '$sha', want $GITHUB_SHA"; sleep 10
+          done
+          exit 1
+
+  # Release: automatic semantic versioning from Conventional Commits, only after the deploy gate is green
+  release:
+    name: Release (semantic version)
+    needs: deploy
+    runs-on: ubuntu-latest
+    permissions:
+      contents: write
+    steps:
+      - uses: actions/checkout@v7
+        with:
+          fetch-depth: 0
+      - name: Decide the version from commits since the last tag
+        id: rel
+        run: python3 scripts/release.py
+      - name: Commit, tag and publish the release
+        if: ${{ steps.rel.outputs.released == 'true' }}
+        env:
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          VERSION: ${{ steps.rel.outputs.version }}
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add successor/__init__.py CHANGELOG.md
+          git commit -m "chore(release): v${VERSION} [skip ci]"
+          git pull --rebase origin main
+          git tag -a "v${VERSION}" -m "v${VERSION}"
+          git push origin HEAD:main "v${VERSION}"
+          gh release create "v${VERSION}" --title "Successor v${VERSION}" --notes-file release-notes.md --verify-tag
