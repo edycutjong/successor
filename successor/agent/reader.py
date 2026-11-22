@@ -16,7 +16,7 @@ import re
 import time
 from collections.abc import Awaitable, Callable
 from pathlib import Path
-from typing import Any, Literal
+from typing import Any, Literal, get_args
 
 import httpx
 from pydantic import BaseModel
@@ -91,7 +91,7 @@ SUBMIT_PROPOSAL_TOOL = {
         "parameters": {
             "type": "object",
             "properties": {
-                "event_type": {"type": "string", "enum": list(EventType.__args__)},
+                "event_type": {"type": "string", "enum": list(get_args(EventType))},
                 **{name: _FIELD_SCHEMA for name in FIELD_NAMES},
                 "links_to_follow": {
                     "type": "array",
@@ -170,7 +170,9 @@ async def read_notice(
             headers={"Authorization": f"Bearer {cfg['api_key']}"},
         )
     latency_ms = round((time.perf_counter() - t0) * 1000)
-    raw = r.json() if r.headers.get("content-type", "").startswith("application/json") else {"text": r.text}
+    raw: dict = (
+        r.json() if r.headers.get("content-type", "").startswith("application/json") else {"text": r.text}
+    )
     transcript = {
         "model": model,
         "request": {k: v for k, v in body.items()},
@@ -278,7 +280,9 @@ async def qwen_chat(cfg: dict, body: dict, timeout: float) -> tuple[int, dict, i
             json=body,
             headers={"Authorization": f"Bearer {cfg['api_key']}"},
         )
-    raw = r.json() if r.headers.get("content-type", "").startswith("application/json") else {"text": r.text}
+    raw: dict = (
+        r.json() if r.headers.get("content-type", "").startswith("application/json") else {"text": r.text}
+    )
     return r.status_code, raw, round((time.perf_counter() - t0) * 1000)
 
 
@@ -367,7 +371,7 @@ class ReaderSession:
         except (KeyError, IndexError, TypeError) as exc:
             raise ReaderError("agent returned no message") from exc
 
-    async def _loop(self) -> dict | None:
+    async def _loop(self) -> dict:
         timeouts = 0
         while True:
             msg = await self._call()

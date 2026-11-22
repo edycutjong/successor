@@ -179,6 +179,11 @@ async def stream_probe(n: int = Query(5, ge=1, le=20), gap: float = Query(1.0, g
 
 
 if os.environ.get("SERVE_STATIC") == "1":  # local development only; Vercel serves public/ itself
+    from fastapi.responses import FileResponse
     from fastapi.staticfiles import StaticFiles
+
+    @app.get("/judge", include_in_schema=False)
+    async def judge_page() -> FileResponse:  # on Vercel this path is a rewrite to /judge.html
+        return FileResponse(Path(__file__).resolve().parents[1] / "public" / "judge.html")
 
     app.mount("/", StaticFiles(directory=str(Path(__file__).resolve().parents[1] / "public"), html=True))

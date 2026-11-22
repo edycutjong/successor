@@ -17,7 +17,9 @@ from statistics import median
 
 def usd(row: dict | list | None) -> dict:
     row = row[0] if isinstance(row, list) and row else row
-    return (((row or {}).get("quote") or {}).get("USD")) or {}
+    if not isinstance(row, dict):
+        return {}
+    return ((row.get("quote") or {}).get("USD")) or {}
 
 
 def daily_closes(hist_data: dict | None) -> list[dict]:

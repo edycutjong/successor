@@ -142,7 +142,7 @@ def ratio_state(
             if within(now, 1.0):
                 obs.append(f"prices consistent with 1:1 (old/new = {now:.4f}); never used as a swap quantity")
         why = "ratio not stated" if stated is None else "ratio stated but not bound to the coins in its quote"
-        return RatioResult("none", None, why, obs, event_day.day and event_day.day.isoformat())
+        return RatioResult("none", None, why, obs, event_day.day.isoformat() if event_day.day else None)
     day_txt = event_day.day.isoformat() if event_day.day else None
     # route 1: event-date check
     if event_day.day and not single_id:

@@ -4,10 +4,11 @@ version = "0.1.0"
 description = "Reads CoinMarketCap migration notices, verifies the successor token against CMC data, returns one verdict with the proving rows."
 requires-python = ">=3.11"
 license = { text = "MIT" }
-dependencies = ["fastapi>=0.115,<0.116", "httpx>=0.28,<0.29", "pydantic>=2,<3"]
+dependencies = ["fastapi>=0.165,<1", "starlette>=1.3.1", "httpx>=0.28,<0.29", "pydantic>=2,<3"]
 
 [project.optional-dependencies]
-dev = ["pytest>=8", "pytest-asyncio>=0.24", "respx>=0.21", "ruff>=0.7", "uvicorn>=0.32"]
+dev = ["pytest>=8", "pytest-asyncio>=0.24", "pytest-cov>=5", "respx>=0.21", "ruff>=0.7", "mypy>=1.11", "pip-audit>=2.7", "uvicorn>=0.32"]
+e2e = ["playwright>=1.47"]
 
 [tool.ruff]
 line-length = 110
@@ -19,8 +20,23 @@ ignore = ["E501"]  # the formatter wraps code; long strings and comments stay re
 
 [tool.pytest.ini_options]
 testpaths = ["tests"]
+pythonpath = ["."]
+norecursedirs = ["e2e"]  # live-URL browser tests run via `make e2e`, not in the unit run
 asyncio_mode = "auto"
 asyncio_default_fixture_loop_scope = "function"
 
 [tool.setuptools]
 packages = ["successor", "successor.agent", "successor.verify"]
+
+[tool.coverage.run]
+source = ["successor", "api"]
+omit = ["successor/cli.py"]
+
+[tool.coverage.report]
+fail_under = 70
+show_missing = false
+
+[tool.mypy]
+python_version = "3.11"
+ignore_missing_imports = true
+files = ["successor", "api"]

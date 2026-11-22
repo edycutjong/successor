@@ -157,21 +157,17 @@ def decide(f: Facts) -> Decision:
             SELL_OLD, "R7", f"the swap window closed ({f.deadline_text}); the old token still trades"
         )
     priced = r is not None and f.old_price and f.new_price
-    if (
-        alive_old
-        and alive_new
-        and f.ratio_state in ("P", "Q")
-        and priced
-        and f.old_price >= r * f.new_price * PREMIUM
-    ):
-        prem = (f.old_price / (r * f.new_price) - 1) * 100
+    # typed copies for the arithmetic below; only read when `priced` is truthy (all three are set)
+    rr, op, np_ = r or 0.0, f.old_price or 0.0, f.new_price or 0.0
+    if alive_old and alive_new and f.ratio_state in ("P", "Q") and priced and op >= rr * np_ * PREMIUM:
+        prem = (op / (rr * np_) - 1) * 100
         return Decision(
             SELL_OLD,
             "R8",
             f"at CMC's quotes the old token is worth {prem:.1f}% more than the {r:g}:1 swap "
             f"(old ${f.old_price:.6g} vs {r:g} × new ${f.new_price:.6g})",
         )
-    discount = alive_old and priced and f.old_price < r * f.new_price * DISCOUNT
+    discount = alive_old and priced and op < rr * np_ * DISCOUNT
     old_ok = (
         (alive_old and not discount)
         or f.old_market == "dead"
