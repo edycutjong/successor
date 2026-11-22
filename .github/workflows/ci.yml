@@ -213,7 +213,14 @@ jobs:
           fetch-depth: 0
       - name: Decide the version from commits since the last tag
         id: rel
-        run: python3 scripts/release.py
+        env:
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        # rebase first: the tag lands on top of main, so every commit under it must be in the notes
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git pull --rebase origin main
+          python3 scripts/release.py
       - name: Commit, tag and publish the release
         if: ${{ steps.rel.outputs.released == 'true' }}
         env:
