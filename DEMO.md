@@ -56,7 +56,7 @@ Most notices cannot be confirmed from CMC's data alone, and the page lists why.
 Without a CMC key the app returns an error and no verdict; without an LLM key a cold notice ends NOT VERIFIABLE
 (`tests/test_unplugged.py`, `tests/test_unplugged_http.py`). `make unplug-e2e` starts the app with no keys and an empty home
 directory and points the live-flow browser tests at it: the app answers HTTP 502 `CMC_API_KEY is not set` and the tests fail
-(`docs/proof/unplug/`). The demo cannot pass with the sources removed.
+(`docs/proof/unplug/`). With the sources removed the live-flow tests fail; they pass only against the real product.
 
 ## 6. Numbers to quote
 
@@ -65,5 +65,5 @@ directory and points the live-flow browser tests at it: the app answers HTTP 502
 | Tests | 83 passed (82 % coverage), 12 live-URL E2E | `make test-coverage`, `make e2e` |
 | Evals | 10/10 cases, 4/4 variants | `python scripts/run_evals.py` |
 | Cached lookup, live CMC calls | p50 1.007 s, p95 1.454 s (n=12, 2026-11-22 04:29 UTC) | `docs/proof/bench/` |
-| Cold Reader lookup | 16.89 s (CPOOL), 8.79 s (MKR), single day-one samples; final engine 14.5 s (CPOOL) | `docs/proof/deploy/` |
+| Cold Reader lookup (`fresh=1`) | p50 15.44 s, p95 21.45 s (n=6, CPOOL, 2026-11-22 05:22 UTC); day-one singles 16.89 s (CPOOL), 8.79 s (MKR) | `docs/proof/bench/bench-cold-2026-11-22.json`, `docs/proof/deploy/` |
 | Notices in the active top 2000 | 161 (141 migration-type) | `/api/census` |

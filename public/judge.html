@@ -41,7 +41,8 @@
     <tr><td>Census</td><td><a href="/api/census">/api/census</a></td><td>161 notices in the top 2000; verdicts, buckets and capture time live</td></tr>
     <tr><td>Lookup latency (cached Reader read, live CMC calls)</td><td>see <code>docs/proof/bench/</code> in the repo</td><td><code>python scripts/bench.py https://successor.edycu.dev CPOOL 12</code></td></tr>
     <tr><td>Tests and evals</td><td>see the README "Engineering Rigor" table</td><td><code>pytest -q</code>, <code>python scripts/run_evals.py</code></td></tr>
-    <tr><td>Unplug test</td><td>no CMC key: an error and no verdict</td><td><code>tests/test_unplugged.py</code>, <code>tests/test_unplugged_http.py</code></td></tr>
+    <tr><td>Live-URL browser tests</td><td>open, click a coin, assert a verdict and receipt</td><td><code>e2e/</code>, <code>make e2e</code></td></tr>
+    <tr><td>Unplug test</td><td>no CMC key: an error and no verdict</td><td><code>tests/test_unplugged.py</code>, <code>tests/test_unplugged_http.py</code>, <code>make unplug-e2e</code></td></tr>
   </table>
 
   <h2>Reproduce (the real path)</h2>

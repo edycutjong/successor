@@ -13,7 +13,7 @@ permissions:
 # one run per branch; a newer push cancels the older one
 concurrency:
   group: ci-${{ github.ref }}
-  cancel-in-progress: true
+  cancel-in-progress: ${{ github.event_name == 'pull_request' }}
 
 env:
   LIVE_URL: https://successor.edycu.dev
@@ -106,7 +106,7 @@ jobs:
 
   # Stage 5: E2E on the live URL (the judged flow, real CMC calls, no mocks)
   e2e:
-    name: 5 · E2E (live URL)
+    name: 5 · E2E (live URL; on a PR this smoke-tests current production)
     needs: [build, deploy]
     # run after a deploy; on pull requests (deploy skipped) run against the current production
     if: ${{ !cancelled() && needs.build.result == 'success' && (needs.deploy.result == 'success' || needs.deploy.result == 'skipped') }}
@@ -120,11 +120,6 @@ jobs:
       - run: playwright install --with-deps chromium
       - name: Browser tests against ${{ env.LIVE_URL }}
         run: E2E_BASE_URL="$LIVE_URL" pytest e2e -q -p no:cacheprovider --override-ini="norecursedirs="
-      - uses: actions/upload-artifact@v4
-        if: failure()
-        with:
-          name: e2e-report
-          path: test-results/
 
   # Stage 6: performance gates on the live URL
   perf:

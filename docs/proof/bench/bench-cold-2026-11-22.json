@@ -3,20 +3,19 @@
   "query": "CPOOL",
   "n": 6,
   "kind": "cold: fresh=1, the Reader re-reads the notice live (one Qwen call), live CMC calls, full JSON answer",
-  "captured_at": "2026-11-22T04:55:25Z",
+  "captured_at": "2026-11-22T05:22:29Z",
   "samples_s": [
-    14.461,
-    23.719,
-    16.216,
-    0.36,
-    0.347,
-    0.341
+    14.415,
+    17.548,
+    15.767,
+    15.114,
+    21.454,
+    14.579
   ],
-  "p50_s": 7.41,
-  "p95_s": 23.719,
-  "max_s": 23.719,
+  "p50_s": 15.441,
+  "p95_s": 21.454,
+  "max_s": 21.454,
   "outcomes": [
-    "200 verdict SELL_OLD/None",
-    "429 error None/None"
+    "200 verdict SELL_OLD/R8"
   ]
 }

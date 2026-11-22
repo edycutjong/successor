@@ -126,7 +126,7 @@ copied from old to new coin, `convert=EUR` scaling supply, and the notice being 
 | Tests | **83 passed**, 82 % line coverage (gate 70 %), mypy clean | `make test-coverage`, `make typecheck` |
 | Evals | **10/10** counted cases + 4/4 variants | `python scripts/run_evals.py` (replays real saved CMC rows and recorded Reader output) |
 | Lookup latency, cached Reader read, live CMC calls | **p50 1.007 s · p95 1.454 s (= max at n=12)** (n=12, 2026-11-22 04:29 UTC) | `python scripts/bench.py https://successor.edycu.dev CPOOL 12`, samples in `docs/proof/bench/` |
-| Lookup latency, cold Reader read | 16.89 s (CPOOL), 8.79 s (MKR), single samples on the day-one spike engine; final engine, fresh CPOOL read 14.5 s | `docs/proof/deploy/` (`p1c-cpool-fresh-live.json`) |
+| Lookup latency, cold Reader read (`fresh=1`, one Qwen call, live CMC calls) | **p50 15.44 s · p95 21.45 s (= max at n=6)** (n=6, CPOOL, 2026-11-22 05:22 UTC); earlier single samples 16.89 s (CPOOL), 8.79 s (MKR) on the day-one engine | `make bench-cold`, samples in `docs/proof/bench/bench-cold-2026-11-22.json`, `docs/proof/deploy/` |
 | Census | 161 notices; verdicts over them: NOT VERIFIABLE 130 · NOTHING TO DO 26 · WRITE OFF 3 · SWAP 2 · SELL OLD 0 (verdicts captured 2026-11-22T03:45:14Z) | `GET /api/census`, `python scripts/census.py` |
 | Live-URL E2E | **12 browser + API tests pass** on https://successor.edycu.dev (open, click CPOOL/AGIX, assert verdict + receipt, `/judge` with no auth, 3 viewports), 2026-11-22 | `make e2e` |
 | Unplug test | No CMC key: error and no verdict. No LLM key on a cold notice: NOT VERIFIABLE. With every key removed the E2E tests fail | `tests/test_unplugged.py`, `tests/test_unplugged_http.py`, `make unplug-e2e` (`docs/proof/unplug/`) |
@@ -202,8 +202,8 @@ python scripts/run_evals.py    # 10/10 counted cases, 4/4 variants (offline repl
 
 `.github/workflows/` runs the same gates in six stages (quality, security, build, deploy, live-URL E2E, performance) plus CodeQL
 (`python`, `javascript-typescript`, `actions`), gitleaks over the full history, a release workflow on `v*.*.*` tags, a daily
-live check, and Dependabot (pip + actions, monthly, grouped, no major bumps). Every gate also ran locally on 2026-11-22; the
-outputs are in `docs/proof/gates/`. GitHub Actions did not start jobs while the repository was private (an account billing
+live check, a nightly notice snapshot (`snapshot.yml`; the figures in this README are pinned to the 2026-11-22 capture and do not move with it), and Dependabot (pip + actions, monthly, grouped, no major bumps). Every gate also ran locally on 2026-11-22; the
+outputs are in `docs/proof/gates/` (local gates, live E2E run, Lighthouse scores). GitHub Actions did not start jobs while the repository was private (an account billing
 limit), so no workflow run is claimed here; see "What we got wrong".
 
 ## 📁 Project Structure

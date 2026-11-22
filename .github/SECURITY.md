@@ -3,7 +3,7 @@
 ## Supported Versions
 | Version | Supported |
 |---|---|
-| latest (`main`) | ✅ |
+| latest (`main`) | yes |
 
 ## Reporting a Vulnerability
 Please **do not** open a public issue for security vulnerabilities. Instead, report them privately:

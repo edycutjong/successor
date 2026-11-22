@@ -4,7 +4,7 @@ BASE ?= https://successor.edycu.dev
 .PHONY: unplug-e2e help install lint lint-fix typecheck test test-coverage evals unplug e2e bench bench-cold lighthouse audit secrets security-scan ci
 
 help: ## list targets
-	@grep -E '^[a-z-]+:.*##' Makefile | sed 's/:.*## /\t/'
+	@grep -E '^[a-z0-9-]+:.*##' Makefile | sed 's/:.*## /\t/'
 
 install: ## dev + e2e dependencies and the Chromium for the browser tests
 	$(PY) -m pip install -e '.[dev,e2e]' && $(PY) -m playwright install chromium
@@ -53,4 +53,4 @@ secrets: ## gitleaks over the full history
 
 security-scan: audit secrets
 
-ci: lint typecheck test-coverage unplug audit secrets ## everything CI runs before the live stages
+ci: lint typecheck test-coverage unplug evals audit secrets ## everything CI runs before the live stages (needs the gitleaks binary)

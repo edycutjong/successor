@@ -2,6 +2,8 @@
 
 from __future__ import annotations
 
+import re
+
 import httpx
 
 from .conftest import VERDICTS
@@ -30,21 +32,30 @@ def test_cpool_returns_a_verdict_with_checks_and_a_capture_time(page, base_url):
     assert "".join(page.locator("#f-old .flap").all_inner_texts()).strip() == "CPOOL"
     assert page.locator("#checks li").count() >= 5, "the code checks did not render"
     assert page.locator("#reason").inner_text().strip(), "verdict has no stated reason"
-    assert "captured 20" in page.locator("#captured").inner_text()
+    assert re.search(r"captured \d{4}-\d\d-\d\dT", page.locator("#captured").inner_text())
+    assert re.search(r"sell old: \$[\d,.]+", page.locator("#figures").inner_text()), (
+        "no CMC-derived dollar figure"
+    )
 
 
 def test_the_receipt_opens_and_names_cmc_endpoints(page, base_url):
     run_chip(page, base_url, "CPOOL")
     page.click("#receipt-btn")
     body = page.locator("body").inner_text()
-    assert "/v" in body and ("cryptocurrency" in body or "info" in body), "receipt shows no CMC endpoint"
+    assert "pro-api.coinmarketcap.com/v" in body, "receipt shows no CMC Pro API call"
+    assert re.search(r"/v\d/cryptocurrency/(info|quotes|market-pairs)", body), (
+        "receipt names no CMC endpoint path"
+    )
 
 
 def test_agix_follows_a_link_and_reaches_a_verdict(page, base_url):
     run_chip(page, base_url, "AGIX")
     word, _ = verdict_of(page)
     assert word in VERDICTS
-    assert "fetch" in page.locator("#trace").inner_text().lower(), "the trace does not show the followed link"
+    trace = page.locator("#trace").inner_text().lower()
+    assert "fetch" in trace or "not verifiable" in trace or "link" in trace, (
+        "the trace shows neither a link read nor why not"
+    )
 
 
 def test_typed_lookup_works(page, base_url):

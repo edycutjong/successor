@@ -1,0 +1,49 @@
+{
+  "tool": "lhci 0.14 autorun (lighthouserc.json), 2 runs per URL",
+  "runs": [
+    {
+      "url": "https://successor.edycu.dev/",
+      "fetched": "2026-11-22T04:50:23.180Z",
+      "preset": "desktop",
+      "scores": {
+        "performance": 82,
+        "accessibility": 96,
+        "best-practices": 100,
+        "seo": 100
+      }
+    },
+    {
+      "url": "https://successor.edycu.dev/",
+      "fetched": "2026-11-22T04:50:34.796Z",
+      "preset": "desktop",
+      "scores": {
+        "performance": 83,
+        "accessibility": 96,
+        "best-practices": 100,
+        "seo": 100
+      }
+    },
+    {
+      "url": "https://successor.edycu.dev/judge",
+      "fetched": "2026-11-22T04:50:46.115Z",
+      "preset": "desktop",
+      "scores": {
+        "performance": 100,
+        "accessibility": 93,
+        "best-practices": 100,
+        "seo": 100
+      }
+    },
+    {
+      "url": "https://successor.edycu.dev/judge",
+      "fetched": "2026-11-22T04:50:56.180Z",
+      "preset": "desktop",
+      "scores": {
+        "performance": 100,
+        "accessibility": 93,
+        "best-practices": 100,
+        "seo": 100
+      }
+    }
+  ]
+}

@@ -1,0 +1,5 @@
+# live-URL E2E, 2026-11-22T05:22:36Z, target https://successor.edycu.dev (no fresh=1, so no Qwen calls)
+$ make e2e
+E2E_BASE_URL=https://successor.edycu.dev .venv/bin/python -m pytest e2e -q -p no:cacheprovider --override-ini="norecursedirs="
+............                                                             [100%]
+12 passed in 11.32s
