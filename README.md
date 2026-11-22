@@ -207,11 +207,11 @@ Python 3.11+, a CoinMarketCap Pro API key, a DashScope (Alibaba Cloud Model Stud
 ### Installation
 
 ```bash
-uv venv && uv pip install -e '.[dev]'
+uv venv && uv pip install -e '.[dev]'   # the dev extra brings uvicorn
 export CMC_API_KEY=...        # CoinMarketCap Pro API key
 export DASHSCOPE_API_KEY=...  # Qwen on DashScope (intl); QWEN_MODEL overrides qwen4-max
-uvicorn api.index:app --reload
-curl -N 'localhost:8000/api/lookup?q=CPOOL&qty=10000'
+SERVE_STATIC=1 .venv/bin/uvicorn api.index:app --reload   # SERVE_STATIC=1 serves the board locally (Vercel serves public/ in production)
+curl -N 'localhost:8000/api/lookup?q=CPOOL&qty=10000'    # or open http://localhost:8000 and click CPOOL
 ```
 
 Keys are read server-side only and never appear in a response; the receipt's `curl` shows a placeholder.

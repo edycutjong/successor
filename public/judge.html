@@ -50,9 +50,9 @@
 
   <h2>Reproduce (the real path)</h2>
   <pre>git clone https://github.com/edycutjong/successor &amp;&amp; cd successor
-pip install -e .
+python3 -m venv .venv &amp;&amp; .venv/bin/pip install -e '.[dev]'
 export CMC_API_KEY=...  DASHSCOPE_API_KEY=...
-uvicorn api.index:app
+SERVE_STATIC=1 .venv/bin/uvicorn api.index:app
 # open http://localhost:8000 and click CPOOL</pre>
   <p>This path calls the real CoinMarketCap Pro API and Qwen. The deterministic offline replay (<code>python scripts/run_evals.py</code>) is a separate eval run over recorded rows, not the product.</p>
 

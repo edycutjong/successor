@@ -33,9 +33,10 @@ If a live lookup errors or runs long (CMC or the model slow), the board says so 
 
 ```bash
 git clone https://github.com/edycutjong/successor && cd successor
-pip install -e .
+python3 -m venv .venv && .venv/bin/pip install -e '.[dev]'
 export CMC_API_KEY=...  DASHSCOPE_API_KEY=...
-uvicorn api.index:app
+SERVE_STATIC=1 .venv/bin/uvicorn api.index:app
+# open http://localhost:8000 and click CPOOL
 ```
 
 This calls the real CoinMarketCap Pro API and Qwen. `python scripts/run_evals.py` is a separate deterministic replay over recorded rows, an eval, not the product.
