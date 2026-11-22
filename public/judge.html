@@ -32,7 +32,10 @@
   main.judge p, main.judge li, main.judge td { color: var(--bone); }
   main.judge ol, main.judge ul { padding-left: 1.4rem; }
   main.judge li { margin: .55rem 0; }
-  main.judge li::marker { color: var(--muted); font-family: var(--font-display); }
+  main.judge ol { list-style: none; counter-reset: step; padding-left: 0; }
+  main.judge ol > li { counter-increment: step; position: relative; padding-left: 3.1rem; margin: 1rem 0; }
+  main.judge ol > li::before { content: counter(step); position: absolute; left: 0; top: -.1rem; width: 2.1rem; height: 2.1rem; border-radius: 50%; border: 1.5px solid var(--gauze); display: grid; place-items: center; font: 400 22px/1 var(--font-display); color: var(--bone); }
+  main.judge ul li::marker { color: var(--muted); }
   main.judge strong { color: #fff; font-weight: 700; }
   main.judge a { color: var(--bone); text-decoration: underline; text-decoration-color: var(--gauze); text-underline-offset: 3px; text-decoration-thickness: 1.5px; transition: text-decoration-color .15s; }
   main.judge a:hover { text-decoration-color: var(--bone); }
@@ -79,7 +82,7 @@
     <tr><td>Live health</td><td><a href="/api/health">/api/health</a></td><td>CMC key status, LLM model, cache size, build SHA, all with timestamps</td></tr>
     <tr><td>Census</td><td><a href="/api/census">/api/census</a></td><td>161 notices in the top 2000; verdicts, buckets and capture time live</td></tr>
     <tr><td>Lookup latency (cached Reader read, live CMC calls)</td><td>cached p50 1.007 s / p95 1.454 s (n=12, 04:29 UTC), re-measured 11:16 UTC p50 0.796 s / p95 1.363 s (n=12); cold p50 15.44 s (n=6), 2026-11-22, <code>docs/proof/bench/</code></td><td><code>python scripts/bench.py https://successor.edycu.dev CPOOL 12</code></td></tr>
-    <tr><td>Tests and evals</td><td>83 tests (82 % coverage); evals 10/10 counted + 4/4 variants</td><td><code>pytest -q</code>, <code>python scripts/run_evals.py</code></td></tr>
+    <tr><td>Tests and evals</td><td>88 tests (82 % coverage, gate run 2026-11-22 21:16 UTC, <code>docs/proof/gates/local-gates-2026-11-22T2116Z.txt</code>); evals 10/10 counted + 4/4 variants</td><td><code>pytest -q</code>, <code>python scripts/run_evals.py</code></td></tr>
     <tr><td>Live-URL browser tests</td><td>open, click a coin, assert a verdict and receipt</td><td><code>e2e/</code>, <code>make e2e</code></td></tr>
     <tr><td>Unplug test</td><td>no CMC key: an error and no verdict</td><td><code>tests/test_unplugged.py</code>, <code>tests/test_unplugged_http.py</code>, <code>make unplug-e2e</code></td></tr>
   </table></div>

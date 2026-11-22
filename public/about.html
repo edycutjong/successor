@@ -47,7 +47,8 @@ h3 { font: 600 26px/1.05 var(--font-display); letter-spacing: .04em; text-transf
 .hero { padding: 40px 0 56px; background: radial-gradient(900px 640px at 78% 40%, rgba(255, 122, 42, .1), transparent 62%); }
 .hero .wrap { display: grid; grid-template-columns: minmax(0, .92fr) minmax(0, 1.08fr); gap: clamp(28px, 4vw, 64px); align-items: center; }
 h1 { font: 300 clamp(56px, 6.4vw, 104px)/.9 var(--font-display); text-transform: uppercase; letter-spacing: .005em; margin: 16px 0 18px; }
-h1 em { font-style: normal; font-weight: 500; color: var(--lit); text-shadow: 0 0 22px rgba(255, 122, 42, .35); }
+h1 em { font-style: normal; font-weight: 500; color: var(--bone); transition: color .25s, text-shadow .25s; }
+h1 em.lit { color: var(--lit); text-shadow: 0 0 18px rgba(255, 122, 42, .3); }
 .hsub { font: 600 19px/1.4 var(--font-body); margin: 0 0 12px; max-width: 34ch; }
 .lede { color: var(--muted); max-width: 52ch; margin: 0; }
 .lede b { color: var(--bone); }
@@ -70,6 +71,7 @@ h1 em { font-style: normal; font-weight: 500; color: var(--lit); text-shadow: 0 
 .ren .arr { color: var(--muted); font-size: 32px; }
 .ren .succ { color: transparent; -webkit-text-stroke: 1.15px var(--ghost); transition: color .2s, text-shadow .2s; }
 .ren .succ.lit { color: #FFE2C4; -webkit-text-stroke: 0; text-shadow: var(--glow); }
+.ren .succ.after { -webkit-text-stroke: 1.2px var(--after); }
 .bh { display: block; font: 600 13px/1.3 var(--font-display); letter-spacing: .22em; text-transform: uppercase; color: var(--muted); margin-bottom: 6px; }
 .checks { list-style: none; margin: 0; padding: 0; }
 .checks li { display: grid; grid-template-columns: 16px minmax(0, 1fr); gap: 12px; align-items: start; padding: 9px 0; border-top: 1px solid rgba(138, 106, 69, .22); }
@@ -78,13 +80,13 @@ h1 em { font-style: normal; font-weight: 500; color: var(--lit); text-shadow: 0 
 .checks .k i { font-style: normal; font: 700 15px var(--font-display); letter-spacing: .08em; color: var(--muted); margin-right: 8px; }
 .checks .v { display: block; min-height: 2.8em; font-size: 13.5px; line-height: 1.4; color: var(--muted); overflow-wrap: anywhere; }
 .inst .ct-tube { --th: 360px; --cs: 46px; }
-.tubecap { margin: 8px 0 0; text-align: center; font: 500 12px/1.4 var(--font-data); color: var(--muted); min-height: 2.8em; }
+.tubecap { margin: 8px 0 0; text-align: center; font: 500 13px/1.4 var(--font-data); color: var(--muted); min-height: 2.8em; }
 .fig { display: flex; flex-wrap: wrap; align-items: baseline; gap: 6px 18px; margin: 14px 0 4px; padding-top: 14px; border-top: 1px solid var(--rule); }
 .fig .big { font: 300 54px/1 var(--font-display); letter-spacing: .02em; }
 .fig .say { color: var(--muted); max-width: 30ch; line-height: 1.35; min-height: 2.7em; }
 .fig .vals { flex-basis: 100%; margin: 0; min-height: 1.6em; font: 500 13px/1.6 var(--font-data); color: var(--bone); }
 .bfoot { display: flex; flex-wrap: wrap; align-items: center; justify-content: space-between; gap: 10px; margin-top: 10px; }
-.cap { margin: 0; font: 500 12px var(--font-data); color: var(--muted); }
+.cap { margin: 0; font: 500 13px var(--font-data); color: var(--muted); }
 .runs { display: flex; flex-wrap: wrap; align-items: center; gap: 6px; font-size: 13px; color: var(--muted); }
 .runs button { font: 700 14px/1 var(--font-display); letter-spacing: .12em; color: var(--bone); background: transparent; border: 1px solid var(--rule); padding: 8px 10px; cursor: pointer; transition: border-color .15s, background .15s; }
 .runs button:hover:not(:disabled) { border-color: var(--bone); background: rgba(239, 230, 218, .06); }
@@ -97,10 +99,10 @@ h1 em { font-style: normal; font-weight: 500; color: var(--lit); text-shadow: 0 
 .rc { padding: 24px 24px 20px; border-left: 1px solid var(--rule); }
 .rc:first-child { border-left: 0; }
 .num { position: relative; display: inline-block; font: 300 76px/1 var(--font-display); letter-spacing: .03em; }
-.num::before { content: attr(data-ghost); position: absolute; left: 0; top: 0; color: transparent; -webkit-text-stroke: 1px var(--ghost); }
+.num::before { content: attr(data-ghost); position: absolute; left: 0; top: 0; white-space: nowrap; color: transparent; -webkit-text-stroke: 1px var(--ghost); }
 .num .u { font-size: 34px; color: var(--muted); margin-left: 4px; }
 .rc p { margin: 10px 0 8px; color: var(--muted); font-size: 15px; line-height: 1.4; }
-.proof { font: 12px var(--font-data); color: var(--muted); opacity: .85; overflow-wrap: anywhere; }
+.proof { font: 12.5px var(--font-data); color: var(--muted); overflow-wrap: anywhere; }
 
 /* demo */
 .pair { display: grid; grid-template-columns: minmax(0, 1.15fr) minmax(0, .85fr); gap: 24px; }
@@ -212,13 +214,13 @@ footer a:hover { color: var(--bone); text-decoration: underline; text-underline-
 @media (min-width: 1041px) and (max-height: 820px) { .hero { padding-top: 24px; } h1 { font-size: clamp(52px, 5.6vw, 88px); } .inst .ct-tube { --th: 320px; --cs: 42px; } .hsub { margin-bottom: 8px; } }
 @media (max-width: 1040px) {
   .hero .wrap, .pair, .agix, .why130, .faq .wrap { grid-template-columns: minmax(0, 1fr); }
-  .hero .wrap { gap: 0; } .hcopy { display: contents; } .hcopy > * { order: 6; } .hero .ct-eyebrow { order: 1; } .hero h1 { order: 2; } .hsub { order: 3; } .ctas { order: 4; } .bench { order: 5; margin: 6px 0 22px; }
+  .hero .wrap { gap: 0; } .hcopy { display: contents; } .hcopy > * { order: 6; } .hero .ct-eyebrow { order: 1; } .hero h1 { order: 2; } .hsub { order: 3; } .ctas { order: 4; } .bench { order: 4; margin: 6px 0 22px; } .ctas { order: 5; margin-top: 4px; }
   .flow { grid-template-columns: 1fr 1fr; } .flow > div:nth-child(3) { border-left: 0; } .flow > div:nth-child(n+3) { border-top: 1px solid var(--rule); }
   .receipts .wrap { grid-template-columns: 1fr 1fr; } .rc:nth-child(3) { border-left: 0; } .rc:nth-child(n+3) { border-top: 1px solid var(--rule); }
   .rf { grid-template-columns: 52px minmax(0, 1fr); } .rf .demo, .rf .ct-chip { grid-column: 2; justify-self: start; }
 }
 @media (max-width: 640px) {
-  .s { padding: 64px 0; } h1 { font-size: 12.6vw; } .hero .ct-eyebrow { font-size: 12px; letter-spacing: .2em; } .inst { grid-template-columns: minmax(0, 1fr) 150px; gap: 14px; } .checks .v { display: none; } .checks li { padding: 7px 0; } .checks .k { font-size: 14px; } .ren { font-size: 30px; margin-bottom: 8px; } .ren .arr { font-size: 22px; } .inst .ct-tube { --th: 236px; --cs: 22px; --k: .64; } .tubecap { font-size: 11px; } .notice { font-size: 14px; } .bench { padding: 16px 14px 14px; } .ctas .ct-btn { padding: 12px 14px; font-size: 15px; }
+  .s { padding: 64px 0; } h1 { font-size: 12.6vw; } .hero .ct-eyebrow { font-size: 12px; letter-spacing: .2em; } .inst { grid-template-columns: minmax(0, 1fr) 150px; gap: 14px; } .checks .v { display: none; } .checks li { padding: 7px 0; } .checks .k { font-size: 14px; } .ren { font-size: 30px; margin-bottom: 8px; } .ren .arr { font-size: 22px; } .inst .ct-tube { --th: 236px; --cs: 22px; --k: .64; } .tubecap { font-size: 12px; } .runs button { min-height: 44px; padding: 10px 12px; } .copy { min-width: 64px; } .notice { font-size: 14px; } .bench { padding: 16px 14px 14px; } .ctas .ct-btn { padding: 12px 14px; font-size: 15px; }
 .flow { grid-template-columns: 1fr; } .flow > div { border-left: 0; border-top: 1px solid var(--rule); } .flow > div:first-child { border-top: 0; }
   .num { font-size: 56px; } .crow { grid-template-columns: minmax(0, 1fr) 64px; } .crow .ticks, .crow .zero { grid-column: 1 / -1; } .crow .w { font-size: 30px; }
   .vs strong { font-size: 36px; } .look { flex-direction: column; }
@@ -240,7 +242,7 @@ footer a:hover { color: var(--bone); text-decoration: underline; text-underline-
   <div class="wrap">
     <div class="hcopy">
       <p class="ct-eyebrow">CMC API Hackathon · AI Agents and Automation</p>
-      <h1 id="h1">Five verdicts in the glass. <em>Only a checked one lights.</em></h1>
+      <h1 id="h1">Five verdicts in the glass. <em class="lit" id="h-em">Only a checked one lights.</em></h1>
       <p class="hsub">An AI reads CoinMarketCap's migration notice. Code verifies it against CMC's own rows.</p>
       <p class="lede">CPOOL's notice says it became CLEAR at 1:1, in one paragraph of prose. <b>161 coins</b> in CMC's top 2000 carry a notice, <b>141</b> of them migrations, and <b>80</b> name the successor only in prose. You get one verdict, with the rows that prove it.</p>
       <div class="ctas">
@@ -302,8 +304,8 @@ footer a:hover { color: var(--bone); text-decoration: underline; text-underline-
   <div class="wrap">
     <div class="rc"><span class="num" data-ghost="888" data-count="161">161</span><p>coins in CMC's top 2000 carry a migration or other notice</p><code class="proof">docs/proof/assets/census-…T0349Z.json</code></div>
     <div class="rc"><span class="num" data-ghost="88" data-count="80">80</span><p>name the successor only in prose, which no endpoint returns as data</p><code class="proof">census · prose_only</code></div>
-    <div class="rc"><span class="num" data-ghost="88" data-count="83">83</span><p>tests pass, 82&nbsp;% coverage, plus 10/10 evals on real CMC rows</p><code class="proof">docs/proof/gates/local-gates-2026-11-22.txt</code></div>
-    <div class="rc"><span class="num" data-ghost="8.888" data-count="1.007">1.007</span><span class="num u">s</span><p>p50 lookup with a cached read and live CMC calls (n=12)</p><code class="proof">docs/proof/bench/bench-2026-11-22.json</code></div>
+    <div class="rc"><span class="num" data-ghost="88" data-count="88">88</span><p>tests pass, 82&nbsp;% coverage (2026-11-22 21:16 UTC run), plus 10/10 evals on real CMC rows</p><code class="proof">docs/proof/gates/local-gates-2026-11-22T2116Z.txt</code></div>
+    <div class="rc"><span class="num" data-ghost="8.888" data-count="1.007">1.007</span><span class="num u">s</span><p>p50 lookup with a cached read and live CMC calls (n=12, 2026-11-22)</p><code class="proof">docs/proof/bench/bench-2026-11-22.json</code></div>
   </div>
 </section>
 
@@ -389,7 +391,7 @@ footer a:hover { color: var(--bone); text-decoration: underline; text-underline-
         <div class="demo"><span><i class="ct-lamp lit" aria-hidden="true"></i>contract</span><span><i class="ct-lamp after" aria-hidden="true"></i>ratio unconfirmed → no SWAP</span></div><code class="ct-chip">test_never_swap_on_fail.py</code></div>
       <div class="rf" role="listitem"><span class="n" aria-hidden="true">03</span><div><h3>Injection test case: verdict kept</h3><p>Eval case 10: a hand-made notice that tries to instruct the model, replayed offline over recorded CMC rows and the Reader's recorded output, still gets the checked verdict from the table.</p></div>
         <div class="demo"><span><i class="ct-lamp refused" aria-hidden="true"></i>instructions in the notice</span><span><i class="ct-lamp lit" aria-hidden="true"></i>verdict from R1–R10 only</span></div><code class="ct-chip">eval case 10 · injection</code></div>
-      <div class="rf" role="listitem"><span class="n" aria-hidden="true">04</span><div><h3>Links stay on CMC's map</h3><p><code>follow_link</code> opens only hosts CMC lists for the coin or its successor.</p></div>
+      <div class="rf" role="listitem"><span class="n" aria-hidden="true">04</span><div><h3>Links stay on CMC's map</h3><p><code>follow_link</code> opens only hosts CMC lists for the coin or a coin its notice links, plus a short fixed list of publishing hosts.</p></div>
         <div class="demo"><span><i class="ct-lamp lit" aria-hidden="true"></i>fetch.ai · listed by CMC</span><span><i class="ct-lamp refused" aria-hidden="true"></i>private address · refused</span></div><code class="ct-chip">test_fetch_link.py</code></div>
       <div class="rf" role="listitem"><span class="n" aria-hidden="true">05</span><div><h3>Silence is not an answer</h3><p>A hung upstream ends the stream with an error event after a hard 55 s cancel.</p></div>
         <div class="demo"><span><i class="ct-lamp refused" aria-hidden="true"></i>55 s → error event</span></div><code class="ct-chip">test_flow_guards.py</code></div>
@@ -498,22 +500,24 @@ footer a:hover { color: var(--bone); text-decoration: underline; text-underline-
   // successor/verify/verdict.py: rules are tried in this order and the first match wins
   const RULES = [['R3', 'NOT_VERIFIABLE'], ['R4', 'NOTHING_TO_DO'], ['R5', 'NOT_VERIFIABLE'], ['R6', 'WRITE_OFF'], ['R7', 'SELL_OLD'], ['R8', 'SELL_OLD'], ['R9', 'SWAP'], ['R10', 'NOT_VERIFIABLE']];
 
-  function darkTube() { Object.values(cath).forEach((c) => c.classList.remove('on', 'flick')); tube.setAttribute('aria-label', 'Verdict tube: dark, no verdict yet'); }
+  const hEm = $('h-em');
+  function darkTube() { Object.values(cath).forEach((c) => c.classList.remove('on', 'flick')); hEm.classList.remove('lit'); tube.setAttribute('aria-label', 'Verdict tube: dark, no verdict yet'); }
   async function strike(verdict, rule, ctx) {
-    const k = RULES.findIndex((r) => r[0] === rule);
+    const ruled = !ctx.agentDown;  // a Reader failure ends R10 from code without decide(): nothing to flicker through
+    const k = ruled ? RULES.findIndex((r) => r[0] === rule) : -1;
     const missed = (k > 0 ? RULES.slice(0, k) : []).map((r) => r[1]).filter((v, i, a) => v !== verdict && v !== a[i - 1]);
     if (!RM) for (const v of missed) {
       if (ctx.id !== runId) return;
       cath[v].classList.add('flick'); await sleep(95); cath[v].classList.remove('flick'); await sleep(45);
     }
     if (ctx.id !== runId) return;
-    darkTube(); if (cath[verdict]) cath[verdict].classList.add('on');
+    darkTube(); if (cath[verdict]) { cath[verdict].classList.add('on'); hEm.classList.add('lit'); }
     tube.setAttribute('aria-label', 'Verdict tube: ' + (VWORD[verdict] || verdict) + ' is lit');
-    $('h-rule').textContent = k > 0 ? rule + ' struck · R3 to ' + RULES[k - 1][0] + ' did not match · first match wins' : rule + ' struck · first match wins';
+    $('h-rule').textContent = !ruled ? rule + ' · agent unavailable, the rule table never ran' : k > 0 ? rule + ' struck · R3 to ' + RULES[k - 1][0] + ' did not match · first match wins' : rule + ' struck · first match wins';
   }
   function reset(sym, notice) {
-    darkTube(); hOld.textContent = sym; hNew.textContent = '?'; hNew.classList.remove('lit');
-    $('h-big').textContent = '…'; $('h-say').textContent = 'reading the notice'; $('h-vals').textContent = ''; $('h-rule').textContent = 'the tube stays dark until the checks are in';
+    darkTube(); hOld.textContent = sym; hNew.textContent = '?'; hNew.classList.remove('lit', 'after');
+    $('h-big').textContent = '…'; $('h-say').textContent = 'reading the notice'; $('h-vals').textContent = ''; $('h-rule').textContent = 'dark until the checks land';
     ['C2', 'C4', 'C5o', 'C5n'].forEach((c) => lamp(c, 'off', 'waiting'));
     if (notice !== undefined) $('h-notice').innerHTML = '<span class="src">1 · CMC notice, read by qwen4-max</span>' + notice;
     else document.querySelectorAll('#h-notice u').forEach((u) => { u.className = ''; });
@@ -531,7 +535,7 @@ footer a:hover { color: var(--bone); text-decoration: underline; text-underline-
     else if (s === 'proposal') {
       $('h-say').textContent = 'proposal #' + (e.n || 1) + ' in · code is checking it';
       field('sym', 'after'); field('ratio', 'after'); field('contract', 'after');
-      hNew.textContent = (e.fields && e.fields.successor_symbol) || '?';
+      hNew.textContent = (e.fields && e.fields.successor_symbol) || '?'; hNew.classList.add('after');
       lamp('C2', 'after', 'proposed: ' + ((e.fields && e.fields.successor_symbol) || '?'));
       lamp('C4', 'after', 'proposed ratio: ' + ((e.fields && e.fields.ratio_new_per_old) ?? 'not stated'));
     }
@@ -539,7 +543,7 @@ footer a:hover { color: var(--bone); text-decoration: underline; text-underline-
       const st = stateOf(e.state);
       lamp('C2', st, e.reason || e.state, '<i>C2</i>Contract');
       field('sym', st); field('contract', st);
-      if (st === 'lit' && e.successor) { hNew.textContent = e.successor.symbol; hNew.classList.add('lit'); }
+      if (st === 'lit' && e.successor) { hNew.textContent = e.successor.symbol; hNew.classList.remove('after'); hNew.classList.add('lit'); }
     }
     else if (s === 'market_old') lamp('C5o', stateOf(e.state), e.reason || e.state, '<i>C5</i>Old market');
     else if (s === 'market_new') lamp('C5n', stateOf(e.state), e.reason || e.state, '<i>C5</i>New market');
@@ -550,7 +554,8 @@ footer a:hover { color: var(--bone); text-decoration: underline; text-underline-
     }
     else if (s === 'verdict') {
       ctx.done = true;
-      $('h-say').textContent = 'checks in · the rule table decides';
+      ctx.agentDown = /^agent unavailable/.test(e.reason || '');
+      $('h-say').textContent = ctx.agentDown ? 'the Reader failed: no proposal to check' : 'checks in · the rule table decides';
       await strike(e.verdict, e.rule_id, ctx);
       if (ctx.id !== runId) return;
       const w = VWORD[e.verdict] || e.verdict; $('h-live').textContent = 'Verdict: ' + w;
