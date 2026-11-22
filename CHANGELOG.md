@@ -2,6 +2,13 @@
 
 Generated from Conventional Commits by scripts/release.py.
 
+## v1.1.3 (2026-11-22)
+
+### Bug fixes
+
+- the deck's version stamp reads /api/health, so it names the live release instead of going stale at every automatic release (it said v1.1.1 after v1.1.2 shipped); static v1.1.2 stays as the fallback (a2a r10) (dd59d9b)
+- a timeout or connection reset is a recorded failed sample, not a crash that loses the file; a second capture in the same minute gets a suffix instead of overwriting the first (a2a r10) (0c96e53)
+
 ## v1.1.2 (2026-11-22)
 
 ### Bug fixes
