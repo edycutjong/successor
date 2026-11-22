@@ -83,7 +83,7 @@ the successor. The wording is "what CMC's data supports", not advice. Fees, gas 
 
 | Layer | Choice |
 |---|---|
-| Runtime | Python 3.11, FastAPI as one Vercel serverless function (`api/index.py`, `maxDuration` 60), streaming NDJSON |
+| Runtime | Python 3.12 on Vercel (3.11+ supported), FastAPI as one Vercel serverless function (`api/index.py`, `maxDuration` 60), streaming NDJSON |
 | Front end | Plain HTML/CSS/JS in `public/` (a departure board: split-flap names, lamps, trace, receipt drawer). No build step |
 | LLM | Qwen `qwen4-max` on Alibaba Cloud DashScope (intl); `QWEN_MODEL` overrides it (the day-one spike script `scripts/spike_llm.py` fell back to `qwen3.8-max-0902`; the product has no fallback). The Reader's extraction for a notice is cached by coin and notice hash in `data/extractions/` |
 | Data | CoinMarketCap Pro API only. Prices, contracts and notices are never taken from the LLM |
@@ -91,7 +91,7 @@ the successor. The wording is "what CMC's data supports", not advice. Fees, gas 
 
 ## 🏆 CoinMarketCap API Integration
 
-Endpoints Successor calls (5 to 12 calls per lookup in the captured streams; `info?address=` only when you paste a contract or the Reader quotes one; `key/info` from the credit guard at most every 10 minutes (cached) and from `/api/health` on every request). All are verbatim in the receipt drawer and in `docs/proof/spike/`:
+Endpoints Successor calls (5 to 12 calls per lookup in the captured streams; `info?address=` only when you paste a contract or the Reader quotes one; `key/info` from the credit guard at most every 10 minutes (cached) and from `/api/health` at most once a minute per instance (cached)). All are verbatim in the receipt drawer and in `docs/proof/spike/`:
 
 | Endpoint | Used for |
 |---|---|
@@ -211,16 +211,16 @@ Keys are read server-side only and never appear in a response; the receipt's `cu
 make ci                        # ruff, mypy, pytest + coverage, unplug tests, pip-audit, gitleaks (full history)
 make e2e                       # 12 browser/API tests against the live URL (BASE=http://localhost:8000 for a local run)
 make unplug-e2e                # app with no keys: it errors and the live-flow tests must fail
-make bench                     # cached lookup p50/p95, gate p95 <= 3 s;  make bench-cold  for fresh Reader reads
+make bench                     # cached lookup p50/p95 over 20 calls, gate p95 <= 3 s;  make bench-cold  for fresh Reader reads
 make lighthouse                # accessibility >= 0.9 is a hard gate
 python scripts/run_evals.py    # 10/10 counted cases, 4/4 variants (offline replay of recorded rows; an eval, not the product)
 ```
 
 `.github/workflows/ci.yml` runs six stages: 1 Quality (ruff, mypy, tests, unplug) and 2 Security (pip-audit, gitleaks, kitchen-file guard) in parallel,
-3 Build (evals, import check) plus a Vercel deployment that is not yet on the production domain, 4 E2E and 5 Performance (p95 gate, Lighthouse) against that
+3 Build (evals, import check) plus a Vercel deployment that is not yet on the production domain, 4 E2E and 5 Performance (cached-lookup p95 <= 3 s over 20 calls, nearest rank, a latency-only miss re-measured once with both batches kept; Lighthouse) against that
 deployment, then 6 Deploy Gate (main only), which promotes that same deployment to production and checks `/api/health` reports the pushed commit. CodeQL
-(`python`, `javascript-typescript`, `actions`), gitleaks over the full history, a daily live check, a nightly notice snapshot (`snapshot.yml` writes `data/snapshots/census-<date>.json` and stops at the submission deadline; `data/census.json` and the figures in this README stay pinned to the 2026-11-22 capture), and Dependabot (pip + actions, monthly, grouped, no major bumps) run alongside. Releases are automatic: after Stage 6 is green, Conventional Commits since the last tag set the semver bump (`scripts/release.py`), and the job commits, tags and publishes the GitHub release with no manual step.
-The pipeline is green on main: [run](https://github.com/edycutjong/successor/actions/runs/45068463385). The local gate outputs are in `docs/proof/gates/` (local gates, live E2E run, Lighthouse scores).
+(`python`, `javascript-typescript`, `actions`), gitleaks over the full history, a daily live check, a nightly notice snapshot (`snapshot.yml` writes `data/snapshots/census-<date>.json` and stops at the submission deadline; `data/census.json` and the figures in this README stay pinned to the 2026-11-22 capture), and Dependabot (pip + actions, monthly, grouped, no major bumps) run alongside. Releases are automatic: after Stage 6 is green, Conventional Commits since the last tag set the semver bump (`scripts/release.py`), and the job commits, tags and publishes the GitHub release with no manual step. Only the commit the pipeline tested is released (if main has moved on, the newer run releases), and Stage 3 stamps that version into the deployment, so `/api/health` reports the release it belongs to.
+The CI badge at the top shows the state of main; the first fully green run is [this one](https://github.com/edycutjong/successor/actions/runs/45068463385). The local gate outputs are in `docs/proof/gates/` (local gates, live E2E run, Lighthouse scores).
 
 ## 📁 Project Structure
 
