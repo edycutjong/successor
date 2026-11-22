@@ -92,8 +92,12 @@ p { margin: 0; }
 /* 5 how, stepped */
 .flow { display: grid; grid-template-columns: 1.15fr 1fr 1fr 1fr; border: 1px solid var(--rule); }
 .rail { position: relative; display: grid; grid-template-columns: 1.15fr 1fr 1fr 1fr; margin: 0 0 22px; }
-.rail::before { content: ""; position: absolute; left: 17px; right: 25%; top: 17px; height: 2px; background: linear-gradient(90deg, rgba(239, 233, 220, .25), var(--after) 40%, var(--lit) 75%); }
-.rail span { position: relative; display: flex; align-items: center; gap: 14px; font: 600 26px var(--font-display); letter-spacing: .2em; text-transform: uppercase; color: var(--muted); transition: opacity .3s; }
+.rail span { position: relative; display: flex; align-items: center; gap: 0; font: 600 26px var(--font-display); letter-spacing: .2em; text-transform: uppercase; color: var(--muted); transition: opacity .3s; }
+.rail span b { font-weight: 600; padding: 0 16px 0 14px; }
+.rail span::after { content: ""; flex: 1; height: 2px; margin-right: 14px; background: rgba(239, 233, 220, .25); }
+.rail span:nth-child(2)::after { background: linear-gradient(90deg, var(--after), var(--lit)); }
+.rail span:nth-child(3)::after { background: var(--lit); }
+.rail span:last-child::after { display: none; }
 .rail .ct-lamp { width: 36px; height: 36px; background-size: 20px; }
 .rail .node0 { width: 36px; height: 36px; border-radius: 50%; border: 2px solid rgba(239, 233, 220, .3); background: var(--bg); }
 .flow > div { padding: 40px 34px; border-left: 1px solid var(--rule); transition: opacity .3s; }
@@ -157,7 +161,7 @@ p { margin: 0; }
 #presenter.on { display: block; }
 #presenter small { display: block; font: 600 12px var(--font-data); color: var(--muted); margin-bottom: 4px; }
 .hud { position: fixed; right: 16px; top: 12px; z-index: 31; display: flex; gap: 6px; align-items: center; }
-.hud button, .hud span { font: 600 14px var(--font-body); color: var(--bone); background: rgba(19, 14, 20, .9); border: 1px solid var(--gauze); padding: 8px 12px; }
+.hud button, .hud span { font: 600 14px var(--font-body); color: var(--bone); background: rgba(19, 14, 20, .9); border: 1px solid rgba(239, 233, 220, .32); padding: 8px 12px; }
 .hud button { cursor: pointer; transition: border-color .15s, background .15s; }
 .hud button:hover { border-color: var(--bone); background: #231A23; }
 body.portrait { overflow: auto; height: auto; }
@@ -255,7 +259,7 @@ body.portrait .hud { display: none; }
 <section class="slide" data-n="5" data-steps="3" aria-label="How it works">
   <p class="label">Four stops · the CPOOL run</p>
   <h2>The model reads.<br>Code rules.</h2>
-  <div class="rail" id="rail5" aria-hidden="true"><span><i class="node0"></i>prose</span><span><i class="ct-lamp after"></i>proposed</span><span class="r-chk"><i class="ct-lamp lit"></i>checked</span><span class="r-rul"><i class="ct-lamp lit"></i>struck</span></div>
+  <div class="rail" id="rail5" aria-hidden="true"><span><i class="node0"></i><b>prose</b></span><span><i class="ct-lamp after"></i><b>proposed</b></span><span class="r-chk"><i class="ct-lamp lit"></i><b>checked</b></span><span class="r-rul"><i class="ct-lamp lit"></i><b>struck</b></span></div>
   <div class="flow" id="flow5">
     <div><h3>One API call returns prose</h3><p class="q">“…rebranded to … (CLEAR) … 1:1 swap…”</p><span class="chip">/info</span></div>
     <div><h3>Reader proposes</h3><div class="st"><span class="ct-lamp after"></span>quotes each field</div><span class="chip">qwen4-max</span></div>
