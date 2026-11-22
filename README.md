@@ -1,5 +1,5 @@
 <div align="center">
-  <img src="docs/assets/icon.svg" alt="Successor icon" width="144">
+  <img src="docs/assets/icon-animated.svg" alt="Successor icon" width="144">
   <h1>Successor 🛫</h1>
   <p><em>CoinMarketCap says a coin migrated, but only in prose. Successor reads the notice, finds the successor token, checks it against CMC's own rows, and gives the holder one verdict.</em></p>
   <img src="docs/assets/readme-hero-animated.svg" alt="Successor: CPOOL flaps turn to CLEAR, three lamps go green, and the status column settles on SELL OLD, +15.7%. An AI reader proposes the successor from CMC's prose notice; code checks it against CMC rows (CMC data 2026-11-22 03:49 UTC)." width="100%">
@@ -75,28 +75,16 @@ the successor. The wording is "what CMC's data supports", not advice. Fees, gas 
 
 ## 🏗️ Architecture & Tech Stack
 
-```mermaid
-flowchart LR
-  U[Holder: coin or contract + quantity] --> API["/api/lookup (FastAPI, NDJSON stream)"]
-  API --> R1["C1 resolve: /v1/cryptocurrency/map + /v2/cryptocurrency/info"]
-  R1 --> N["CMC notice (free text)"]
-  N --> RD["Reader: Qwen qwen4-max proposes<br/>successor, contract, chain, ratio, deadline"]
-  RD <-->|follow_link: CMC-listed hosts only, SSRF-guarded| L[Linked announcement]
-  RD --> V["Inspector: code verifies each proposal"]
-  V --> Q["C2 contract + chain: info?address="]
-  V --> P["C4 ratio on the event date: quotes/historical"]
-  V --> M["C5 still trading: market-pairs/latest + quotes/latest"]
-  Q --> T["Verdict table R1-R10 (pure, tested)"]
-  P --> T
-  M --> T
-  T --> OUT["SWAP / SELL OLD / WRITE OFF / NOT VERIFIABLE<br/>+ receipt: endpoints, params, timestamps, credits, verbatim rows"]
-```
+<p align="center">
+  <a href="docs/architecture.html"><img src="docs/assets/architecture.png" alt="Successor architecture. A holder's GET /api/lookup goes to api/index.py and successor/flow.py, which resolve the coin (C1) and read its CMC notice. 1, Reader proposes: Qwen qwen4-max reads only the notice text (and up to 2 allow-listed linked pages via follow_link, or a cached extraction) and proposes successor, contract, chain, ratio and dates with verbatim quotes; CMC prices are never sent to it and it has no verdict field. 2, Inspector checks: plain code in successor/verify/ runs C3 quoted verbatim, C2 successor and contract, C5 markets alive, C4 ratio within 5 percent, C6 price integrity against CMC rows, and can send one refute reason back. 3, Rules decide: verdict.py picks SWAP (R9), SELL OLD (R7, R8), WRITE OFF (R6), NOT VERIFIABLE (R3, R5, R10) or NOTHING TO DO (R4); SWAP only if C2 verified the successor and C4 price-confirmed the ratio. Six CMC endpoints: /v1/key/info, /v1/cryptocurrency/map, /v2/cryptocurrency/info, /v2/cryptocurrency/quotes/latest, /v2/cryptocurrency/quotes/historical, /v2/cryptocurrency/market-pairs/latest. Every step streams as NDJSON to the board and its receipt drawer." width="100%"></a>
+</p>
+<p align="center"><sub>Drawn from the code; every component names its file. Source: <a href="docs/architecture.html"><code>docs/architecture.html</code></a> (self-contained HTML + SVG).</sub></p>
 
 | Layer | Choice |
 |---|---|
 | Runtime | Python 3.11, FastAPI as one Vercel serverless function (`api/index.py`, `maxDuration` 60), streaming NDJSON |
 | Front end | Plain HTML/CSS/JS in `public/` (a departure board: split-flap names, lamps, trace, receipt drawer). No build step |
-| LLM | Qwen `qwen4-max` on Alibaba Cloud DashScope (intl), fallback `qwen3.8-max-0902`. The Reader's extraction for a notice is cached by coin and notice hash in `data/extractions/` |
+| LLM | Qwen `qwen4-max` on Alibaba Cloud DashScope (intl); `QWEN_MODEL` overrides it (the day-one spike script `scripts/spike_llm.py` fell back to `qwen3.8-max-0902`; the product has no fallback). The Reader's extraction for a notice is cached by coin and notice hash in `data/extractions/` |
 | Data | CoinMarketCap Pro API only. Prices, contracts and notices are never taken from the LLM |
 | State | None: committed JSON (`data/`) for the extraction cache and census, no database |
 
@@ -248,6 +236,7 @@ scripts/                  census, evals, bench (cached + cold), unplug E2E
 JUDGE.md, /judge         the 30-second path for a judge, no login
 docs/proof/               verbatim CMC + Qwen responses, lookup captures, deploy and bench proof
 docs/DX-REPORT.md         what made the CMC API possible, what got in the way
+docs/architecture.html    the architecture diagram above (self-contained HTML + SVG; PNG in docs/assets/)
 ```
 
 ## 🆕 Pre-existing work and what is new
