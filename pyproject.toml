@@ -1,0 +1,25 @@
+[project]
+name = "successor"
+version = "0.1.0"
+description = "Reads CoinMarketCap migration notices, verifies the successor token against CMC data, returns one verdict with the proving rows."
+requires-python = ">=3.11"
+license = { text = "MIT" }
+dependencies = ["fastapi>=0.115,<0.116", "httpx>=0.28,<0.29", "pydantic>=2,<3"]
+
+[project.optional-dependencies]
+dev = ["pytest>=8", "pytest-asyncio>=0.24", "respx>=0.21", "ruff>=0.7", "uvicorn>=0.32"]
+
+[tool.ruff]
+line-length = 110
+target-version = "py311"
+
+[tool.ruff.lint]
+select = ["E", "F", "I", "B", "UP"]
+
+[tool.pytest.ini_options]
+testpaths = ["tests"]
+asyncio_mode = "auto"
+asyncio_default_fixture_loop_scope = "function"
+
+[tool.setuptools]
+packages = ["successor", "successor.agent", "successor.verify"]

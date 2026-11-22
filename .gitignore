@@ -1,0 +1,31 @@
+# secrets
+.env
+.env.*
+*.pem
+*.key
+# tooling
+.vercel/
+.venv/
+__pycache__/
+*.pyc
+.pytest_cache/
+.ruff_cache/
+.coverage
+coverage/
+node_modules/
+dist/
+.DS_Store
+# kitchen guard — these never belong in the public repo
+specs/
+_ideas/
+_specs/
+_notes/
+.claude/
+CLAUDE.md
+AGENTS.md
+PRODUCT.md
+graphify-out/
+progress.md
+predictions*
+radar*
+*.egg-info/
