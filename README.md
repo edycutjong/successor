@@ -24,6 +24,7 @@
 ---
 
 **No wallet needed anywhere. Every lookup is a read-only call to CoinMarketCap and, when a notice is new, one Qwen call.**
+Why it matters, in one example (CMC quotes, 2026-11-22 03:49 UTC): a tracker shows **$5,924.93** for 10,000 AGIX, which has traded $0 in 24 h; swapped into FET at the ratio the agent found and code price-confirmed, the same coins are **$463.42**.
 Try it: https://successor.edycu.dev (judges: [/judge](https://successor.edycu.dev/judge), the 30-second path), or `curl -N 'https://successor.edycu.dev/api/lookup?q=CPOOL&qty=10000'`.
 
 ## 📸 See it in Action
@@ -66,8 +67,9 @@ An agent with a hard split of roles:
   successor, the chain, the ratio against historical quotes on the event date, whether both tokens still trade. Then a
   deterministic table of rules (R1 to R10, `successor/verify/verdict.py`) picks the verdict.
 
-The LLM never decides the verdict. SWAP is only produced when the contract is verified and the ratio is price-confirmed;
-otherwise SWAP is withheld, and a claim that fails a check ends as NOT VERIFIABLE, SELL OLD or WRITE OFF as the table says.
+The LLM never decides the verdict. SWAP is only produced when the successor is verified against CMC's data (its contract
+matches, the notice links its CMC page, or it is the only CMC id with that exact name and symbol) and the ratio is
+price-confirmed; a contract the Reader quoted that fails to match blocks SWAP. Otherwise SWAP is withheld, and a claim that fails a check ends as NOT VERIFIABLE, SELL OLD or WRITE OFF as the table says.
 The four verdicts are **SWAP · SELL OLD · WRITE OFF · NOT VERIFIABLE**, plus NOTHING TO DO when the coin you hold is already
 the successor. The wording is "what CMC's data supports", not advice. Fees, gas and slippage are excluded and said so on screen.
 
@@ -111,6 +113,31 @@ Endpoints Successor calls (5 to 12 calls per lookup in the captured streams; `in
 | `GET /v2/cryptocurrency/market-pairs/latest` | Whether the old token still trades on spot pairs |
 | `GET /v1/key/info` | Credits left and monthly limit, shown on `/api/health` |
 
+### One real call: code and response
+
+Code, `successor/cmc.py` (`CmcClient.info`, abridged):
+
+```python
+params: dict[str, Any] = {"aux": aux}  # default aux = "urls,platform,date_added,notice,status"
+if ids:
+    params["id"] = ",".join(map(str, ids))
+if address:
+    params["address"] = address
+return await self.get("/v2/cryptocurrency/info", params)
+```
+
+Response, verbatim fields from `docs/proof/spike/01-info.json` (HTTP 200, 1 credit, captured 2026-11-22T01:24:19Z):
+
+```json
+"12573": {"id": 12573, "symbol": "CPOOL", "name": "Clearpool",
+  "notice": "Clearpool (CPOOL) has rebranded to Clearpool (CLEAR) and undergone a 1:1 swap from the [old contract](https://etherscan.io/token/0x66761fa41377003622aee3c7675fc7b5c1c2fac5) to [new contract](https://etherscan.io/token/0x5200f539478f58d9aea962095ba3b16b5e550e00). For more details, please [click here](https://x.com/ClearpoolFin/status/2122523453270180117)."}
+"42884": {"id": 42884, "symbol": "CLEAR", "name": "Clearpool",
+  "platform": {"name": "Ethereum", "token_address": "0x5200f539478f58d9aea962095ba3b16b5e550e00"}}
+```
+
+The notice is prose; the successor's contract is a field on another coin. The Reader proposes `0x5200…0e00` from the
+prose and code compares it with CLEAR's `token_address` (check C2). Every lookup's calls and raw rows are in the receipt drawer.
+
 Successor's own endpoints: `GET /api/lookup?q=&qty=&id=&fresh=` (NDJSON trace, or one JSON answer with
 `Accept: application/json`), `GET /api/hero`, `GET /api/notices`, `GET /api/census`, `GET /api/health`.
 
@@ -134,7 +161,7 @@ copied from old to new coin, `convert=EUR` scaling supply, and the notice being 
 | Lighthouse (desktop, live) | home: performance 82-83, accessibility 96, best practices 100, SEO 100; `/judge`: 100 / 93 / 100 / 100 (2026-11-22) | `make lighthouse` |
 
 The census numbers are the honest headline: **most notices cannot be confirmed from CMC's data alone.** 130 of 161 end in NOT
-VERIFIABLE, and the page says why (61: old and new token share one CMC page, 26: CMC's data refutes the notice, 22: the notice
+VERIFIABLE, and the page says why (61: old and new token share one CMC page, 26: the proposed successor fails a check against CMC's records, such as a quoted contract no CMC coin carries, 22: the notice
 names no successor, 10: no ratio or announcement unfetchable). A tool that said SWAP for those would be guessing.
 
 ### Attacks defeated
@@ -142,7 +169,7 @@ names no successor, 10: no ratio or announcement unfetchable). A tool that said 
 | Control | Why it is load-bearing | Test |
 |---|---|---|
 | A contract that is one hex digit off is refuted, never repaired | A Reader that mistypes an address must not be able to talk code into a verdict | `tests/test_successor_c2.py::test_one_hex_digit_off_is_refuted_and_never_repairable` |
-| SWAP requires a verified contract and a price-confirmed ratio, for every combination of check results | The headline rule of the verdict table | `tests/test_never_swap_on_fail.py::test_properties_hold_for_every_combination` |
+| SWAP requires a verified successor (C2) and a price-confirmed ratio (C4), for every combination of check results | The headline rule of the verdict table | `tests/test_never_swap_on_fail.py::test_properties_hold_for_every_combination` |
 | A dropped quoted contract or ratio withholds SWAP | The Reader omitting a field must not weaken the check | `tests/test_never_swap_on_fail.py::test_a2a_r03_dropped_contract_or_ratio_quote_blocks_swap` |
 | A label-only "swap" from the Reader never reaches SWAP | The Reader's `event_type` alone cannot make a verdict | `tests/test_flow_guards.py::test_label_only_swap_never_reaches_swap` |
 | A misread ratio or symbol is caught by code | Misreads are in the eval set, run offline | `scripts/run_evals.py` variants `cpool-misread-ratio`, `cpool-misread-symbol` |
@@ -154,7 +181,7 @@ names no successor, 10: no ratio or announcement unfetchable). A tool that said 
 
 1. **Most notices end NOT VERIFIABLE** (130 of 161, 2026-11-22). The 161-coin census has 0 SELL OLD and only 2 SWAP; SELL OLD is demonstrated by the featured coins CPOOL (R8) and RZUSD (R7).
 2. **Verdicts are market-sensitive and flip between runs.** RZUSD was WRITE OFF in one census run and SELL OLD live a short while later because the old token still trades; RAMP moved from WRITE OFF to NOT VERIFIABLE in a re-run. Every verdict on screen carries its capture time.
-3. **The Reader is slow.** `qwen4-max` takes a median 8.6 s per call (p90 16.5 s, max 25 s, over the 297 recorded calls in `data/extractions/`); a cold lookup took up to 16.89 s here and a lookup deadline of 52 s applies. Cached notices answer in about a second. Un-cached coins clicked live can end NOT VERIFIABLE with "agent unavailable".
+3. **The Reader is slow.** `qwen4-max` takes a median 8.6 s per call (p90 16.5 s, max 25 s, over the 297 recorded calls in `data/extractions/`); a cold lookup took 15.44 s median and 21.45 s at worst (n=6, `docs/proof/bench/`); the lookup deadline is 52 s and a hard cancel ends the stream at 55 s. Cached notices answer in about a second. Un-cached coins clicked live can end NOT VERIFIABLE with "agent unavailable".
 4. **The census scope is the active top 2000** by rank. The four featured demo coins (CPOOL, AGIX, RZUSD, BIT) sit outside it and are marked and kept out of every count. Notice classification is a regex over CMC's field, not an LLM.
 5. **Event dates are inferred.** CMC copies `date_added` from the old coin to the new one, so a rename is dated from the X post the notice links; where the successor's history starts later, the ratio falls back to the first common traded day within 7 days, labelled on screen.
 6. **Only some announcements can be read.** `follow_link` is limited to hosts CMC lists for the coin or its successor (MKR's forum post is not on that list, so MKR ends NOT VERIFIABLE).

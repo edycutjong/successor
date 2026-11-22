@@ -485,7 +485,7 @@ footer nav { display: flex; gap: 18px; flex-wrap: wrap; }
     <div class="refusals" role="list">
       <div class="rf" role="listitem"><span class="n" aria-hidden="true">01</span><div><h3>One hex digit off is refuted, never repaired</h3><p>A Reader that mistypes a contract cannot talk the code into a verdict.</p></div>
         <div class="demo"><span><i class="lamp ok" aria-hidden="true"></i>0x5200f539…5e550e00</span><span><i class="lamp bad" aria-hidden="true"></i><s>0x5200f539…5e550e0<mark>1</mark></s></span></div><code class="chip">test_successor_c2.py</code></div>
-      <div class="rf" role="listitem"><span class="n" aria-hidden="true">02</span><div><h3>SWAP needs both proofs</h3><p>A verified contract and a price-confirmed ratio, for every combination of check results.</p></div>
+      <div class="rf" role="listitem"><span class="n" aria-hidden="true">02</span><div><h3>SWAP needs both proofs</h3><p>A successor verified against CMC's data and a price-confirmed ratio, for every combination of check results.</p></div>
         <div class="demo"><span><i class="lamp ok" aria-hidden="true"></i>contract</span><span><i class="lamp prop" aria-hidden="true"></i>ratio unconfirmed → no SWAP</span></div><code class="chip">test_never_swap_on_fail.py</code></div>
       <div class="rf" role="listitem"><span class="n" aria-hidden="true">03</span><div><h3>Injected notices lose</h3><p>A notice that tries to instruct the model still gets a clean verdict from the table.</p></div>
         <div class="demo"><span><i class="lamp bad" aria-hidden="true"></i>instructions in the notice</span><span><i class="lamp ok" aria-hidden="true"></i>verdict from R1–R10 only</span></div><code class="chip">eval case 10 · injection</code></div>
@@ -517,7 +517,7 @@ footer nav { display: flex; gap: 18px; flex-wrap: wrap; }
       </div>
       <ol class="leaflet">
         <li><b>61</b><span>old and new token share one CMC page, so there is no second price series to test a ratio against</span></li>
-        <li><b>26</b><span>CMC's own data refutes what the notice says</span></li>
+        <li><b>26</b><span>the proposed successor fails a check against CMC's records</span></li>
         <li><b>22</b><span>the notice names no successor</span></li>
         <li><b>10</b><span>no swap ratio stated, or the linked announcement could not be fetched</span></li>
         <li><b>11</b><span>no live successor market (5), a "swap" the text does not show (3), a quote not in the notice (2), other (1)</span></li>
@@ -549,7 +549,7 @@ footer nav { display: flex; gap: 18px; flex-wrap: wrap; }
       <details open><summary>Does the AI decide the verdict?</summary><p>No. <code>qwen4-max</code> reads the notice and proposes fields, each with the quote it came from. Plain code checks every field against CMC rows, and a table of ten rules (R1–R10, <code>successor/verify/verdict.py</code>) picks the verdict.</p></details>
       <details><summary>Why can't one API call answer this?</summary><p>CMC's <code>info</code> endpoint returns the notice as prose. No field says "the successor of CPOOL is CLEAR, 1:1". Something has to read it, and something else has to check what was read.</p></details>
       <details><summary>What is live, and what is cached?</summary><p>Every lookup calls CMC live, 5 to 12 calls in the captured streams. The Reader's output is cached per coin and notice text, so a click costs at most one Qwen call. Cached p50 is 1.007 s; a cold read's p50 is 15.44 s.</p></details>
-      <details><summary>What if the notice is wrong?</summary><p>Then a check fails and the verdict says so. In the census, CMC's own data refutes 26 notices, and a Reader quote that is not in the notice is dropped before any check runs.</p></details>
+      <details><summary>What if the notice is wrong?</summary><p>Then a check fails and the verdict says so. In the census, 26 proposed successors fail a check against CMC's records, and a Reader quote that is not in the notice is dropped before any check runs.</p></details>
       <details><summary>Why do most coins end NOT VERIFIABLE?</summary><p>Because CMC's data cannot confirm them. In 61 of the 130, old and new token share one CMC page, so there are no two price series to test a ratio against. Successor shows the reason instead of guessing.</p></details>
       <details><summary>Is this financial advice?</summary><p>No. The verdict is what CMC's data supports. Values exclude fees, gas and slippage, and a SWAP reads "if the issuer's swap is still open" when the notice states no window.</p></details>
     </div>

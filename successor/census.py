@@ -30,7 +30,7 @@ def reason_group(reason: str) -> str:
     if "successor not named" in r:
         return "the notice names no successor"
     if "refuted" in r:
-        return "CMC's data refutes what the notice says"
+        return "the proposed successor fails a check against CMC's records"
     if "no live market" in r:
         return "the successor has no live market to compare"
     if "agent" in r:
