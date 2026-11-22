@@ -1,0 +1,69 @@
+{
+ "purpose": "Does CMC carry Neo N3 GAS's contract hash quoted in the GAS notice, in either byte order? (a2a r06 check)",
+ "probes": [
+  {
+   "request": {
+    "method": "GET",
+    "url": "https://pro-api.coinmarketcap.com/v2/cryptocurrency/info?address=0xd2a4cff31913016155e38e474a2c06d08be276cf",
+    "headers": {
+     "X-CMC_PRO_API_KEY": "$CMC_API_KEY"
+    }
+   },
+   "captured_at": "2026-11-22T07:14:24Z",
+   "http_status": 400,
+   "response": {
+    "status": {
+     "timestamp": "2026-11-22T07:14:24.398Z",
+     "error_code": 400,
+     "error_message": "Invalid value for 'slug': 'null'",
+     "elapsed": 4,
+     "credit_count": 0,
+     "notice": null
+    }
+   }
+  },
+  {
+   "request": {
+    "method": "GET",
+    "url": "https://pro-api.coinmarketcap.com/v2/cryptocurrency/info?address=cf76e28bd0062c4a478ee35561011319f3cfa4d2",
+    "headers": {
+     "X-CMC_PRO_API_KEY": "$CMC_API_KEY"
+    }
+   },
+   "captured_at": "2026-11-22T07:14:24Z",
+   "http_status": 400,
+   "response": {
+    "status": {
+     "timestamp": "2026-11-22T07:14:25.227Z",
+     "error_code": 400,
+     "error_message": "Invalid value for 'slug': 'null'",
+     "elapsed": 95,
+     "credit_count": 0,
+     "notice": null
+    }
+   }
+  },
+  {
+   "request": {
+    "method": "GET",
+    "url": "https://pro-api.coinmarketcap.com/v2/cryptocurrency/info?address=0xcf76e28bd0062c4a478ee35561011319f3cfa4d2",
+    "headers": {
+     "X-CMC_PRO_API_KEY": "$CMC_API_KEY"
+    }
+   },
+   "captured_at": "2026-11-22T07:14:25Z",
+   "http_status": 400,
+   "response": {
+    "status": {
+     "timestamp": "2026-11-22T07:14:25.496Z",
+     "error_code": 400,
+     "error_message": "Invalid value for 'slug': 'null'",
+     "elapsed": 4,
+     "credit_count": 0,
+     "notice": null
+    }
+   }
+  }
+ ],
+ "finding": "All three forms return HTTP 400 \"Invalid value for 'slug': 'null'\" (CMC's response for an address it does not know; see DX-REPORT), so no CMC coin carries the hash in either byte order."
+}

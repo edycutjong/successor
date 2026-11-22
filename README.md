@@ -64,7 +64,7 @@ An agent with a hard split of roles:
   (`follow_link`), and *proposes* the successor name and symbol, contract, chain, ratio and deadline, each with the quote it
   came from.
 - **Inspector (plain code).** Verifies every proposal against CMC rows: the contract against CMC's contract list for the
-  successor, the chain, the ratio against historical quotes on the event date, whether both tokens still trade. Then a
+  successor, the chain, the ratio against historical quotes on the event date (it confirms within ±5%, `TOL` in `successor/verify/ratio.py`), whether both tokens still trade. Then a
   deterministic table of rules (R1 to R10, `successor/verify/verdict.py`) picks the verdict.
 
 The LLM never decides the verdict. SWAP is only produced when the successor is verified against CMC's data (its contract
@@ -151,7 +151,7 @@ copied from old to new coin, `convert=EUR` scaling supply, and the notice being 
 | Metric | Value | How to reproduce |
 |---|---|---|
 | Tests | **83 passed**, 82 % line coverage (gate 70 %), mypy clean | `make test-coverage`, `make typecheck` |
-| Evals | **10/10** counted cases + 4/4 variants | `python scripts/run_evals.py` (replays real saved CMC rows and recorded Reader output) |
+| Evals | **10/10** counted cases + 4/4 variants (a variant re-runs a case with a field stripped or a second capture; reported, not counted) | `python scripts/run_evals.py` (replays real saved CMC rows and recorded Reader output) |
 | Lookup latency, cached Reader read, live CMC calls | **p50 1.007 s · p95 1.454 s (= max at n=12)** (n=12, 2026-11-22 04:29 UTC) | `python scripts/bench.py https://successor.edycu.dev CPOOL 12`, samples in `docs/proof/bench/` |
 | Lookup latency, cold Reader read (`fresh=1`, one Qwen call, live CMC calls) | **p50 15.44 s · p95 21.45 s (= max at n=6)** (n=6, CPOOL, 2026-11-22 05:22 UTC); earlier single samples 16.89 s (CPOOL), 8.79 s (MKR) on the day-one engine | `make bench-cold`, samples in `docs/proof/bench/bench-cold-2026-11-22.json`, `docs/proof/deploy/` |
 | Census | 161 notices; verdicts over them: NOT VERIFIABLE 130 · NOTHING TO DO 26 · WRITE OFF 3 · SWAP 2 · SELL OLD 0 (verdicts captured 2026-11-22T03:45:14Z) | `GET /api/census`, `python scripts/census.py` |

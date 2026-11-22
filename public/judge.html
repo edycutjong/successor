@@ -29,8 +29,8 @@
   <ol>
     <li>Open <a href="/">successor.edycu.dev</a>: it runs <strong>CPOOL</strong> on load (the CPOOL chip re-runs it). The board streams the CMC notice, the Reader's proposal, the code checks and the verdict. Expected when this page was written (2026-11-22): <strong>SELL OLD</strong> (rule R8), because CMC's quotes put the old token above the 1:1 swap. Verdicts follow the market, so the capture time is on screen.</li>
     <li>Click <strong>Receipt</strong>: the CMC calls behind the verdict, with a copyable curl.</li>
-    <li>Click the <strong>AGIX</strong> chip: the Reader follows the notice's link, code confirms the ratio against CMC prices on the event date, verdict <strong>SWAP</strong> (R9).</li>
-    <li>Type <strong>GAS</strong>: its notice quotes a contract (<code>0xd2a4…76cf</code>) that no CMC coin carries. Code finds no CMC coin with that contract, so check C2 fails and the verdict is <strong>NOT VERIFIABLE</strong> (R5), not a guess (captured 2026-11-22 07:11 UTC; raw stream <code>docs/proof/assets/lookup-GAS-2026-11-22T0711Z.ndjson</code>).</li>
+    <li>Click the <strong>AGIX</strong> chip: the trace shows the Reader's recorded run (the trace labels it "recorded extraction") following the notice's link to fetch.ai; code confirms the ratio against CMC prices on the event date, live, verdict <strong>SWAP</strong> (R9).</li>
+    <li>Type <strong>GAS</strong>: its notice quotes a contract (<code>0xd2a4…76cf</code>) that no CMC coin carries. Code finds no CMC coin with that contract, so check C2 fails and the verdict is <strong>NOT VERIFIABLE</strong> (R5), not a guess. The notice may be right; CMC's <code>info?address=</code> knows that hash in neither byte order, so CMC's data cannot confirm it (captured 2026-11-22 07:11 UTC; raw stream <code>docs/proof/assets/lookup-GAS-2026-11-22T0711Z.ndjson</code>).</li>
     <li>Scroll to the <strong>census</strong>: every notice in CMC's top 2000, with the verdict code gives each. Most end NOT VERIFIABLE, and the page says why.</li>
     <li>Prefer a terminal? <code>curl -N 'https://successor.edycu.dev/api/lookup?q=CPOOL&amp;qty=10000'</code></li>
   </ol>
