@@ -2,6 +2,8 @@
 
   python scripts/release.py            # compute, then write __version__ + CHANGELOG.md + release-notes.md
   python scripts/release.py --dry-run  # print the next version (or "none") and the reason
+  python scripts/release.py --stamp    # write only __version__ (CI stage 3, before `vercel build`: the deployment
+                                       # reports the version the release job will tag for this same commit)
 
 Rules, over the commits since the last v*.*.* tag:
   feat -> minor; fix / perf / deps -> patch; "!" after the type or a "BREAKING CHANGE:" footer -> major.
@@ -24,6 +26,7 @@ SUBJECT = re.compile(r"^(?P<type>[a-z]+)(?:\((?P<scope>[^)]*)\))?(?P<bang>!)?: (
 BUMP = {"feat": "minor", "fix": "patch", "perf": "patch", "deps": "patch"}
 SECTIONS = {"feat": "Features", "fix": "Bug fixes", "perf": "Performance", "deps": "Dependencies"}
 RANK = {"none": 0, "patch": 1, "minor": 2, "major": 3}
+HEADER = "# Changelog\n\nGenerated from Conventional Commits by scripts/release.py.\n\n"
 
 
 def git(*args: str) -> str:
@@ -96,8 +99,16 @@ def plan(commits: list[tuple[str, str, str]], current: str) -> tuple[str | None,
     return new, "\n".join(lines).rstrip() + "\n"
 
 
+def changelog(old: str, notes: str) -> str:
+    """New CHANGELOG.md text: one header, the new notes, then every earlier release (old header dropped)."""
+    k = old.find("\n## v")
+    earlier = old[k + 1 :] if k >= 0 else ""
+    return HEADER + notes + ("\n" + earlier if earlier else "")
+
+
 def main() -> int:
     dry = "--dry-run" in sys.argv
+    stamp = "--stamp" in sys.argv
     current = re.search(r'__version__ = "(\d+\.\d+\.\d+)"', INIT.read_text())
     assert current, "no __version__ in successor/__init__.py"
     tag = last_tag()
@@ -105,7 +116,7 @@ def main() -> int:
     if not new:
         print(f"no release: no feat/fix/perf/deps/breaking commits since {tag or 'the start'}")
         out = os.environ.get("GITHUB_OUTPUT")
-        if out and not dry:
+        if out and not dry and not stamp:
             Path(out).open("a").write("released=false\n")
         return 0
     print(f"release v{new} (from {current.group(1)}, since {tag})")
@@ -113,14 +124,10 @@ def main() -> int:
         print(notes)
         return 0
     INIT.write_text(INIT.read_text().replace(f'__version__ = "{current.group(1)}"', f'__version__ = "{new}"'))
+    if stamp:
+        return 0
     cl = ROOT / "CHANGELOG.md"
-    old = cl.read_text().split("\n", 2)[2] if cl.exists() else ""
-    cl.write_text(
-        "# Changelog\n\nGenerated from Conventional Commits by scripts/release.py.\n\n"
-        + notes
-        + "\n"
-        + old.lstrip("\n")
-    )
+    cl.write_text(changelog(cl.read_text() if cl.exists() else "", notes))
     (ROOT / "release-notes.md").write_text(notes.split("\n", 2)[2])
     out = os.environ.get("GITHUB_OUTPUT")
     if out:

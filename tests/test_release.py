@@ -48,3 +48,9 @@ def test_bump_and_plan():
     )
     assert new == "1.1.0" and "### Features" in notes and "### Bug fixes" in notes
     assert release.plan([("a1", "docs: x", ""), ("b2", "P7: y", "")], "1.0.0") == (None, "")
+    # CHANGELOG.md keeps one header however many releases are prepended
+    text = release.changelog("", notes)
+    for v in ("1.1.1", "1.2.0"):
+        text = release.changelog(text, f"## v{v} (2026-11-23)\n\n### Bug fixes\n\n- y (d4)\n")
+    assert text.count("Generated from Conventional Commits") == 1 and text.count("## v") == 3
+    assert text.index("## v1.2.0") < text.index("## v1.1.1") < text.index("## v1.1.0")
