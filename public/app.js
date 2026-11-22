@@ -240,7 +240,11 @@ async function health() {
 $("form").addEventListener("submit", (e) => { e.preventDefault(); const q = $("q").value.trim(); if (q) lookup(q, null); });
 document.addEventListener("click", (e) => {
   const b = e.target.closest("[data-q]");
-  if (b) { lookup(b.dataset.q, b.dataset.id ? Number(b.dataset.id) : null); return; }
+  if (b) {
+    if (b.closest("#ctable")) window.scrollTo({ top: 0, behavior: matchMedia("(prefers-reduced-motion: reduce)").matches ? "auto" : "smooth" });
+    lookup(b.dataset.q, b.dataset.id ? Number(b.dataset.id) : null);
+    return;
+  }
   const c = e.target.closest(".chip[data-row]");
   if (c) openReceipt(c.dataset.row);
 });
@@ -251,6 +255,50 @@ document.addEventListener("keydown", (e) => { if (e.key === "Escape" && !$("draw
 $("copy").addEventListener("click", async () => { await navigator.clipboard.writeText(JSON.stringify(state.final, null, 1)); $("copy").textContent = "Copied"; setTimeout(() => ($("copy").textContent = "Copy JSON"), 1200); });
 $("reread").addEventListener("click", () => lookup(state.q, state.id, true));
 
+
+// ---- census screen -------------------------------------------------------------------------------
+const VLABEL = { SWAP: "Swap", SELL_OLD: "Sell old", WRITE_OFF: "Write off", NOT_VERIFIABLE: "Not verifiable", NOTHING_TO_DO: "Nothing to do" };
+let census = { rows: [], f: "all" };
+
+function censusRows() {
+  const f = census.f;
+  const keep = (r) => f === "all" || (f === "migration" && r.type === "migration") || (f === "prose" && r.prose_only) || r.verdict === f;
+  $("cbody").innerHTML = census.rows.filter(keep).map((r) => {
+    const flags = [r.prose_only ? "prose only" : "names a contract", r.names_ratio ? "ratio named" : "no ratio", r.only_unfetchable_hosts ? "links not fetchable" : ""].filter(Boolean).join(" · ");
+    const v = r.verdict && r.verdict !== "ERROR" ? `<span class="vd ${esc(r.verdict)}">${esc(VLABEL[r.verdict] || r.verdict)}</span>` : `<span class="vd none">not read yet</span>`;
+    return `<tr><td class="num">${r.featured ? "★" : esc(r.rank)}</td><td><span class="sym">${esc(r.symbol)}</span> <span class="why">${esc(r.name)}${r.featured ? " · demo coin, outside the top-2000 scan" : ""}</span></td><td class="why hide-s">${esc(r.type)} · ${esc(flags)}</td><td>${v}</td><td><button type="button" data-q="${esc(r.symbol)}" data-id="${esc(r.id)}" aria-label="Look up ${esc(r.symbol)} live">Look up</button></td></tr>`;
+  }).join("") || `<tr><td colspan="5" class="why">no coins match this filter</td></tr>`;
+}
+
+async function loadCensus() {
+  try {
+    const [c, n] = await Promise.all([fetch("/api/census").then((r) => r.json()), fetch("/api/notices").then((r) => r.json())]);
+    census.rows = n.notices;
+    const tile = (b, t) => `<div class="tile"><b>${esc(b)}</b><span>${esc(t)}</span></div>`;
+    $("census-meta").textContent = `Captured ${c.captured_at} · ${c.scope} · ${c.method}`;
+    $("tiles").innerHTML = [
+      tile(c.notices, `coins carry a notice (of ${c.coins_scanned} scanned)`),
+      tile(`${c.prose_only} / ${c.migration_type}`, "migration-type notices state the successor only in prose"),
+      tile(c.no_ratio_named, "name no swap ratio"),
+      tile(c.only_unfetchable_hosts, "link only to hosts the agent cannot fetch"),
+      tile(`${c.verdicts.NOT_VERIFIABLE} / ${c.verdicts_total}`, `verdicts are Not verifiable (read ${c.verdicts_captured || "n/a"})`),
+    ].join("");
+    const tot = Math.max(c.verdicts_total, 1);
+    $("dist").innerHTML = Object.entries(c.verdicts).filter(([, k]) => k).map(([k, v]) => `<i class="${esc(k)}" style="width:${(v / tot) * 100}%" title="${esc(VLABEL[k])}: ${v}"></i>`).join("");
+    $("dist").setAttribute("aria-label", "Verdict distribution: " + Object.entries(c.verdicts).map(([k, v]) => `${VLABEL[k]} ${v}`).join(", "));
+    $("dist").insertAdjacentHTML("afterend", `<p class="legend">${Object.entries(c.verdicts).map(([k, v]) => `${esc(VLABEL[k])} ${v}`).join(" · ")} · agent needed to follow a link: ${c.agent_needed}</p>`);
+    censusRows();
+  } catch { $("census-meta").textContent = "Census unavailable right now."; }
+}
+$("filters").addEventListener("click", (e) => {
+  const b = e.target.closest(".filt");
+  if (!b) return;
+  census.f = b.dataset.f;
+  document.querySelectorAll(".filt").forEach((x) => x.classList.toggle("on", x === b));
+  censusRows();
+});
+
 const params = new URLSearchParams(location.search);
 health();
+loadCensus();
 lookup(params.get("q") || "CPOOL", params.get("id") ? Number(params.get("id")) : params.get("q") ? null : 12573);

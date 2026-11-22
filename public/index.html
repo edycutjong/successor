@@ -58,6 +58,23 @@
     <button type="button" data-q="ONE" data-id="37166">ONE</button>
   </p>
   <div class="pick" id="pick" hidden></div>
+
+  <section class="census" id="census" aria-labelledby="census-h">
+    <h2 id="census-h">Census: every notice in the top 2000</h2>
+    <p class="census-meta" id="census-meta">loading the census …</p>
+    <div class="tiles" id="tiles"></div>
+    <div class="dist" id="dist" role="img" aria-label="Verdict distribution"></div>
+    <div class="filters" id="filters" role="group" aria-label="Filter the census list">
+      <button type="button" class="filt on" data-f="all">All</button>
+      <button type="button" class="filt" data-f="migration">Migration-type</button>
+      <button type="button" class="filt" data-f="prose">Prose only</button>
+      <button type="button" class="filt" data-f="NOT_VERIFIABLE">Not verifiable</button>
+      <button type="button" class="filt" data-f="SELL_OLD">Sell old</button>
+      <button type="button" class="filt" data-f="SWAP">Swap</button>
+      <button type="button" class="filt" data-f="WRITE_OFF">Write off</button>
+    </div>
+    <div class="tablewrap"><table class="ctable" id="ctable"><thead><tr><th>#</th><th>Coin</th><th>Notice</th><th>Verdict</th><th><span class="sr">Open</span></th></tr></thead><tbody id="cbody"></tbody></table></div>
+  </section>
   <p class="foot">Verdicts state what CMC's data supports, not what you should do. Figures exclude fees, gas and slippage. Data: CoinMarketCap Pro API, read live. Agent: Qwen (DashScope); it proposes fields, code decides.</p>
 </main>
 

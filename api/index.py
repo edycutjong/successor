@@ -13,6 +13,7 @@ from fastapi.responses import JSONResponse, StreamingResponse
 
 sys.path.insert(0, str(Path(__file__).resolve().parents[1]))
 from successor import __version__  # noqa: E402
+from successor import census as cn  # noqa: E402
 from successor.agent.reader import load_config  # noqa: E402
 from successor.cmc import CmcClient  # noqa: E402
 from successor.flow import lookup_stream  # noqa: E402
@@ -39,10 +40,31 @@ async def health() -> JSONResponse:
         {
             "cmc": cmc_part,
             "llm": {"model": llm["model"], "configured": bool(llm["api_key"])},
+            "cache": {"extractions": cn.cache_count()},
+            "census_captured_at": cn.load().get("captured_at"),
             "build_sha": os.environ.get("VERCEL_GIT_COMMIT_SHA") or os.environ.get("BUILD_SHA", "local"),
             "version": __version__,
         }
     )
+
+
+@app.get("/api/notices")
+async def notices() -> JSONResponse:
+    doc = cn.load()
+    return JSONResponse(
+        {"captured_at": doc["captured_at"], "count": len(doc["coins"]), "notices": cn.notices(doc)}
+    )
+
+
+@app.get("/api/census")
+async def census() -> JSONResponse:
+    return JSONResponse(cn.summary())
+
+
+@app.get("/api/hero")
+async def hero(request: Request, qty: float = Query(10000.0, ge=0, le=1e15)):
+    """The first-screen lookup (CPOOL): the same live flow as /api/lookup, cached extraction."""
+    return await lookup(request, q=cn.HERO_Q, qty=qty, id=cn.HERO_ID, fresh=False)
 
 
 @app.get("/api/lookup")

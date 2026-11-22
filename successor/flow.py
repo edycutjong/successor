@@ -187,7 +187,9 @@ async def _run(
         sym = q.lstrip("$").upper()
         if re.fullmatch(r"[A-Z0-9]{1,20}", sym):
             r = await cmc.map(symbol=sym)
-            if not r.ok and r.http_status != 400:  # CMC answers 400 for an unknown symbol; fall through to slug
+            if (
+                not r.ok and r.http_status != 400
+            ):  # CMC answers 400 for an unknown symbol; fall through to slug
                 _need(cmc, r, "resolve")
             cands = _map_rows(r.data) if r.ok else []
         slug = re.sub(r"[^a-z0-9]+", "-", q.lower()).strip("-")
