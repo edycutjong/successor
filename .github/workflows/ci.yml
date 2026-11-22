@@ -24,8 +24,8 @@ jobs:
     name: 1 · Quality
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v4
-      - uses: astral-sh/setup-uv@v5
+      - uses: actions/checkout@v7
+      - uses: astral-sh/setup-uv@v7
         with:
           python-version: "3.12"
           enable-cache: true
@@ -38,7 +38,7 @@ jobs:
         run: pytest -q --cov --cov-report=term-missing --cov-report=xml
       - name: "Unplug the keys: the demo path must fail"
         run: pytest -q tests/test_unplugged.py tests/test_unplugged_http.py
-      - uses: actions/upload-artifact@v4
+      - uses: actions/upload-artifact@v7
         with:
           name: coverage
           path: coverage.xml
@@ -48,16 +48,16 @@ jobs:
     name: 2 · Security
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v4
+      - uses: actions/checkout@v7
         with:
           fetch-depth: 0 # gitleaks scans the whole history
-      - uses: astral-sh/setup-uv@v5
+      - uses: astral-sh/setup-uv@v7
         with:
           python-version: "3.12"
       - name: Dependency audit (pip-audit)
         run: uv pip install --system -e . pip-audit && pip-audit --skip-editable
       - name: Secret scan, full history (gitleaks)
-        uses: gitleaks/gitleaks-action@v2
+        uses: gitleaks/gitleaks-action@v3
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
       - name: No kitchen files in the repo
@@ -72,8 +72,8 @@ jobs:
     needs: [quality, security]
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v4
-      - uses: astral-sh/setup-uv@v5
+      - uses: actions/checkout@v7
+      - uses: astral-sh/setup-uv@v7
         with:
           python-version: "3.12"
       - run: uv pip install --system -e '.[dev]'
@@ -95,8 +95,8 @@ jobs:
       VERCEL_ORG_ID: ${{ secrets.VERCEL_ORG_ID }}
       VERCEL_PROJECT_ID: ${{ secrets.VERCEL_PROJECT_ID }}
     steps:
-      - uses: actions/checkout@v4
-      - uses: actions/setup-node@v4
+      - uses: actions/checkout@v7
+      - uses: actions/setup-node@v7
         with:
           node-version: "22"
       - run: npm i -g vercel@latest
@@ -112,8 +112,8 @@ jobs:
     if: ${{ !cancelled() && needs.build.result == 'success' && (needs.deploy.result == 'success' || needs.deploy.result == 'skipped') }}
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v4
-      - uses: astral-sh/setup-uv@v5
+      - uses: actions/checkout@v7
+      - uses: astral-sh/setup-uv@v7
         with:
           python-version: "3.12"
       - run: uv pip install --system -e '.[dev,e2e]'
@@ -127,19 +127,19 @@ jobs:
     needs: e2e
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v4
-      - uses: astral-sh/setup-uv@v5
+      - uses: actions/checkout@v7
+      - uses: astral-sh/setup-uv@v7
         with:
           python-version: "3.12"
       - run: uv pip install --system httpx
       - name: "Cached lookup p50/p95, gate p95 <= 3 s"
         run: python scripts/bench.py "$LIVE_URL" CPOOL 12 --gate-p95 3
-      - uses: actions/setup-node@v4
+      - uses: actions/setup-node@v7
         with:
           node-version: "22"
       - name: Lighthouse (accessibility is a hard gate)
         run: npx --yes @lhci/cli@0.14 autorun --config=lighthouserc.json
-      - uses: actions/upload-artifact@v4
+      - uses: actions/upload-artifact@v7
         with:
           name: perf
           path: |
