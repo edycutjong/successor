@@ -18,9 +18,9 @@
 <meta property="og:image:alt" content="Successor: CMC's CPOOL notice, three code checks against CMC rows, and the board's verdict CPOOL to CLEAR, SELL OLD, +15.7% (CMC data 2026-11-22 03:49 UTC)">
 <meta name="twitter:card" content="summary_large_image">
 <meta name="twitter:image" content="https://successor.edycu.dev/og-image-1200.png?v=20261122b">
-<link rel="preconnect" href="https://fonts.googleapis.com">
-<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Big+Shoulders+Display:wght@600;800&family=Atkinson+Hyperlegible+Next:wght@400;700&family=Fragment+Mono&display=swap" rel="stylesheet">
+<link rel="preload" href="/fonts/big-shoulders-display-latin.woff2" as="font" type="font/woff2" crossorigin>
+<link rel="preload" href="/fonts/atkinson-next-latin.woff2" as="font" type="font/woff2" crossorigin>
+<link rel="preload" href="/fonts/fragment-mono-latin.woff2" as="font" type="font/woff2" crossorigin>
 <link rel="stylesheet" href="/board.css">
 </head>
 <body>
@@ -32,7 +32,7 @@
 </header>
 
 <main>
-  <section class="board" aria-label="Departure board">
+  <section class="board boot" id="board" aria-label="Departure board">
     <div class="cols"><span aria-hidden="true">Old</span><span aria-hidden="true"></span><span aria-hidden="true">Successor</span><span aria-hidden="true">Verdict</span><label class="qty">qty <input id="qty" type="number" min="0" step="any" value="10000" aria-label="Quantity held"></label></div>
     <div class="row" id="row">
       <div class="flaps" id="f-old" aria-label="Old token"></div>

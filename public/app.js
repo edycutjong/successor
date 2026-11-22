@@ -11,6 +11,9 @@ const STEP = {
   market_old: "old market (market-pairs, quotes)", market_new: "successor market", ratio: "ratio (C4)",
 };
 let state = { final: null, events: [], q: "CPOOL", id: 12573, ctrl: null, ticking: null };
+// the page-load lookup keeps the reserved board heights (.boot in board.css); a user lookup or an error releases them
+let booting = true;
+const unboot = () => $("board")?.classList.remove("boot");
 
 function flaps(el, text, cls) {
   const chars = [...String(text || "").toUpperCase()].slice(0, 15);
@@ -157,6 +160,7 @@ function onEvent(ev) {
     trace(t, esc(ev.message));
   } else if (ev.type === "error") {
     stopTick();
+    unboot();
     state.final = ev;
     flaps($("f-verdict"), "NO VERDICT", "verdict NOT_VERIFIABLE");
     $("reason").textContent = `Error at ${ev.step}${ev.http_status ? ` (HTTP ${ev.http_status})` : ""}: ${ev.error}. No verdict is shown. `;
@@ -190,6 +194,8 @@ async function lookup(q, id, fresh = false) {
     onEvent(ev);
   };
   state.q = q; state.id = id;
+  if (!booting) unboot();
+  booting = false;
   reset(q);
   $("go").disabled = true;
   const p = new URLSearchParams({ q, qty: $("qty").value || "1" });

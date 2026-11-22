@@ -1,3 +1,8 @@
+/* self-hosted (OFL, public/fonts/OFL-NOTE.txt): no render-blocking third-party CSS on the board */
+@font-face { font-family: 'Big Shoulders Display'; font-style: normal; font-weight: 100 900; font-display: swap; src: url(/fonts/big-shoulders-display-latin.woff2) format('woff2'); unicode-range: U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6, U+02DA, U+02DC, U+0304, U+0308, U+0329, U+2000-206F, U+20AC, U+2122, U+2191, U+2193, U+2212, U+2215, U+FEFF, U+FFFD; }
+@font-face { font-family: 'Atkinson Hyperlegible Next'; font-style: normal; font-weight: 200 800; font-display: swap; src: url(/fonts/atkinson-next-latin.woff2) format('woff2'); unicode-range: U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6, U+02DA, U+02DC, U+0304, U+0308, U+0329, U+2000-206F, U+20AC, U+2122, U+2191, U+2193, U+2212, U+2215, U+FEFF, U+FFFD; }
+@font-face { font-family: 'Atkinson Hyperlegible Next'; font-style: italic; font-weight: 400; font-display: swap; src: url(/fonts/atkinson-next-italic-latin.woff2) format('woff2'); unicode-range: U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6, U+02DA, U+02DC, U+0304, U+0308, U+0329, U+2000-206F, U+20AC, U+2122, U+2191, U+2193, U+2212, U+2215, U+FEFF, U+FFFD; }
+@font-face { font-family: 'Fragment Mono'; font-style: normal; font-weight: 400; font-display: swap; src: url(/fonts/fragment-mono-latin.woff2) format('woff2'); unicode-range: U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6, U+02DA, U+02DC, U+0304, U+0308, U+0329, U+2000-206F, U+20AC, U+2122, U+2191, U+2193, U+2212, U+2215, U+FEFF, U+FFFD; }
 :root {
   --bg: #15130F; --flap: #24211C; --hinge: #0D0C0A; --ink: #EFE9DC; --muted: #9A9284; --rule: #3A352D;
   --before: #E8A33D; --after: #5FC27E; --refuted: #EE6650;
@@ -151,3 +156,20 @@ main { max-width: 1180px; margin: 0 auto; padding: 1.5rem clamp(1rem, 4vw, 3rem)
 .ctable .block { display: block; } .ctable .when { display: block; font-family: var(--font-data); font-size: .72rem; }
 .ctable .show-s { display: none; } .reasons { color: var(--ink); font-size: .92rem; max-width: 110ch; margin: 1rem 0 .4rem; }
 @media (max-width: 720px) { .ctable .show-s { display: block; } }
+
+/* boot: the first load (CPOOL) reserves the space its live stream fills, so the board does not jump while it streams
+   (heights measured on the CPOOL verdict at 375/412/768/1024/1440 px). app.js drops .boot on the first user lookup or an error. */
+.board.boot .caveats:empty, .board.boot .notice:empty { display: block; }
+.board.boot .caveats { min-height: 1.35rem; }
+.board.boot .reason { min-height: 1.5rem; }
+.board.boot .notice { min-height: 3.8rem; }
+.board.boot .checks { min-height: 21rem; }
+.board.boot .trace-lines { min-height: 17rem; }
+@media (max-width: 900px) {
+  .board.boot .reason { min-height: 3rem; } .board.boot .notice { min-height: 5.3rem; }
+  .board.boot .checks { min-height: 60rem; } .board.boot .trace-lines { min-height: 22rem; }
+}
+@media (max-width: 480px) {
+  .board.boot .figures { min-height: 3.5rem; } .board.boot .reason { min-height: 4.5rem; } .board.boot .notice { min-height: 8.3rem; }
+  .board.boot .checks { min-height: 69rem; } .board.boot .trace-lines { min-height: 44rem; }
+}
