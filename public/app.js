@@ -244,7 +244,7 @@ async function health() {
     el.classList.add(ok ? "ok" : "bad");
     el.querySelector(".health-text").textContent = ok ? "live" : "degraded";
     el.title = `CMC ok: ${ok} · credits left ${h.cmc?.credits_left ?? "?"} · model ${h.llm?.model} · build ${h.build_sha}`;
-    el.setAttribute("aria-label", "API health: " + el.title);
+    el.setAttribute("aria-label", (ok ? "live" : "degraded") + " · API health: " + el.title);
   } catch { el.classList.add("bad"); }
 }
 

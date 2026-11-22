@@ -4,19 +4,20 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>Successor: what happened to your coin</title>
-<meta name="description" content="Your coin was renamed, migrated or redenominated and CoinMarketCap says so only in a free-text notice. Successor reads the notice, verifies the successor against CMC's own data and returns one verdict with the rows that prove it.">
+<meta name="description" content="CMC says a coin migrated only in prose. Successor's AI reads the notice, code checks it against CMC's own rows, and you get one verdict.">
+<meta name="author" content="Edy Cu">
 <link rel="icon" href="/icon.svg" type="image/svg+xml">
 <meta property="og:site_name" content="Successor">
 <meta property="og:type" content="website">
 <meta property="og:url" content="https://successor.edycu.dev/">
 <meta property="og:title" content="Successor: what happened to your coin">
-<meta property="og:description" content="CMC says your coin migrated, in prose. An AI reads the notice; code checks the successor against CMC's own rows and returns one verdict.">
-<meta property="og:image" content="https://successor.edycu.dev/og-image.png?v=20261122">
-<meta property="og:image:width" content="2400">
-<meta property="og:image:height" content="1260">
+<meta property="og:description" content="CMC says your coin migrated, in prose. An AI reads the notice; code checks it against CMC's rows. One verdict.">
+<meta property="og:image" content="https://successor.edycu.dev/og-image-1200.png?v=20261122b">
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="630">
 <meta property="og:image:alt" content="Successor: CMC's CPOOL notice, three code checks against CMC rows, and the board's verdict CPOOL to CLEAR, SELL OLD, +15.7% (CMC data 2026-11-22 03:49 UTC)">
 <meta name="twitter:card" content="summary_large_image">
-<meta name="twitter:image" content="https://successor.edycu.dev/og-image.png?v=20261122">
+<meta name="twitter:image" content="https://successor.edycu.dev/og-image-1200.png?v=20261122b">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Big+Shoulders+Display:wght@600;800&family=Atkinson+Hyperlegible+Next:wght@400;700&family=Fragment+Mono&display=swap" rel="stylesheet">
@@ -32,7 +33,7 @@
 
 <main>
   <section class="board" aria-label="Departure board">
-    <div class="cols" aria-hidden="true"><span>Old</span><span></span><span>Successor</span><span>Verdict</span><label class="qty">qty <input id="qty" type="number" min="0" step="any" value="10000" aria-label="Quantity held"></label></div>
+    <div class="cols"><span aria-hidden="true">Old</span><span aria-hidden="true"></span><span aria-hidden="true">Successor</span><span aria-hidden="true">Verdict</span><label class="qty">qty <input id="qty" type="number" min="0" step="any" value="10000" aria-label="Quantity held"></label></div>
     <div class="row" id="row">
       <div class="flaps" id="f-old" aria-label="Old token"></div>
       <div class="arrow" aria-hidden="true">→</div>
