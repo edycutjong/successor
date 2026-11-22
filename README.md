@@ -227,7 +227,7 @@ make lighthouse                # accessibility >= 0.9 is a hard gate
 python scripts/run_evals.py    # 10/10 counted cases, 4/4 variants (offline replay of recorded rows; an eval, not the product)
 ```
 
-`.github/workflows/` runs the same gates in six stages (quality, security, build, deploy, live-URL E2E, performance) plus CodeQL
+`.github/workflows/` defines the same gates in six stages (quality, security, build, deploy, live-URL E2E, performance) plus CodeQL
 (`python`, `javascript-typescript`, `actions`), gitleaks over the full history, a release workflow on `v*.*.*` tags, a daily
 live check, a nightly notice snapshot (`snapshot.yml`; the figures in this README are pinned to the 2026-11-22 capture and do not move with it), and Dependabot (pip + actions, monthly, grouped, no major bumps). Every gate also ran locally on 2026-11-22; the
 outputs are in `docs/proof/gates/` (local gates, live E2E run, Lighthouse scores). GitHub Actions did not start jobs while the repository was private (an account billing
