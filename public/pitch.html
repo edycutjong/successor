@@ -49,7 +49,7 @@ h2 { font-size: 104px; margin-bottom: 30px; max-width: 15em; }
 .body { font-size: 34px; line-height: 1.45; color: #CFC8BA; max-width: 30em; margin: 0; }
 .body b { color: var(--ink); }
 code, .mono { font-family: var(--font-data); }
-.hl { text-decoration: underline; text-decoration-color: var(--after); text-decoration-thickness: .085em; text-underline-offset: .09em; text-decoration-skip-ink: none; }
+.hl { text-decoration: underline; text-decoration-color: var(--ink); text-decoration-thickness: .085em; text-underline-offset: .09em; text-decoration-skip-ink: none; }
 .hl.prop { text-decoration-color: var(--before); }
 .lamps { display: flex; gap: 28px; margin-top: 24px; font: 800 30px/1 var(--font-display); letter-spacing: .06em; }
 .lamps span { display: flex; gap: 12px; align-items: center; }
@@ -127,7 +127,9 @@ code, .mono { font-family: var(--font-data); }
 .demo2 figcaption { font-size: 24px; color: #CFC8BA; margin-top: 18px; line-height: 1.35; }
 .demo2 figcaption b { font: 800 30px/1 var(--font-display); letter-spacing: .06em; color: var(--ink); }
 .box { position: absolute; border: 3px solid var(--ink); border-radius: 6px; pointer-events: none; }
-.box .co { position: absolute; left: -22px; top: -22px; }
+.box .co { position: absolute; left: -26px; top: -26px; }
+.demo2 .frame { overflow: visible; }
+.demo2 .frame img { border-radius: 0 0 8px 8px; }
 .co { width: 44px; height: 44px; border-radius: 50%; background: var(--ink); color: var(--hinge); display: grid; place-items: center; font: 900 30px/1 var(--font-display); border: 4px solid var(--hinge); }
 .legend { display: flex; gap: 44px; margin-top: 26px; font-size: 25px; color: #CFC8BA; }
 .legend span { display: flex; gap: 12px; align-items: center; }
@@ -215,9 +217,8 @@ body.portrait .hud { display: none; }
 <section class="slide on" data-n="1" aria-label="Cover">
   <div class="cover">
     <div>
-      <p class="label">CMC API Hackathon</p>
       <h1>Your coin left the station. Successor <span class="hl">checks where it went.</span></h1>
-      <p class="sub">AI reads the notice. Code checks the rows.</p>
+      <p class="sub">AI reads CMC's migration notice. Code checks CMC's rows.</p>
     </div>
     <div class="bcard">
       <div class="cols"><span>Old</span><span></span><span>Successor</span></div>
@@ -229,7 +230,7 @@ body.portrait .hud { display: none; }
       <div class="term"><span class="c">03:49 UTC · 8 credits</span></div>
     </div>
   </div>
-  <div class="foot"><b>SUCCESSOR</b><span>v1.0.0 · 01/10</span></div>
+  <div class="foot"><b>SUCCESSOR</b><span>CMC API Hackathon · AI Agents and Automation · v1.0.0 · 01/10</span></div>
   <aside class="notes">Open on the board: CPOOL's name only turned to CLEAR once code checked the contract. That's the whole product in one row. Keep it to one breath.</aside>
 </section>
 
@@ -260,7 +261,7 @@ body.portrait .hud { display: none; }
 <section class="slide" data-n="4" aria-label="Solution">
   <div class="sol">
     <div>
-      <p class="label">Platform 1 · the board</p>
+      <p class="label">Arrivals · the board</p>
       <h2>Reads the notice. Checks the rows.</h2>
       <p class="body">One coin in. <b>SWAP</b>, <b>SELL OLD</b>, <b>WRITE OFF</b> or <b>NOT VERIFIABLE</b> out, with its proof.</p>
     </div>
@@ -275,10 +276,10 @@ body.portrait .hud { display: none; }
   <p class="label">Four stops</p>
   <h2>The model reads. Code rules.</h2>
   <div class="flow">
-    <div><h3>CMC gives prose</h3><span class="chip">/v2/cryptocurrency/info</span></div>
+    <div><h3>One API call returns prose</h3><p>“…rebranded to … (CLEAR) … 1:1 swap…”</p><span class="chip">/info</span></div>
     <div><h3>Reader proposes</h3><div class="st"><span class="lamp prop"></span>quotes each field</div><span class="chip">qwen4-max</span></div>
     <div><h3>Code checks</h3><div class="st"><span class="lamp ok"></span>contract</div><div class="st"><span class="lamp ok"></span>ratio</div><div class="st"><span class="lamp ok"></span>markets</div><span class="chip">5 CMC endpoints</span></div>
-    <div><h3>A table decides</h3><p>SWAP needs both proofs.</p><span class="chip">R1–R10</span></div>
+    <div><h3>Successor returns a verdict</h3><span class="chip">R1–R10</span></div>
   </div>
   <div class="foot"><b>SUCCESSOR</b><span>05/10</span></div>
   <aside class="notes">The split is the design. The LLM proposes, quoting its source. Code verifies against map, info, quotes latest, quotes historical and market pairs. A deterministic table picks the verdict. The LLM never decides.</aside>
@@ -288,9 +289,9 @@ body.portrait .hud { display: none; }
 <section class="slide" data-n="6" aria-label="Live demo">
   <p class="label">Two real lookups</p>
   <div class="demo2">
-    <figure><div class="frame"><div class="bar"><i></i><i></i><i></i><span>?q=CPOOL</span></div><div class="shot"><img src="/assets/shot-cpool.webp" width="1626" height="968" alt="CPOOL board: SELL OLD"><span class="box" style="left:1.41%;top:8.33%;width:61.04%;height:10.22%"><i class="co">1</i></span><span class="box" style="left:62.12%;top:8.33%;width:36.47%;height:10.22%"><i class="co">2</i></span><span class="box" style="left:1.41%;top:46.49%;width:3.09%;height:51.00%"><i class="co">3</i></span></div></div>
+    <figure><div class="frame"><div class="bar"><i></i><i></i><i></i><span>?q=CPOOL</span></div><div class="shot"><img src="/assets/shot-cpool.webp" width="1626" height="968" alt="CPOOL board: SELL OLD"><span class="box" style="left:1.5%;top:3.5%;width:60.5%;height:15.4%"><i class="co">1</i></span><span class="box" style="left:62.6%;top:3.5%;width:36%;height:15.4%"><i class="co">2</i></span><span class="box" style="left:1.3%;top:46.2%;width:3.3%;height:51.6%"><i class="co">3</i></span></div></div>
       <figcaption><b>CPOOL → CLEAR · SELL OLD</b></figcaption></figure>
-    <figure><div class="frame"><div class="bar"><i></i><i></i><i></i><span>?q=AGIX</span></div><div class="shot"><img src="/assets/shot-agix.webp" width="1626" height="1004" alt="AGIX board: SWAP if the issuer's swap is still open"><span class="box" style="left:1.41%;top:8.00%;width:61.04%;height:9.92%"><i class="co">1</i></span><span class="box" style="left:62.12%;top:8.00%;width:36.47%;height:9.92%"><i class="co">2</i></span><span class="box" style="left:1.41%;top:48.37%;width:3.09%;height:49.24%"><i class="co">3</i></span></div></div>
+    <figure><div class="frame"><div class="bar"><i></i><i></i><i></i><span>?q=AGIX</span></div><div class="shot"><img src="/assets/shot-agix.webp" width="1626" height="1004" alt="AGIX board: SWAP if the issuer's swap is still open"><span class="box" style="left:1.5%;top:3.3%;width:60.5%;height:14.9%"><i class="co">1</i></span><span class="box" style="left:62.6%;top:3.3%;width:36%;height:14.9%"><i class="co">2</i></span><span class="box" style="left:1.3%;top:48.1%;width:3.3%;height:49.8%"><i class="co">3</i></span></div></div>
       <figcaption><b>AGIX → FET · SWAP</b> · ratio read from fetch.ai</figcaption></figure>
   </div>
   <div class="legend"><span><i class="co">1</i>flaps turn once verified</span><span><i class="co">2</i>verdict</span><span><i class="co">3</i>one lamp per check</span></div>
@@ -302,11 +303,11 @@ body.portrait .hud { display: none; }
 <section class="slide" data-n="7" aria-label="Guards">
   <h2>It refuses to guess.</h2>
   <div class="guards">
-    <div class="g big"><div><h3>One hex digit off: refuted</h3><p>The Reader cannot talk code into a verdict.</p></div>
+    <div class="g big"><div><h3>One hex digit off: refuted</h3><p>Mistypes never become verdicts.</p></div>
       <div class="hex"><div><span class="lamp ok"></span>0x5200…5e550e00</div><div><span class="lamp bad"></span><s>0x5200…5e550e0<mark>1</mark></s></div></div>
       <span class="chip">test_one_hex_digit_off_is_refuted_and_never_repairable</span></div>
     <div class="g"><h3>SWAP needs both proofs</h3><p>Verified contract, price-confirmed ratio.</p></div>
-    <div class="g"><h3>Injection loses</h3><p>10/10 evals, misreads included.</p></div>
+    <div class="g"><h3>Injection loses</h3><p>Eval case 10: an injected notice, clean verdict.</p></div>
   </div>
   <div class="foot"><b>SUCCESSOR</b><span>07/10</span></div>
   <aside class="notes">Each refusal is a named test. Property test over every combination of check results. Evals replay saved CMC responses offline, including a notice that tries to instruct the model.</aside>
@@ -315,7 +316,7 @@ body.portrait .hud { display: none; }
 <!-- 8 HONESTY -->
 <section class="slide" data-n="8" aria-label="Honest headline">
   <p class="label">Census · 161 notices</p>
-  <h2>130 say: not verifiable.</h2>
+  <h2>130 of 161 end NOT VERIFIABLE.</h2>
   <div class="census">
     <div>
       <div class="crow"><div class="flaps half" data-f="NOT VERIFIABLE"></div><span class="c">130</span><span class="u"></span></div>
@@ -329,6 +330,7 @@ body.portrait .hud { display: none; }
       <li><b>26</b>refuted by CMC data</li>
       <li><b>22</b>no successor named</li>
       <li><b>10</b>no ratio stated</li>
+      <li><b>11</b>other reasons</li>
     </ol>
   </div>
   <div class="foot"><b>SUCCESSOR</b><span>08/10</span></div>

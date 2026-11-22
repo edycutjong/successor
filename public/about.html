@@ -97,18 +97,20 @@ b, strong { font-weight: 700; color: var(--ink); }
 .lamp.bad { background: var(--refuted); border-color: var(--refuted); color: var(--hinge); }
 
 /* ---------- hero ---------- */
-.hero { position: relative; padding: 40px 0 64px; border-bottom: 1px solid var(--rule); }
+.hero { position: relative; padding: 22px 0 56px; border-bottom: 1px solid var(--rule); }
 .hero::before { content: ""; position: absolute; inset: 0; pointer-events: none; opacity: .5;
   background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='120' height='56'%3E%3Cpath d='M0 55.5H120' stroke='%23241F19' stroke-width='1'/%3E%3Cpath d='M119.5 0V56' stroke='%231E1A15' stroke-width='1'/%3E%3C/svg%3E"); }
 .hero .wrap { position: relative; }
 .label { display: inline-flex; align-items: center; gap: 10px; font: 700 14px/1 var(--font-display); letter-spacing: .16em; text-transform: uppercase; color: var(--muted); }
 .label .lamp { width: 12px; height: 12px; font-size: 0; }
 .label .lamp::before { content: none; }
-.hero h1 { font: 900 clamp(44px, 5.3vw, 78px)/.94 var(--font-display); text-transform: uppercase; letter-spacing: .005em; margin: 18px 0 22px; max-width: 16em; }
-.hero h1 .hl { text-decoration: underline; text-decoration-color: var(--before); text-decoration-thickness: .085em; text-underline-offset: .09em; text-decoration-skip-ink: none; transition: text-decoration-color .3s ease; }
-.hero h1 .hl.ok { text-decoration-color: var(--after); }
-.hrow { display: grid; grid-template-columns: minmax(0, 1.05fr) minmax(0, 1fr); gap: 48px; align-items: start; margin-bottom: 34px; }
-.lede { max-width: 36em; color: #CFC8BA; font-size: 18px; margin: 0; }
+.hero h1 { font: 900 clamp(42px, 4.9vw, 70px)/.94 var(--font-display); text-transform: uppercase; letter-spacing: .005em; margin: 14px 0 12px; max-width: 17em; }
+.hsub { font: 700 clamp(19px, 1.7vw, 23px)/1.35 var(--font-body); margin: 0 0 18px; max-width: 46em; }
+.sr { position: absolute; width: 1px; height: 1px; overflow: hidden; clip: rect(0 0 0 0); white-space: nowrap; }
+.hero h1 .hl { text-decoration: underline; text-decoration-color: var(--ink); text-decoration-thickness: .085em; text-underline-offset: .09em; text-decoration-skip-ink: none; transition: text-decoration-color .3s ease; }
+.hero h1 .hl.run { text-decoration-color: var(--before); }
+.hrow { display: grid; grid-template-columns: minmax(0, 1.05fr) minmax(0, 1fr); gap: 48px; align-items: start; margin-bottom: 26px; }
+.lede { max-width: 36em; color: #CFC8BA; font-size: 17px; margin: 0; }
 .ctas { display: flex; flex-wrap: wrap; gap: 12px; margin-bottom: 14px; }
 .runline { display: flex; align-items: center; gap: 10px; max-width: 100%; border: 1px solid var(--rule); border-radius: 4px; padding: 8px 8px 8px 14px; background: var(--steel); }
 .runline code { color: var(--muted); white-space: nowrap; overflow: hidden; text-overflow: ellipsis; min-width: 0; flex: 1; font-size: 13.5px; }
@@ -121,23 +123,23 @@ b, strong { font-weight: 700; color: var(--ink); }
 /* the hero board: one full-width departure board */
 .board { background: var(--steel); border: 1px solid var(--rule); border-radius: 8px; padding: 22px 28px 18px; }
 .bh { display: block; font: 700 13px/1 var(--font-display); letter-spacing: .2em; color: var(--muted); text-transform: uppercase; margin-bottom: 10px; }
-.ba { display: grid; grid-template-columns: minmax(0, 5fr) 44px minmax(0, 6fr) minmax(0, 4.2fr); gap: 20px; align-items: start; }
-.ba .arr { color: var(--muted); font: 800 40px/1 var(--font-display); text-align: center; padding-top: 44px; }
-#h-old { --max: 60px; --g: 5px; }
-#h-new { --max: 80px; --g: 6px; }
-.fig { padding-bottom: 4px; }
-.fig .big { display: block; font: 900 clamp(48px, 5.4vw, 84px)/.9 var(--font-display); letter-spacing: .01em; }
-.fig .say { display: block; color: var(--muted); font-size: 14.5px; line-height: 1.4; margin-top: 8px; }
-.vb { margin-top: 18px; }
-#h-vd { --max: 76px; --g: 6px; }
-.vals { font-size: 15px; color: #CFC8BA; margin: 14px 0 0; min-height: 24px; }
-.bsplit { display: grid; grid-template-columns: minmax(0, 1.15fr) minmax(0, 1fr); gap: 28px; margin-top: 18px; align-items: start; }
+.ba { display: grid; grid-template-columns: minmax(0, 1.55fr) minmax(0, 1fr); gap: 32px; align-items: start; margin-top: 12px; }
+.ren { display: grid; grid-template-columns: minmax(0, 5fr) 40px minmax(0, 6fr); gap: 14px; align-items: start; }
+.ren .arr { color: var(--muted); font: 800 36px/1 var(--font-display); text-align: center; padding-top: 40px; }
+#h-old { --max: 52px; --g: 5px; }
+#h-new { --max: 66px; --g: 6px; }
+.fig { display: flex; align-items: baseline; gap: 18px; flex-wrap: wrap; margin-top: 14px; }
+.fig .big { font: 900 clamp(44px, 4.4vw, 64px)/.9 var(--font-display); letter-spacing: .01em; }
+.fig .say { color: var(--muted); font-size: 14.5px; line-height: 1.4; max-width: 24em; }
+.vb { margin-top: 8px; }
+#h-vd { --max: 70px; --g: 6px; }
+.vals { font-size: 15px; color: #CFC8BA; margin: 0; min-height: 24px; flex-basis: 100%; }
 .checks { list-style: none; margin: 0; padding: 0; border-top: 1px solid var(--rule); }
-.checks li { display: grid; grid-template-columns: 22px 8.6em minmax(0, 1fr); gap: 12px; align-items: center; padding: 8px 0; border-bottom: 1px solid var(--rule); }
-.checks .k { font: 800 18px/1.1 var(--font-display); letter-spacing: .06em; text-transform: uppercase; }
+.checks li { display: grid; grid-template-columns: 22px 7.4em minmax(0, 1fr); gap: 10px; align-items: center; padding: 6px 0; border-bottom: 1px solid var(--rule); }
+.checks .k { font: 800 17px/1.1 var(--font-display); letter-spacing: .06em; text-transform: uppercase; }
 .checks .k i { font-style: normal; color: var(--muted); font-weight: 700; margin-right: 6px; }
-.checks .v { color: var(--muted); font-size: 14px; line-height: 1.4; overflow-wrap: anywhere; }
-.notice { margin: 0; padding: 4px 0 4px 16px; border-left: 2px solid var(--rule); color: #CFC8BA; font-size: 15.5px; line-height: 1.6; }
+.checks .v { color: var(--muted); font-size: 13.5px; line-height: 1.35; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+.notice { margin: 0; padding: 2px 0 2px 16px; border-left: 2px solid var(--rule); color: #CFC8BA; font-size: 15.5px; line-height: 1.55; }
 .notice .src { display: block; font: 700 12px/1 var(--font-display); letter-spacing: .16em; color: var(--muted); text-transform: uppercase; margin-bottom: 8px; }
 .notice u { text-decoration: none; border-bottom: 2px solid transparent; transition: border-color .2s, color .2s; }
 .notice u.prop { border-bottom-color: var(--before); color: var(--ink); }
@@ -197,7 +199,6 @@ figcaption { color: var(--muted); font-size: 14px; line-height: 1.5; padding: 12
 .flow > div { padding: 22px 20px 24px; border-right: 1px solid var(--rule); position: relative; }
 .flow > div:last-child { border-right: 0; }
 .flow .ico { width: 34px; height: 34px; color: var(--muted); display: block; margin-bottom: 12px; }
-.card .ico { width: 36px; height: 36px; color: var(--muted); }
 .flow h3 { font: 800 22px/1.05 var(--font-display); letter-spacing: .06em; text-transform: uppercase; margin: 0 0 6px; }
 .flow .who { font: 400 12px/1.4 var(--font-data); color: var(--muted); margin: 0 0 16px; overflow-wrap: anywhere; }
 .flow .json { font: 400 12.5px/1.65 var(--font-data); color: #CFC8BA; overflow-wrap: anywhere; margin: 0; }
@@ -216,30 +217,23 @@ figcaption { color: var(--muted); font-size: 14px; line-height: 1.5; padding: 12
 .vs strong { display: block; font: 900 44px/1 var(--font-display); }
 .vs span { color: var(--muted); font-size: 14px; }
 
-/* guards bento */
-.bento { display: grid; grid-template-columns: repeat(6, minmax(0, 1fr)); gap: 14px; }
-.card { background: var(--steel); border: 1px solid var(--rule); border-radius: 6px; padding: 24px; display: flex; flex-direction: column; gap: 10px; transition: border-color .2s, transform .2s; }
-.card:hover { border-color: var(--muted); transform: translateY(-2px); }
-.card.a { grid-column: span 4; grid-row: span 2; }
-.card.b { grid-column: span 2; }
-.card.c { grid-column: span 2; }
-.card.d { grid-column: span 3; }
-.card.e { grid-column: span 3; }
-.card h3 { font: 800 25px/1.05 var(--font-display); text-transform: uppercase; letter-spacing: .03em; margin: 0; }
-.card p { margin: 0; color: #CFC8BA; font-size: 15.5px; line-height: 1.5; }
-.card .chip { align-self: flex-start; margin-top: auto; font: 400 12px/1 var(--font-data); color: var(--muted); border: 1px solid var(--rule); border-radius: 3px; padding: 6px 8px; overflow-wrap: anywhere; line-height: 1.4; }
-.card svg { width: 40px; height: 40px; color: var(--ink); }
-.hexdemo { font: 400 clamp(15px, 1.7vw, 22px)/2 var(--font-data); margin: auto 0; padding: 18px 0; overflow-wrap: anywhere; display: grid; gap: 6px; }
-.hexdemo .lamp { width: 28px; height: 28px; font-size: 16px; }
-.hexdemo div { display: flex; gap: 12px; align-items: center; }
-.hexdemo s { text-decoration-color: var(--refuted); color: var(--muted); }
-.hexdemo mark { background: none; color: var(--refuted); font-weight: 700; }
-
+/* guards: refusal rows */
+.refusals { border-top: 1px solid var(--rule); }
+.rf { display: grid; grid-template-columns: 52px minmax(0, 1.25fr) minmax(0, 1fr) 210px; gap: 24px; align-items: center; padding: 22px 0; border-bottom: 1px solid var(--rule); }
+.rf .n { font: 900 32px/1 var(--font-display); color: var(--muted); }
+.rf h3 { font: 800 25px/1.08 var(--font-display); text-transform: uppercase; letter-spacing: .03em; margin: 0 0 6px; }
+.rf p { margin: 0; color: #CFC8BA; font-size: 15.5px; line-height: 1.5; }
+.rf .demo { font: 400 14px/1.5 var(--font-data); display: grid; gap: 8px; overflow-wrap: anywhere; }
+.rf .demo span { display: flex; gap: 10px; align-items: center; }
+.rf .demo s { text-decoration-color: var(--refuted); color: var(--muted); }
+.rf .demo mark { background: none; color: var(--refuted); font-weight: 700; }
+.rf .chip { justify-self: start; font: 400 12px/1.4 var(--font-data); color: var(--muted); border: 1px solid var(--rule); border-radius: 3px; padding: 6px 8px; overflow-wrap: anywhere; }
 /* census */
 .census .rows { border-top: 1px solid var(--rule); }
 .crow { display: grid; grid-template-columns: 420px 80px minmax(0, 1fr); gap: 24px; align-items: center; padding: 18px 0; border-bottom: 1px solid var(--rule); }
 .crow .flaps { --max: 30px; --g: 3px; }
 .crow .count { font: 900 44px/1 var(--font-display); text-align: right; }
+svg.units { display: block; max-width: 100%; height: auto; }
 .units { display: flex; flex-wrap: wrap; gap: 4px; }
 .units i { width: 13px; height: 19px; background: var(--flap); border-radius: 2px; position: relative; }
 .units i::after { content: ""; position: absolute; left: 0; right: 0; top: 9px; height: 1px; background: var(--hinge); }
@@ -291,14 +285,13 @@ footer nav { display: flex; gap: 18px; flex-wrap: wrap; }
 
 /* ---------- responsive ---------- */
 @media (max-width: 1020px) {
-  .pair, .agix, .why130, .faq .wrap, .hrow, .bsplit { grid-template-columns: minmax(0, 1fr); gap: 28px; }
-  .ba { grid-template-columns: minmax(0, 5fr) 36px minmax(0, 6fr); }
-  .ba .fig { grid-column: 1 / -1; display: flex; align-items: baseline; gap: 16px; flex-wrap: wrap; }
+  .pair, .agix, .why130, .faq .wrap, .hrow, .ba { grid-template-columns: minmax(0, 1fr); gap: 24px; }
+  .checks .v { white-space: normal; }
   .flow { grid-template-columns: minmax(0, 1fr) minmax(0, 1fr); }
   .flow > div:nth-child(2) { border-right: 0; }
   .flow > div:nth-child(-n+2) { border-bottom: 1px solid var(--rule); }
-  .bento { grid-template-columns: repeat(2, minmax(0, 1fr)); }
-  .card.a, .card.b, .card.c, .card.d, .card.e { grid-column: span 2; grid-row: auto; }
+  .rf { grid-template-columns: 44px minmax(0, 1fr); }
+  .rf .demo, .rf .chip { grid-column: 2; }
   .receipts .wrap { grid-template-columns: repeat(2, minmax(0, 1fr)); }
   .nav ul { display: none; }
   .nav .btn { margin-left: auto; }
@@ -313,8 +306,8 @@ footer nav { display: flex; gap: 18px; flex-wrap: wrap; }
   .crow .units { grid-column: 1 / -1; }
   .crow .count { font-size: 34px; }
   .checks li { grid-template-columns: 22px minmax(0, 1fr); }
-  .ba { grid-template-columns: minmax(0, 1fr); gap: 12px; }
-  .ba .arr { transform: rotate(90deg); padding: 0; width: 40px; }
+  .ren { grid-template-columns: minmax(0, 1fr); gap: 8px; }
+  .ren .arr { transform: rotate(90deg); padding: 0; width: 36px; }
   .checks .v { grid-column: 2; }
   .honest li { grid-template-columns: minmax(0, 1fr); gap: 8px; }
   .brand small { display: none; }
@@ -324,7 +317,7 @@ footer nav { display: flex; gap: 18px; flex-wrap: wrap; }
 }
 @media (prefers-reduced-motion: reduce) {
   .flaps .t.f b, .flaps .t.f::before, .term pre .cursor { animation: none; }
-  .card, .btn { transition: none; }
+  .btn { transition: none; }
 }
 @media print { .nav, .runs, .copy, .look { display: none; } body { background: #fff; color: #000; } }
 </style>
@@ -349,10 +342,11 @@ footer nav { display: flex; gap: 18px; flex-wrap: wrap; }
 <main id="main">
 <section class="hero" aria-labelledby="h1">
   <div class="wrap">
-    <p class="label"><span class="lamp" id="hlamp" aria-hidden="true"></span><span id="hlabel">CMC API Hackathon · AI Agents and Automation</span></p>
+    <p class="label" id="hlabel">CMC API Hackathon · AI Agents and Automation</p>
     <h1 id="h1">Your coin left the station. Successor <span class="hl" id="hl">checks where it went.</span></h1>
+    <p class="hsub">An AI reads CoinMarketCap's migration notice. Code verifies it against CMC's own rows.</p>
     <div class="hrow">
-      <p class="lede">CoinMarketCap's notice says CPOOL became CLEAR at 1:1, in one paragraph of prose. <b>161 coins</b> in CMC's top 2000 carry a notice like that, and <b>80</b> name the successor only in prose. An AI reads it, code checks every field against CMC's own rows, and you get one verdict.</p>
+      <p class="lede">CPOOL's notice says it became CLEAR at 1:1, in one paragraph of prose. <b>161 coins</b> in CMC's top 2000 carry a notice, <b>141</b> of them migrations, and <b>80</b> name the successor only in prose. You get one verdict, with the rows that prove it.</p>
       <div>
         <div class="ctas">
           <a class="btn" href="https://github.com/edycutjong/successor"><svg viewBox="0 0 16 16" fill="currentColor" aria-hidden="true"><path d="M8 0a8 8 0 0 0-2.53 15.59c.4.07.55-.17.55-.38v-1.34c-2.23.48-2.7-1.07-2.7-1.07-.36-.92-.89-1.17-.89-1.17-.73-.5.06-.49.06-.49.8.06 1.23.83 1.23.83.72 1.22 1.88.87 2.34.66.07-.52.28-.87.5-1.07-1.78-.2-3.65-.89-3.65-3.95 0-.87.31-1.59.82-2.15-.08-.2-.36-1.02.08-2.12 0 0 .67-.21 2.2.82a7.6 7.6 0 0 1 4 0c1.53-1.04 2.2-.82 2.2-.82.44 1.1.16 1.92.08 2.12.51.56.82 1.28.82 2.15 0 3.07-1.87 3.75-3.66 3.95.29.25.54.73.54 1.48v2.2c0 .21.15.46.55.38A8 8 0 0 0 8 0Z"/></svg>GitHub</a>
@@ -360,28 +354,28 @@ footer nav { display: flex; gap: 18px; flex-wrap: wrap; }
           <a class="btn primary" href="/">Open the live board →</a>
         </div>
         <div class="runline"><code id="curl">curl -N '<em>https://successor.edycu.dev/api/lookup?q=CPOOL&amp;qty=10000</em>'</code><button class="copy" type="button" data-copy="curl -N 'https://successor.edycu.dev/api/lookup?q=CPOOL&amp;qty=10000'">Copy</button></div>
-        <p class="note">No wallet, no sign-up. Read-only calls to CoinMarketCap and, when a notice is new, one Qwen call. Not financial advice.</p>
+        <p class="note">No wallet, no sign-up, read-only calls. Not financial advice.</p>
       </div>
     </div>
 
     <div class="board" id="board" aria-label="Departure board: a CPOOL lookup replayed from a captured stream">
+      <p class="notice" id="h-notice"><span class="src">1 · CMC notice, read by qwen4-max</span>Clearpool (CPOOL) has <u class="ok" data-f="sym">rebranded to Clearpool (CLEAR)</u> and <u class="ok" data-f="ratio">undergone a 1:1 swap</u> from the old contract to <u class="ok" data-f="contract">new contract</u>. For more details, please click here.</p>
       <div class="ba">
-        <div><span class="bh">Old</span><div class="flaps" id="h-old" style="--n:6" aria-label="Old token CPOOL"></div></div>
-        <span class="arr" aria-hidden="true">→</span>
-        <div><span class="bh">Successor</span><div class="flaps" id="h-new" style="--n:6" aria-label="Successor token CLEAR"></div></div>
-        <div class="fig"><span class="big" id="h-big">+15.7%</span><span class="say" id="h-say">the old token is worth more than the 1:1 swap, at CMC's quotes</span></div>
-      </div>
-      <div class="vb"><span class="bh">Verdict</span><div class="flaps" id="h-vd" style="--n:14" aria-live="polite" aria-label="Verdict SELL OLD"></div></div>
-      <p class="vals" id="h-vals">10,000 CPOOL · sell old $243.01 · swap 1:1 $210.06 · excludes fees and gas</p>
-      <div class="bsplit">
+        <div class="ren">
+          <div><span class="bh">Old</span><div class="flaps" id="h-old" style="--n:6" role="img" aria-label="Old token CPOOL"></div></div>
+          <span class="arr" aria-hidden="true">→</span>
+          <div><span class="bh">Successor</span><div class="flaps" id="h-new" style="--n:6" role="img" aria-label="Successor token CLEAR"></div></div>
+        </div>
+        <div><span class="bh">2 · Checked by code against CMC rows</span>
         <ol class="checks" id="h-checks">
-          <li data-c="C2"><span class="lamp ok" aria-hidden="true"></span><span class="k"><i>C2</i>Contract</span><span class="v">0x5200…0e00 = CMC's CLEAR contract, id 42884</span></li>
-          <li data-c="C4"><span class="lamp ok" aria-hidden="true"></span><span class="k"><i>C4</i>Ratio 1:1</span><span class="v">old/new 1.04342 after the event → confirms</span></li>
-          <li data-c="C5o"><span class="lamp ok" aria-hidden="true"></span><span class="k"><i>C5</i>Old market</span><span class="v">$1,385,625 / 24 h, top venue Upbit</span></li>
-          <li data-c="C5n"><span class="lamp ok" aria-hidden="true"></span><span class="k"><i>C5</i>New market</span><span class="v">$603,140 / 24 h, top venue Uniswap v4</span></li>
-        </ol>
-        <p class="notice" id="h-notice"><span class="src">CMC notice · read by qwen4-max</span>Clearpool (CPOOL) has <u class="ok" data-f="sym">rebranded to Clearpool (CLEAR)</u> and <u class="ok" data-f="ratio">undergone a 1:1 swap</u> from the old contract to <u class="ok" data-f="contract">new contract</u>. For more details, please click here.</p>
+          <li data-c="C2"><span class="lamp ok" aria-hidden="true"></span><span class="k"><i>C2</i>Contract<span class="sr"> verified</span></span><span class="v">0x5200…0e00 = CMC's CLEAR contract, id 42884</span></li>
+          <li data-c="C4"><span class="lamp ok" aria-hidden="true"></span><span class="k"><i>C4</i>Ratio 1:1<span class="sr"> verified</span></span><span class="v">old/new 1.04342 after the event → confirms</span></li>
+          <li data-c="C5o"><span class="lamp ok" aria-hidden="true"></span><span class="k"><i>C5</i>Old market<span class="sr"> verified</span></span><span class="v">$1,385,625 / 24 h, top venue Upbit</span></li>
+          <li data-c="C5n"><span class="lamp ok" aria-hidden="true"></span><span class="k"><i>C5</i>New market<span class="sr"> verified</span></span><span class="v">$603,140 / 24 h, top venue Uniswap v4</span></li>
+        </ol></div>
       </div>
+      <div class="vb"><span class="bh">3 · Verdict</span><div class="flaps" id="h-vd" style="--n:14" role="img" aria-label="Verdict SELL OLD"></div><p class="sr" id="h-live" aria-live="polite"></p></div>
+      <div class="fig"><span class="big" id="h-big">+15.7%</span><span class="say" id="h-say">the old token is worth more than the 1:1 swap, at CMC's quotes</span><p class="vals" id="h-vals">10,000 CPOOL · sell old $243.01 · swap 1:1 $210.06 · excludes fees and gas</p></div>
       <div class="bfoot">
         <p class="cap" id="h-cap">replay · lookup captured 2026-11-22 03:49 UTC · 8 CMC credits · 457 ms</p>
         <div class="runs" role="group" aria-label="Run a live lookup on CoinMarketCap now">
@@ -408,7 +402,7 @@ footer nav { display: flex; gap: 18px; flex-wrap: wrap; }
 
 <section class="s" id="demo" aria-labelledby="demo-h">
   <div class="wrap">
-    <p class="eyebrow">Platform 1 · the demo</p>
+    <p class="eyebrow">Arrivals · the demo</p>
     <h2 id="demo-h">One lookup, shown twice.</h2>
     <p class="sub">Left, the live board, captured about two hours after the stream on the right. Same coin, same verdict, a different margin: the market moved. That is why every verdict carries its capture time.</p>
     <div class="pair">
@@ -441,7 +435,7 @@ footer nav { display: flex; gap: 18px; flex-wrap: wrap; }
     <h2 id="why-h">No endpoint returns “CPOOL became CLEAR, 1:1”.</h2>
     <p class="sub">CMC knows the coin migrated. It says so in prose. Turning that paragraph into a decision takes a reader, and a checker that does not trust the reader.</p>
     <div class="flow">
-      <div><span class="step-n">Stop 01</span><svg class="ico" viewBox="0 0 40 40" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M6 10h28M6 17h28M6 24h18M6 31h24"/></svg><h3>CMC gives prose</h3><p class="who">GET /v2/cryptocurrency/info?aux=notice</p>
+      <div><span class="step-n">Stop 01</span><svg class="ico" viewBox="0 0 40 40" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M6 10h28M6 17h28M6 24h18M6 31h24"/></svg><h3>One API call returns prose</h3><p class="who">GET /v2/cryptocurrency/info?aux=notice</p>
         <p class="json"><span class="k">"notice":</span> "Clearpool (CPOOL) has rebranded to Clearpool (CLEAR) and undergone a 1:1 swap from the [old contract](https://etherscan.io/token/0x6676…fac5) to [new contract](https://etherscan.io/token/0x5200…0e00)…"</p></div>
       <div><span class="step-n">Stop 02</span><svg class="ico" viewBox="0 0 40 40" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M7 11h11v11h-5l-5 6v-6H7zM22 11h11v11h-5l-5 6v-6h-1z"/></svg><h3>The Reader proposes</h3><p class="who">qwen4-max · tool loop · every field quoted</p>
         <ul>
@@ -455,7 +449,7 @@ footer nav { display: flex; gap: 18px; flex-wrap: wrap; }
           <li><span class="lamp ok" aria-hidden="true"></span><span><b>C4</b> old/new = 1.04342 on 2026-11-19, stated 1</span></li>
           <li><span class="lamp ok" aria-hidden="true"></span><span><b>C5</b> both tokens still trade</span></li>
         </ul></div>
-      <div><span class="step-n">Stop 04</span><svg class="ico" viewBox="0 0 40 40" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="5" y="8" width="30" height="24" rx="2"/><path d="M5 16h30M5 24h30M15 8v24"/></svg><h3>A table decides</h3><p class="who">successor/verify/verdict.py · R1–R10</p>
+      <div><span class="step-n">Stop 04</span><svg class="ico" viewBox="0 0 40 40" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="5" y="8" width="30" height="24" rx="2"/><path d="M5 16h30M5 24h30M15 8v24"/></svg><h3>Successor returns a verdict</h3><p class="who">successor/verify/verdict.py · R1–R10</p>
         <p class="stamp">Sell<br>old</p><p class="who" style="margin:0">R8 · old worth 15.7% more than the swap</p></div>
     </div>
 
@@ -479,54 +473,35 @@ footer nav { display: flex; gap: 18px; flex-wrap: wrap; }
 
 <section class="s" id="guards" aria-labelledby="guards-h">
   <div class="wrap">
-    <p class="eyebrow">Platform 2 · the guards</p>
+    <p class="eyebrow">Signals · the guards</p>
     <h2 id="guards-h">What the code refuses to do.</h2>
     <p class="sub">The model reads; it never rules. Each refusal below is a named test in the repo.</p>
-    <div class="bento">
-      <article class="card a">
-        <svg viewBox="0 0 40 40" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><rect x="5" y="8" width="13" height="24" rx="2"/><rect x="22" y="8" width="13" height="24" rx="2"/><path d="M5 20h13M22 20h13"/></svg>
-        <h3>One hex digit off is refuted, never repaired</h3>
-        <p>If the Reader mistypes a contract, it cannot talk the code into a verdict. The board strikes the field through and the lamp goes red.</p>
-        <div class="hexdemo" aria-label="Example: a contract one digit off is refuted">
-          <div><span class="lamp ok" aria-hidden="true"></span><span>0x5200f539…5e550e00</span></div>
-          <div><span class="lamp bad" aria-hidden="true"></span><s>0x5200f539…5e550e0<mark>1</mark></s></div>
-        </div>
-        <span class="chip">tests/test_successor_c2.py · one_hex_digit_off_is_refuted_and_never_repairable</span>
-      </article>
-      <article class="card b">
-        <svg class="ico" viewBox="0 0 40 40" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="5" y="9" width="13" height="22" rx="2"/><rect x="22" y="9" width="13" height="22" rx="2"/><path d="M5 20h13M22 20h13M9 15l2.5 2.5L15 13M26 15l2.5 2.5L32 13"/></svg><h3>SWAP needs both proofs</h3>
-        <p>A verified contract and a price-confirmed ratio, for every combination of check results.</p>
-        <span class="chip">test_never_swap_on_fail.py</span>
-      </article>
-      <article class="card c">
-        <h3>Injected notices lose</h3>
-        <p>A notice that tries to instruct the model still gets a clean verdict.</p>
-        <span class="chip">eval 10 · injection</span>
-      </article>
-      <article class="card d">
-        <svg class="ico" viewBox="0 0 40 40" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M8 30c5-12 19-6 24-20"/><circle cx="8" cy="30" r="3"/><circle cx="32" cy="10" r="3"/><path d="M4 36h12M24 4h12"/></svg><h3>Links stay on CMC's map</h3>
-        <p><code>follow_link</code> opens only hosts CMC lists for the coin or its successor, and refuses private addresses.</p>
-        <span class="chip">tests/test_fetch_link.py · SSRF guard</span>
-      </article>
-      <article class="card e">
-        <svg class="ico" viewBox="0 0 40 40" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4 14l2 2 3-4M12 14l2 2 3-4M20 14l2 2 3-4M28 14l2 2 3-4M4 26l2 2 3-4M12 26l2 2 3-4M20 26l2 2 3-4M28 26l2 2 3-4M36 14v0M36 26v0"/></svg><h3>Ten evals, replayed on real rows</h3>
-        <p>10/10 counted cases and 4/4 variants run offline on saved CMC responses, misreads included.</p>
-        <span class="chip">scripts/run_evals.py</span>
-      </article>
+    <div class="refusals" role="list">
+      <div class="rf" role="listitem"><span class="n" aria-hidden="true">01</span><div><h3>One hex digit off is refuted, never repaired</h3><p>A Reader that mistypes a contract cannot talk the code into a verdict.</p></div>
+        <div class="demo"><span><i class="lamp ok" aria-hidden="true"></i>0x5200f539…5e550e00</span><span><i class="lamp bad" aria-hidden="true"></i><s>0x5200f539…5e550e0<mark>1</mark></s></span></div><code class="chip">test_successor_c2.py</code></div>
+      <div class="rf" role="listitem"><span class="n" aria-hidden="true">02</span><div><h3>SWAP needs both proofs</h3><p>A verified contract and a price-confirmed ratio, for every combination of check results.</p></div>
+        <div class="demo"><span><i class="lamp ok" aria-hidden="true"></i>contract</span><span><i class="lamp prop" aria-hidden="true"></i>ratio unconfirmed → no SWAP</span></div><code class="chip">test_never_swap_on_fail.py</code></div>
+      <div class="rf" role="listitem"><span class="n" aria-hidden="true">03</span><div><h3>Injected notices lose</h3><p>A notice that tries to instruct the model still gets a clean verdict from the table.</p></div>
+        <div class="demo"><span><i class="lamp bad" aria-hidden="true"></i>instructions in the notice</span><span><i class="lamp ok" aria-hidden="true"></i>verdict from R1–R10 only</span></div><code class="chip">eval case 10 · injection</code></div>
+      <div class="rf" role="listitem"><span class="n" aria-hidden="true">04</span><div><h3>Links stay on CMC's map</h3><p><code>follow_link</code> opens only hosts CMC lists for the coin or its successor.</p></div>
+        <div class="demo"><span><i class="lamp ok" aria-hidden="true"></i>fetch.ai · listed by CMC</span><span><i class="lamp bad" aria-hidden="true"></i>private address · refused</span></div><code class="chip">test_fetch_link.py</code></div>
+      <div class="rf" role="listitem"><span class="n" aria-hidden="true">05</span><div><h3>Silence is not an answer</h3><p>A hung upstream ends the stream with an error event after a hard 55 s cancel.</p></div>
+        <div class="demo"><span><i class="lamp bad" aria-hidden="true"></i>55 s → error event</span></div><code class="chip">test_flow_guards.py</code></div>
     </div>
+    <p class="capline">evals: 10/10 counted cases + 4/4 variants, replayed offline on saved CMC rows, misreads included · scripts/run_evals.py</p>
   </div>
 </section>
 
 <section class="s census" id="census" aria-labelledby="census-h">
   <div class="wrap">
-    <p class="eyebrow">Platform 3 · the census</p>
+    <p class="eyebrow">Timetable · the census</p>
     <h2 id="census-h">Every notice in the top 2000, looked up.</h2>
     <p class="sub">The real lookup flow, run on all 161 coins that carry a notice. One tile per coin.</p>
     <div class="rows" role="list">
-      <div class="crow" role="listitem"><div class="flaps" data-board="NOT VERIFIABLE" style="--n:14"></div><span class="count">130</span><div class="units half" data-units="130" aria-hidden="true"></div></div>
-      <div class="crow" role="listitem"><div class="flaps" data-board="NOTHING TO DO" style="--n:14"></div><span class="count">26</span><div class="units" data-units="26" aria-hidden="true"></div></div>
-      <div class="crow" role="listitem"><div class="flaps" data-board="WRITE OFF" style="--n:14"></div><span class="count">3</span><div class="units" data-units="3" aria-hidden="true"></div></div>
-      <div class="crow" role="listitem"><div class="flaps" data-board="SWAP" style="--n:14"></div><span class="count">2</span><div class="units lit" data-units="2" aria-hidden="true"></div></div>
+      <div class="crow" role="listitem"><div class="flaps" data-board="NOT VERIFIABLE" style="--n:14"></div><span class="count">130</span><svg class="units" viewBox="0 0 612 96" width="612" height="96" aria-hidden="true"><rect x="0" y="5" width="13" height="11" rx="1.5" fill="#2E2A23"/><rect x="0" y="10" width="13" height="1.5" fill="#0D0C0A"/><rect x="17" y="5" width="13" height="11" rx="1.5" fill="#2E2A23"/><rect x="17" y="10" width="13" height="1.5" fill="#0D0C0A"/><rect x="34" y="5" width="13" height="11" rx="1.5" fill="#2E2A23"/><rect x="34" y="10" width="13" height="1.5" fill="#0D0C0A"/><rect x="51" y="5" width="13" height="11" rx="1.5" fill="#2E2A23"/><rect x="51" y="10" width="13" height="1.5" fill="#0D0C0A"/><rect x="68" y="5" width="13" height="11" rx="1.5" fill="#2E2A23"/><rect x="68" y="10" width="13" height="1.5" fill="#0D0C0A"/><rect x="85" y="5" width="13" height="11" rx="1.5" fill="#2E2A23"/><rect x="85" y="10" width="13" height="1.5" fill="#0D0C0A"/><rect x="102" y="5" width="13" height="11" rx="1.5" fill="#2E2A23"/><rect x="102" y="10" width="13" height="1.5" fill="#0D0C0A"/><rect x="119" y="5" width="13" height="11" rx="1.5" fill="#2E2A23"/><rect x="119" y="10" width="13" height="1.5" fill="#0D0C0A"/><rect x="136" y="5" width="13" height="11" rx="1.5" fill="#2E2A23"/><rect x="136" y="10" width="13" height="1.5" fill="#0D0C0A"/><rect x="153" y="5" width="13" height="11" rx="1.5" fill="#2E2A23"/><rect x="153" y="10" width="13" height="1.5" fill="#0D0C0A"/><rect x="170" y="5" width="13" height="11" rx="1.5" fill="#2E2A23"/><rect x="170" y="10" width="13" height="1.5" fill="#0D0C0A"/><rect x="187" y="5" width="13" height="11" rx="1.5" fill="#2E2A23"/><rect x="187" y="10" width="13" height="1.5" fill="#0D0C0A"/><rect x="204" y="5" width="13" height="11" rx="1.5" fill="#2E2A23"/><rect x="204" y="10" width="13" height="1.5" fill="#0D0C0A"/><rect x="221" y="5" width="13" height="11" rx="1.5" fill="#2E2A23"/><rect x="221" y="10" width="13" height="1.5" fill="#0D0C0A"/><rect x="238" y="5" width="13" height="11" rx="1.5" fill="#2E2A23"/><rect x="238" y="10" width="13" height="1.5" fill="#0D0C0A"/><rect x="255" y="5" width="13" height="11" rx="1.5" fill="#2E2A23"/><rect x="255" y="10" width="13" height="1.5" fill="#0D0C0A"/><rect x="272" y="5" width="13" height="11" rx="1.5" fill="#2E2A23"/><rect x="272" y="10" width="13" height="1.5" fill="#0D0C0A"/><rect x="289" y="5" width="13" height="11" rx="1.5" fill="#2E2A23"/><rect x="289" y="10" width="13" height="1.5" fill="#0D0C0A"/><rect x="306" y="5" width="13" height="11" rx="1.5" fill="#2E2A23"/><rect x="306" y="10" width="13" height="1.5" fill="#0D0C0A"/><rect x="323" y="5" width="13" height="11" rx="1.5" fill="#2E2A23"/><rect x="323" y="10" width="13" height="1.5" fill="#0D0C0A"/><rect x="340" y="5" width="13" height="11" rx="1.5" fill="#2E2A23"/><rect x="340" y="10" width="13" height="1.5" fill="#0D0C0A"/><rect x="357" y="5" width="13" height="11" rx="1.5" fill="#2E2A23"/><rect x="357" y="10" width="13" height="1.5" fill="#0D0C0A"/><rect x="374" y="5" width="13" height="11" rx="1.5" fill="#2E2A23"/><rect x="374" y="10" width="13" height="1.5" fill="#0D0C0A"/><rect x="391" y="5" width="13" height="11" rx="1.5" fill="#2E2A23"/><rect x="391" y="10" width="13" height="1.5" fill="#0D0C0A"/><rect x="408" y="5" width="13" height="11" rx="1.5" fill="#2E2A23"/><rect x="408" y="10" width="13" height="1.5" fill="#0D0C0A"/><rect x="425" y="5" width="13" height="11" rx="1.5" fill="#2E2A23"/><rect x="425" y="10" width="13" height="1.5" fill="#0D0C0A"/><rect x="442" y="5" width="13" height="11" rx="1.5" fill="#2E2A23"/><rect x="442" y="10" width="13" height="1.5" fill="#0D0C0A"/><rect x="459" y="5" width="13" height="11" rx="1.5" fill="#2E2A23"/><rect x="459" y="10" width="13" height="1.5" fill="#0D0C0A"/><rect x="476" y="5" width="13" height="11" rx="1.5" fill="#2E2A23"/><rect x="476" y="10" width="13" height="1.5" fill="#0D0C0A"/><rect x="493" y="5" width="13" height="11" rx="1.5" fill="#2E2A23"/><rect x="493" y="10" width="13" height="1.5" fill="#0D0C0A"/><rect x="510" y="5" width="13" height="11" rx="1.5" fill="#2E2A23"/><rect x="510" y="10" width="13" height="1.5" fill="#0D0C0A"/><rect x="527" y="5" width="13" height="11" rx="1.5" fill="#2E2A23"/><rect x="527" y="10" width="13" height="1.5" fill="#0D0C0A"/><rect x="544" y="5" width="13" height="11" rx="1.5" fill="#2E2A23"/><rect x="544" y="10" width="13" height="1.5" fill="#0D0C0A"/><rect x="561" y="5" width="13" height="11" rx="1.5" fill="#2E2A23"/><rect x="561" y="10" width="13" height="1.5" fill="#0D0C0A"/><rect x="578" y="5" width="13" height="11" rx="1.5" fill="#2E2A23"/><rect x="578" y="10" width="13" height="1.5" fill="#0D0C0A"/><rect x="595" y="5" width="13" height="11" rx="1.5" fill="#2E2A23"/><rect x="595" y="10" width="13" height="1.5" fill="#0D0C0A"/><rect x="0" y="29" width="13" height="11" rx="1.5" fill="#2E2A23"/><rect x="0" y="34" width="13" height="1.5" fill="#0D0C0A"/><rect x="17" y="29" width="13" height="11" rx="1.5" fill="#2E2A23"/><rect x="17" y="34" width="13" height="1.5" fill="#0D0C0A"/><rect x="34" y="29" width="13" height="11" rx="1.5" fill="#2E2A23"/><rect x="34" y="34" width="13" height="1.5" fill="#0D0C0A"/><rect x="51" y="29" width="13" height="11" rx="1.5" fill="#2E2A23"/><rect x="51" y="34" width="13" height="1.5" fill="#0D0C0A"/><rect x="68" y="29" width="13" height="11" rx="1.5" fill="#2E2A23"/><rect x="68" y="34" width="13" height="1.5" fill="#0D0C0A"/><rect x="85" y="29" width="13" height="11" rx="1.5" fill="#2E2A23"/><rect x="85" y="34" width="13" height="1.5" fill="#0D0C0A"/><rect x="102" y="29" width="13" height="11" rx="1.5" fill="#2E2A23"/><rect x="102" y="34" width="13" height="1.5" fill="#0D0C0A"/><rect x="119" y="29" width="13" height="11" rx="1.5" fill="#2E2A23"/><rect x="119" y="34" width="13" height="1.5" fill="#0D0C0A"/><rect x="136" y="29" width="13" height="11" rx="1.5" fill="#2E2A23"/><rect x="136" y="34" width="13" height="1.5" fill="#0D0C0A"/><rect x="153" y="29" width="13" height="11" rx="1.5" fill="#2E2A23"/><rect x="153" y="34" width="13" height="1.5" fill="#0D0C0A"/><rect x="170" y="29" width="13" height="11" rx="1.5" fill="#2E2A23"/><rect x="170" y="34" width="13" height="1.5" fill="#0D0C0A"/><rect x="187" y="29" width="13" height="11" rx="1.5" fill="#2E2A23"/><rect x="187" y="34" width="13" height="1.5" fill="#0D0C0A"/><rect x="204" y="29" width="13" height="11" rx="1.5" fill="#2E2A23"/><rect x="204" y="34" width="13" height="1.5" fill="#0D0C0A"/><rect x="221" y="29" width="13" height="11" rx="1.5" fill="#2E2A23"/><rect x="221" y="34" width="13" height="1.5" fill="#0D0C0A"/><rect x="238" y="29" width="13" height="11" rx="1.5" fill="#2E2A23"/><rect x="238" y="34" width="13" height="1.5" fill="#0D0C0A"/><rect x="255" y="29" width="13" height="11" rx="1.5" fill="#2E2A23"/><rect x="255" y="34" width="13" height="1.5" fill="#0D0C0A"/><rect x="272" y="29" width="13" height="11" rx="1.5" fill="#2E2A23"/><rect x="272" y="34" width="13" height="1.5" fill="#0D0C0A"/><rect x="289" y="29" width="13" height="11" rx="1.5" fill="#2E2A23"/><rect x="289" y="34" width="13" height="1.5" fill="#0D0C0A"/><rect x="306" y="29" width="13" height="11" rx="1.5" fill="#2E2A23"/><rect x="306" y="34" width="13" height="1.5" fill="#0D0C0A"/><rect x="323" y="29" width="13" height="11" rx="1.5" fill="#2E2A23"/><rect x="323" y="34" width="13" height="1.5" fill="#0D0C0A"/><rect x="340" y="29" width="13" height="11" rx="1.5" fill="#2E2A23"/><rect x="340" y="34" width="13" height="1.5" fill="#0D0C0A"/><rect x="357" y="29" width="13" height="11" rx="1.5" fill="#2E2A23"/><rect x="357" y="34" width="13" height="1.5" fill="#0D0C0A"/><rect x="374" y="29" width="13" height="11" rx="1.5" fill="#2E2A23"/><rect x="374" y="34" width="13" height="1.5" fill="#0D0C0A"/><rect x="391" y="29" width="13" height="11" rx="1.5" fill="#2E2A23"/><rect x="391" y="34" width="13" height="1.5" fill="#0D0C0A"/><rect x="408" y="29" width="13" height="11" rx="1.5" fill="#2E2A23"/><rect x="408" y="34" width="13" height="1.5" fill="#0D0C0A"/><rect x="425" y="29" width="13" height="11" rx="1.5" fill="#2E2A23"/><rect x="425" y="34" width="13" height="1.5" fill="#0D0C0A"/><rect x="442" y="29" width="13" height="11" rx="1.5" fill="#2E2A23"/><rect x="442" y="34" width="13" height="1.5" fill="#0D0C0A"/><rect x="459" y="29" width="13" height="11" rx="1.5" fill="#2E2A23"/><rect x="459" y="34" width="13" height="1.5" fill="#0D0C0A"/><rect x="476" y="29" width="13" height="11" rx="1.5" fill="#2E2A23"/><rect x="476" y="34" width="13" height="1.5" fill="#0D0C0A"/><rect x="493" y="29" width="13" height="11" rx="1.5" fill="#2E2A23"/><rect x="493" y="34" width="13" height="1.5" fill="#0D0C0A"/><rect x="510" y="29" width="13" height="11" rx="1.5" fill="#2E2A23"/><rect x="510" y="34" width="13" height="1.5" fill="#0D0C0A"/><rect x="527" y="29" width="13" height="11" rx="1.5" fill="#2E2A23"/><rect x="527" y="34" width="13" height="1.5" fill="#0D0C0A"/><rect x="544" y="29" width="13" height="11" rx="1.5" fill="#2E2A23"/><rect x="544" y="34" width="13" height="1.5" fill="#0D0C0A"/><rect x="561" y="29" width="13" height="11" rx="1.5" fill="#2E2A23"/><rect x="561" y="34" width="13" height="1.5" fill="#0D0C0A"/><rect x="578" y="29" width="13" height="11" rx="1.5" fill="#2E2A23"/><rect x="578" y="34" width="13" height="1.5" fill="#0D0C0A"/><rect x="595" y="29" width="13" height="11" rx="1.5" fill="#2E2A23"/><rect x="595" y="34" width="13" height="1.5" fill="#0D0C0A"/><rect x="0" y="53" width="13" height="11" rx="1.5" fill="#2E2A23"/><rect x="0" y="58" width="13" height="1.5" fill="#0D0C0A"/><rect x="17" y="53" width="13" height="11" rx="1.5" fill="#2E2A23"/><rect x="17" y="58" width="13" height="1.5" fill="#0D0C0A"/><rect x="34" y="53" width="13" height="11" rx="1.5" fill="#2E2A23"/><rect x="34" y="58" width="13" height="1.5" fill="#0D0C0A"/><rect x="51" y="53" width="13" height="11" rx="1.5" fill="#2E2A23"/><rect x="51" y="58" width="13" height="1.5" fill="#0D0C0A"/><rect x="68" y="53" width="13" height="11" rx="1.5" fill="#2E2A23"/><rect x="68" y="58" width="13" height="1.5" fill="#0D0C0A"/><rect x="85" y="53" width="13" height="11" rx="1.5" fill="#2E2A23"/><rect x="85" y="58" width="13" height="1.5" fill="#0D0C0A"/><rect x="102" y="53" width="13" height="11" rx="1.5" fill="#2E2A23"/><rect x="102" y="58" width="13" height="1.5" fill="#0D0C0A"/><rect x="119" y="53" width="13" height="11" rx="1.5" fill="#2E2A23"/><rect x="119" y="58" width="13" height="1.5" fill="#0D0C0A"/><rect x="136" y="53" width="13" height="11" rx="1.5" fill="#2E2A23"/><rect x="136" y="58" width="13" height="1.5" fill="#0D0C0A"/><rect x="153" y="53" width="13" height="11" rx="1.5" fill="#2E2A23"/><rect x="153" y="58" width="13" height="1.5" fill="#0D0C0A"/><rect x="170" y="53" width="13" height="11" rx="1.5" fill="#2E2A23"/><rect x="170" y="58" width="13" height="1.5" fill="#0D0C0A"/><rect x="187" y="53" width="13" height="11" rx="1.5" fill="#2E2A23"/><rect x="187" y="58" width="13" height="1.5" fill="#0D0C0A"/><rect x="204" y="53" width="13" height="11" rx="1.5" fill="#2E2A23"/><rect x="204" y="58" width="13" height="1.5" fill="#0D0C0A"/><rect x="221" y="53" width="13" height="11" rx="1.5" fill="#2E2A23"/><rect x="221" y="58" width="13" height="1.5" fill="#0D0C0A"/><rect x="238" y="53" width="13" height="11" rx="1.5" fill="#2E2A23"/><rect x="238" y="58" width="13" height="1.5" fill="#0D0C0A"/><rect x="255" y="53" width="13" height="11" rx="1.5" fill="#2E2A23"/><rect x="255" y="58" width="13" height="1.5" fill="#0D0C0A"/><rect x="272" y="53" width="13" height="11" rx="1.5" fill="#2E2A23"/><rect x="272" y="58" width="13" height="1.5" fill="#0D0C0A"/><rect x="289" y="53" width="13" height="11" rx="1.5" fill="#2E2A23"/><rect x="289" y="58" width="13" height="1.5" fill="#0D0C0A"/><rect x="306" y="53" width="13" height="11" rx="1.5" fill="#2E2A23"/><rect x="306" y="58" width="13" height="1.5" fill="#0D0C0A"/><rect x="323" y="53" width="13" height="11" rx="1.5" fill="#2E2A23"/><rect x="323" y="58" width="13" height="1.5" fill="#0D0C0A"/><rect x="340" y="53" width="13" height="11" rx="1.5" fill="#2E2A23"/><rect x="340" y="58" width="13" height="1.5" fill="#0D0C0A"/><rect x="357" y="53" width="13" height="11" rx="1.5" fill="#2E2A23"/><rect x="357" y="58" width="13" height="1.5" fill="#0D0C0A"/><rect x="374" y="53" width="13" height="11" rx="1.5" fill="#2E2A23"/><rect x="374" y="58" width="13" height="1.5" fill="#0D0C0A"/><rect x="391" y="53" width="13" height="11" rx="1.5" fill="#2E2A23"/><rect x="391" y="58" width="13" height="1.5" fill="#0D0C0A"/><rect x="408" y="53" width="13" height="11" rx="1.5" fill="#2E2A23"/><rect x="408" y="58" width="13" height="1.5" fill="#0D0C0A"/><rect x="425" y="53" width="13" height="11" rx="1.5" fill="#2E2A23"/><rect x="425" y="58" width="13" height="1.5" fill="#0D0C0A"/><rect x="442" y="53" width="13" height="11" rx="1.5" fill="#2E2A23"/><rect x="442" y="58" width="13" height="1.5" fill="#0D0C0A"/><rect x="459" y="53" width="13" height="11" rx="1.5" fill="#2E2A23"/><rect x="459" y="58" width="13" height="1.5" fill="#0D0C0A"/><rect x="476" y="53" width="13" height="11" rx="1.5" fill="#2E2A23"/><rect x="476" y="58" width="13" height="1.5" fill="#0D0C0A"/><rect x="493" y="53" width="13" height="11" rx="1.5" fill="#2E2A23"/><rect x="493" y="58" width="13" height="1.5" fill="#0D0C0A"/><rect x="510" y="53" width="13" height="11" rx="1.5" fill="#2E2A23"/><rect x="510" y="58" width="13" height="1.5" fill="#0D0C0A"/><rect x="527" y="53" width="13" height="11" rx="1.5" fill="#2E2A23"/><rect x="527" y="58" width="13" height="1.5" fill="#0D0C0A"/><rect x="544" y="53" width="13" height="11" rx="1.5" fill="#2E2A23"/><rect x="544" y="58" width="13" height="1.5" fill="#0D0C0A"/><rect x="561" y="53" width="13" height="11" rx="1.5" fill="#2E2A23"/><rect x="561" y="58" width="13" height="1.5" fill="#0D0C0A"/><rect x="578" y="53" width="13" height="11" rx="1.5" fill="#2E2A23"/><rect x="578" y="58" width="13" height="1.5" fill="#0D0C0A"/><rect x="595" y="53" width="13" height="11" rx="1.5" fill="#2E2A23"/><rect x="595" y="58" width="13" height="1.5" fill="#0D0C0A"/><rect x="0" y="77" width="13" height="11" rx="1.5" fill="#2E2A23"/><rect x="0" y="82" width="13" height="1.5" fill="#0D0C0A"/><rect x="17" y="77" width="13" height="11" rx="1.5" fill="#2E2A23"/><rect x="17" y="82" width="13" height="1.5" fill="#0D0C0A"/><rect x="34" y="77" width="13" height="11" rx="1.5" fill="#2E2A23"/><rect x="34" y="82" width="13" height="1.5" fill="#0D0C0A"/><rect x="51" y="77" width="13" height="11" rx="1.5" fill="#2E2A23"/><rect x="51" y="82" width="13" height="1.5" fill="#0D0C0A"/><rect x="68" y="77" width="13" height="11" rx="1.5" fill="#2E2A23"/><rect x="68" y="82" width="13" height="1.5" fill="#0D0C0A"/><rect x="85" y="77" width="13" height="11" rx="1.5" fill="#2E2A23"/><rect x="85" y="82" width="13" height="1.5" fill="#0D0C0A"/><rect x="102" y="77" width="13" height="11" rx="1.5" fill="#2E2A23"/><rect x="102" y="82" width="13" height="1.5" fill="#0D0C0A"/><rect x="119" y="77" width="13" height="11" rx="1.5" fill="#2E2A23"/><rect x="119" y="82" width="13" height="1.5" fill="#0D0C0A"/><rect x="136" y="77" width="13" height="11" rx="1.5" fill="#2E2A23"/><rect x="136" y="82" width="13" height="1.5" fill="#0D0C0A"/><rect x="153" y="77" width="13" height="11" rx="1.5" fill="#2E2A23"/><rect x="153" y="82" width="13" height="1.5" fill="#0D0C0A"/><rect x="170" y="77" width="13" height="11" rx="1.5" fill="#2E2A23"/><rect x="170" y="82" width="13" height="1.5" fill="#0D0C0A"/><rect x="187" y="77" width="13" height="11" rx="1.5" fill="#2E2A23"/><rect x="187" y="82" width="13" height="1.5" fill="#0D0C0A"/><rect x="204" y="77" width="13" height="11" rx="1.5" fill="#2E2A23"/><rect x="204" y="82" width="13" height="1.5" fill="#0D0C0A"/><rect x="221" y="77" width="13" height="11" rx="1.5" fill="#2E2A23"/><rect x="221" y="82" width="13" height="1.5" fill="#0D0C0A"/><rect x="238" y="77" width="13" height="11" rx="1.5" fill="#2E2A23"/><rect x="238" y="82" width="13" height="1.5" fill="#0D0C0A"/><rect x="255" y="77" width="13" height="11" rx="1.5" fill="#2E2A23"/><rect x="255" y="82" width="13" height="1.5" fill="#0D0C0A"/><rect x="272" y="77" width="13" height="11" rx="1.5" fill="#2E2A23"/><rect x="272" y="82" width="13" height="1.5" fill="#0D0C0A"/><rect x="289" y="77" width="13" height="11" rx="1.5" fill="#2E2A23"/><rect x="289" y="82" width="13" height="1.5" fill="#0D0C0A"/><rect x="306" y="77" width="13" height="11" rx="1.5" fill="#2E2A23"/><rect x="306" y="82" width="13" height="1.5" fill="#0D0C0A"/><rect x="323" y="77" width="13" height="11" rx="1.5" fill="#2E2A23"/><rect x="323" y="82" width="13" height="1.5" fill="#0D0C0A"/><rect x="340" y="77" width="13" height="11" rx="1.5" fill="#2E2A23"/><rect x="340" y="82" width="13" height="1.5" fill="#0D0C0A"/><rect x="357" y="77" width="13" height="11" rx="1.5" fill="#2E2A23"/><rect x="357" y="82" width="13" height="1.5" fill="#0D0C0A"/></svg></div>
+      <div class="crow" role="listitem"><div class="flaps" data-board="NOTHING TO DO" style="--n:14"></div><span class="count">26</span><svg class="units" viewBox="0 0 442 24" width="442" height="24" aria-hidden="true"><rect x="0" y="0" width="13" height="19" rx="2" fill="#24211C"/><rect x="0" y="9" width="13" height="1" fill="#0D0C0A"/><rect x="17" y="0" width="13" height="19" rx="2" fill="#24211C"/><rect x="17" y="9" width="13" height="1" fill="#0D0C0A"/><rect x="34" y="0" width="13" height="19" rx="2" fill="#24211C"/><rect x="34" y="9" width="13" height="1" fill="#0D0C0A"/><rect x="51" y="0" width="13" height="19" rx="2" fill="#24211C"/><rect x="51" y="9" width="13" height="1" fill="#0D0C0A"/><rect x="68" y="0" width="13" height="19" rx="2" fill="#24211C"/><rect x="68" y="9" width="13" height="1" fill="#0D0C0A"/><rect x="85" y="0" width="13" height="19" rx="2" fill="#24211C"/><rect x="85" y="9" width="13" height="1" fill="#0D0C0A"/><rect x="102" y="0" width="13" height="19" rx="2" fill="#24211C"/><rect x="102" y="9" width="13" height="1" fill="#0D0C0A"/><rect x="119" y="0" width="13" height="19" rx="2" fill="#24211C"/><rect x="119" y="9" width="13" height="1" fill="#0D0C0A"/><rect x="136" y="0" width="13" height="19" rx="2" fill="#24211C"/><rect x="136" y="9" width="13" height="1" fill="#0D0C0A"/><rect x="153" y="0" width="13" height="19" rx="2" fill="#24211C"/><rect x="153" y="9" width="13" height="1" fill="#0D0C0A"/><rect x="170" y="0" width="13" height="19" rx="2" fill="#24211C"/><rect x="170" y="9" width="13" height="1" fill="#0D0C0A"/><rect x="187" y="0" width="13" height="19" rx="2" fill="#24211C"/><rect x="187" y="9" width="13" height="1" fill="#0D0C0A"/><rect x="204" y="0" width="13" height="19" rx="2" fill="#24211C"/><rect x="204" y="9" width="13" height="1" fill="#0D0C0A"/><rect x="221" y="0" width="13" height="19" rx="2" fill="#24211C"/><rect x="221" y="9" width="13" height="1" fill="#0D0C0A"/><rect x="238" y="0" width="13" height="19" rx="2" fill="#24211C"/><rect x="238" y="9" width="13" height="1" fill="#0D0C0A"/><rect x="255" y="0" width="13" height="19" rx="2" fill="#24211C"/><rect x="255" y="9" width="13" height="1" fill="#0D0C0A"/><rect x="272" y="0" width="13" height="19" rx="2" fill="#24211C"/><rect x="272" y="9" width="13" height="1" fill="#0D0C0A"/><rect x="289" y="0" width="13" height="19" rx="2" fill="#24211C"/><rect x="289" y="9" width="13" height="1" fill="#0D0C0A"/><rect x="306" y="0" width="13" height="19" rx="2" fill="#24211C"/><rect x="306" y="9" width="13" height="1" fill="#0D0C0A"/><rect x="323" y="0" width="13" height="19" rx="2" fill="#24211C"/><rect x="323" y="9" width="13" height="1" fill="#0D0C0A"/><rect x="340" y="0" width="13" height="19" rx="2" fill="#24211C"/><rect x="340" y="9" width="13" height="1" fill="#0D0C0A"/><rect x="357" y="0" width="13" height="19" rx="2" fill="#24211C"/><rect x="357" y="9" width="13" height="1" fill="#0D0C0A"/><rect x="374" y="0" width="13" height="19" rx="2" fill="#24211C"/><rect x="374" y="9" width="13" height="1" fill="#0D0C0A"/><rect x="391" y="0" width="13" height="19" rx="2" fill="#24211C"/><rect x="391" y="9" width="13" height="1" fill="#0D0C0A"/><rect x="408" y="0" width="13" height="19" rx="2" fill="#24211C"/><rect x="408" y="9" width="13" height="1" fill="#0D0C0A"/><rect x="425" y="0" width="13" height="19" rx="2" fill="#24211C"/><rect x="425" y="9" width="13" height="1" fill="#0D0C0A"/></svg></div>
+      <div class="crow" role="listitem"><div class="flaps" data-board="WRITE OFF" style="--n:14"></div><span class="count">3</span><svg class="units" viewBox="0 0 51 24" width="51" height="24" aria-hidden="true"><rect x="0" y="0" width="13" height="19" rx="2" fill="#24211C"/><rect x="0" y="9" width="13" height="1" fill="#0D0C0A"/><rect x="17" y="0" width="13" height="19" rx="2" fill="#24211C"/><rect x="17" y="9" width="13" height="1" fill="#0D0C0A"/><rect x="34" y="0" width="13" height="19" rx="2" fill="#24211C"/><rect x="34" y="9" width="13" height="1" fill="#0D0C0A"/></svg></div>
+      <div class="crow" role="listitem"><div class="flaps" data-board="SWAP" style="--n:14"></div><span class="count">2</span><svg class="units" viewBox="0 0 34 24" width="34" height="24" aria-hidden="true"><rect x="0" y="0" width="13" height="19" rx="2" fill="#EFE9DC"/><rect x="0" y="9" width="13" height="1" fill="#0D0C0A"/><rect x="17" y="0" width="13" height="19" rx="2" fill="#EFE9DC"/><rect x="17" y="9" width="13" height="1" fill="#0D0C0A"/></svg></div>
       <div class="crow" role="listitem"><div class="flaps" data-board="SELL OLD" style="--n:14"></div><span class="count">0</span><div class="units"><span class="zero">none in the census; CPOOL is a featured coin outside it</span></div></div>
     </div>
     <div class="why130">
@@ -561,7 +536,7 @@ footer nav { display: flex; gap: 18px; flex-wrap: wrap; }
 <section class="s faq" id="faq" aria-labelledby="faq-h">
   <div class="wrap">
     <div>
-      <p class="eyebrow">Platform 4 · questions</p>
+      <p class="eyebrow">Information desk</p>
       <h2 id="faq-h">Questions a judge would ask.</h2>
     </div>
     <div>
@@ -635,7 +610,6 @@ footer nav { display: flex; gap: 18px; flex-wrap: wrap; }
 
   // static boards (census + receipts) render their final state immediately, no-JS-safe after this runs
   document.querySelectorAll('[data-board]').forEach((el) => setFlaps(el, el.dataset.board, false));
-  document.querySelectorAll('[data-units]').forEach((el) => { el.innerHTML = '<i></i>'.repeat(Number(el.dataset.units)); });
   const counts = [...document.querySelectorAll('[data-count]')];
   counts.forEach((el) => setFlaps(el, el.dataset.count, false));
   if (!RM && 'IntersectionObserver' in window) {
@@ -654,8 +628,11 @@ footer nav { display: flex; gap: 18px; flex-wrap: wrap; }
   function lamp(c, st, text, key) {
     const li = lampFor[c]; if (!li) return;
     const l = li.querySelector('.lamp'); l.className = 'lamp ' + st;
+    const v = li.querySelector('.v');
     if (text !== undefined) li.querySelector('.v').textContent = text;
-    if (key !== undefined) li.querySelector('.k').innerHTML = key;
+    if (key !== undefined) li.querySelector('.k').innerHTML = key + '<span class="sr"></span>';
+    const sr = li.querySelector('.sr'); if (sr) sr.textContent = ' ' + ({ ok: 'verified', bad: 'refuted', prop: 'pending', off: 'waiting' }[st]);
+    if (text !== undefined) v.title = text;
   }
   function field(f, st) { document.querySelectorAll('#h-notice u[data-f="' + f + '"]').forEach((u) => { u.className = st; }); }
   const okState = (s) => ['verified', 'alive', 'P', 'confirmed'].includes(s) ? 'ok' : ['refuted', 'R', 'failed', 'mismatch'].includes(s) ? 'bad' : 'prop';
@@ -665,11 +642,11 @@ footer nav { display: flex; gap: 18px; flex-wrap: wrap; }
   function resetBoard(sym, notice) {
     hNew.classList.remove('half');
     setFlaps(hOld, sym, false); setFlaps(hNew, '', false); setFlaps(hVd, '', false);
-    hl.classList.remove('ok');
+    hl.classList.add('run');
     $('h-big').textContent = '…'; $('h-say').textContent = 'reading the notice';
     $('h-vals').textContent = '';
     ['C2', 'C4', 'C5o', 'C5n'].forEach((c) => lamp(c, 'off', 'waiting'));
-    if (notice !== undefined) $('h-notice').innerHTML = '<span class="src">CMC notice · read by qwen4-max</span>' + notice;
+    if (notice !== undefined) $('h-notice').innerHTML = '<span class="src">1 · CMC notice, read by qwen4-max</span>' + notice;
     else document.querySelectorAll('#h-notice u').forEach((u) => { u.className = ''; });
   }
 
@@ -679,7 +656,7 @@ footer nav { display: flex; gap: 18px; flex-wrap: wrap; }
     if (s === 'resolve' && ctx.live) { setFlaps(hOld, (e.chosen && e.chosen.symbol) || ctx.q, true); }
     else if (s === 'notice' && ctx.live) {
       const txt = (e.notice || 'no notice on this coin').replace(/\[([^\]]+)\]\([^)]+\)/g, '$1');
-      $('h-notice').innerHTML = '<span class="src">CMC notice · read by qwen4-max</span>' + txt.replace(/[<>&]/g, (c) => ({ '<': '&lt;', '>': '&gt;', '&': '&amp;' }[c]));
+      $('h-notice').innerHTML = '<span class="src">1 · CMC notice, read by qwen4-max</span>' + txt.replace(/[<>&]/g, (c) => ({ '<': '&lt;', '>': '&gt;', '&': '&amp;' }[c]));
       $('h-say').textContent = 'the Reader is reading the notice';
     }
     else if (s === 'follow_link') { $('h-say').textContent = 'the Reader opened ' + (e.host || 'a link') + ' (a host CMC lists)'; }
@@ -709,7 +686,7 @@ footer nav { display: flex; gap: 18px; flex-wrap: wrap; }
       if (e.verdict === 'NOT_VERIFIABLE') hNew.classList.add('half');
       await setFlaps(hVd, w, true);
       if (ctx.id !== runId) return;
-      hVd.setAttribute('aria-label', 'Verdict ' + w);
+      hVd.setAttribute('aria-label', 'Verdict ' + w); $('h-live').textContent = 'Verdict: ' + w;
       const so = e.value_sell_old_usd, sw = e.value_swap_usd, tr = e.tracker_value_usd;
       const qty = Number(e.qty || 10000).toLocaleString('en-US');
       if (so != null && sw != null && sw > 0) {
@@ -726,7 +703,7 @@ footer nav { display: flex; gap: 18px; flex-wrap: wrap; }
         $('h-say').textContent = e.reason || '';
         $('h-vals').textContent = '';
       }
-      hl.classList.toggle('ok', e.verdict !== 'NOT_VERIFIABLE');
+      hl.classList.remove('run');
       const when = (e.captured_at || '').replace('T', ' ').replace(/:\d\dZ$/, ' UTC');
       $('h-cap').textContent = (ctx.live ? 'live · ' : 'replay · ') + 'lookup captured ' + when + ' · ' + (e.credits_used ?? '?') + ' CMC credits · ' + (ctx.live ? Math.round(performance.now() - ctx.t0) + ' ms in your browser' : e.t_ms + ' ms');
     }
@@ -779,8 +756,7 @@ footer nav { display: flex; gap: 18px; flex-wrap: wrap; }
   $('replay').addEventListener('click', replay);
   // no-JS / print default = the final captured state in the HTML; with JS, paint flaps then play the replay once
   setFlaps(hOld, 'CPOOL', false); setFlaps(hNew, 'CLEAR', false); setFlaps(hVd, 'SELL OLD', false);
-  if (!RM) replay(); else hl.classList.add('ok');
-  fetch('/api/health').then((r) => r.json()).then((h) => { if (h && h.cmc && h.cmc.ok) { $('hlamp').className = 'lamp ok'; $('hlabel').textContent += ' · API live'; } }).catch(() => {});
+  if (!RM) replay();
 
   // ---------- terminal replay ----------
   const term = $('term'); const termHTML = term.innerHTML; let typing = 0;
