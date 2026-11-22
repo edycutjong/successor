@@ -86,6 +86,8 @@ jobs:
       VERCEL_TARGET: ${{ github.event_name == 'push' && 'production' || 'preview' }}
     steps:
       - uses: actions/checkout@v7
+        with:
+          fetch-depth: 0 # tags: the version stamp below counts commits since the last v*.*.* tag
       - uses: actions/setup-python@v7
         with:
           python-version: "3.12"
@@ -97,6 +99,8 @@ jobs:
         run: |
           SERVE_STATIC=1 python -c "from api.index import app; print(len(app.routes), 'routes')"
           test -s public/index.html && test -s public/judge.html
+      - name: Stamp the version this commit releases as (so /api/health matches the tag the release job cuts)
+        run: python scripts/release.py --stamp
       - uses: actions/setup-node@v7
         with:
           node-version: "22"
@@ -162,13 +166,28 @@ jobs:
           npx --yes @lhci/cli@0.14 autorun --config=lighthouserc.json \
             --collect.url="$TARGET/" --collect.url="$TARGET/judge" \
             --collect.settings.extraHeaders="{\"x-vercel-protection-bypass\":\"$BYPASS\"}"
+      - name: Lighthouse scores for the artifact
+        if: ${{ always() }}
+        # the raw reports in .lighthouseci/ copy every setting into the report, the bypass header included, so they stay on the runner
+        run: |
+          python3 - <<'PY'
+          import glob, json, pathlib, time
+          rows = []
+          for f in sorted(glob.glob(".lighthouseci/lhr-*.json")):
+              r = json.load(open(f))
+              url = r.get("finalDisplayedUrl") or r.get("finalUrl") or r.get("requestedUrl")
+              scores = {k: c.get("score") for k, c in r.get("categories", {}).items()}
+              rows.append({"url": url, "fetched_at": r.get("fetchTime"), "scores": scores})
+          out = pathlib.Path("docs/proof/bench") / time.strftime("lighthouse-%Y-%m-%dT%H%MZ.json", time.gmtime())
+          out.parent.mkdir(parents=True, exist_ok=True)
+          out.write_text(json.dumps({"preset": "desktop", "runs": rows}, indent=2) + "\n")
+          print(out, len(rows), "runs")
+          PY
       - uses: actions/upload-artifact@v7
         if: ${{ always() }}
         with:
           name: perf
-          path: |
-            docs/proof/bench/
-            .lighthouseci/
+          path: docs/proof/bench/
 
   # Stage 6: deploy gate. Main pushes only; promotes the exact deployment stages 4 and 5 tested.
   deploy:
@@ -211,15 +230,17 @@ jobs:
       - uses: actions/checkout@v7
         with:
           fetch-depth: 0
-      - name: Decide the version from commits since the last tag
+      - name: Decide the version from the commits this run tested
         id: rel
-        env:
-          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-        # rebase first: the tag lands on top of main, so every commit under it must be in the notes
+        # Only the commit stages 1-6 tested is released. If main has moved on, the newer push's own run tests and
+        # releases everything since the last tag, so no untested commit ever sits under a tag.
         run: |
-          git config user.name "github-actions[bot]"
-          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
-          git pull --rebase origin main
+          tip=$(git ls-remote origin refs/heads/main | cut -f1)
+          if [ "$tip" != "$GITHUB_SHA" ]; then
+            echo "::notice::main moved to $tip after this run's commit; the newer run releases these commits"
+            echo "released=false" >> "$GITHUB_OUTPUT"
+            exit 0
+          fi
           python3 scripts/release.py
       - name: Commit, tag and publish the release
         if: ${{ steps.rel.outputs.released == 'true' }}
@@ -231,7 +252,10 @@ jobs:
           git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
           git add successor/__init__.py CHANGELOG.md
           git commit -m "chore(release): v${VERSION} [skip ci]"
-          git pull --rebase origin main
           git tag -a "v${VERSION}" -m "v${VERSION}"
-          git push origin HEAD:main "v${VERSION}"
-          gh release create "v${VERSION}" --title "Successor v${VERSION}" --notes-file release-notes.md --verify-tag
+          # atomic and no rebase: the commit and the tag land together, on top of the tested commit, or not at all
+          if git push --atomic origin HEAD:main "v${VERSION}"; then
+            gh release create "v${VERSION}" --title "Successor v${VERSION}" --notes-file release-notes.md --verify-tag
+          else
+            echo "::notice::main moved during the release; the newer run releases these commits"
+          fi
