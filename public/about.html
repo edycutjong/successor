@@ -196,6 +196,8 @@ figcaption { color: var(--muted); font-size: 14px; line-height: 1.5; padding: 12
 .flow { display: grid; grid-template-columns: 1.35fr 1.1fr 1.1fr .8fr; gap: 0; border: 1px solid var(--rule); border-radius: 6px; overflow: hidden; background: var(--bg); }
 .flow > div { padding: 22px 20px 24px; border-right: 1px solid var(--rule); position: relative; }
 .flow > div:last-child { border-right: 0; }
+.flow .ico { width: 34px; height: 34px; color: var(--muted); display: block; margin-bottom: 12px; }
+.card .ico { width: 36px; height: 36px; color: var(--muted); }
 .flow h3 { font: 800 22px/1.05 var(--font-display); letter-spacing: .06em; text-transform: uppercase; margin: 0 0 6px; }
 .flow .who { font: 400 12px/1.4 var(--font-data); color: var(--muted); margin: 0 0 16px; overflow-wrap: anywhere; }
 .flow .json { font: 400 12.5px/1.65 var(--font-data); color: #CFC8BA; overflow-wrap: anywhere; margin: 0; }
@@ -439,21 +441,21 @@ footer nav { display: flex; gap: 18px; flex-wrap: wrap; }
     <h2 id="why-h">No endpoint returns “CPOOL became CLEAR, 1:1”.</h2>
     <p class="sub">CMC knows the coin migrated. It says so in prose. Turning that paragraph into a decision takes a reader, and a checker that does not trust the reader.</p>
     <div class="flow">
-      <div><span class="step-n">Stop 01</span><h3>CMC gives prose</h3><p class="who">GET /v2/cryptocurrency/info?aux=notice</p>
+      <div><span class="step-n">Stop 01</span><svg class="ico" viewBox="0 0 40 40" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M6 10h28M6 17h28M6 24h18M6 31h24"/></svg><h3>CMC gives prose</h3><p class="who">GET /v2/cryptocurrency/info?aux=notice</p>
         <p class="json"><span class="k">"notice":</span> "Clearpool (CPOOL) has rebranded to Clearpool (CLEAR) and undergone a 1:1 swap from the [old contract](https://etherscan.io/token/0x6676…fac5) to [new contract](https://etherscan.io/token/0x5200…0e00)…"</p></div>
-      <div><span class="step-n">Stop 02</span><h3>The Reader proposes</h3><p class="who">qwen4-max · tool loop · every field quoted</p>
+      <div><span class="step-n">Stop 02</span><svg class="ico" viewBox="0 0 40 40" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M7 11h11v11h-5l-5 6v-6H7zM22 11h11v11h-5l-5 6v-6h-1z"/></svg><h3>The Reader proposes</h3><p class="who">qwen4-max · tool loop · every field quoted</p>
         <ul>
           <li><span class="lamp prop" aria-hidden="true"></span><span>successor <b>CLEAR</b><q>rebranded to Clearpool (CLEAR)</q></span></li>
           <li><span class="lamp prop" aria-hidden="true"></span><span>contract <b class="mono">0x5200…0e00</b><q>new contract</q></span></li>
           <li><span class="lamp prop" aria-hidden="true"></span><span>ratio <b>1 new per old</b><q>undergone a 1:1 swap</q></span></li>
         </ul></div>
-      <div><span class="step-n">Stop 03</span><h3>Code checks</h3><p class="who">map · info · quotes · market-pairs · historical</p>
+      <div><span class="step-n">Stop 03</span><svg class="ico" viewBox="0 0 40 40" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="6" y="6" width="28" height="28" rx="3"/><path d="M13 20l5 5 9-10"/></svg><h3>Code checks</h3><p class="who">map · info · quotes · market-pairs · historical</p>
         <ul>
           <li><span class="lamp ok" aria-hidden="true"></span><span><b>C2</b> the contract equals CMC's row for CLEAR, id 42884</span></li>
           <li><span class="lamp ok" aria-hidden="true"></span><span><b>C4</b> old/new = 1.04342 on 2026-11-19, stated 1</span></li>
           <li><span class="lamp ok" aria-hidden="true"></span><span><b>C5</b> both tokens still trade</span></li>
         </ul></div>
-      <div><span class="step-n">Stop 04</span><h3>A table decides</h3><p class="who">successor/verify/verdict.py · R1–R10</p>
+      <div><span class="step-n">Stop 04</span><svg class="ico" viewBox="0 0 40 40" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="5" y="8" width="30" height="24" rx="2"/><path d="M5 16h30M5 24h30M15 8v24"/></svg><h3>A table decides</h3><p class="who">successor/verify/verdict.py · R1–R10</p>
         <p class="stamp">Sell<br>old</p><p class="who" style="margin:0">R8 · old worth 15.7% more than the swap</p></div>
     </div>
 
@@ -492,7 +494,7 @@ footer nav { display: flex; gap: 18px; flex-wrap: wrap; }
         <span class="chip">tests/test_successor_c2.py · one_hex_digit_off_is_refuted_and_never_repairable</span>
       </article>
       <article class="card b">
-        <h3>SWAP needs both proofs</h3>
+        <svg class="ico" viewBox="0 0 40 40" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="5" y="9" width="13" height="22" rx="2"/><rect x="22" y="9" width="13" height="22" rx="2"/><path d="M5 20h13M22 20h13M9 15l2.5 2.5L15 13M26 15l2.5 2.5L32 13"/></svg><h3>SWAP needs both proofs</h3>
         <p>A verified contract and a price-confirmed ratio, for every combination of check results.</p>
         <span class="chip">test_never_swap_on_fail.py</span>
       </article>
@@ -502,12 +504,12 @@ footer nav { display: flex; gap: 18px; flex-wrap: wrap; }
         <span class="chip">eval 10 · injection</span>
       </article>
       <article class="card d">
-        <h3>Links stay on CMC's map</h3>
+        <svg class="ico" viewBox="0 0 40 40" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M8 30c5-12 19-6 24-20"/><circle cx="8" cy="30" r="3"/><circle cx="32" cy="10" r="3"/><path d="M4 36h12M24 4h12"/></svg><h3>Links stay on CMC's map</h3>
         <p><code>follow_link</code> opens only hosts CMC lists for the coin or its successor, and refuses private addresses.</p>
         <span class="chip">tests/test_fetch_link.py · SSRF guard</span>
       </article>
       <article class="card e">
-        <h3>Ten evals, replayed on real rows</h3>
+        <svg class="ico" viewBox="0 0 40 40" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4 14l2 2 3-4M12 14l2 2 3-4M20 14l2 2 3-4M28 14l2 2 3-4M4 26l2 2 3-4M12 26l2 2 3-4M20 26l2 2 3-4M28 26l2 2 3-4M36 14v0M36 26v0"/></svg><h3>Ten evals, replayed on real rows</h3>
         <p>10/10 counted cases and 4/4 variants run offline on saved CMC responses, misreads included.</p>
         <span class="chip">scripts/run_evals.py</span>
       </article>
