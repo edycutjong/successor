@@ -231,7 +231,7 @@ successor/verify/         resolve, successor (C2), quotes, ratio (C4), market (C
 successor/flow.py         stream orchestrator; receipt.py builds the proof drawer
 public/                   the board (index.html, board.css, app.js)
 data/                     cached Reader extractions, notices, census
-evals/ tests/ e2e/        10 eval cases, 83 unit tests, 12 live-URL browser/API tests
+evals/ tests/ e2e/        10 eval cases, 87 unit tests, 12 live-URL browser/API tests
 scripts/                  census, evals, bench (cached + cold), unplug E2E
 .github/                  CI/CD, CodeQL, gitleaks, Dependabot, release, community files
 JUDGE.md, /judge         the 30-second path for a judge, no login
