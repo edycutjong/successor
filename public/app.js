@@ -175,7 +175,16 @@ function reset(q) {
 
 async function lookup(q, id, fresh = false) {
   if (state.ctrl) state.ctrl.abort();
-  state.ctrl = new AbortController();
+  const ctrl = new AbortController();
+  state.ctrl = ctrl;
+  // only the newest lookup may touch the board (a2a r03: an aborted stream could re-enable Go or land late events)
+  const mine = () => state.ctrl === ctrl;
+  const emit = (line) => {
+    if (!mine()) return;
+    let ev;
+    try { ev = JSON.parse(line); } catch { ev = { type: "error", step: "stream", error: "unreadable line from the server", t_ms: 0 }; }
+    onEvent(ev);
+  };
   state.q = q; state.id = id;
   reset(q);
   $("go").disabled = true;
@@ -184,7 +193,7 @@ async function lookup(q, id, fresh = false) {
   if (fresh) p.set("fresh", "1");
   history.replaceState(null, "", `/?q=${encodeURIComponent(q)}${id ? `&id=${id}` : ""}`);
   try {
-    const r = await fetch(`/api/lookup?${p}`, { headers: { Accept: "application/x-ndjson" }, signal: state.ctrl.signal });
+    const r = await fetch(`/api/lookup?${p}`, { headers: { Accept: "application/x-ndjson" }, signal: ctrl.signal });
     const reader = r.body.getReader();
     const dec = new TextDecoder();
     let buf = "";
@@ -195,14 +204,14 @@ async function lookup(q, id, fresh = false) {
       let i;
       while ((i = buf.indexOf("\n")) >= 0) {
         const line = buf.slice(0, i).trim(); buf = buf.slice(i + 1);
-        if (line) onEvent(JSON.parse(line));
+        if (line) emit(line);
       }
     }
-    if (buf.trim()) onEvent(JSON.parse(buf));
-    if (!state.final) onEvent({ type: "error", step: "stream", error: "the stream ended without a verdict", t_ms: 0 });
+    if (buf.trim()) emit(buf);
+    if (mine() && !state.final) onEvent({ type: "error", step: "stream", error: "the stream ended without a verdict", t_ms: 0 });
   } catch (e) {
-    if (e.name !== "AbortError") onEvent({ type: "error", step: "network", error: String(e.message || e), t_ms: 0 });
-  } finally { $("go").disabled = false; }
+    if (e.name !== "AbortError" && mine()) onEvent({ type: "error", step: "network", error: String(e.message || e), t_ms: 0 });
+  } finally { if (mine()) $("go").disabled = false; }
 }
 
 function receiptHtml(v) {

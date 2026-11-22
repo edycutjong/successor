@@ -104,3 +104,17 @@ def test_unknown_credit_balance_is_not_cached():
     assert asyncio.run(flow._credits_ok(c)) == (True, None)
     asyncio.run(flow._credits_ok(c))
     assert NoUsage.n == 2 and "v" not in flow._credit_cache and c.calls == []
+
+
+def test_naive_timestamp_does_not_crash_the_sanity_guard():
+    now = datetime(2026, 11, 22, tzinfo=UTC)
+    leg = {
+        "label": "old",
+        "requested_id": 1,
+        "returned_id": 1,
+        "is_active": 1,
+        "price": 1.0,
+        "volume_24h": 5,
+        "last_updated": "2026-11-01T00:00:00",
+    }
+    assert any("48 h" in t for t in sanity.check(legs=[leg], ratio=None, now=now))

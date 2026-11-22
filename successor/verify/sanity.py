@@ -2,16 +2,19 @@
 
 from __future__ import annotations
 
-from datetime import datetime, timedelta
+from datetime import UTC, datetime, timedelta
 
 
 def _ts(s: str | None) -> datetime | None:
     if not s:
         return None
     try:
-        return datetime.fromisoformat(s.replace("Z", "+00:00"))
+        d = datetime.fromisoformat(str(s).replace("Z", "+00:00"))
     except ValueError:
         return None
+    return (
+        d if d.tzinfo else d.replace(tzinfo=UTC)
+    )  # a2a r03: a naive stamp must not crash the aware subtraction
 
 
 def check(

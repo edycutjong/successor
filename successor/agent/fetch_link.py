@@ -172,12 +172,14 @@ async def follow_link(url: str, notice: str, allowed: set[str]) -> dict:
             host = check_url(current, notice, allowed, in_notice=False)
             await _public_dns(host)
             async with c.stream("GET", current) as r:
+                # DNS rebinding guard on EVERY hop, redirects included (a2a r03): the peer is checked before a
+                # Location header is trusted or a body byte is read
+                peer = _peer_ip(r)
+                if peer is not None and (not peer.is_global or peer.is_multicast):
+                    raise LinkRefused(f"{host} connected to a non-public address")
                 if r.status_code in (301, 302, 303, 307, 308) and r.headers.get("location"):
                     current = urljoin(current, r.headers["location"])
                     continue
-                peer = _peer_ip(r)
-                if peer is not None and (not peer.is_global or peer.is_multicast):
-                    raise LinkRefused(f"{host} connected to a non-public address")  # DNS rebinding guard
                 if r.status_code != 200:
                     raise LinkRefused(f"HTTP {r.status_code} from {host}")
                 body = b""

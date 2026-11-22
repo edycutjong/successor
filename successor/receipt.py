@@ -2,7 +2,9 @@
 
 from __future__ import annotations
 
+import shlex
 from typing import Any
+from urllib.parse import urlencode
 
 from successor.cmc import BASE_URL, CmcResponse
 
@@ -12,9 +14,11 @@ def call_id(i: int) -> str:
 
 
 def curl(resp: CmcResponse) -> str:
-    query = "&".join(f"{k}={v}" for k, v in resp.params.items())
+    """A command a judge can paste: the key expands from the shell (double quotes), the URL is encoded and
+    single-quoted (a2a r03: the header used to sit in single quotes, so $CMC_API_KEY never expanded)."""
+    query = urlencode(resp.params, safe=",")
     url = f"{BASE_URL}{resp.path}" + (f"?{query}" if query else "")
-    return f"curl -s -H 'X-CMC_PRO_API_KEY: $CMC_API_KEY' '{url}'"
+    return f'curl -s -H "X-CMC_PRO_API_KEY: $CMC_API_KEY" {shlex.quote(url)}'
 
 
 def build(

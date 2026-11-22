@@ -3,8 +3,9 @@
 > CoinMarketCap tells you a coin migrated, but only in prose. Successor reads the notice, finds the successor
 > token, verifies it against CMC's own data and gives the holder one verdict with the rows that prove it.
 
-**Status: early build.** The CoinMarketCap and LLM integrations are proven (see `docs/proof/spike/`); the
-verification engine and the board UI are in progress. The full README arrives with the first release.
+**Status: building.** Live at https://successor.edycu.dev: the board streams a real lookup (CoinMarketCap +
+the Reader) through the verdict table in `successor/verify/verdict.py`, with every CMC row in the receipt. The
+full README (endpoints, evidence, limits) arrives with the first release.
 
 ## Run locally
 

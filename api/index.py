@@ -6,8 +6,10 @@ import json
 import os
 import sys
 import time
+from collections import defaultdict, deque
 from pathlib import Path
 
+import httpx
 from fastapi import FastAPI, Query, Request
 from fastapi.responses import JSONResponse, StreamingResponse
 
@@ -19,6 +21,51 @@ from successor.cmc import CmcClient  # noqa: E402
 from successor.flow import lookup_stream  # noqa: E402
 
 app = FastAPI(title="Successor", version=__version__, docs_url="/api/docs", openapi_url="/api/openapi.json")
+
+# --- abuse gate (a2a r03) ------------------------------------------------------------------------------------
+# Every lookup calls CMC live; fresh=1 forces a paid Reader call. Windows are per serverless instance, so this
+# bounds a burst from one client, not the deployment (the Reader's daily cap is per instance too).
+LIMITS = {"lookup": (20, 60.0), "fresh": (3, 600.0), "fresh_all": (30, 3600.0)}
+_hits: dict[str, deque[float]] = defaultdict(deque)
+
+
+def _client_ip(request: Request) -> str:
+    fwd = request.headers.get("x-forwarded-for", "")
+    return (fwd.split(",")[0].strip() or request.headers.get("x-real-ip") or "") or (
+        request.client.host if request.client else "?"
+    )
+
+
+def _take(bucket: str, kind: str) -> float | None:
+    """Records a hit; returns seconds to wait when the window is full, else None."""
+    n, win = LIMITS[kind]
+    q, now = _hits[bucket], time.monotonic()
+    while q and now - q[0] > win:
+        q.popleft()
+    if len(q) >= n:
+        return win - (now - q[0])
+    q.append(now)
+    return None
+
+
+def _limited(request: Request, fresh: bool) -> JSONResponse | None:
+    ip = _client_ip(request)
+    checks = [(f"lookup:{ip}", "lookup")] + (
+        [(f"fresh:{ip}", "fresh"), ("fresh:*", "fresh_all")] if fresh else []
+    )
+    for bucket, kind in checks:
+        wait = _take(bucket, kind)
+        if wait is not None:
+            what = "live re-reads" if kind.startswith("fresh") else "lookups"
+            body = {
+                "type": "error",
+                "step": "rate_limit",
+                "error": f"too many {what} from this client; try again in {int(wait) + 1} s (cached reads stay open)",
+                "http_status": 429,
+                "t_ms": 0,
+            }
+            return JSONResponse(body, status_code=429, headers={"Retry-After": str(int(wait) + 1)})
+    return None
 
 
 @app.get("/api/health")
@@ -33,8 +80,8 @@ async def health() -> JSONResponse:
                 "credits_left": ((d.get("usage") or {}).get("current_month") or {}).get("credits_left"),
                 "checked_at": r.captured_at,
             }
-        except RuntimeError as exc:
-            cmc_part = {"ok": False, "error": str(exc)}
+        except (RuntimeError, httpx.HTTPError) as exc:
+            cmc_part = {"ok": False, "error": f"{type(exc).__name__}: {exc}"[:200]}
     llm = load_config()
     return JSONResponse(
         {
@@ -75,6 +122,8 @@ async def lookup(
     id: int | None = Query(None, ge=1),  # noqa: A002 - CMC id picked from the candidates
     fresh: bool = Query(False),
 ):
+    if (blocked := _limited(request, fresh)) is not None:
+        return blocked
     if "application/json" in request.headers.get("accept", "") and "ndjson" not in request.headers.get(
         "accept", ""
     ):

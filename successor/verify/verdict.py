@@ -92,6 +92,8 @@ def _missing(f: Facts) -> str:
         return "merged CMC page: the old contract has no CMC id of its own, and continuity did not confirm the ratio"
     if f.old_market == "dead" and f.deadline_passed:
         return "swap window closed and the old token has no market of its own"
+    if f.new_market == "unknown":
+        return "CMC returned no price or volume for the successor; no swap value to compare"
     if f.new_market != "alive":
         return "successor has no live market; no swap value to compare"
     if f.ratio is None:

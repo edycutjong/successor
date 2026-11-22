@@ -83,3 +83,25 @@ def test_reason_groups_and_zero_volume() -> None:
     assert (s["old_zero_volume"], s["market_checked"]) == (1, 2)
     assert cn.reason_group("successor not named in the notice") == "the notice names no successor"
     assert all("reason" in r for r in cn.notices(doc)[:1])
+
+
+def test_fresh_rereads_are_rate_limited_per_client(
+    client: TestClient, monkeypatch: pytest.MonkeyPatch
+) -> None:
+    # a2a r03: fresh=1 forces a paid Reader call; one client gets 3 per 10 min, cached reads stay open
+    import api.index as idx
+
+    async def fake(q, qty, cmc_id, fresh):
+        yield {"type": "verdict", "verdict": "NOT_VERIFIABLE"}
+
+    monkeypatch.setattr(idx, "lookup_stream", fake)
+    idx._hits.clear()
+    h = {"accept": "application/json", "x-forwarded-for": "203.0.113.7"}
+    codes = [client.get("/api/lookup?q=CPOOL&fresh=1", headers=h).status_code for _ in range(4)]
+    assert codes == [200, 200, 200, 429]
+    r = client.get("/api/lookup?q=CPOOL&fresh=1", headers=h)
+    assert r.status_code == 429 and r.json()["step"] == "rate_limit" and int(r.headers["retry-after"]) > 0
+    assert client.get("/api/lookup?q=CPOOL", headers=h).status_code == 200
+    other = {**h, "x-forwarded-for": "198.51.100.9"}
+    assert client.get("/api/lookup?q=CPOOL&fresh=1", headers=other).status_code == 200
+    idx._hits.clear()
