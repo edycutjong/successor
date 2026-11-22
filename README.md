@@ -99,7 +99,7 @@ flowchart LR
 
 ## 🏆 CoinMarketCap API Integration
 
-Endpoints Successor calls (5 to 12 calls per lookup in the captured streams; `info?address=` only when the Reader quotes a contract; `key/info` at most every 10 minutes, for `/api/health` and the credit guard). All are verbatim in the receipt drawer and in `docs/proof/spike/`:
+Endpoints Successor calls (5 to 12 calls per lookup in the captured streams; `info?address=` only when you paste a contract or the Reader quotes one; `key/info` from the credit guard at most every 10 minutes (cached) and from `/api/health` on every request). All are verbatim in the receipt drawer and in `docs/proof/spike/`:
 
 | Endpoint | Used for |
 |---|---|
