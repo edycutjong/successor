@@ -922,11 +922,11 @@
    "only_unfetchable_hosts": false,
    "verdict": "NOT_VERIFIABLE",
    "rule_id": "R10",
-   "reason": "agent unavailable: agent timed out after 2 tries",
-   "verdict_captured_at": "2026-11-22T02:31:19Z",
+   "reason": "merged CMC page: the old contract has no CMC id of its own, and continuity did not confirm the ratio",
+   "verdict_captured_at": "2026-11-22T02:38:58Z",
    "agent_needed": false,
-   "cold_ms": 46748,
-   "successor": null
+   "cold_ms": 47346,
+   "successor": "H"
   },
   {
    "id": 3330,
@@ -2959,11 +2959,11 @@
    "only_unfetchable_hosts": false,
    "verdict": "NOT_VERIFIABLE",
    "rule_id": "R10",
-   "reason": "agent unavailable: agent timed out after 2 tries",
-   "verdict_captured_at": "2026-11-22T02:31:19Z",
+   "reason": "merged CMC page: the old contract has no CMC id of its own, and continuity did not confirm the ratio",
+   "verdict_captured_at": "2026-11-22T02:38:44Z",
    "agent_needed": true,
-   "cold_ms": 46390,
-   "successor": null
+   "cold_ms": 33653,
+   "successor": "QCAD"
   },
   {
    "id": 2297,
