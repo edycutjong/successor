@@ -9,7 +9,27 @@
    "verdict": "SELL_OLD",
    "rule_id": "R8"
   },
-  "why": "stated 1:1, old CPOOL still trades above the swap value"
+  "why": "stated 1:1, old CPOOL still trades above the swap value",
+  "variants": [
+   {
+    "name": "cpool-misread-ratio",
+    "strip": "misread-ratio",
+    "expect": {
+     "verdict": "NOT_VERIFIABLE",
+     "rule_id": "R10"
+    },
+    "why": "simulated misread: the recorded extraction says ratio 2 while its quote says 1:1 → C3b unbound → no Q/P → no SELL OLD"
+   },
+   {
+    "name": "cpool-misread-symbol",
+    "strip": "misread-symbol",
+    "expect": {
+     "verdict": "SELL_OLD",
+     "rule_id": "R8"
+    },
+    "why": "simulated misread: symbol 'LEAR' only appears inside 'CLEAR' → C3 drops it; the quoted contract still verifies the successor"
+   }
+  ]
  },
  {
   "n": 2,
@@ -45,7 +65,7 @@
    "verdict": "SWAP",
    "rule_id": "R9"
   },
-  "why": "stated 1:1, BIT volume 0 (stale price never used); P from the event-date check on MNT's CMC listing date (code-derived). Spec variant 4b: the recorded fixture carries event-date rows. BIT still trades ($93 / 24 h on 2026-11-22), so it is alive by rule C5; the size caveat warns"
+  "why": "stated 1:1 ('BitDAO has migrated 1:1 on Mantle (MNT)'); P from the event-date check on MNT's CMC listing date 2023-07-17 (code-derived): old/new 0.9969. Spec variant 4b: the recorded fixture carries event-date rows. P0c saw BIT at $0 volume; on 2026-11-22 BIT trades $93 / 24 h (SushiSwap), so C5 is alive and the size caveat fires"
  },
  {
   "n": 5,
@@ -94,15 +114,26 @@
    "rule_id": "R6"
   },
   "why": "notice says 1:X; the agent follows the linked announcement: 'The swap ratio is 4:1' and 'closes on 25 October 2026' (passed); old RZUSD has $0 volume",
-  "variant": {
-   "name": "rzusd-unfetchable",
-   "capture": "no-links",
-   "expect": {
-    "verdict": "NOT_VERIFIABLE",
-    "rule_id": "R10"
+  "variants": [
+   {
+    "name": "rzusd-unfetchable",
+    "capture": "no-links",
+    "expect": {
+     "verdict": "NOT_VERIFIABLE",
+     "rule_id": "R10"
+    },
+    "why": "recorded live with follow_link refused: only the notice's '1:X' remains → ratio not stated"
    },
-   "why": "recorded live with follow_link refused: only the notice's '1:X' remains → ratio not stated"
-  }
+   {
+    "name": "rzusd-misread-deadline",
+    "strip": "misread-deadline",
+    "expect": {
+     "verdict": "NOT_VERIFIABLE",
+     "rule_id": "R10"
+    },
+    "why": "simulated misread: deadline 2030-10-25 against the quote 'closes on 25 October 2026' → C3 drops the deadline → no R6 from it"
+   }
+  ]
  },
  {
   "n": 9,

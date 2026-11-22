@@ -12,7 +12,8 @@
   "why": "old and new merged on one CMC id, contract changed, no continuity confirmation"
  },
  "hand_made": false,
- "now": "2026-11-22T01:50:03Z",
+ "variant": null,
+ "now": "2026-11-22T02:04:23Z",
  "cmc_log": [
   {
    "path": "/v1/cryptocurrency/map",
@@ -21,8 +22,8 @@
     "symbol": "BDX"
    },
    "http_status": 200,
-   "elapsed_ms": 264,
-   "captured_at": "2026-11-22T01:50:03Z",
+   "elapsed_ms": 298,
+   "captured_at": "2026-11-22T02:04:24Z",
    "body": {
     "data": [
      {
@@ -30,10 +31,10 @@
       "name": "Beldex",
       "symbol": "BDX",
       "slug": "beldex",
-      "rank": 216,
+      "rank": 215,
       "is_active": 1,
       "first_historical_data": "2019-06-07T16:10:00.000Z",
-      "last_historical_data": "2026-11-22T01:45:00.000Z",
+      "last_historical_data": "2026-11-22T02:00:00.000Z",
       "platform": null
      },
      {
@@ -41,10 +42,10 @@
       "name": "Baby DragonX",
       "symbol": "BDX",
       "slug": "baby-dragonx",
-      "rank": 6653,
+      "rank": 4856,
       "is_active": 1,
       "first_historical_data": "2024-02-29T00:20:00.000Z",
-      "last_historical_data": "2026-11-22T01:45:00.000Z",
+      "last_historical_data": "2026-11-22T02:00:00.000Z",
       "platform": {
        "id": 1,
        "name": "Ethereum",
@@ -55,7 +56,7 @@
      }
     ],
     "status": {
-     "timestamp": "2026-11-22T01:50:03.593Z",
+     "timestamp": "2026-11-22T02:04:23.909Z",
      "error_code": 0,
      "error_message": null,
      "elapsed": 2,
@@ -71,8 +72,8 @@
     "id": "3987"
    },
    "http_status": 200,
-   "elapsed_ms": 720,
-   "captured_at": "2026-11-22T01:50:04Z",
+   "elapsed_ms": 256,
+   "captured_at": "2026-11-22T02:04:24Z",
    "body": {
     "data": {
      "3987": {
@@ -212,10 +213,10 @@
      }
     },
     "status": {
-     "timestamp": "2026-11-22T01:50:04.314Z",
+     "timestamp": "2026-11-22T02:04:24.165Z",
      "error_code": 0,
      "error_message": null,
-     "elapsed": 5,
+     "elapsed": 7,
      "credit_count": 1,
      "notice": null
     }
@@ -228,8 +229,8 @@
     "symbol": "BDX"
    },
    "http_status": 200,
-   "elapsed_ms": 70,
-   "captured_at": "2026-11-22T01:50:23Z",
+   "elapsed_ms": 7,
+   "captured_at": "2026-11-22T02:04:24Z",
    "body": {
     "data": [
      {
@@ -237,10 +238,10 @@
       "name": "Beldex",
       "symbol": "BDX",
       "slug": "beldex",
-      "rank": 216,
+      "rank": 215,
       "is_active": 1,
       "first_historical_data": "2019-06-07T16:10:00.000Z",
-      "last_historical_data": "2026-11-22T01:45:00.000Z",
+      "last_historical_data": "2026-11-22T02:00:00.000Z",
       "platform": null
      },
      {
@@ -248,10 +249,10 @@
       "name": "Baby DragonX",
       "symbol": "BDX",
       "slug": "baby-dragonx",
-      "rank": 6653,
+      "rank": 4856,
       "is_active": 1,
       "first_historical_data": "2024-02-29T00:20:00.000Z",
-      "last_historical_data": "2026-11-22T01:45:00.000Z",
+      "last_historical_data": "2026-11-22T02:00:00.000Z",
       "platform": {
        "id": 1,
        "name": "Ethereum",
@@ -262,7 +263,7 @@
      }
     ],
     "status": {
-     "timestamp": "2026-11-22T01:50:03.593Z",
+     "timestamp": "2026-11-22T02:04:23.909Z",
      "error_code": 0,
      "error_message": null,
      "elapsed": 2,
@@ -278,14 +279,14 @@
     "address": "0x9d10a1ec41fe7878429bb457e31f9b050d38c633"
    },
    "http_status": 400,
-   "elapsed_ms": 728,
-   "captured_at": "2026-11-22T01:50:23Z",
+   "elapsed_ms": 265,
+   "captured_at": "2026-11-22T02:04:24Z",
    "body": {
     "status": {
-     "timestamp": "2026-11-22T01:50:23.719Z",
+     "timestamp": "2026-11-22T02:04:24.438Z",
      "error_code": 400,
      "error_message": "Invalid value for 'slug': 'null'",
-     "elapsed": 39,
+     "elapsed": 3,
      "credit_count": 0,
      "notice": null
     }
@@ -298,8 +299,8 @@
     "id": "33605"
    },
    "http_status": 200,
-   "elapsed_ms": 804,
-   "captured_at": "2026-11-22T01:50:24Z",
+   "elapsed_ms": 742,
+   "captured_at": "2026-11-22T02:04:25Z",
    "body": {
     "data": {
      "33605": {
@@ -366,16 +367,173 @@
        }
       ],
       "self_reported_circulating_supply": 112261200490,
-      "self_reported_market_cap": 60686.07086872502,
+      "self_reported_market_cap": 60708.260596719905,
       "infinite_supply": false,
       "status": "active"
      }
     },
     "status": {
-     "timestamp": "2026-11-22T01:50:24.514Z",
+     "timestamp": "2026-11-22T02:04:25.182Z",
      "error_code": 0,
      "error_message": null,
-     "elapsed": 57,
+     "elapsed": 11,
+     "credit_count": 1,
+     "notice": null
+    }
+   }
+  },
+  {
+   "path": "/v2/cryptocurrency/info",
+   "params": {
+    "aux": "urls,platform,date_added,notice,status",
+    "address": "0x6ad12e761b438bea3ea09f6c6266556bb24c2181"
+   },
+   "http_status": 200,
+   "elapsed_ms": 703,
+   "captured_at": "2026-11-22T02:04:26Z",
+   "body": {
+    "data": {
+     "3987": {
+      "id": 3987,
+      "name": "Beldex",
+      "symbol": "BDX",
+      "category": "coin",
+      "slug": "beldex",
+      "subreddit": "",
+      "notice": "Beldex (BDX) has undergone a 1:1 swap from the [old contract](https://bscscan.com/token/0x6ad12E761b438beA3EA09F6C6266556Bb24C2181) to [new contract](https://bscscan.com/token/0x9d10a1ec41Fe7878429BB457e31F9b050D38c633). For more details, please [click here](https://beldexcoin.medium.com/phase-i-of-the-bdx-bsc-migration-successfully-completed-088b5e8fe74f).",
+      "tag-names": [
+       "AI & Big Data",
+       "DeFi",
+       "Privacy",
+       "Masternodes",
+       "Ethereum Ecosystem",
+       "Solana Ecosystem",
+       "Web3",
+       "BNB Chain Ecosystem",
+       "DWF Labs Portfolio",
+       "Base Ecosystem",
+       "DePIN",
+       "Privacy Coins"
+      ],
+      "tag-groups": [
+       "INDUSTRY",
+       "CATEGORY",
+       "CATEGORY",
+       "CATEGORY",
+       "PLATFORM",
+       "PLATFORM",
+       "INDUSTRY",
+       "PLATFORM",
+       "CATEGORY",
+       "PLATFORM",
+       "INDUSTRY",
+       "CATEGORY"
+      ],
+      "urls": {
+       "website": [
+        "https://www.beldex.io/"
+       ],
+       "twitter": [
+        "https://twitter.com/BeldexCoin"
+       ],
+       "message_board": [
+        "https://beldexcoin.medium.com/"
+       ],
+       "chat": [
+        "https://t.me/beldexcoin",
+        "https://discord.com/invite/Hj4MAmA5gs"
+       ],
+       "facebook": [],
+       "explorer": [
+        "https://explorer.beldex.io/",
+        "https://bscscan.com/token/0x9d10a1ec41Fe7878429BB457e31F9b050D38c633",
+        "https://etherscan.io/token/0x6ad12E761b438beA3EA09F6C6266556Bb24C2181",
+        "https://solscan.io/token/CP4w2B3og2TaFUpye1kr8pdeJwwahtESKppZnffN9n9d"
+       ],
+       "reddit": [],
+       "technical_doc": [
+        "https://beldex.io/whitepaper.pdf"
+       ],
+       "source_code": [
+        "https://github.com/Beldex-Coin"
+       ],
+       "announcement": [
+        "https://bitcointalk.org/index.php?topic=5050775.0"
+       ]
+      },
+      "platform": {
+       "id": "1839",
+       "name": "BNB",
+       "symbol": "BNB",
+       "slug": "bnb",
+       "token_address": "0x9d10a1ec41Fe7878429BB457e31F9b050D38c633"
+      },
+      "date_added": "2019-06-07T00:00:00.000Z",
+      "twitter_username": "BeldexCoin",
+      "is_hidden": 0,
+      "contract_address": [
+       {
+        "contract_address": "0x9d10a1ec41Fe7878429BB457e31F9b050D38c633",
+        "platform": {
+         "name": "BNB Smart Chain (BEP20)",
+         "coin": {
+          "id": "1839",
+          "name": "BNB",
+          "symbol": "BNB",
+          "slug": "bnb"
+         }
+        }
+       },
+       {
+        "contract_address": "0x6ad12E761b438beA3EA09F6C6266556Bb24C2181",
+        "platform": {
+         "name": "Ethereum",
+         "coin": {
+          "id": "1027",
+          "name": "Ethereum",
+          "symbol": "ETH",
+          "slug": "ethereum"
+         }
+        }
+       },
+       {
+        "contract_address": "CP4w2B3og2TaFUpye1kr8pdeJwwahtESKppZnffN9n9d",
+        "platform": {
+         "name": "Solana",
+         "coin": {
+          "id": "5426",
+          "name": "Solana",
+          "symbol": "SOL",
+          "slug": "solana"
+         }
+        }
+       },
+       {
+        "contract_address": "0x6ad12E761b438beA3EA09F6C6266556Bb24C2181",
+        "platform": {
+         "name": "Base",
+         "coin": {
+          "id": "27716",
+          "name": "Base",
+          "symbol": "-",
+          "slug": "base"
+         }
+        }
+       }
+      ],
+      "self_reported_tags": [
+       "PoS",
+       "DApp"
+      ],
+      "infinite_supply": false,
+      "status": "active"
+     }
+    },
+    "status": {
+     "timestamp": "2026-11-22T02:04:25.891Z",
+     "error_code": 0,
+     "error_message": null,
+     "elapsed": 9,
      "credit_count": 1,
      "notice": null
     }
@@ -387,8 +545,8 @@
     "id": "3987"
    },
    "http_status": 200,
-   "elapsed_ms": 306,
-   "captured_at": "2026-11-22T01:50:24Z",
+   "elapsed_ms": 703,
+   "captured_at": "2026-11-22T02:04:26Z",
    "body": {
     "data": {
      "3987": {
@@ -461,45 +619,45 @@
       "is_active": 1,
       "infinite_supply": false,
       "is_fiat": 0,
-      "circulating_supply": 7872046751.875612,
+      "circulating_supply": 7872047499.359234,
       "total_supply": 9939718245.382559,
       "max_supply": null,
       "date_added": "2019-06-07T00:00:00.000Z",
       "num_market_pairs": 78,
-      "cmc_rank": 216,
-      "last_updated": "2026-11-22T01:50:03.195Z",
+      "cmc_rank": 215,
+      "last_updated": "2026-11-22T02:04:04.723Z",
       "tvl_ratio": null,
       "platform": null,
       "self_reported_circulating_supply": null,
       "self_reported_market_cap": null,
-      "minted_market_cap": 676962876.31,
+      "minted_market_cap": 683172600.87,
       "quote": {
        "USD": {
-        "price": 0.06810684765856286,
-        "volume_24h": 8951676.525888126,
-        "volume_change_24h": 31.614712567459,
-        "cex_volume_24h": 8944461.453045137,
-        "dex_volume_24h": 7215.072842988948,
-        "percent_change_1h": -1.621139586563,
-        "percent_change_24h": -5.275241017052,
-        "percent_change_7d": -5.548889303857,
-        "percent_change_30d": -15.030462294057,
-        "percent_change_60d": -10.048890681866,
-        "percent_change_90d": -17.424484681327,
-        "market_cap": 536140288.89107686,
+        "price": 0.06873158614765996,
+        "volume_24h": 8919870.301068265,
+        "volume_change_24h": 30.069125606777,
+        "cex_volume_24h": 8912737.005969953,
+        "dex_volume_24h": 7133.295098312932,
+        "percent_change_1h": -0.428063537067,
+        "percent_change_24h": -4.406547558484,
+        "percent_change_7d": -5.006542234917,
+        "percent_change_30d": -15.866335330316,
+        "percent_change_60d": -9.169819239016,
+        "percent_change_90d": -16.58529908233,
+        "market_cap": 541058310.8606803,
         "market_cap_dominance": 0,
-        "fully_diluted_market_cap": 676962876.31,
+        "fully_diluted_market_cap": 683172600.87,
         "tvl": null,
-        "last_updated": "2026-11-22T01:49:02.000Z"
+        "last_updated": "2026-11-22T02:03:02.000Z"
        }
       }
      }
     },
     "status": {
-     "timestamp": "2026-11-22T01:50:24.834Z",
+     "timestamp": "2026-11-22T02:04:26.597Z",
      "error_code": 0,
      "error_message": null,
-     "elapsed": 62,
+     "elapsed": 4,
      "credit_count": 1,
      "notice": null
     }
@@ -514,8 +672,8 @@
     "interval": "daily"
    },
    "http_status": 200,
-   "elapsed_ms": 256,
-   "captured_at": "2026-11-22T01:50:25Z",
+   "elapsed_ms": 254,
+   "captured_at": "2026-11-22T02:04:26Z",
    "body": {
     "data": {
      "id": 3987,
@@ -1054,7 +1212,7 @@
      ]
     },
     "status": {
-     "timestamp": "2026-11-22T01:50:25.087Z",
+     "timestamp": "2026-11-22T02:04:26.849Z",
      "error_code": 0,
      "error_message": null,
      "elapsed": 11,
@@ -1071,8 +1229,8 @@
     "limit": 20
    },
    "http_status": 200,
-   "elapsed_ms": 744,
-   "captured_at": "2026-11-22T01:50:25Z",
+   "elapsed_ms": 269,
+   "captured_at": "2026-11-22T02:04:27Z",
    "body": {
     "data": {
      "id": 3987,
@@ -1106,17 +1264,17 @@
        },
        "quote": {
         "exchange_reported": {
-         "price": 0.06825,
-         "volume_24h_base": 34838676.3924,
-         "volume_24h_quote": 2377739.6637813,
-         "last_updated": "2026-11-22T01:47:54.000Z"
+         "price": 0.06811,
+         "volume_24h_base": 34620514.9764,
+         "volume_24h_quote": 2358003.2750426,
+         "last_updated": "2026-11-22T02:02:53.000Z"
         },
         "USD": {
-         "price": 0.06810611,
-         "volume_24h": 2372676.6521146,
-         "depth_negative_two": 4453.24137258,
-         "depth_positive_two": 6911.52016189,
-         "last_updated": "2026-11-22T01:47:54.000Z"
+         "price": 0.06797867,
+         "volume_24h": 2353531.85583221,
+         "depth_negative_two": 15820.40638026,
+         "depth_positive_two": 6329.80762284,
+         "last_updated": "2026-11-22T02:02:53.000Z"
         }
        }
       },
@@ -1146,17 +1304,17 @@
        },
        "quote": {
         "exchange_reported": {
-         "price": 0.07146,
-         "volume_24h_base": 26360337.33385111,
-         "volume_24h_quote": 1883709.705877,
-         "last_updated": "2026-11-22T01:39:13.000Z"
+         "price": 0.0713,
+         "volume_24h_base": 26354632.82258065,
+         "volume_24h_quote": 1879085.32025,
+         "last_updated": "2026-11-22T01:57:11.000Z"
         },
         "USD": {
-         "price": 0.07130781,
-         "volume_24h": 1879698.04712759,
-         "depth_negative_two": 61.02377493,
-         "depth_positive_two": 153.86166978,
-         "last_updated": "2026-11-22T01:39:13.000Z"
+         "price": 0.07114808,
+         "volume_24h": 1875081.52185802,
+         "depth_negative_two": 4.06396758,
+         "depth_positive_two": 260.82845963,
+         "last_updated": "2026-11-22T01:57:11.000Z"
         }
        }
       },
@@ -1186,17 +1344,17 @@
        },
        "quote": {
         "exchange_reported": {
-         "price": 1.14e-06,
-         "volume_24h_base": 26899348.949,
-         "volume_24h_quote": 30.56304028,
-         "last_updated": "2026-11-22T01:45:15.000Z"
+         "price": 1.13e-06,
+         "volume_24h_base": 26787646.2686,
+         "volume_24h_quote": 30.36915457,
+         "last_updated": "2026-11-22T02:02:23.000Z"
         },
         "USD": {
-         "price": 0.06813648,
-         "volume_24h": 1833008.97860986,
-         "depth_negative_two": 1829.16462347,
-         "depth_positive_two": 1782.56213305,
-         "last_updated": "2026-11-22T01:45:15.000Z"
+         "price": 0.06807075,
+         "volume_24h": 1821832.35708734,
+         "depth_negative_two": 2021.95255057,
+         "depth_positive_two": 1897.82928078,
+         "last_updated": "2026-11-22T02:02:23.000Z"
         }
        }
       },
@@ -1226,17 +1384,17 @@
        },
        "quote": {
         "exchange_reported": {
-         "price": 0.06857,
-         "volume_24h_base": 18281199.07919874,
-         "volume_24h_quote": 1253541.82086066,
-         "last_updated": "2026-11-22T01:39:07.000Z"
+         "price": 0.06823,
+         "volume_24h_base": 18371165.27044671,
+         "volume_24h_quote": 1253464.60640258,
+         "last_updated": "2026-11-22T01:54:07.000Z"
         },
         "USD": {
-         "price": 0.06842329,
-         "volume_24h": 1250859.85239531,
-         "depth_negative_two": 1271.68873271,
-         "depth_positive_two": 728.56887128,
-         "last_updated": "2026-11-22T01:39:07.000Z"
+         "price": 0.06808298,
+         "volume_24h": 1250763.74972185,
+         "depth_negative_two": 1257.33397952,
+         "depth_positive_two": 741.4448188,
+         "last_updated": "2026-11-22T01:54:07.000Z"
         }
        }
       },
@@ -1266,60 +1424,17 @@
        },
        "quote": {
         "exchange_reported": {
-         "price": 0.06824,
-         "volume_24h_base": 11652989.44900352,
-         "volume_24h_quote": 795200,
-         "last_updated": "2026-11-22T01:45:09.000Z"
+         "price": 0.06726,
+         "volume_24h_base": 11751412.42937853,
+         "volume_24h_quote": 790400,
+         "last_updated": "2026-11-22T02:00:12.000Z"
         },
         "USD": {
-         "price": 0.0680985,
-         "volume_24h": 793551.06670013,
-         "depth_negative_two": 39149.91211054,
-         "depth_positive_two": 68.01686575,
-         "last_updated": "2026-11-22T01:45:09.000Z"
-        }
-       }
-      },
-      {
-       "market_id": 1646410,
-       "market_pair": "BDX/USDT",
-       "category": "spot",
-       "fee_type": "percentage",
-       "outlier_detected": 1,
-       "exclusions": [
-        "price",
-        "volume"
-       ],
-       "exchange": {
-        "id": 790,
-        "name": "Pionex",
-        "slug": "pionex"
-       },
-       "market_pair_base": {
-        "currency_id": 3987,
-        "currency_symbol": "BDX",
-        "exchange_symbol": "BDX",
-        "currency_type": "cryptocurrency"
-       },
-       "market_pair_quote": {
-        "currency_id": 825,
-        "currency_symbol": "USDT",
-        "exchange_symbol": "USDT",
-        "currency_type": "cryptocurrency"
-       },
-       "quote": {
-        "exchange_reported": {
-         "price": 0.07354,
-         "volume_24h_base": 9364206.87346342,
-         "volume_24h_quote": 688643.7734745,
-         "last_updated": "2026-11-22T01:45:10.000Z"
-        },
-        "USD": {
-         "price": 0.07338751,
-         "volume_24h": 702159.17042719,
-         "depth_negative_two": 14.69027583,
-         "depth_positive_two": 14.46469226,
-         "last_updated": "2026-11-22T01:45:10.000Z"
+         "price": 0.06711799,
+         "volume_24h": 788731.1708057,
+         "depth_negative_two": 9974.782641,
+         "depth_positive_two": 63.16634485,
+         "last_updated": "2026-11-22T02:00:12.000Z"
         }
        }
       },
@@ -1328,11 +1443,8 @@
        "market_pair": "BDX/USDC",
        "category": "spot",
        "fee_type": "percentage",
-       "outlier_detected": 1,
-       "exclusions": [
-        "price",
-        "volume"
-       ],
+       "outlier_detected": 0,
+       "exclusions": null,
        "exchange": {
         "id": 790,
         "name": "Pionex",
@@ -1352,15 +1464,100 @@
        },
        "quote": {
         "exchange_reported": {
-         "price": 0.07659,
-         "volume_24h_base": 9336463.09613265,
-         "volume_24h_quote": 715079.7085328,
-         "last_updated": "2026-11-22T01:45:10.000Z"
+         "price": 0.07643,
+         "volume_24h_base": 9360077.82010336,
+         "volume_24h_quote": 715390.7477905,
+         "last_updated": "2026-11-22T02:00:08.000Z"
         },
         "USD": {
-         "price": 0.07658384,
-         "volume_24h": 700078.85033833,
-         "last_updated": "2026-11-22T01:45:10.000Z"
+         "price": 0.07641947,
+         "volume_24h": 701317.21904825,
+         "depth_negative_two": 27.42491634,
+         "depth_positive_two": 19.43633683,
+         "last_updated": "2026-11-22T02:00:08.000Z"
+        }
+       }
+      },
+      {
+       "market_id": 1646410,
+       "market_pair": "BDX/USDT",
+       "category": "spot",
+       "fee_type": "percentage",
+       "outlier_detected": 0,
+       "exclusions": null,
+       "exchange": {
+        "id": 790,
+        "name": "Pionex",
+        "slug": "pionex"
+       },
+       "market_pair_base": {
+        "currency_id": 3987,
+        "currency_symbol": "BDX",
+        "exchange_symbol": "BDX",
+        "currency_type": "cryptocurrency"
+       },
+       "market_pair_quote": {
+        "currency_id": 825,
+        "currency_symbol": "USDT",
+        "exchange_symbol": "USDT",
+        "currency_type": "cryptocurrency"
+       },
+       "quote": {
+        "exchange_reported": {
+         "price": 0.07359,
+         "volume_24h_base": 9353695.13445033,
+         "volume_24h_quote": 688338.4249442,
+         "last_updated": "2026-11-22T02:00:08.000Z"
+        },
+        "USD": {
+         "price": 0.07343237,
+         "volume_24h": 700838.98719609,
+         "depth_negative_two": 1.07708871,
+         "depth_positive_two": 1.15534754,
+         "last_updated": "2026-11-22T02:00:08.000Z"
+        }
+       }
+      },
+      {
+       "market_id": 1646411,
+       "market_pair": "BDX/USDC",
+       "category": "spot",
+       "fee_type": "percentage",
+       "outlier_detected": 0,
+       "exclusions": [
+        "price",
+        "volume"
+       ],
+       "exchange": {
+        "id": 32784,
+        "name": "Picol",
+        "slug": "picol"
+       },
+       "market_pair_base": {
+        "currency_id": 3987,
+        "currency_symbol": "BDX",
+        "exchange_symbol": "BDX",
+        "currency_type": "cryptocurrency"
+       },
+       "market_pair_quote": {
+        "currency_id": 3408,
+        "currency_symbol": "USDC",
+        "exchange_symbol": "USDC",
+        "currency_type": "cryptocurrency"
+       },
+       "quote": {
+        "exchange_reported": {
+         "price": 0.07643,
+         "volume_24h_base": 8255588.63733115,
+         "volume_24h_quote": 630974.63955122,
+         "last_updated": "2026-11-22T02:00:08.000Z"
+        },
+        "USD": {
+         "price": 0.07641947,
+         "volume_24h": 618561.78720055,
+         "depth_negative_two": 12.37450669,
+         "depth_positive_two": 19.79879881,
+         "last_updated": "2026-11-22T02:00:08.000Z"
         }
        }
       },
@@ -1369,7 +1566,7 @@
        "market_pair": "BDX/USDT",
        "category": "spot",
        "fee_type": "percentage",
-       "outlier_detected": 1,
+       "outlier_detected": 0,
        "exclusions": [
         "price",
         "volume"
@@ -1393,60 +1590,17 @@
        },
        "quote": {
         "exchange_reported": {
-         "price": 0.07354,
-         "volume_24h_base": 8259230.46239475,
-         "volume_24h_quote": 607383.80820451,
-         "last_updated": "2026-11-22T01:45:12.000Z"
+         "price": 0.07359,
+         "volume_24h_base": 8249959.10858513,
+         "volume_24h_quote": 607114.49080078,
+         "last_updated": "2026-11-22T02:00:08.000Z"
         },
         "USD": {
-         "price": 0.07338751,
-         "volume_24h": 619304.38831678,
-         "depth_negative_two": 24.60911726,
-         "depth_positive_two": 1.01444251,
-         "last_updated": "2026-11-22T01:45:12.000Z"
-        }
-       }
-      },
-      {
-       "market_id": 1646411,
-       "market_pair": "BDX/USDC",
-       "category": "spot",
-       "fee_type": "percentage",
-       "outlier_detected": 1,
-       "exclusions": [
-        "price",
-        "volume"
-       ],
-       "exchange": {
-        "id": 32784,
-        "name": "Picol",
-        "slug": "picol"
-       },
-       "market_pair_base": {
-        "currency_id": 3987,
-        "currency_symbol": "BDX",
-        "exchange_symbol": "BDX",
-        "currency_type": "cryptocurrency"
-       },
-       "market_pair_quote": {
-        "currency_id": 3408,
-        "currency_symbol": "USDC",
-        "exchange_symbol": "USDC",
-        "currency_type": "cryptocurrency"
-       },
-       "quote": {
-        "exchange_reported": {
-         "price": 0.07659,
-         "volume_24h_base": 8234760.45078901,
-         "volume_24h_quote": 630700.30292593,
-         "last_updated": "2026-11-22T01:45:12.000Z"
-        },
-        "USD": {
-         "price": 0.07658384,
-         "volume_24h": 617469.54599841,
-         "depth_negative_two": 19.35370355,
-         "depth_positive_two": 19.12606922,
-         "last_updated": "2026-11-22T01:45:12.000Z"
+         "price": 0.07343237,
+         "volume_24h": 618139.98670695,
+         "depth_negative_two": 10.89651307,
+         "depth_positive_two": 2.03747564,
+         "last_updated": "2026-11-22T02:00:08.000Z"
         }
        }
       },
@@ -1479,15 +1633,15 @@
        },
        "quote": {
         "exchange_reported": {
-         "price": 6.8783,
-         "volume_24h_base": 2058360.95948246,
-         "volume_24h_quote": 14158024.18760818,
-         "last_updated": "2026-11-22T01:45:12.000Z"
+         "price": 6.8683,
+         "volume_24h_base": 2074413.31854921,
+         "volume_24h_quote": 14247692.99579152,
+         "last_updated": "2026-11-22T02:00:09.000Z"
         },
         "USD": {
-         "price": 0.07421517,
-         "volume_24h": 152761.6177975,
-         "last_updated": "2026-11-22T01:45:12.000Z"
+         "price": 0.07410728,
+         "volume_24h": 153729.12230396,
+         "last_updated": "2026-11-22T02:00:09.000Z"
         }
        }
       },
@@ -1520,17 +1674,17 @@
        },
        "quote": {
         "exchange_reported": {
-         "price": 0.0684,
-         "volume_24h_base": 865852.79824561,
-         "volume_24h_quote": 59224.3314,
-         "last_updated": "2026-11-22T01:45:08.000Z"
+         "price": 0.068207,
+         "volume_24h_base": 874757.58060023,
+         "volume_24h_quote": 59664.5903,
+         "last_updated": "2026-11-22T01:54:09.000Z"
         },
         "USD": {
-         "price": 0.06825616,
-         "volume_24h": 59286.65844736,
-         "depth_negative_two": 7512.42423355,
-         "depth_positive_two": 3758.23047796,
-         "last_updated": "2026-11-22T01:45:08.000Z"
+         "price": 0.06806003,
+         "volume_24h": 59687.77225473,
+         "depth_negative_two": 10092.80973357,
+         "depth_positive_two": 4712.68315225,
+         "last_updated": "2026-11-22T01:54:09.000Z"
         }
        }
       },
@@ -1560,17 +1714,17 @@
        },
        "quote": {
         "exchange_reported": {
-         "price": 0.0684,
-         "volume_24h_base": 770085.09108187,
-         "volume_24h_quote": 52673.82023,
-         "last_updated": "2026-11-22T01:45:07.000Z"
+         "price": 0.0682,
+         "volume_24h_base": 775475.64765396,
+         "volume_24h_quote": 52887.43917,
+         "last_updated": "2026-11-22T01:54:07.000Z"
         },
         "USD": {
-         "price": 0.06825616,
-         "volume_24h": 52563.04755772,
-         "depth_negative_two": 454.87697413,
-         "depth_positive_two": 241.38878041,
-         "last_updated": "2026-11-22T01:45:07.000Z"
+         "price": 0.06805305,
+         "volume_24h": 52773.48190892,
+         "depth_negative_two": 640.28427013,
+         "depth_positive_two": 86.68333006,
+         "last_updated": "2026-11-22T01:54:07.000Z"
         }
        }
       },
@@ -1603,12 +1757,12 @@
          "price": 0.12933,
          "volume_24h_base": 559534.1,
          "volume_24h_quote": 72364.545153,
-         "last_updated": "2026-11-22T01:42:07.000Z"
+         "last_updated": "2026-11-22T02:00:07.000Z"
         },
         "USD": {
          "price": 0.08568112,
          "volume_24h": 47941.50996532,
-         "last_updated": "2026-11-22T01:42:07.000Z"
+         "last_updated": "2026-11-22T02:00:07.000Z"
         }
        }
       },
@@ -1641,17 +1795,17 @@
        },
        "quote": {
         "exchange_reported": {
-         "price": 1.15e-06,
-         "volume_24h_base": 645037.46870338,
-         "volume_24h_quote": 0.7394,
-         "last_updated": "2026-11-22T01:45:08.000Z"
+         "price": 1.14e-06,
+         "volume_24h_base": 644403.33511604,
+         "volume_24h_quote": 0.735,
+         "last_updated": "2026-11-22T01:54:09.000Z"
         },
         "USD": {
-         "price": 0.0687617,
-         "volume_24h": 44166.99486362,
-         "depth_negative_two": 1.17716346,
-         "depth_positive_two": 1.14832977,
-         "last_updated": "2026-11-22T01:45:08.000Z"
+         "price": 0.06846898,
+         "volume_24h": 43969.89561406,
+         "depth_negative_two": 2.01561809,
+         "depth_positive_two": 1.15543679,
+         "last_updated": "2026-11-22T01:54:09.000Z"
         }
        }
       },
@@ -1685,14 +1839,14 @@
        "quote": {
         "exchange_reported": {
          "price": 6.86,
-         "volume_24h_base": 246178.64723032,
-         "volume_24h_quote": 1688785.52,
-         "last_updated": "2026-11-22T01:45:08.000Z"
+         "volume_24h_base": 260476.64723032,
+         "volume_24h_quote": 1786869.8,
+         "last_updated": "2026-11-22T02:00:08.000Z"
         },
         "USD": {
          "price": 0.07401772,
-         "volume_24h": 18221.58266787,
-         "last_updated": "2026-11-22T01:45:08.000Z"
+         "volume_24h": 19279.88805673,
+         "last_updated": "2026-11-22T02:00:08.000Z"
         }
        }
       },
@@ -1725,14 +1879,14 @@
          "price": 0.0722,
          "volume_24h_base": 136923.24,
          "volume_24h_quote": 9885.857928,
-         "last_updated": "2026-11-22T01:42:07.000Z"
+         "last_updated": "2026-11-22T02:00:07.000Z"
         },
         "USD": {
-         "price": 0.07218751,
-         "volume_24h": 9884.14843369,
-         "depth_negative_two": 32.06294544,
-         "depth_positive_two": 32.24067796,
-         "last_updated": "2026-11-22T01:42:07.000Z"
+         "price": 0.07219006,
+         "volume_24h": 9884.49641982,
+         "depth_negative_two": 32.19870528,
+         "depth_positive_two": 32.37719035,
+         "last_updated": "2026-11-22T02:00:07.000Z"
         }
        }
       },
@@ -1762,15 +1916,15 @@
        },
        "quote": {
         "exchange_reported": {
-         "price": 0.00012909,
-         "volume_24h_base": 103463.10184906,
-         "volume_24h_quote": 13.54260249,
-         "last_updated": "2026-11-22T01:44:46.000Z"
+         "price": 0.00012991,
+         "volume_24h_base": 102317.93374661,
+         "volume_24h_quote": 13.38894667,
+         "last_updated": "2026-11-22T02:01:52.000Z"
         },
         "USD": {
-         "price": 0.07079049,
-         "volume_24h": 7215.07284299,
-         "last_updated": "2026-11-22T01:44:46.000Z"
+         "price": 0.07129042,
+         "volume_24h": 7133.29509831,
+         "last_updated": "2026-11-22T02:01:52.000Z"
         }
        }
       },
@@ -1803,15 +1957,15 @@
        },
        "quote": {
         "exchange_reported": {
-         "price": 6.56,
-         "volume_24h_base": 27224.361581,
-         "volume_24h_quote": 178591.81197136,
-         "last_updated": "2026-11-22T01:47:53.000Z"
+         "price": 6.57,
+         "volume_24h_base": 27294.91135,
+         "volume_24h_quote": 179327.5675695,
+         "last_updated": "2026-11-22T01:57:13.000Z"
         },
         "USD": {
-         "price": 0.0707808,
-         "volume_24h": 1926.96196592,
-         "last_updated": "2026-11-22T01:47:53.000Z"
+         "price": 0.07088869,
+         "volume_24h": 1934.90058885,
+         "last_updated": "2026-11-22T01:57:13.000Z"
         }
        }
       },
@@ -1844,12 +1998,14 @@
          "price": 7.4003,
          "volume_24h_base": 5564.98640424,
          "volume_24h_quote": 41182.56888733,
-         "last_updated": "2026-11-22T01:39:07.000Z"
+         "last_updated": "2026-11-22T01:54:09.000Z"
         },
         "USD": {
          "price": 0.07984743,
          "volume_24h": 444.34984465,
-         "last_updated": "2026-11-22T01:39:07.000Z"
+         "depth_negative_two": 709.72002568,
+         "depth_positive_two": 30.78320204,
+         "last_updated": "2026-11-22T01:54:09.000Z"
         }
        }
       },
@@ -1882,24 +2038,24 @@
          "price": 0.06922,
          "volume_24h_base": 1731.94091881,
          "volume_24h_quote": 119.8849504,
-         "last_updated": "2026-11-22T01:45:24.000Z"
+         "last_updated": "2026-11-22T02:02:24.000Z"
         },
         "USD": {
-         "price": 0.06907619,
-         "volume_24h": 119.6358756,
-         "depth_negative_two": 107.11596797,
-         "depth_positive_two": 4.65590827,
-         "last_updated": "2026-11-22T01:45:24.000Z"
+         "price": 0.0690709,
+         "volume_24h": 119.62672108,
+         "depth_negative_two": 107.56951478,
+         "depth_positive_two": 4.67562216,
+         "last_updated": "2026-11-22T02:02:24.000Z"
         }
        }
       }
      ]
     },
     "status": {
-     "timestamp": "2026-11-22T01:50:25.825Z",
+     "timestamp": "2026-11-22T02:04:27.122Z",
      "error_code": 0,
      "error_message": null,
-     "elapsed": 26,
+     "elapsed": 27,
      "credit_count": 1,
      "notice": null
     }

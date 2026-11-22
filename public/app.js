@@ -48,7 +48,8 @@ function noticeHtml(notice, quotes, states) {
   let html = esc(notice).replace(/\[([^\]]+)\]\((https?:\/\/[^)\s]+)\)/g, (_m, label, url) => {
     let host = "link";
     try { host = new URL(url.replace(/&amp;/g, "&")).hostname.replace(/^www\./, ""); } catch { /* keep "link" */ }
-    return host.endsWith("coinmarketcap.com")
+    const cmc = (host === "coinmarketcap.com" || host.endsWith(".coinmarketcap.com")) && url.startsWith("https://");
+    return cmc
       ? `<a href="${url}" target="_blank" rel="noopener">${label}</a>`
       : `${label} <span class="host">(${esc(host)})</span>`;
   });
@@ -83,6 +84,12 @@ function figures() {
   if (v.tracker_value_usd != null) parts.push(`<span class="tracker">tracker value (CMC price on a dead market): ${usd(v.tracker_value_usd * k)}</span>`);
   parts.push(`<span class="tracker">for ${qty.toLocaleString("en-US")} ${esc(v.holding?.symbol)} · window ${esc(v.swap_window || "not stated")}</span>`);
   $("figures").innerHTML = parts.join('<span class="sep">|</span>');
+  const notes = ["excludes fees, gas and slippage"];
+  const sell = v.value_sell_old_usd != null ? v.value_sell_old_usd * k : null;
+  if (sell != null && v.old_volume_24h_usd && sell > 0.01 * v.old_volume_24h_usd) {
+    notes.push(`size caveat: ${usd(sell)} is over 1% of the old token's 24 h volume (${usd(v.old_volume_24h_usd)}); the sell figure may not be achievable at that size`);
+  }
+  $("caveats").textContent = notes.join(" · ");
 }
 
 function onEvent(ev) {
@@ -161,7 +168,7 @@ function stopTick() { if (state.ticking) clearInterval(state.ticking); state.tic
 function reset(q) {
   state.events = []; state.final = null; state.quotes = {};
   flaps($("f-old"), q); flaps($("f-new"), ""); flaps($("f-verdict"), "", "verdict");
-  ["figures", "reason", "notice", "checks", "trace", "captured"].forEach((id) => ($(id).innerHTML = ""));
+  ["figures", "caveats", "reason", "notice", "checks", "trace", "captured"].forEach((id) => ($(id).innerHTML = ""));
   $("pick").hidden = true; $("receipt-btn").disabled = true; $("reread").disabled = true;
 }
 

@@ -24,6 +24,13 @@ def _strip(fx: dict, how: str | None) -> dict:
     if how == "fetches":  # the announcement was not fetchable: announcement-sourced fields fail C3
         fx["extraction"]["fetches"] = []
         fx["extraction"]["link_errors"] = [{"url": "(variant)", "error": "not fetchable"}]
+    elif how == "misread-ratio":  # simulated LLM misread: true quote, wrong number (×2)
+        f = fx["extraction"]["proposals"][-1]["ratio_new_per_old"]
+        f["value"] = float(f["value"]) * 2
+    elif how == "misread-deadline":  # simulated LLM misread: true quote, wrong date
+        fx["extraction"]["proposals"][-1]["deadline"]["value"] = "2030-10-25"
+    elif how == "misread-symbol":  # simulated LLM misread: a symbol that only appears inside another word
+        fx["extraction"]["proposals"][-1]["successor_symbol"]["value"] = "LEAR"
     elif how == "event-history":  # no event-date rows: keep only the 30-day windows
         now = fx["now"][:10]
         for e in fx["cmc_log"]:
@@ -59,8 +66,7 @@ async def run_all() -> list[dict]:
     for case in load_cases():
         fx = json.loads((FIXTURES / f"{case['name']}.json").read_text())
         runs = [(case["name"], None, case["expect"], fx, True)]
-        v = case.get("variant")
-        if v:
+        for v in case.get("variants") or ([case["variant"]] if case.get("variant") else []):
             vfx = json.loads((FIXTURES / f"{v['name']}.json").read_text()) if v.get("capture") else fx
             runs.append((v["name"], v.get("strip"), v["expect"], vfx, False))
         for name, strip, exp, f, counted in runs:

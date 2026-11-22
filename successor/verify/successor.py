@@ -47,7 +47,9 @@ def contracts_of(info_row: dict | None) -> list[tuple[str, str]]:
 def chain_matches(proposed: str | None, platform: str) -> bool:
     if not proposed:
         return True
-    p, plat = proposed.lower().strip(), platform.lower()
+    p, plat = proposed.lower().strip(), platform.lower().strip()
+    if not plat:
+        return False
     if p in plat or plat.split(" (")[0] in p:
         return True
     for canon, aliases in _CHAIN_ALIASES.items():
@@ -71,11 +73,14 @@ class C2Result:
     successor: dict | None
     reason: str
     candidates: list[dict] = field(default_factory=list)
+    contract_quoted: bool = False
 
     @property
     def repairable(self) -> bool:
         """The Reader gets one repair turn for an unresolved identity, never for a contract mismatch."""
-        return self.state == "unresolved" or (self.state == "refuted" and self.match == "no-id")
+        return self.state == "unresolved" or (
+            self.state == "refuted" and self.match == "no-id" and not self.contract_quoted
+        )
 
 
 def check_successor(
@@ -144,7 +149,7 @@ def check_successor(
                 cands,
             )
         return C2Result(
-            "refuted", "no-id", None, f"no CMC coin carries the quoted contract {new_contract}", cands
+            "refuted", "no-id", None, f"no CMC coin carries the quoted contract {new_contract}", cands, True
         )
 
     if not named:

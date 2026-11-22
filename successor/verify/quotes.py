@@ -34,13 +34,49 @@ def _in_text(quote: str, text: str) -> bool:
     return bool(quote) and norm(quote).lower() in norm(text).lower()
 
 
+_MONTHS = {
+    m: i + 1
+    for i, m in enumerate(
+        ["jan", "feb", "mar", "apr", "may", "jun", "jul", "aug", "sep", "oct", "nov", "dec"]
+    )
+}
+
+
+def dates_in(text: str) -> set[date]:
+    """Every calendar date written in the text: 2026-10-25, 2026/10/25, 25 October 2026, October 25, 2026, 25 Oct 2026."""
+    out: set[date] = set()
+    t = norm(text)
+
+    def add(y, m, d):
+        try:
+            out.add(date(int(y), int(m), int(d)))
+        except ValueError:
+            pass
+
+    for y, m, d in re.findall(r"\b(\d{4})[-/.](\d{1,2})[-/.](\d{1,2})\b", t):
+        add(y, m, d)
+    mon = r"(jan|feb|mar|apr|may|jun|jul|aug|sep|oct|nov|dec)[a-z]*\.?"
+    for d, m, y in re.findall(rf"\b(\d{{1,2}})(?:st|nd|rd|th)?\s+{mon}\s*,?\s+(\d{{4}})\b", t, re.I):
+        add(y, _MONTHS[m.lower()[:3]], d)
+    for m, d, y in re.findall(rf"\b{mon}\s+(\d{{1,2}})(?:st|nd|rd|th)?\s*,?\s+(\d{{4}})\b", t, re.I):
+        add(y, _MONTHS[m.lower()[:3]], d)
+    return out
+
+
 def _value_in_quote(name: str, value: object, quote: str) -> bool:
     """A contract or symbol value must itself appear in its quote (stops a true quote carrying a false value)."""
     if value is None:
         return True
     q = norm(quote).lower()
-    if name in ("new_contract", "old_contract", "successor_symbol"):
-        return str(value).lower().lstrip("$") in q
+    if name in ("new_contract", "old_contract"):
+        return str(value).lower() in q
+    if name == "successor_symbol":
+        return (
+            re.search(rf"(?<![a-z0-9]){re.escape(str(value).lower().lstrip('$'))}(?![a-z0-9])", q) is not None
+        )
+    if name in ("effective_date", "deadline"):  # a misread date never survives a true quote
+        d = parse_iso_date(value)
+        return d is not None and d in dates_in(quote)
     return True
 
 

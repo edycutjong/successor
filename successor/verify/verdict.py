@@ -100,7 +100,7 @@ def decide(f: Facts) -> Decision:
         return Decision(
             NOTHING_TO_DO,
             "R4",
-            "same CMC id and the contract is unchanged: a rename or ticker change, the coin you hold is the successor",
+            "the coin you hold is the successor itself (same CMC id): a rename, a ticker change or the new token; nothing to swap",
         )
     if f.c2 == "refuted":
         return Decision(NOT_VERIFIABLE, "R5", f"successor refuted by CMC's data: {f.c2_reason}")

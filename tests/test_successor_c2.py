@@ -73,3 +73,14 @@ def test_notice_link_resolved_by_cmc_id_verifies_identity():
 def test_unique_exact_name_and_symbol():
     r = _c2(notice="renamed", candidates=[CLEAR, EVERCLEAR])
     assert r.state == "verified" and r.match == "identity: unique name + symbol"
+
+
+def test_unknown_quoted_contract_is_never_repairable():
+    r = _c2(symbol=None, name=None, new_contract="0x" + "1" * 40, candidates=[])
+    assert r.state == "refuted" and r.match == "no-id" and not r.repairable
+
+
+def test_named_chain_never_matches_a_platform_without_a_name():
+    from successor.verify.successor import chain_matches
+
+    assert chain_matches("anything", "") is False and chain_matches(None, "") is True

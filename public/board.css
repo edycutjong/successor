@@ -42,6 +42,8 @@ main { max-width: 1180px; margin: 0 auto; padding: 1.5rem clamp(1rem, 4vw, 3rem)
 .figures b { color: var(--ink); } .figures .sep { color: var(--rule); margin: 0 .6rem; }
 .figures .tracker { color: var(--muted); }
 .reason { margin: 0 0 .8rem; max-width: 95ch; }
+.caveats { margin: 0 0 .3rem; color: var(--before); font-size: .9rem; max-width: 95ch; }
+.caveats:empty { display: none; }
 .notice { color: var(--muted); border-left: 3px solid var(--rule); padding: .4rem .9rem; margin: .4rem 0 1rem; max-width: 95ch; }
 .notice:empty { display: none; }
 .notice mark { background: none; color: var(--ink); text-decoration: underline 2px var(--before); text-underline-offset: 3px; }

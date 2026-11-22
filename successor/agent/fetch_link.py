@@ -118,8 +118,18 @@ async def _public_dns(host: str) -> None:
         raise LinkRefused(f"DNS failed for {host}") from exc
     for info in infos:
         ip = ipaddress.ip_address(info[4][0])
-        if ip.is_private or ip.is_loopback or ip.is_link_local or ip.is_reserved or ip.is_multicast:
+        if not ip.is_global or ip.is_multicast:
             raise LinkRefused(f"{host} resolves to a non-public address")
+
+
+def _peer_ip(r: httpx.Response):
+    """The address the connection actually reached (re-checked after connect: DNS may change between checks)."""
+    try:
+        stream = r.extensions.get("network_stream")
+        addr = stream.get_extra_info("server_addr") if stream else None
+        return ipaddress.ip_address(addr[0]) if addr else None
+    except (ValueError, TypeError, AttributeError):
+        return None
 
 
 class _Text(HTMLParser):
@@ -165,6 +175,9 @@ async def follow_link(url: str, notice: str, allowed: set[str]) -> dict:
                 if r.status_code in (301, 302, 303, 307, 308) and r.headers.get("location"):
                     current = urljoin(current, r.headers["location"])
                     continue
+                peer = _peer_ip(r)
+                if peer is not None and (not peer.is_global or peer.is_multicast):
+                    raise LinkRefused(f"{host} connected to a non-public address")  # DNS rebinding guard
                 if r.status_code != 200:
                     raise LinkRefused(f"HTTP {r.status_code} from {host}")
                 body = b""

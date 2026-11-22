@@ -15,6 +15,8 @@ from collections.abc import AsyncIterator
 from datetime import UTC, date, datetime, timedelta
 from typing import Any
 
+import httpx
+
 from successor.agent import reader as rd
 from successor.agent.fetch_link import allowed_hosts, follow_link
 from successor.cmc import CmcClient
@@ -29,6 +31,7 @@ from successor.verify.successor import C2Result, addr_eq, check_successor, has_c
 from successor.verify.verdict import Facts, decide
 
 CREDIT_FLOOR = 5_000
+SWAP_WORDS = re.compile(r"\bswap|migrat|redenominat|new contract|/token/|/address/|contract address", re.I)
 _credit_cache: dict[str, Any] = {}
 
 
@@ -68,6 +71,25 @@ def _info_as_cand(row: dict) -> dict:
         "slug": row.get("slug"),
         "is_active": 1 if (row.get("status") or "active") == "active" else 0,
     }
+
+
+def dropped_contracts(prev, cur) -> list[str]:
+    """Contracts a previous proposal kept (C3) that a resubmit drops or changes."""
+    if prev is None:
+        return []
+    return [
+        k
+        for k in ("new_contract", "old_contract")
+        if prev.value(k) and not addr_eq(str(prev.value(k)), str(cur.value(k) or ""))
+    ]
+
+
+def _assess(rp, row: dict, closes: list[dict]) -> mk.Market:
+    """C5 from a market-pairs response: only a plan denial (403 / 1006) falls back to volume + flatness."""
+    denied = rp.http_status == 403 or rp.status.get("error_code") == 1006
+    if not rp.ok and not denied:
+        return mk.Market("unknown", f"spot pairs unavailable (HTTP {rp.http_status}): market not assessed")
+    return mk.assess(row, rp.data if rp.ok else None, closes, pairs_denied=denied)
 
 
 def _check(cid: str, label: str, state: str, value: str, rows: list[str]) -> dict:
@@ -135,6 +157,8 @@ async def lookup_stream(
             yield e
     except FlowError as exc:
         yield ev("error", step=exc.step, error=exc.message, http_status=exc.http_status)
+    except httpx.HTTPError as exc:
+        yield ev("error", step="network", error=f"{type(exc).__name__}: {exc}"[:300], http_status=None)
     except RuntimeError as exc:  # missing key etc.
         yield ev("error", step="config", error=str(exc), http_status=None)
     finally:
@@ -159,11 +183,17 @@ async def _run(
         r = _need(cmc, await cmc.info(address=q.lower() if q.lower().startswith("0x") else q), "resolve")
         cands = [_info_as_cand(v) for v in (r.data or {}).values()]
     else:
-        r = _need(cmc, await cmc.map(symbol=q.upper()), "resolve")
-        cands = _map_rows(r.data)
-        if not cands and re.fullmatch(r"[a-z0-9-]+", q.lower()):
-            r = await cmc.map(slug=q.lower())
+        cands = []
+        sym = q.lstrip("$").upper()
+        if re.fullmatch(r"[A-Z0-9]{1,20}", sym):
+            r = await cmc.map(symbol=sym)
+            if not r.ok and r.http_status != 400:  # CMC answers 400 for an unknown symbol; fall through to slug
+                _need(cmc, r, "resolve")
             cands = _map_rows(r.data) if r.ok else []
+        slug = re.sub(r"[^a-z0-9]+", "-", q.lower()).strip("-")
+        if not cands and slug:  # a slug or a name ("clearpool", "Maker"); CMC 400s on unknown slugs
+            r = await cmc.info(slugs=[slug])
+            cands = [_info_as_cand(v) for v in (r.data or {}).values()] if r.ok else []
     c1 = pick_holding(q, cands, cmc_id)
     rows_c1 = [_rid(cmc)]
     yield ev(
@@ -269,6 +299,7 @@ async def _run(
     # --- verify each proposal (the second exists only after a repair turn) ------------------------
     c2: C2Result | None = None
     c3 = None
+    prev_c3 = None
     infos: dict[str, dict] = {str(hold["id"]): hrow}
     i = 0
     while True:
@@ -288,6 +319,15 @@ async def _run(
             check="C3",
         )
         c2, rows_c2 = await _verify_successor(cmc, c3, notice, hold, hrow, linked_rows, infos)
+        dropped = dropped_contracts(prev_c3, c3)
+        if dropped:  # a repair may add evidence, never drop or change a contract the notice quotes
+            c2 = C2Result(
+                "refuted",
+                "contract",
+                None,
+                f"the resubmitted proposal dropped or changed the quoted {', '.join(dropped)}",
+            )
+        prev_c3 = c3
         yield ev(
             "step",
             step="successor",
@@ -379,8 +419,17 @@ async def _run(
             (old_c and new_c and not addr_eq(str(old_c), str(new_c)))
             or proposal.get("event_type") in ("contract_swap", "chain_migration", "token_swap", "merger")
             or (r_quoted is not None and r_quoted != 1)
+            # the LLM's event_type alone never makes a swap a rename: swap / migration wording or a token link
+            # in the notice keeps R4 (NOTHING_TO_DO) off
+            or SWAP_WORDS.search(notice) is not None
         )
     )
+    if contract_changed and old_c and new_c and has_contract(hrow, new_c):
+        # the coin looked up carries the new contract: if the old contract is a CMC id of its own, the holder
+        # already holds the successor (someone entering CLEAR); otherwise this is a merged page (BDX)
+        ra = await cmc.info(address=str(old_c).lower() if str(old_c).lower().startswith("0x") else str(old_c))
+        if ra.ok and any(int(k) != int(hold["id"]) for k in (ra.data or {})):
+            contract_changed = False
     old_verified = bool(old_c) and has_contract(hrow, old_c)
     if old_c and not old_verified and not same_id and c2.state == "verified":
         c2 = C2Result(
@@ -415,8 +464,7 @@ async def _run(
     else:
         rp = await cmc.market_pairs(hold["id"])
         rows_old = [*rows_q, _rid(cmc)] + ([r_oh] if r_oh else [])
-        denied = rp.http_status == 403 or (rp.status.get("error_code") == 1006)
-        old_m = mk.assess(old_row1, rp.data if rp.ok else None, old_closes, pairs_denied=denied or not rp.ok)
+        old_m = _assess(rp, old_row1, old_closes)
     yield ev("step", step="market_old", check="C5", coin=hold["symbol"], **old_m.as_dict(), rows=rows_old)
     checks.append(_check("C5", f"old {hold['symbol']} market", _lamp(old_m.state), old_m.reason, rows_old))
 
@@ -426,20 +474,14 @@ async def _run(
         if same_id:
             rp = await cmc.market_pairs(succ["id"])
             rows_new = [*rows_q, _rid(cmc)] + ([r_oh] if r_oh else [])
-            denied = rp.http_status == 403 or rp.status.get("error_code") == 1006
-            new_m = mk.assess(
-                old_row1, rp.data if rp.ok else None, old_closes, pairs_denied=denied or not rp.ok
-            )
+            new_m = _assess(rp, old_row1, old_closes)
         elif not new_row1 or not new_row1.get("is_active", 1) or not succ.get("is_active", 1):
             new_m = mk.Market("dead", "successor CMC id is inactive")
             rows_new = rows_q
         else:
             rp = await cmc.market_pairs(succ["id"])
             rows_new = [*rows_q, _rid(cmc)] + ([r_nh] if r_nh else [])
-            denied = rp.http_status == 403 or rp.status.get("error_code") == 1006
-            new_m = mk.assess(
-                new_row1, rp.data if rp.ok else None, new_closes, pairs_denied=denied or not rp.ok
-            )
+            new_m = _assess(rp, new_row1, new_closes)
         yield ev("step", step="market_new", check="C5", coin=succ["symbol"], **new_m.as_dict(), rows=rows_new)
         checks.append(
             _check("C5", f"successor {succ['symbol']} market", _lamp(new_m.state), new_m.reason, rows_new)
@@ -511,7 +553,7 @@ async def _run(
         _check(
             "C4",
             "swap ratio",
-            "verified" if ratio.state == "P" else "not_run" if ratio.state == "none" else "verified",
+            {"P": "verified", "Q": "stale", "none": "not_run"}[ratio.state],
             f"{ratio.state}: {ratio.reason}" if stated is not None else binding.reason,
             rows_ratio,
         )
@@ -608,6 +650,7 @@ async def _run(
         value_swap_usd=value_swap,
         value_sell_old_usd=value_sell,
         tracker_value_usd=tracker,
+        old_volume_24h_usd=old_m.volume_24h,
         old_price_usd=tracker_price,
         new_price_usd=mk.usd(new_row1).get("price") if new_row1 else None,
         ratio_new_per_old=r_use,

@@ -52,3 +52,17 @@ def test_iso_dates_only():
     assert str(parse_iso_date("2024-07-01")) == "2024-07-01"
     assert parse_iso_date("July 1, 2024") is None
     assert parse_iso_date("2024-13-01") is None
+
+
+def test_c3_binds_dates_and_symbols_to_their_quotes():
+    src = {"notice": "The swap window closes on 25 October 2026. Now trading as CLEAR, see money.example"}
+    keep = check_quotes({"deadline": _f("2026-10-25", "closes on 25 October 2026")}, src)
+    assert "deadline" in keep.kept
+    miss = check_quotes({"deadline": _f("2020-01-01", "closes on 25 October 2026")}, src)
+    assert "deadline" in miss.dropped  # a misread date never survives a true quote
+    assert (
+        "successor_symbol" in check_quotes({"successor_symbol": _f("LEAR", "trading as CLEAR")}, src).dropped
+    )
+    assert (
+        "successor_symbol" in check_quotes({"successor_symbol": _f("ONE", "see money.example")}, src).dropped
+    )

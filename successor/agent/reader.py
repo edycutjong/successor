@@ -353,11 +353,18 @@ class ReaderSession:
             rec.update(http_status=None, latency_ms=round(timeout * 1000), response={"error": "timeout"})
             self.calls.append(rec)
             return None
+        except (httpx.HTTPError, ValueError) as exc:
+            rec.update(http_status=None, latency_ms=None, response={"error": type(exc).__name__})
+            self.calls.append(rec)
+            raise ReaderError(f"agent unreachable ({type(exc).__name__})") from exc
         rec.update(http_status=status, latency_ms=ms, response=raw, usage=raw.get("usage"))
         self.calls.append(rec)
         if status != 200:
             raise ReaderError(f"Qwen HTTP {status}: {str(raw)[:200]}")
-        return raw["choices"][0]["message"]
+        try:
+            return raw["choices"][0]["message"]
+        except (KeyError, IndexError, TypeError) as exc:
+            raise ReaderError("agent returned no message") from exc
 
     async def _loop(self) -> dict | None:
         timeouts = 0
@@ -449,7 +456,13 @@ class ReaderSession:
             self.events.append({"step": "follow_link", "url": url, "ok": False, "error": type(exc).__name__})
             self._tool_result(call_id, f"Not fetchable: {type(exc).__name__}.")
             return
-        page = {**page, "text": page["text"][:PAGE_CHARS]}
+        text = page["text"][:PAGE_CHARS]
+        page = {
+            **page,
+            "text": text,
+            "sha256": hashlib.sha256(text.encode()).hexdigest(),
+            "truncated": len(page["text"]) > PAGE_CHARS,
+        }
         self.fetches.append(page)
         self.events.append(
             {

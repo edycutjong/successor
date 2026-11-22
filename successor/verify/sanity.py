@@ -24,7 +24,10 @@ def check(
     trips: list[str] = []
     for leg in legs:
         lab = leg.get("label", "coin")
-        if leg.get("returned_id") is not None and int(leg["returned_id"]) != int(leg["requested_id"]):
+        if leg.get("returned_id") is None:
+            trips.append(f"{lab}: CMC returned no quote row for requested id {leg['requested_id']}")
+            continue
+        if int(leg["returned_id"]) != int(leg["requested_id"]):
             trips.append(
                 f"{lab}: CMC returned id {leg['returned_id']} for requested id {leg['requested_id']}"
             )
