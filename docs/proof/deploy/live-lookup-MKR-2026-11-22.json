@@ -1,0 +1,145 @@
+{
+ "url": "https://successor.edycu.dev/api/lookup?q=MKR&qty=1000",
+ "http_status": 200,
+ "headers": {
+  "content-type": "application/x-ndjson",
+  "date": "Sun, 22 Nov 2026 01:32:41 GMT",
+  "server": "Vercel",
+  "x-vercel-cache": "MISS",
+  "x-vercel-id": "sin1::iad1::m9xnf-1795311161729-5c347510c992"
+ },
+ "captured_at": "2026-11-22T01:32:50Z",
+ "client_wall_s": 8.786,
+ "lines": [
+  {
+   "client_s": 0.698,
+   "event": {
+    "type": "step",
+    "t_ms": 30,
+    "step": "resolve",
+    "query": "MKR",
+    "candidates": [
+     {
+      "id": 1518,
+      "symbol": "MKR",
+      "slug": "maker",
+      "is_active": 1,
+      "rank": 4938
+     }
+    ]
+   }
+  },
+  {
+   "client_s": 0.728,
+   "event": {
+    "type": "step",
+    "t_ms": 55,
+    "step": "notice",
+    "coin": {
+     "id": 1518,
+     "symbol": "MKR",
+     "slug": "maker",
+     "is_active": 1,
+     "rank": 4938
+    },
+    "has_notice": true,
+    "notice": "[Maker (MKR)](https://coinmarketcap.com/currencies/maker/) has been rebranded to [Sky (SKY)](https://coinmarketcap.com/currencies/sky/). For more information, please refer to this [article](https://forum.makerdao.com/t/sky-has-arrived/24959) and [post](https://x.com/SkyEcosystem/status/1828405625828843710).",
+    "credits": 1
+   }
+  },
+  {
+   "client_s": 8.702,
+   "event": {
+    "type": "step",
+    "t_ms": 8034,
+    "step": "reader",
+    "model": "qwen4-max",
+    "latency_ms": 7979,
+    "proposal": {
+     "event_type": "rename",
+     "successor_name": "Sky",
+     "successor_symbol": "SKY",
+     "new_chain": null,
+     "new_contract": null,
+     "old_contract": null,
+     "ratio_new_per_old": null,
+     "effective_date": null,
+     "deadline": null,
+     "links_to_follow": [
+      "https://forum.makerdao.com/t/sky-has-arrived/24959",
+      "https://x.com/SkyEcosystem/status/1828405625828843710"
+     ],
+     "unstated": [
+      "new_chain",
+      "new_contract",
+      "old_contract",
+      "ratio_new_per_old",
+      "effective_date",
+      "deadline"
+     ]
+    },
+    "cache": "miss"
+   }
+  },
+  {
+   "client_s": 8.712,
+   "event": {
+    "type": "step",
+    "t_ms": 8034,
+    "step": "quotes_verbatim",
+    "checks": {
+     "successor_name": true,
+     "successor_symbol": true
+    },
+    "ok": true
+   }
+  },
+  {
+   "client_s": 8.759,
+   "event": {
+    "type": "step",
+    "t_ms": 8088,
+    "step": "contracts",
+    "successor": {
+     "id": 33038,
+     "symbol": "SKY",
+     "slug": "sky",
+     "is_active": 1,
+     "rank": 55
+    },
+    "quoted": {},
+    "match": null
+   }
+  },
+  {
+   "client_s": 8.783,
+   "event": {
+    "type": "step",
+    "t_ms": 8113,
+    "step": "quotes",
+    "old": {
+     "price": 1439.5513741147624,
+     "volume_24h": 248.76289466446974,
+     "last_updated": "2026-11-22T01:32:05.000Z"
+    },
+    "new": {
+     "price": 0.0439398794090489,
+     "volume_24h": 19697727.260478754,
+     "last_updated": "2026-11-22T01:32:05.000Z"
+    }
+   }
+  },
+  {
+   "client_s": 8.784,
+   "event": {
+    "type": "verdict",
+    "t_ms": 8113,
+    "engine": "spike",
+    "qty": 1000.0,
+    "credits_used": 3,
+    "verdict": "NOT VERIFIABLE",
+    "reason": "no quoted contract to check against CMC"
+   }
+  }
+ ]
+}

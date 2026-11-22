@@ -1,0 +1,50 @@
+{
+ "url": "https://successor.edycu.dev/api/stream-probe?n=5&gap=1",
+ "http_status": 200,
+ "headers": {
+  "content-type": "application/x-ndjson",
+  "date": "Sun, 22 Nov 2026 01:32:19 GMT",
+  "server": "Vercel",
+  "x-vercel-cache": "MISS",
+  "x-vercel-id": "sin1::iad1::gtnkl-1795311139073-3bea4835bfaa"
+ },
+ "captured_at": "2026-11-22T01:32:24Z",
+ "client_wall_s": 5.779,
+ "lines": [
+  {
+   "client_s": 0.782,
+   "event": {
+    "i": 0,
+    "server_ms": 0
+   }
+  },
+  {
+   "client_s": 1.773,
+   "event": {
+    "i": 1,
+    "server_ms": 1001
+   }
+  },
+  {
+   "client_s": 2.775,
+   "event": {
+    "i": 2,
+    "server_ms": 2002
+   }
+  },
+  {
+   "client_s": 3.775,
+   "event": {
+    "i": 3,
+    "server_ms": 3003
+   }
+  },
+  {
+   "client_s": 4.776,
+   "event": {
+    "i": 4,
+    "server_ms": 4005
+   }
+  }
+ ]
+}

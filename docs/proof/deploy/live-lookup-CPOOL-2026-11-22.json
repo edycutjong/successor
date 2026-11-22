@@ -1,0 +1,147 @@
+{
+ "url": "https://successor.edycu.dev/api/lookup?q=CPOOL&qty=1000",
+ "http_status": 200,
+ "headers": {
+  "content-type": "application/x-ndjson",
+  "date": "Sun, 22 Nov 2026 01:32:24 GMT",
+  "server": "Vercel",
+  "x-vercel-cache": "MISS",
+  "x-vercel-id": "sin1::iad1::7jzds-1795311144753-df80b5d58309"
+ },
+ "captured_at": "2026-11-22T01:32:41Z",
+ "client_wall_s": 16.89,
+ "lines": [
+  {
+   "client_s": 0.663,
+   "event": {
+    "type": "step",
+    "t_ms": 84,
+    "step": "resolve",
+    "query": "CPOOL",
+    "candidates": [
+     {
+      "id": 12573,
+      "symbol": "CPOOL",
+      "slug": "clearpool",
+      "is_active": 1,
+      "rank": 4058
+     }
+    ]
+   }
+  },
+  {
+   "client_s": 0.695,
+   "event": {
+    "type": "step",
+    "t_ms": 109,
+    "step": "notice",
+    "coin": {
+     "id": 12573,
+     "symbol": "CPOOL",
+     "slug": "clearpool",
+     "is_active": 1,
+     "rank": 4058
+    },
+    "has_notice": true,
+    "notice": "Clearpool (CPOOL) has rebranded to Clearpool (CLEAR) and undergone a 1:1 swap from the [old contract](https://etherscan.io/token/0x66761fa41377003622aee3c7675fc7b5c1c2fac5) to [new contract](https://etherscan.io/token/0x5200f539478f58d9aea962095ba3b16b5e550e00). For more details, please [click here](https://x.com/ClearpoolFin/status/2122523453270180117).",
+    "credits": 1
+   }
+  },
+  {
+   "client_s": 16.812,
+   "event": {
+    "type": "step",
+    "t_ms": 16238,
+    "step": "reader",
+    "model": "qwen4-max",
+    "latency_ms": 16129,
+    "proposal": {
+     "event_type": "token_swap",
+     "successor_name": "Clearpool",
+     "successor_symbol": "CLEAR",
+     "new_chain": null,
+     "new_contract": "0x5200f539478f58d9aea962095ba3b16b5e550e00",
+     "old_contract": "0x66761fa41377003622aee3c7675fc7b5c1c2fac5",
+     "ratio_new_per_old": 1.0,
+     "effective_date": null,
+     "deadline": null,
+     "links_to_follow": [
+      "https://x.com/ClearpoolFin/status/2122523453270180117"
+     ],
+     "unstated": [
+      "new_chain",
+      "effective_date",
+      "deadline"
+     ]
+    },
+    "cache": "miss"
+   }
+  },
+  {
+   "client_s": 16.826,
+   "event": {
+    "type": "step",
+    "t_ms": 16238,
+    "step": "quotes_verbatim",
+    "checks": {
+     "successor_name": true,
+     "successor_symbol": true,
+     "new_contract": true,
+     "old_contract": true,
+     "ratio_new_per_old": true
+    },
+    "ok": true
+   }
+  },
+  {
+   "client_s": 16.86,
+   "event": {
+    "type": "step",
+    "t_ms": 16288,
+    "step": "contracts",
+    "successor": {
+     "id": 42884,
+     "symbol": "CLEAR",
+     "slug": "clearpool-finance",
+     "is_active": 1,
+     "rank": 524
+    },
+    "quoted": {
+     "old_contract": "0x66761fa41377003622aee3c7675fc7b5c1c2fac5",
+     "new_contract": "0x5200f539478f58d9aea962095ba3b16b5e550e00"
+    },
+    "match": true
+   }
+  },
+  {
+   "client_s": 16.889,
+   "event": {
+    "type": "step",
+    "t_ms": 16316,
+    "step": "quotes",
+    "old": {
+     "price": 0.024565558977907763,
+     "volume_24h": 3182093.9798672767,
+     "last_updated": "2026-11-22T01:31:02.000Z"
+    },
+    "new": {
+     "price": 0.02103455427487173,
+     "volume_24h": 760906.0055307357,
+     "last_updated": "2026-11-22T01:31:02.000Z"
+    }
+   }
+  },
+  {
+   "client_s": 16.889,
+   "event": {
+    "type": "verdict",
+    "t_ms": 16316,
+    "engine": "spike",
+    "qty": 1000.0,
+    "credits_used": 3,
+    "verdict": "SELL OLD",
+    "old_over_new": 1.1679
+   }
+  }
+ ]
+}
