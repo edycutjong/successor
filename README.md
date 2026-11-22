@@ -71,7 +71,7 @@ An agent with a hard split of roles:
 The LLM never decides the verdict. SWAP is only produced when the successor is verified against CMC's data (its contract
 matches, the notice links its CMC page, or it is the only CMC id with that exact name and symbol) and the ratio is
 price-confirmed; a contract the Reader quoted that fails to match blocks SWAP. Otherwise SWAP is withheld, and a claim that fails a check ends as NOT VERIFIABLE, SELL OLD or WRITE OFF as the table says.
-SELL OLD (R8) needs the old token to trade at least 5% above the swap value at CMC's quotes (`PREMIUM` in `successor/verify/verdict.py`); under that margin a confirmed swap stays SWAP (R9), and its reason states the margin. CPOOL sits near that line and has shown both verdicts: SELL OLD at 15.7% (03:49 UTC capture above) and SWAP at 4.6% (2026-11-22 23:43 UTC, `docs/proof/assets/lookup-CPOOL-2026-11-22T2343Z.ndjson`).
+SELL OLD (R8) needs the old token to trade at least 5% above the swap value at CMC's quotes (`PREMIUM` in `successor/verify/verdict.py`); under that margin a confirmed swap stays SWAP (R9), and when the old token is still above the swap its reason states the margin. CPOOL sits near that line and has shown both verdicts: SELL OLD at 15.7% (03:49 UTC capture above) and SWAP at 4.6% (2026-11-22 23:43 UTC, `docs/proof/assets/lookup-CPOOL-2026-11-22T2343Z.ndjson`).
 The four verdicts are **SWAP · SELL OLD · WRITE OFF · NOT VERIFIABLE**, plus NOTHING TO DO when the coin you hold is already
 the successor. The wording is "what CMC's data supports", not advice. Fees, gas and slippage are excluded and said so on screen.
 

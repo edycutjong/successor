@@ -8,9 +8,9 @@ CoinMarketCap says a coin migrated, but only in prose. Successor reads the notic
 
 ## The 2-minute path (steps 1–3 take 30 seconds)
 
-Only ten seconds? Click **AGIX** on the board, then **Receipt**: the agent follows the notice's link, code confirms the ratio against CMC's prices, and the receipt shows CMC's own rows.
+Only ten seconds? Click **AGIX** on the board, then **Receipt**: the agent (a recorded run) follows the notice's link, code confirms the ratio against CMC's prices, and the receipt shows CMC's own rows.
 
-1. Open https://successor.edycu.dev: it runs **CPOOL** on load (the CPOOL chip re-runs it). The board streams the CMC notice, the Reader's proposal, the code checks and the verdict. On 2026-11-22 03:49 UTC it read **SELL OLD** (rule R8): CMC's quotes put the old token 15.7% above the 1:1 swap. R8 needs at least 5%; under that margin the same lookup reads **SWAP** (R9), and its reason gives the margin. CPOOL has shown both, so read the verdict with the capture time on screen.
+1. Open https://successor.edycu.dev: it runs **CPOOL** on load (the CPOOL chip re-runs it). The board streams the CMC notice, the Reader's proposal, the code checks and the verdict. On 2026-11-22 03:49 UTC it read **SELL OLD** (rule R8): CMC's quotes put the old token 15.7% above the 1:1 swap. R8 needs at least 5%; under that margin the same lookup reads **SWAP** (R9), and when the old token is still above the swap its reason gives the margin. CPOOL has shown both, so read the verdict with the capture time on screen.
 2. Click **Receipt**: the CMC calls behind the verdict.
 3. Click **AGIX**: the trace shows the Reader's recorded run (the trace labels it "recorded extraction") following the notice's link to fetch.ai; code confirms the ratio against CMC prices on the event date, live, verdict **SWAP** (R9).
 4. Open `/?q=GAS&id=1785` (Neo's GAS): its notice quotes a contract (`0xd2a4…76cf`) that no CMC coin carries, so check C2 fails and the verdict is **NOT VERIFIABLE** (R5), not a guess.¹ Offline, `python scripts/run_evals.py` shows the same refusal for a contract one hex digit off (`cpool-bad-contract`).
