@@ -3,383 +3,284 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>Successor: your coin left the station. Successor checks where it went.</title>
-<meta name="description" content="CMC says a coin migrated only in prose. Successor's AI reads the notice, code checks it against CMC's own rows, and you get one verdict.">
+<title>Successor · five verdicts in the glass, only a checked one lights</title>
+<meta name="description" content="CoinMarketCap says a coin migrated, but only in prose. Successor's AI reads the notice, code checks every field against CMC's own rows, and only then does one verdict light.">
 <meta name="author" content="Edy Cu">
-<meta name="theme-color" content="#15130F">
+<meta name="theme-color" content="#130E14">
 <link rel="icon" href="/icon.svg" type="image/svg+xml">
 <link rel="canonical" href="https://successor.edycu.dev/about">
 <meta property="og:site_name" content="Successor">
 <meta property="og:type" content="website">
+<meta property="og:title" content="Successor · only a checked verdict lights">
 <meta property="og:url" content="https://successor.edycu.dev/about">
-<meta property="og:title" content="Your coin left the station. Successor checks where it went.">
-<meta property="og:description" content="CMC says your coin migrated, in prose. An AI reads the notice; code checks it against CMC's rows. One verdict.">
 <meta property="og:image" content="https://successor.edycu.dev/og-image-1200.png?v=20261122b">
 <meta property="og:image:width" content="1200">
 <meta property="og:image:height" content="630">
-<meta property="og:image:alt" content="Successor: CMC's CPOOL notice, three code checks against CMC rows, and the board's verdict CPOOL to CLEAR, SELL OLD, +15.7% (CMC data 2026-11-22 03:49 UTC)">
+<meta property="og:description" content="CMC says your coin migrated, in prose. An AI reads the notice; code checks it against CMC's rows. One verdict.">
 <meta name="twitter:card" content="summary_large_image">
-<meta name="twitter:image" content="https://successor.edycu.dev/og-image-1200.png?v=20261122b">
-<link rel="preload" href="/fonts/big-shoulders-display-latin.woff2" as="font" type="font/woff2" crossorigin>
-<link rel="preload" href="/fonts/atkinson-next-latin.woff2" as="font" type="font/woff2" crossorigin>
+<link rel="preload" href="/fonts/sofia-sans-extra-condensed-latin.woff2" as="font" type="font/woff2" crossorigin>
+<link rel="preload" href="/fonts/sofia-sans-latin.woff2" as="font" type="font/woff2" crossorigin>
+<link rel="stylesheet" href="/cathode.css">
 <style>
-@font-face { font-family: 'Atkinson Hyperlegible Next'; font-style: italic; font-weight: 400; font-display: swap; src: url(/fonts/atkinson-next-italic-latin.woff2) format('woff2'); unicode-range: U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6, U+02DA, U+02DC, U+0304, U+0308, U+0329, U+2000-206F, U+20AC, U+2122, U+2191, U+2193, U+2212, U+2215, U+FEFF, U+FFFD; }
-@font-face { font-family: 'Atkinson Hyperlegible Next'; font-style: normal; font-weight: 400 700; font-display: swap; src: url(/fonts/atkinson-next-latin.woff2) format('woff2'); unicode-range: U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6, U+02DA, U+02DC, U+0304, U+0308, U+0329, U+2000-206F, U+20AC, U+2122, U+2191, U+2193, U+2212, U+2215, U+FEFF, U+FFFD; }
-@font-face { font-family: 'Big Shoulders Display'; font-style: normal; font-weight: 700 900; font-display: swap; src: url(/fonts/big-shoulders-display-latin.woff2) format('woff2'); unicode-range: U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6, U+02DA, U+02DC, U+0304, U+0308, U+0329, U+2000-206F, U+20AC, U+2122, U+2191, U+2193, U+2212, U+2215, U+FEFF, U+FFFD; }
-@font-face { font-family: 'Fragment Mono'; font-style: normal; font-weight: 400; font-display: swap; src: url(/fonts/fragment-mono-latin.woff2) format('woff2'); unicode-range: U+0000-00FF, U+0131, U+0152-0153, U+02BB-02BC, U+02C6, U+02DA, U+02DC, U+0304, U+0308, U+0329, U+2000-206F, U+20AC, U+2122, U+2191, U+2193, U+2212, U+2215, U+FEFF, U+FFFD; }
 :root {
-  --bg:         #15130F;
-  --flap:       #24211C;
-  --hinge:      #0D0C0A;
-  --ink:        #EFE9DC;
-  --muted:      #9A9284;
-  --rule:       #3A352D;
-  --before:     #E8A33D;
-  --after:      #5FC27E;
-  --refuted:    #EE6650;
-  --font-display: "Big Shoulders Display", "Oswald", "Arial Narrow", sans-serif;
-  --font-body:    "Atkinson Hyperlegible Next", "Atkinson Hyperlegible", "Verdana", sans-serif;
-  --font-data:    "Fragment Mono", "Menlo", monospace;
-  --steel:      #1B1914;
-  --wrap: 1180px;
+  --bg: #130E14; --bench: #1B141B; --bench-2: #221922; --gauze: #8A6A45; --ghost: rgba(196, 160, 118, .2);
+  --bone: #EFE9DC; --muted: #9A9284; --lit: #FF7A2A; --lit-hot: #FFC08A; --after: #C98A4B; --refused: #F06A55;
+  --rule: rgba(138, 106, 69, .32);
+  --font-display: "Sofia Sans Extra Condensed", "Arial Narrow", sans-serif;
+  --font-body: "Sofia Sans", "Helvetica Neue", Arial, sans-serif;
+  --font-data: "Red Hat Mono", Menlo, monospace;
+  --glow: 0 0 2px #fff8, 0 0 8px rgba(255, 196, 140, .95), 0 0 22px rgba(255, 140, 60, .9), 0 0 52px rgba(255, 110, 30, .65);
+  --ink-deep: #0D0C0A;  /* shared with the board: terminal, socket and deck ground */
+  color-scheme: dark;
 }
-*,*::before,*::after { box-sizing: border-box; }
-html { scroll-behavior: smooth; scrollbar-color: var(--rule) var(--bg); }
-@media (prefers-reduced-motion: reduce) { html { scroll-behavior: auto; } }
-body { margin: 0; background: var(--bg); color: var(--ink); font: 400 17px/1.6 var(--font-body); -webkit-font-smoothing: antialiased; overflow-x: hidden; }
-::selection { background: var(--before); color: var(--hinge); }
-a { color: var(--ink); text-underline-offset: 3px; text-decoration-color: var(--muted); }
-a:hover { text-decoration-color: var(--ink); }
-:focus-visible { outline: 2px solid var(--before); outline-offset: 3px; border-radius: 2px; }
-.wrap { width: min(var(--wrap), 100% - 40px); margin-inline: auto; }
-.skip { position: absolute; left: -999px; top: 8px; background: var(--ink); color: var(--bg); padding: 8px 14px; z-index: 50; }
-.skip:focus { left: 12px; }
-code, .mono { font-family: var(--font-data); font-size: .86em; }
-b, strong { font-weight: 700; color: var(--ink); }
+</style>
+<style>
+.wrap { position: relative; z-index: 1; max-width: 1360px; margin: 0 auto; padding: 0 clamp(16px, 4vw, 56px); }
+section { position: relative; z-index: 1; }
+.s { padding: 96px 0; border-top: 1px solid var(--rule); }
+h2 { font: 300 clamp(44px, 5vw, 72px)/.95 var(--font-display); text-transform: uppercase; letter-spacing: .01em; margin: 12px 0 20px; max-width: 22ch; }
+h3 { font: 600 26px/1.05 var(--font-display); letter-spacing: .04em; text-transform: uppercase; margin: 0 0 8px; }
+.sub { color: var(--muted); max-width: 64ch; margin: 0 0 40px; }
+.lit-word { color: var(--lit); }
 
-/* ---------- nav ---------- */
-.nav { position: sticky; top: 0; z-index: 20; background: var(--bg); border-bottom: 1px solid var(--rule); }
-.nav .wrap { display: flex; align-items: center; gap: 22px; height: 64px; }
-.brand { display: flex; align-items: center; gap: 10px; text-decoration: none; }
-.brand img { width: 30px; height: 30px; }
-.brand span { font: 800 24px/1 var(--font-display); letter-spacing: .06em; transition: color .15s; }
-.brand:hover span { color: var(--before); }
-.brand small { font: 400 13px/1 var(--font-body); color: var(--muted); margin-left: 4px; }
-.nav ul { list-style: none; display: flex; gap: 20px; margin: 0 0 0 auto; padding: 0; }
-.nav ul a { color: var(--muted); text-decoration: none; font-size: 15px; transition: color .15s; }
-.nav ul a:hover { color: var(--ink); }
-.btn { display: inline-flex; align-items: center; gap: 8px; height: 44px; padding: 0 18px; border: 1px solid var(--rule); border-radius: 4px; background: var(--flap); color: var(--ink); font: 800 17px/1 var(--font-display); letter-spacing: .08em; text-transform: uppercase; text-decoration: none; cursor: pointer; transition: transform .12s ease, border-color .15s, background-color .15s; }
-.btn:hover { border-color: var(--ink); transform: translateY(-1px); }
-.btn:active { transform: translateY(1px); }
-.btn.primary { background: var(--ink); color: var(--bg); border-color: var(--ink); }
-.btn.primary:hover { background: #fffaf0; }
-.btn svg { width: 16px; height: 16px; }
-.nav .btn { height: 38px; font-size: 15px; }
+/* hero */
+.hero { padding: 40px 0 56px; background: radial-gradient(900px 640px at 78% 40%, rgba(255, 122, 42, .1), transparent 62%); }
+.hero .wrap { display: grid; grid-template-columns: minmax(0, .92fr) minmax(0, 1.08fr); gap: clamp(28px, 4vw, 64px); align-items: center; }
+h1 { font: 300 clamp(56px, 6.4vw, 104px)/.9 var(--font-display); text-transform: uppercase; letter-spacing: .005em; margin: 16px 0 18px; }
+h1 em { font-style: normal; font-weight: 500; color: var(--lit); text-shadow: 0 0 22px rgba(255, 122, 42, .35); }
+.hsub { font: 600 19px/1.4 var(--font-body); margin: 0 0 12px; max-width: 34ch; }
+.lede { color: var(--muted); max-width: 52ch; margin: 0; }
+.lede b { color: var(--bone); }
+.ctas { display: flex; flex-wrap: wrap; gap: 12px; margin: 26px 0 16px; }
+.runline { display: flex; align-items: center; max-width: 560px; border: 1px dashed rgba(138, 106, 69, .55); }
+.runline code { flex: 1; min-width: 0; padding: 10px 12px; font-size: 13px; color: var(--muted); white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+.copy { align-self: stretch; font: 600 13px var(--font-body); color: var(--bone); background: var(--bench-2); border: 0; border-left: 1px dashed rgba(138, 106, 69, .55); padding: 0 14px; cursor: pointer; transition: background .15s; }
+.copy:hover { background: #2C222C; }
+.note { font-size: 14px; color: var(--muted); margin: 12px 0 0; }
 
-/* ---------- flaps (the signature) ---------- */
-.flaps { --g: 4px; container-type: inline-size; display: flex; gap: var(--g); }
-.flaps .t { --tw: min(var(--max, 52px), calc((100cqw - (var(--n) - 1) * var(--g)) / var(--n)));
-  position: relative; flex: 0 0 auto; width: var(--tw); height: calc(var(--tw) * 1.36);
-  display: grid; place-items: center; background: var(--flap); border-radius: 3px; overflow: hidden;
-  font: 800 calc(var(--tw) * 1.0)/1 var(--font-display); color: var(--ink); }
-.flaps .t::after { content: ""; position: absolute; left: 0; right: 0; top: 50%; height: 1px; background: var(--hinge); }
-.flaps .t.blank { background: #1E1B17; }
-.flaps .t b { font-weight: 800; display: block; transform-origin: 50% 50%; }
-.flaps .t.f b { animation: flip 64ms cubic-bezier(.3,1.6,.6,1); }
-.flaps .t.f::before { content: ""; position: absolute; inset: 0 0 50% 0; background: var(--hinge); opacity: .55; transform-origin: 50% 100%; animation: drop 64ms linear forwards; }
-@keyframes flip { 0% { transform: scaleY(.15); } 70% { transform: scaleY(1.06); } 100% { transform: scaleY(1); } }
-@keyframes drop { from { transform: scaleY(1); } to { transform: scaleY(0); } }
-.flaps.half .t b { transform: perspective(140px) rotateX(-62deg); opacity: .8; }
-.flaps.half .t::after { height: 2px; background: #000; }
+.bench { background: linear-gradient(180deg, rgba(34, 25, 34, .92), rgba(23, 17, 23, .92)); border: 1px solid var(--rule); padding: 20px 22px 16px; }
+.notice { margin: 0 0 16px; padding: 2px 0 2px 14px; border-left: 2px solid var(--gauze); font-size: 15.5px; line-height: 1.55; color: var(--muted); }
+.notice .src { display: block; font: 600 13px var(--font-display); letter-spacing: .24em; text-transform: uppercase; color: var(--muted); margin-bottom: 4px; }
+.notice u { text-decoration: none; color: var(--bone); border-bottom: 2px solid transparent; transition: border-color .25s, color .25s; }
+.notice u.after { border-color: var(--after); }
+.notice u.lit { border-color: var(--lit); }
+.notice u.refused { border-color: var(--refused); text-decoration: line-through var(--refused); }
+.inst { display: grid; grid-template-columns: minmax(0, 1fr) minmax(0, 300px); gap: 22px; align-items: start; }
+.ren { display: flex; align-items: baseline; gap: 14px; margin: 2px 0 14px; font: 300 46px/1 var(--font-display); text-transform: uppercase; letter-spacing: .04em; }
+.ren .arr { color: var(--muted); font-size: 32px; }
+.ren .succ { color: transparent; -webkit-text-stroke: 1.15px var(--ghost); transition: color .2s, text-shadow .2s; }
+.ren .succ.lit { color: #FFE2C4; -webkit-text-stroke: 0; text-shadow: var(--glow); }
+.bh { display: block; font: 600 13px/1.3 var(--font-display); letter-spacing: .22em; text-transform: uppercase; color: var(--muted); margin-bottom: 6px; }
+.checks { list-style: none; margin: 0; padding: 0; }
+.checks li { display: grid; grid-template-columns: 16px minmax(0, 1fr); gap: 12px; align-items: start; padding: 9px 0; border-top: 1px solid rgba(138, 106, 69, .22); }
+.checks .ct-lamp { margin-top: 3px; }
+.checks .k { display: block; font: 600 15px/1.25 var(--font-body); }
+.checks .k i { font-style: normal; font: 700 15px var(--font-display); letter-spacing: .08em; color: var(--muted); margin-right: 8px; }
+.checks .v { display: block; min-height: 2.8em; font-size: 13.5px; line-height: 1.4; color: var(--muted); overflow-wrap: anywhere; }
+.inst .ct-tube { --th: 360px; --cs: 46px; }
+.tubecap { margin: 8px 0 0; text-align: center; font: 500 12px/1.4 var(--font-data); color: var(--muted); min-height: 2.8em; }
+.fig { display: flex; flex-wrap: wrap; align-items: baseline; gap: 6px 18px; margin: 14px 0 4px; padding-top: 14px; border-top: 1px solid var(--rule); }
+.fig .big { font: 300 54px/1 var(--font-display); letter-spacing: .02em; }
+.fig .say { color: var(--muted); max-width: 30ch; line-height: 1.35; min-height: 2.7em; }
+.fig .vals { flex-basis: 100%; margin: 0; min-height: 1.6em; font: 500 13px/1.6 var(--font-data); color: var(--bone); }
+.bfoot { display: flex; flex-wrap: wrap; align-items: center; justify-content: space-between; gap: 10px; margin-top: 10px; }
+.cap { margin: 0; font: 500 12px var(--font-data); color: var(--muted); }
+.runs { display: flex; flex-wrap: wrap; align-items: center; gap: 6px; font-size: 13px; color: var(--muted); }
+.runs button { font: 700 14px/1 var(--font-display); letter-spacing: .12em; color: var(--bone); background: transparent; border: 1px solid var(--rule); padding: 8px 10px; cursor: pointer; transition: border-color .15s, background .15s; }
+.runs button:hover:not(:disabled) { border-color: var(--bone); background: rgba(239, 230, 218, .06); }
+.runs button[aria-pressed="true"] { border-color: var(--bone); }
+.runs button:disabled { opacity: .55; cursor: progress; }
 
-.lamp { flex: 0 0 auto; width: 22px; height: 22px; border-radius: 50%; display: inline-grid; place-items: center; font: 700 13px/1 var(--font-body); border: 1px solid var(--rule); color: var(--muted); background: transparent; transition: background-color .18s, color .18s, border-color .18s; }
-.lamp::before { content: "·"; }
-.lamp.ok::before { content: "✓"; }
-.lamp.bad::before { content: "✗"; }
-.lamp.prop { background: var(--before); border-color: var(--before); color: var(--hinge); }
-.lamp.ok { background: var(--after); border-color: var(--after); color: var(--hinge); }
-.lamp.bad { background: var(--refuted); border-color: var(--refuted); color: var(--hinge); }
+/* receipts: readouts with the unlit digits behind them */
+.receipts { padding: 0 0 72px; }
+.receipts .wrap { display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); border: 1px solid var(--rule); background: rgba(27, 20, 27, .7); padding: 0; }
+.rc { padding: 24px 24px 20px; border-left: 1px solid var(--rule); }
+.rc:first-child { border-left: 0; }
+.num { position: relative; display: inline-block; font: 300 76px/1 var(--font-display); letter-spacing: .03em; }
+.num::before { content: attr(data-ghost); position: absolute; left: 0; top: 0; color: transparent; -webkit-text-stroke: 1px var(--ghost); }
+.num .u { font-size: 34px; color: var(--muted); margin-left: 4px; }
+.rc p { margin: 10px 0 8px; color: var(--muted); font-size: 15px; line-height: 1.4; }
+.proof { font: 12px var(--font-data); color: var(--muted); opacity: .85; overflow-wrap: anywhere; }
 
-/* ---------- hero ---------- */
-.hero { position: relative; padding: 22px 0 56px; border-bottom: 1px solid var(--rule); }
-.hero::before { content: ""; position: absolute; inset: 0; pointer-events: none; opacity: .5;
-  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='120' height='56'%3E%3Cpath d='M0 55.5H120' stroke='%23241F19' stroke-width='1'/%3E%3Cpath d='M119.5 0V56' stroke='%231E1A15' stroke-width='1'/%3E%3C/svg%3E"); }
-.hero .wrap { position: relative; }
-.label { display: inline-flex; align-items: center; gap: 10px; font: 700 14px/1 var(--font-display); letter-spacing: .16em; text-transform: uppercase; color: var(--muted); }
-.label .lamp { width: 12px; height: 12px; font-size: 0; }
-.label .lamp::before { content: none; }
-.hero h1 { font: 900 clamp(40px, 4.4vw, 64px)/.94 var(--font-display); text-transform: uppercase; letter-spacing: .005em; margin: 14px 0 12px; max-width: 17em; }
-.hsub { font: 700 clamp(19px, 1.7vw, 23px)/1.35 var(--font-body); margin: 0 0 18px; max-width: 46em; }
-.sr { position: absolute; width: 1px; height: 1px; overflow: hidden; clip: rect(0 0 0 0); white-space: nowrap; }
-.hero h1 .hl { text-decoration: underline; text-decoration-color: var(--ink); text-decoration-thickness: .085em; text-underline-offset: .09em; text-decoration-skip-ink: none; transition: text-decoration-color .3s ease; }
-.hero h1 .hl.run { text-decoration-color: var(--before); }
-.hrow { display: grid; grid-template-columns: minmax(0, 1.05fr) minmax(0, 1fr); gap: 48px; align-items: start; margin-bottom: 26px; }
-.lede { max-width: 36em; color: #CFC8BA; font-size: 17px; margin: 0; }
-.ctas { display: flex; flex-wrap: wrap; gap: 12px; margin-bottom: 14px; }
-.runline { display: flex; align-items: center; gap: 10px; max-width: 100%; border: 1px solid var(--rule); border-radius: 4px; padding: 8px 8px 8px 14px; background: var(--steel); }
-.runline code { color: var(--muted); white-space: nowrap; overflow: hidden; text-overflow: ellipsis; min-width: 0; flex: 1; font-size: 13.5px; }
-.runline code em { font-style: normal; color: var(--ink); }
-.copy { flex: 0 0 auto; height: 32px; padding: 0 12px; border: 1px solid var(--rule); border-radius: 3px; background: var(--flap); color: var(--ink); font: 700 13px/1 var(--font-body); cursor: pointer; transition: border-color .15s, transform .12s; }
-.copy:hover { border-color: var(--ink); }
-.copy:active { transform: translateY(1px); }
-.note { color: var(--muted); font-size: 14px; margin: 12px 0 0; }
-
-/* the hero board: one full-width departure board */
-.board { background: var(--steel); border: 1px solid var(--rule); border-radius: 8px; padding: 22px 28px 18px; }
-.bh { display: block; font: 700 13px/1 var(--font-display); letter-spacing: .2em; color: var(--muted); text-transform: uppercase; margin-bottom: 10px; }
-.ba { display: grid; grid-template-columns: minmax(0, 1.55fr) minmax(0, 1fr); gap: 32px; align-items: start; margin-top: 12px; }
-.ren { display: grid; grid-template-columns: minmax(0, 5fr) 40px minmax(0, 6fr); gap: 14px; align-items: start; }
-.ren .arr { color: var(--muted); font: 800 36px/1 var(--font-display); text-align: center; padding-top: 40px; }
-#h-old { --max: 52px; --g: 5px; }
-#h-new { --max: 66px; --g: 6px; }
-.fig { display: flex; align-items: baseline; gap: 18px; flex-wrap: wrap; margin-top: 14px; }
-.fig .big { font: 900 clamp(44px, 4.4vw, 64px)/.9 var(--font-display); letter-spacing: .01em; }
-.fig .say { color: var(--muted); font-size: 14.5px; line-height: 1.4; max-width: 24em; min-height: 2.8em; }
-.vb { margin-top: 14px; }
-#h-vd { --max: 58px; --g: 5px; }
-.vals { font-size: 15px; color: #CFC8BA; margin: 0; min-height: 24px; flex-basis: 100%; }
-.checks { list-style: none; margin: 0; padding: 0; border-top: 1px solid var(--rule); }
-.checks li { display: grid; grid-template-columns: 22px 7.4em minmax(0, 1fr); gap: 10px; align-items: center; padding: 6px 0; border-bottom: 1px solid var(--rule); }
-.checks .k { font: 800 17px/1.1 var(--font-display); letter-spacing: .06em; text-transform: uppercase; }
-.checks .k i { font-style: normal; color: var(--muted); font-weight: 700; margin-right: 6px; }
-.checks .v { color: var(--muted); font-size: 13.5px; line-height: 1.35; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
-.notice { margin: 0; padding: 2px 0 2px 16px; border-left: 2px solid var(--rule); color: #CFC8BA; font-size: 15.5px; line-height: 1.55; }
-.notice .src { display: block; font: 700 12px/1 var(--font-display); letter-spacing: .16em; color: var(--muted); text-transform: uppercase; margin-bottom: 8px; }
-.notice u { text-decoration: none; border-bottom: 2px solid transparent; transition: border-color .2s, color .2s; }
-.notice u.prop { border-bottom-color: var(--before); color: var(--ink); }
-.notice u.ok { border-bottom-color: var(--after); color: var(--ink); }
-.notice u.bad { border-bottom-color: var(--refuted); color: var(--ink); text-decoration: line-through; text-decoration-color: var(--refuted); }
-.bfoot { display: flex; align-items: center; justify-content: space-between; gap: 10px; flex-wrap: wrap; margin-top: 16px; padding-top: 12px; border-top: 1px solid var(--rule); }
-.bfoot .cap { color: var(--muted); font-size: 13px; margin: 0; font-family: var(--font-data); line-height: 1.5; }
-.runs { display: flex; flex-wrap: wrap; gap: 6px; align-items: center; }
-.runs span { color: var(--muted); font-size: 13px; margin-right: 2px; }
-.runs button { height: 34px; min-width: 48px; padding: 0 12px; border: 1px solid var(--rule); border-radius: 3px; background: var(--flap); color: var(--ink); font: 800 15px/1 var(--font-display); letter-spacing: .1em; cursor: pointer; transition: border-color .15s, transform .12s, background-color .15s; }
-.runs button:hover { border-color: var(--ink); }
-.runs button:active { transform: translateY(1px); }
-.runs button[aria-pressed="true"] { border-color: var(--ink); background: var(--rule); }
-.runs button:disabled { opacity: .5; cursor: wait; }
-
-/* ---------- receipts band ---------- */
-.receipts { background: var(--steel); border-bottom: 1px solid var(--rule); padding: 44px 0 40px; }
-.receipts .wrap { display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); gap: 28px; }
-.rc .flaps { --max: 58px; margin-bottom: 14px; max-width: 280px; }
-.rc .flaps .t { font-weight: 900; }
-.rc p { margin: 0; font-size: 15px; line-height: 1.45; }
-.rc .unit { font: 800 26px/1 var(--font-display); color: var(--muted); margin-left: 6px; align-self: flex-end; }
-.rc .num { display: flex; align-items: flex-end; }
-.rc .num .flaps { flex: 1; margin-bottom: 0; }
-.rc .proof { display: block; margin-top: 8px; color: var(--muted); font-size: 13px; overflow-wrap: anywhere; }
-
-/* ---------- sections ---------- */
-section.s { padding: 104px 0; }
-.why h2 { max-width: 24em; }
-.eyebrow { font: 700 14px/1 var(--font-display); letter-spacing: .18em; text-transform: uppercase; color: var(--muted); margin: 0 0 16px; display: flex; gap: 12px; align-items: center; }
-.eyebrow::before { content: ""; width: 28px; height: 1px; background: var(--muted); }
-h2 { font: 900 clamp(38px, 4.6vw, 64px)/.98 var(--font-display); text-transform: uppercase; margin: 0 0 18px; letter-spacing: .005em; max-width: 18em; }
-.sub { color: #CFC8BA; max-width: 42em; margin: 0 0 44px; font-size: 18px; }
-
-/* demo pair */
-.pair { display: grid; grid-template-columns: minmax(0, 1.15fr) minmax(0, 1fr); gap: 22px; align-items: start; }
-.browser { border: 1px solid var(--rule); border-radius: 6px; overflow: hidden; background: var(--steel); }
-.browser .bar { display: flex; align-items: center; gap: 7px; padding: 10px 12px; border-bottom: 1px solid var(--rule); }
-.browser .bar i { width: 9px; height: 9px; border-radius: 50%; background: var(--rule); }
-.browser .bar span { margin-left: 10px; flex: 1; font: 400 12.5px/1 var(--font-data); color: var(--muted); background: var(--bg); border-radius: 3px; padding: 7px 10px; }
+/* demo */
+.pair { display: grid; grid-template-columns: minmax(0, 1.15fr) minmax(0, .85fr); gap: 24px; }
+.browser { margin: 0; border: 1px solid var(--rule); background: #0F0B10; }
+.browser .bar { display: flex; align-items: center; gap: 6px; padding: 9px 12px; border-bottom: 1px solid var(--rule); font: 12px var(--font-data); color: var(--muted); }
+.browser .bar i { width: 9px; height: 9px; border-radius: 50%; background: #3A2F38; }
+.browser .bar span { margin-left: 8px; }
 .browser img { display: block; width: 100%; height: auto; }
-figcaption { color: var(--muted); font-size: 14px; line-height: 1.5; padding: 12px 14px; border-top: 1px solid var(--rule); }
-.term { border: 1px solid var(--rule); border-radius: 6px; background: var(--hinge); overflow: hidden; }
-.term .bar { padding: 10px 14px; border-bottom: 1px solid var(--rule); font: 400 12.5px/1 var(--font-data); color: var(--muted); display: flex; justify-content: space-between; gap: 10px; }
-.term .bar button { background: none; border: 0; color: var(--muted); font: inherit; cursor: pointer; padding: 0; transition: color .15s; }
-.term .bar button:hover { color: var(--ink); }
-.term pre { margin: 0; padding: 16px 18px; font: 400 13px/1.8 var(--font-data); color: var(--muted); overflow-x: auto; min-height: 380px; white-space: pre; }
-.term pre .c { color: var(--ink); }
-.term pre .p { color: var(--before); }
-.term pre .ok { color: var(--after); }
-.term pre .cursor { display: inline-block; width: 8px; height: 15px; background: var(--ink); vertical-align: -3px; animation: blink 1s steps(1) infinite; }
+figcaption { padding: 10px 12px 12px; font-size: 14px; color: var(--muted); }
+.term { border: 1px solid var(--rule); background: var(--ink-deep); display: flex; flex-direction: column; min-width: 0; }
+.term .bar { display: flex; justify-content: space-between; align-items: center; padding: 9px 12px; border-bottom: 1px solid var(--rule); font: 12px var(--font-data); color: var(--muted); }
+.term .bar button { font: 600 12px var(--font-data); color: var(--bone); background: none; border: 1px solid var(--rule); padding: 4px 8px; cursor: pointer; }
+.term .bar button:hover { border-color: var(--bone); }
+.term pre { margin: 0; padding: 16px; font-size: 13px; line-height: 1.75; color: var(--muted); overflow-x: auto; white-space: pre; }
+.term .c { color: var(--bone); }
+.term .ok { color: var(--lit); }
+.term .p { color: var(--after); }
+.cursor { display: inline-block; width: 8px; height: 15px; background: var(--bone); vertical-align: -2px; animation: blink 1s steps(1) infinite; }
 @keyframes blink { 50% { opacity: 0; } }
 
-/* why not one call */
-.why { background: var(--steel); border-block: 1px solid var(--rule); }
-.flow { display: grid; grid-template-columns: 1.35fr 1.1fr 1.1fr .8fr; gap: 0; border: 1px solid var(--rule); border-radius: 6px; overflow: hidden; background: var(--bg); }
-.flow > div { padding: 22px 20px 24px; border-right: 1px solid var(--rule); position: relative; }
-.flow > div:last-child { border-right: 0; }
-.flow .ico { width: 34px; height: 34px; color: var(--muted); display: block; margin-bottom: 12px; }
-.flow h3 { font: 800 22px/1.05 var(--font-display); letter-spacing: .06em; text-transform: uppercase; margin: 0 0 6px; }
-.flow .who { font: 400 12px/1.4 var(--font-data); color: var(--muted); margin: 0 0 16px; overflow-wrap: anywhere; }
-.flow .json { font: 400 12.5px/1.65 var(--font-data); color: #CFC8BA; overflow-wrap: anywhere; margin: 0; }
-.flow .json .k { color: var(--muted); }
-.flow ul { list-style: none; margin: 0; padding: 0; display: grid; gap: 10px; }
-.flow li { font-size: 14.5px; line-height: 1.4; display: grid; grid-template-columns: 22px 1fr; gap: 10px; align-items: start; }
-.flow li .lamp { margin-top: 1px; }
-.flow li q { display: block; color: var(--muted); font-size: 13px; quotes: "“" "”"; }
-.flow .stamp { font: 900 44px/.95 var(--font-display); text-transform: uppercase; margin: 6px 0 10px; }
-.flow .step-n { position: absolute; top: 18px; right: 18px; font: 800 14px/1 var(--font-display); color: var(--muted); letter-spacing: .1em; }
-.agix { display: grid; grid-template-columns: minmax(0, 1fr) minmax(0, 1.1fr); gap: 36px; align-items: center; margin-top: 56px; }
-.agix h3 { font: 900 clamp(30px, 3.2vw, 42px)/1 var(--font-display); text-transform: uppercase; margin: 0 0 14px; }
-.agix p { color: #CFC8BA; margin: 0 0 14px; max-width: 34em; }
-.vs { display: flex; gap: 26px; margin-top: 18px; flex-wrap: wrap; }
-.vs div { border-left: 2px solid var(--rule); padding-left: 14px; }
-.vs strong { display: block; font: 900 44px/1 var(--font-display); }
-.vs span { color: var(--muted); font-size: 14px; }
+/* why: four stops on one bench */
+.flow { display: grid; grid-template-columns: 1.2fr 1fr 1fr .9fr; border: 1px solid var(--rule); }
+.flow > div { padding: 22px 20px; border-left: 1px solid var(--rule); min-width: 0; }
+.flow > div:first-child { border-left: 0; }
+.flow .ico { display: block; width: 34px; height: 34px; margin: 12px 0 0; color: var(--muted); }
+.stop { font: 600 13px var(--font-display); letter-spacing: .26em; text-transform: uppercase; color: var(--muted); }
+.flow h3 { margin-top: 12px; }
+.who { font: 12.5px/1.5 var(--font-data); color: var(--muted); margin: 0 0 12px; overflow-wrap: anywhere; }
+.json { font: 12.5px/1.6 var(--font-data); color: var(--muted); margin: 0; overflow-wrap: anywhere; }
+.json .k { color: var(--bone); }
+.flow ul { list-style: none; margin: 0; padding: 0; }
+.flow li { display: flex; gap: 10px; align-items: flex-start; margin: 0 0 10px; font-size: 15px; line-height: 1.4; }
+.flow li .ct-lamp { margin-top: 2px; }
+.flow q { display: block; color: var(--muted); font-size: 13px; }
+.flow q::before { content: "“"; } .flow q::after { content: "”"; }
+.struck { margin: 6px 0 8px; font: 300 52px/.95 var(--font-display); text-transform: uppercase; color: #FFE2C4; text-shadow: var(--glow); }
+.agix { display: grid; grid-template-columns: minmax(0, .85fr) minmax(0, 1.15fr); gap: 32px; align-items: center; margin-top: 56px; }
+.agix h3 { font-size: 34px; }
+.agix p { color: var(--muted); }
+.agix b, .agix code { color: var(--bone); }
+.vs { display: grid; grid-template-columns: 1fr 1fr; margin: 22px 0 12px; border: 1px solid var(--rule); }
+.vs div { padding: 16px 18px; }
+.vs div + div { border-left: 1px solid var(--rule); }
+.vs strong { display: block; font: 300 48px/1 var(--font-display); }
+.vs .x { text-decoration: line-through 2px var(--muted); color: var(--muted); }
+.vs span { font-size: 14px; color: var(--muted); }
+.agix .small { font-size: 13px; }
 
-/* guards: refusal rows */
+/* guards */
 .refusals { border-top: 1px solid var(--rule); }
-.rf { display: grid; grid-template-columns: 52px minmax(0, 1.25fr) minmax(0, 1fr) 210px; gap: 24px; align-items: center; padding: 22px 0; border-bottom: 1px solid var(--rule); }
-.rf .n { font: 900 32px/1 var(--font-display); color: var(--muted); }
-.rf h3 { font: 800 25px/1.08 var(--font-display); text-transform: uppercase; letter-spacing: .03em; margin: 0 0 6px; }
-.rf p { margin: 0; color: #CFC8BA; font-size: 15.5px; line-height: 1.5; }
-.rf .demo { font: 400 14px/1.5 var(--font-data); display: grid; gap: 8px; overflow-wrap: anywhere; }
-.rf .demo span { display: flex; gap: 10px; align-items: center; }
-.rf .demo s { text-decoration-color: var(--refuted); color: var(--muted); }
-.rf .demo mark { background: none; color: var(--refuted); font-weight: 700; }
-.rf .chip { justify-self: start; font: 400 12px/1.4 var(--font-data); color: var(--muted); border: 1px solid var(--rule); border-radius: 3px; padding: 6px 8px; overflow-wrap: anywhere; }
-/* census */
-.census .rows { border-top: 1px solid var(--rule); }
-.crow { display: grid; grid-template-columns: 420px 80px minmax(0, 1fr); gap: 24px; align-items: center; padding: 18px 0; border-bottom: 1px solid var(--rule); }
-.crow .flaps { --max: 30px; --g: 3px; }
-.crow .count { font: 900 44px/1 var(--font-display); text-align: right; }
-svg.units { display: block; max-width: 100%; height: auto; }
-.units { display: flex; flex-wrap: wrap; gap: 4px; }
-.units i { width: 13px; height: 19px; background: var(--flap); border-radius: 2px; position: relative; }
-.units i::after { content: ""; position: absolute; left: 0; right: 0; top: 9px; height: 1px; background: var(--hinge); }
-.units.half i { transform: perspective(30px) rotateX(-50deg); background: #2E2A23; }
-.units.lit i { background: var(--ink); }
-.units .zero { color: var(--muted); font-size: 14px; }
-.why130 { display: grid; grid-template-columns: minmax(0, .9fr) minmax(0, 1.1fr); gap: 48px; margin-top: 56px; align-items: start; }
-.why130 h3 { font: 900 clamp(30px, 3.2vw, 42px)/1 var(--font-display); text-transform: uppercase; margin: 0 0 14px; }
-.why130 p { color: #CFC8BA; margin: 0; }
+.rf { display: grid; grid-template-columns: 64px minmax(0, 1.1fr) minmax(0, 1fr) auto; gap: 22px; align-items: center; padding: 20px 0; border-bottom: 1px solid var(--rule); }
+.rf .n { font: 200 44px/1 var(--font-display); color: transparent; -webkit-text-stroke: 1.15px rgba(196, 160, 118, .5); }
+.rf h3 { font-size: 24px; margin: 0 0 4px; }
+.rf p { margin: 0; color: var(--muted); font-size: 15px; }
+.rf .demo { display: flex; flex-direction: column; gap: 6px; font: 13px var(--font-data); color: var(--muted); }
+.rf .demo span { display: flex; align-items: center; gap: 8px; }
+.rf .demo mark { background: none; color: var(--refused); font-weight: 600; }
+.capline { margin: 18px 0 0; font: 12.5px var(--font-data); color: var(--muted); }
+
+/* census: the five cathodes again, one tick per coin */
+.census { background: linear-gradient(180deg, rgba(27, 20, 27, .85), rgba(19, 14, 20, .2)); }
+.rows { border-top: 1px solid var(--rule); }
+.crow { display: grid; grid-template-columns: minmax(0, 330px) 90px minmax(0, 1fr); gap: 20px; align-items: center; padding: 14px 0; border-bottom: 1px solid var(--rule); }
+.crow .w { font: 300 38px/1 var(--font-display); text-transform: uppercase; letter-spacing: .04em; color: transparent; -webkit-text-stroke: 1.15px rgba(196, 160, 118, .55); }
+.crow .c { font: 300 44px/1 var(--font-display); text-align: right; }
+.ticks { display: flex; flex-wrap: wrap; gap: 3px; }
+.ticks i { width: 3px; height: 20px; background: rgba(239, 230, 218, .55); }
+.crow .zero { color: var(--muted); font-size: 14px; }
+.why130 { display: grid; grid-template-columns: minmax(0, .9fr) minmax(0, 1.1fr); gap: 40px; margin-top: 44px; }
+.why130 p { color: var(--muted); }
 .leaflet { list-style: none; margin: 0; padding: 0; border-top: 1px solid var(--rule); }
-.leaflet li { display: grid; grid-template-columns: 52px 1fr; gap: 12px; padding: 10px 0; border-bottom: 1px solid var(--rule); font-size: 15px; line-height: 1.45; color: #CFC8BA; }
-.leaflet b { font: 900 26px/1 var(--font-display); text-align: right; }
-.capline { color: var(--muted); font-size: 13px; margin-top: 18px; font-family: var(--font-data); overflow-wrap: anywhere; }
+.leaflet li { display: grid; grid-template-columns: 64px 1fr; gap: 14px; align-items: baseline; padding: 10px 0; border-bottom: 1px solid var(--rule); color: var(--muted); font-size: 15px; }
+.leaflet b { font: 300 34px/1 var(--font-display); color: var(--bone); }
 
 /* honest */
-.honest { background: var(--flap); border-block: 1px solid var(--rule); }
-.honest ol { list-style: none; margin: 0; padding: 0; counter-reset: h; display: grid; gap: 0; }
-.honest li { counter-increment: h; display: grid; grid-template-columns: 74px minmax(0, 1fr); gap: 20px; padding: 26px 0; border-top: 1px solid var(--rule); }
-.honest li::before { content: counter(h, decimal-leading-zero); font: 900 48px/1 var(--font-display); color: var(--muted); }
-.honest blockquote { margin: 0; font-size: clamp(20px, 2vw, 26px); line-height: 1.4; max-width: 38em; }
-.honest cite { display: block; margin-top: 10px; font: 400 13px/1 var(--font-data); color: var(--muted); font-style: normal; }
+.honest { background: #170F16; }
+.honest ol { list-style: none; margin: 0; padding: 0; counter-reset: q; }
+.honest li { display: grid; grid-template-columns: 70px 1fr; gap: 18px; padding: 22px 0; border-top: 1px solid var(--rule); counter-increment: q; }
+.honest li::before { content: "0" counter(q); font: 200 40px/1 var(--font-display); color: var(--muted); }
+.honest blockquote { margin: 0; font: 300 clamp(26px, 2.6vw, 36px)/1.15 var(--font-display); letter-spacing: .01em; }
+.honest code { font-size: .7em; }
+.honest cite { display: block; margin-top: 8px; font: normal 13px var(--font-data); color: var(--muted); }
 
 /* faq */
-.faq .wrap { display: grid; grid-template-columns: minmax(0, .8fr) minmax(0, 1.2fr); gap: 56px; align-items: start; }
-.faq details { border-bottom: 1px solid var(--rule); }
-.faq details:first-of-type { border-top: 1px solid var(--rule); }
-.faq summary { list-style: none; cursor: pointer; display: flex; justify-content: space-between; gap: 18px; align-items: center; padding: 20px 0; font: 800 23px/1.15 var(--font-display); text-transform: uppercase; letter-spacing: .03em; transition: color .15s; }
-.faq summary::-webkit-details-marker { display: none; }
-.faq summary:hover { color: #fffaf0; }
-.faq summary::after { content: "+"; font: 800 26px/1 var(--font-display); color: var(--muted); transition: transform .2s; flex: 0 0 auto; }
-.faq details[open] summary::after { transform: rotate(45deg); }
-.faq details p { margin: 0 0 22px; color: #CFC8BA; max-width: 40em; }
+.faq .wrap { display: grid; grid-template-columns: minmax(0, .8fr) minmax(0, 1.2fr); gap: 48px; }
+details { border-top: 1px solid var(--rule); }
+details:last-child { border-bottom: 1px solid var(--rule); }
+summary { cursor: pointer; list-style: none; padding: 18px 36px 18px 0; position: relative; font: 600 23px/1.2 var(--font-display); letter-spacing: .04em; text-transform: uppercase; transition: color .15s; }
+summary::-webkit-details-marker { display: none; }
+summary::after { content: "+"; position: absolute; right: 4px; top: 14px; font: 300 30px/1 var(--font-display); color: var(--muted); }
+details[open] summary::after { content: "–"; }
+summary:hover { color: #fff; }
+details p { margin: 0 0 18px; color: var(--muted); max-width: 64ch; }
+details code { color: var(--bone); font-size: 14px; }
 
 /* final */
-.final { border-top: 1px solid var(--rule); padding: 96px 0; text-align: left; position: relative; }
-.final::before { content: ""; position: absolute; inset: 0; pointer-events: none; opacity: .5; background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='120' height='56'%3E%3Cpath d='M0 55.5H120' stroke='%23241F19' stroke-width='1'/%3E%3C/svg%3E"); }
-.final .wrap { position: relative; }
-.final h2 { max-width: 14em; }
-.look { display: flex; gap: 10px; max-width: 620px; margin-top: 26px; flex-wrap: wrap; }
-.look input { flex: 1; min-width: 200px; height: 52px; border: 1px solid var(--rule); border-radius: 4px; background: var(--steel); color: var(--ink); padding: 0 16px; font: 400 17px/1 var(--font-body); transition: border-color .15s; }
-.look input:hover { border-color: var(--muted); }
+.final { padding: 104px 0 112px; border-top: 1px solid var(--rule); background: radial-gradient(700px 360px at 50% 100%, rgba(255, 122, 42, .1), transparent 70%); text-align: center; }
+.final h2 { margin: 0 auto 26px; }
+.look { display: flex; max-width: 620px; margin: 0 auto; border: 1px solid var(--gauze); }
+.look input { flex: 1; min-width: 0; font: 500 16px var(--font-data); color: var(--bone); background: rgba(19, 14, 20, .7); border: 0; padding: 16px; }
 .look input::placeholder { color: var(--muted); }
-.look .btn { height: 52px; }
-footer { border-top: 1px solid var(--rule); padding: 32px 0 48px; color: var(--muted); font-size: 14px; }
-footer .wrap { display: flex; justify-content: space-between; gap: 18px; flex-wrap: wrap; }
-footer a { color: var(--muted); }
-footer a:hover { color: var(--ink); }
-footer nav { display: flex; gap: 18px; flex-wrap: wrap; }
+.look .ct-btn { border: 0; }
+footer { position: relative; z-index: 1; border-top: 1px solid var(--rule); padding: 26px 0 36px; font-size: 14px; color: var(--muted); }
+footer .wrap { display: flex; flex-wrap: wrap; justify-content: space-between; gap: 14px; }
+footer nav { display: flex; flex-wrap: wrap; gap: 18px; }
+footer a { color: var(--muted); text-decoration: none; }
+footer a:hover { color: var(--bone); text-decoration: underline; text-underline-offset: 3px; }
 
-/* ---------- responsive ---------- */
-@media (max-width: 1020px) {
-  .pair, .agix, .why130, .faq .wrap, .hrow, .ba { grid-template-columns: minmax(0, 1fr); gap: 24px; }
-  .checks .v { white-space: normal; }
-  .flow { grid-template-columns: minmax(0, 1fr) minmax(0, 1fr); }
-  .flow > div:nth-child(2) { border-right: 0; }
-  .flow > div:nth-child(-n+2) { border-bottom: 1px solid var(--rule); }
-  .rf { grid-template-columns: 44px minmax(0, 1fr); }
-  .rf .demo, .rf .chip { grid-column: 2; }
-  .receipts .wrap { grid-template-columns: repeat(2, minmax(0, 1fr)); }
-  .nav ul { display: none; }
-  .nav .btn { margin-left: auto; }
+@media (min-width: 1041px) and (max-height: 820px) { .hero { padding-top: 24px; } h1 { font-size: clamp(52px, 5.6vw, 88px); } .inst .ct-tube { --th: 320px; --cs: 42px; } .hsub { margin-bottom: 8px; } }
+@media (max-width: 1040px) {
+  .hero .wrap, .pair, .agix, .why130, .faq .wrap { grid-template-columns: minmax(0, 1fr); }
+  .hero .wrap { gap: 0; } .hcopy { display: contents; } .hcopy > * { order: 6; } .hero .ct-eyebrow { order: 1; } .hero h1 { order: 2; } .hsub { order: 3; } .ctas { order: 4; } .bench { order: 5; margin: 6px 0 22px; }
+  .flow { grid-template-columns: 1fr 1fr; } .flow > div:nth-child(3) { border-left: 0; } .flow > div:nth-child(n+3) { border-top: 1px solid var(--rule); }
+  .receipts .wrap { grid-template-columns: 1fr 1fr; } .rc:nth-child(3) { border-left: 0; } .rc:nth-child(n+3) { border-top: 1px solid var(--rule); }
+  .rf { grid-template-columns: 52px minmax(0, 1fr); } .rf .demo, .rf .ct-chip { grid-column: 2; justify-self: start; }
 }
 @media (max-width: 640px) {
-  body { font-size: 16px; }
-  .hero { padding: 40px 0 56px; }
-  section.s { padding: 72px 0; }
-  .flow { grid-template-columns: minmax(0, 1fr); }
-  .flow > div { border-right: 0; border-bottom: 1px solid var(--rule); }
-  .crow { grid-template-columns: minmax(0, 1fr) 64px; gap: 10px 14px; }
-  .crow .units { grid-column: 1 / -1; }
-  .crow .count { font-size: 34px; }
-  .checks li { grid-template-columns: 22px minmax(0, 1fr); }
-  .ren { grid-template-columns: minmax(0, 1fr); gap: 8px; }
-  .ren .arr { transform: rotate(90deg); padding: 0; width: 36px; }
-  .checks .v { grid-column: 2; }
-  .honest li { grid-template-columns: minmax(0, 1fr); gap: 8px; }
-  .brand small { display: none; }
-  .board { padding: 16px 14px 14px; }
-  .term pre { font-size: 11.5px; min-height: 0; }
-  .receipts .wrap { gap: 24px 18px; }
+  .s { padding: 64px 0; } h1 { font-size: 12.6vw; } .hero .ct-eyebrow { font-size: 12px; letter-spacing: .2em; } .inst { grid-template-columns: minmax(0, 1fr) 150px; gap: 14px; } .checks .v { display: none; } .checks li { padding: 7px 0; } .checks .k { font-size: 14px; } .ren { font-size: 30px; margin-bottom: 8px; } .ren .arr { font-size: 22px; } .inst .ct-tube { --th: 236px; --cs: 22px; --k: .64; } .tubecap { font-size: 11px; } .notice { font-size: 14px; } .bench { padding: 16px 14px 14px; } .ctas .ct-btn { padding: 12px 14px; font-size: 15px; }
+.flow { grid-template-columns: 1fr; } .flow > div { border-left: 0; border-top: 1px solid var(--rule); } .flow > div:first-child { border-top: 0; }
+  .num { font-size: 56px; } .crow { grid-template-columns: minmax(0, 1fr) 64px; } .crow .ticks, .crow .zero { grid-column: 1 / -1; } .crow .w { font-size: 30px; }
+  .vs strong { font-size: 36px; } .look { flex-direction: column; }
 }
-@media (prefers-reduced-motion: reduce) {
-  .flaps .t.f b, .flaps .t.f::before, .term pre .cursor { animation: none; }
-  .btn { transition: none; }
-}
-@media print { .nav, .runs, .copy, .look { display: none; } body { background: #fff; color: #000; } }
+@media print { .ct-mesh, .ct-top, .runs, .copy, .term .bar button { display: none; } .s { padding: 40px 0; } }
 </style>
 </head>
 <body>
 <a class="skip" href="#main">Skip to content</a>
-<header class="nav">
-  <div class="wrap">
-    <a class="brand" href="/about" aria-label="Successor home"><img src="/assets/icon.svg" alt="" width="30" height="30"><span>SUCCESSOR</span><small>departures for renamed coins</small></a>
-    <ul>
-      <li><a href="#demo">The demo</a></li>
-      <li><a href="#why">Why an agent</a></li>
-      <li><a href="#census">Census</a></li>
-      <li><a href="#honest">Honest by design</a></li>
-      <li><a href="#faq">FAQ</a></li>
-      <li><a href="/pitch">Pitch deck</a></li>
-    </ul>
-    <a class="btn primary" href="/">Live board</a>
-  </div>
+<div class="ct-mesh" aria-hidden="true"></div>
+<header class="ct-top">
+  <a class="ct-mark" href="/about" aria-label="Successor, about"><img src="/icon.svg" alt="" width="30" height="30">SUCCESSOR</a>
+  <nav class="ct-nav" aria-label="Sections"><a href="#demo">The demo</a><a href="#why">Why an agent</a><a href="#census">Census</a><a href="#honest">Honest by design</a><a href="#faq">FAQ</a><a href="/pitch">Pitch deck</a></nav>
+  <a class="ct-btn solid" href="/">Live board</a>
 </header>
 
 <main id="main">
 <section class="hero" aria-labelledby="h1">
   <div class="wrap">
-    <p class="label" id="hlabel">CMC API Hackathon · AI Agents and Automation</p>
-    <h1 id="h1">Your coin left the station. Successor <span class="hl" id="hl">checks where it went.</span></h1>
-    <p class="hsub">An AI reads CoinMarketCap's migration notice. Code verifies it against CMC's own rows.</p>
-    <div class="hrow">
+    <div class="hcopy">
+      <p class="ct-eyebrow">CMC API Hackathon · AI Agents and Automation</p>
+      <h1 id="h1">Five verdicts in the glass. <em>Only a checked one lights.</em></h1>
+      <p class="hsub">An AI reads CoinMarketCap's migration notice. Code verifies it against CMC's own rows.</p>
       <p class="lede">CPOOL's notice says it became CLEAR at 1:1, in one paragraph of prose. <b>161 coins</b> in CMC's top 2000 carry a notice, <b>141</b> of them migrations, and <b>80</b> name the successor only in prose. You get one verdict, with the rows that prove it.</p>
-      <div>
-        <div class="ctas">
-          <a class="btn" href="https://github.com/edycutjong/successor"><svg viewBox="0 0 16 16" fill="currentColor" aria-hidden="true"><path d="M8 0a8 8 0 0 0-2.53 15.59c.4.07.55-.17.55-.38v-1.34c-2.23.48-2.7-1.07-2.7-1.07-.36-.92-.89-1.17-.89-1.17-.73-.5.06-.49.06-.49.8.06 1.23.83 1.23.83.72 1.22 1.88.87 2.34.66.07-.52.28-.87.5-1.07-1.78-.2-3.65-.89-3.65-3.95 0-.87.31-1.59.82-2.15-.08-.2-.36-1.02.08-2.12 0 0 .67-.21 2.2.82a7.6 7.6 0 0 1 4 0c1.53-1.04 2.2-.82 2.2-.82.44 1.1.16 1.92.08 2.12.51.56.82 1.28.82 2.15 0 3.07-1.87 3.75-3.66 3.95.29.25.54.73.54 1.48v2.2c0 .21.15.46.55.38A8 8 0 0 0 8 0Z"/></svg>GitHub</a>
-          <a class="btn" href="/pitch">Pitch deck</a>
-          <a class="btn primary" href="/">Open the live board →</a>
-        </div>
-        <div class="runline"><code id="curl">curl -N '<em>https://successor.edycu.dev/api/lookup?q=CPOOL&amp;qty=10000</em>'</code><button class="copy" type="button" data-copy="curl -N 'https://successor.edycu.dev/api/lookup?q=CPOOL&amp;qty=10000'">Copy</button></div>
-        <p class="note">No wallet, no sign-up, read-only calls. Not financial advice.</p>
+      <div class="ctas">
+        <a class="ct-btn" href="https://github.com/edycutjong/successor"><svg viewBox="0 0 16 16" fill="currentColor" aria-hidden="true"><path d="M5.5 4 1.5 8l4 4 1-1-3-3 3-3-1-1Zm5 0-1 1 3 3-3 3 1 1 4-4-4-4Z"/></svg>GitHub</a>
+        <a class="ct-btn" href="/pitch">Pitch deck</a>
+        <a class="ct-btn solid" href="/">Open the live board →</a>
       </div>
+      <div class="runline"><code id="curl">curl -N 'https://successor.edycu.dev/api/lookup?q=CPOOL&amp;qty=10000'</code><button class="copy" type="button" data-copy="curl -N 'https://successor.edycu.dev/api/lookup?q=CPOOL&amp;qty=10000'">Copy</button></div>
+      <p class="note">No wallet, no sign-up, read-only calls. Not financial advice.</p>
     </div>
 
-    <div class="board" id="board" aria-label="Departure board: a CPOOL lookup replayed from a captured stream">
-      <p class="notice" id="h-notice"><span class="src">1 · CMC notice, read by qwen4-max</span>Clearpool (CPOOL) has <u class="ok" data-f="sym">rebranded to Clearpool (CLEAR)</u> and <u class="ok" data-f="ratio">undergone a 1:1 swap</u> from the old contract to <u class="ok" data-f="contract">new contract</u>. For more details, please click here.</p>
-      <div class="ba">
+    <div class="bench" id="bench" aria-label="A CPOOL lookup replayed from a captured stream: checks first, then the verdict">
+      <p class="notice" id="h-notice"><span class="src">1 · CMC notice, read by qwen4-max</span>Clearpool (CPOOL) has <u class="lit" data-f="sym">rebranded to Clearpool (CLEAR)</u> and <u class="lit" data-f="ratio">undergone a 1:1 swap</u> from the old contract to <u class="lit" data-f="contract">new contract</u>. For more details, please click here.</p>
+      <div class="inst">
         <div>
-        <div class="ren">
-          <div><span class="bh">Old</span><div class="flaps" id="h-old" style="--n:6" role="img" aria-label="Old token CPOOL"><span class="t"><b>C</b></span><span class="t"><b>P</b></span><span class="t"><b>O</b></span><span class="t"><b>O</b></span><span class="t"><b>L</b></span><span class="t blank"><b>&nbsp;</b></span></div></div>
-          <span class="arr" aria-hidden="true">→</span>
-          <div><span class="bh">Successor</span><div class="flaps" id="h-new" style="--n:6" role="img" aria-label="Successor token CLEAR"><span class="t"><b>C</b></span><span class="t"><b>L</b></span><span class="t"><b>E</b></span><span class="t"><b>A</b></span><span class="t"><b>R</b></span><span class="t blank"><b>&nbsp;</b></span></div></div>
+          <div class="ren" aria-label="Old token CPOOL, successor CLEAR"><span id="h-old">CPOOL</span><span class="arr" aria-hidden="true">→</span><span class="succ lit" id="h-new">CLEAR</span></div>
+          <span class="bh">2 · Checked by code against CMC rows · 4 of 7 shown</span>
+          <ol class="checks" id="h-checks">
+            <li data-c="C2"><span class="ct-lamp lit" aria-hidden="true"></span><span><span class="k"><i>C2</i>Contract<span class="sr"> verified</span></span><span class="v">0x5200…0e00 = CMC's CLEAR contract, id 42884</span></span></li>
+            <li data-c="C4"><span class="ct-lamp lit" aria-hidden="true"></span><span><span class="k"><i>C4</i>Ratio 1:1<span class="sr"> verified</span></span><span class="v">old/new 1.04342 after the event → confirms</span></span></li>
+            <li data-c="C5o"><span class="ct-lamp lit" aria-hidden="true"></span><span><span class="k"><i>C5</i>Old market<span class="sr"> verified</span></span><span class="v">$1,385,625 / 24 h, top venue Upbit</span></span></li>
+            <li data-c="C5n"><span class="ct-lamp lit" aria-hidden="true"></span><span><span class="k"><i>C5</i>New market<span class="sr"> verified</span></span><span class="v">$603,140 / 24 h, top venue Uniswap v4</span></span></li>
+          </ol>
         </div>
-        <div class="vb"><span class="bh">3 · Verdict</span><div class="flaps" id="h-vd" style="--n:14" role="img" aria-label="Verdict SELL OLD"><span class="t"><b>S</b></span><span class="t"><b>E</b></span><span class="t"><b>L</b></span><span class="t"><b>L</b></span><span class="t blank"><b>&nbsp;</b></span><span class="t"><b>O</b></span><span class="t"><b>L</b></span><span class="t"><b>D</b></span><span class="t blank"><b>&nbsp;</b></span><span class="t blank"><b>&nbsp;</b></span><span class="t blank"><b>&nbsp;</b></span><span class="t blank"><b>&nbsp;</b></span><span class="t blank"><b>&nbsp;</b></span><span class="t blank"><b>&nbsp;</b></span></div><p class="sr" id="h-live" aria-live="polite"></p></div>
-      </div>
-        <div><span class="bh">2 · Checked by code against CMC rows · 4 of 7 shown</span>
-        <ol class="checks" id="h-checks">
-          <li data-c="C2"><span class="lamp ok" aria-hidden="true"></span><span class="k"><i>C2</i>Contract<span class="sr"> verified</span></span><span class="v">0x5200…0e00 = CMC's CLEAR contract, id 42884</span></li>
-          <li data-c="C4"><span class="lamp ok" aria-hidden="true"></span><span class="k"><i>C4</i>Ratio 1:1<span class="sr"> verified</span></span><span class="v">old/new 1.04342 after the event → confirms</span></li>
-          <li data-c="C5o"><span class="lamp ok" aria-hidden="true"></span><span class="k"><i>C5</i>Old market<span class="sr"> verified</span></span><span class="v">$1,385,625 / 24 h, top venue Upbit</span></li>
-          <li data-c="C5n"><span class="lamp ok" aria-hidden="true"></span><span class="k"><i>C5</i>New market<span class="sr"> verified</span></span><span class="v">$603,140 / 24 h, top venue Uniswap v4</span></li>
-        </ol></div>
+        <div>
+          <span class="bh">3 · Verdict</span>
+          <div class="ct-tubewrap">
+            <div class="ct-tube" id="tube" role="img" aria-label="Verdict tube: SELL OLD is lit">
+              <span class="ct-cath" data-v="SWAP" style="--y:42px;--s:.84;--b:.4px" aria-hidden="true">Swap</span>
+              <span class="ct-cath on" data-v="SELL_OLD" style="--y:104px;--s:1.06" aria-hidden="true">Sell old</span>
+              <span class="ct-cath" data-v="WRITE_OFF" style="--y:166px;--s:.9;--b:.3px" aria-hidden="true">Write off</span>
+              <span class="ct-cath" data-v="NOT_VERIFIABLE" style="--y:226px;--s:.78;--b:.5px" aria-hidden="true">Not verifiable</span>
+              <span class="ct-cath" data-v="NOTHING_TO_DO" style="--y:284px;--s:.8;--b:.5px" aria-hidden="true">Nothing to do</span>
+              <i class="ct-dome" aria-hidden="true"></i>
+            </div>
+            <div class="ct-socket" aria-hidden="true"></div>
+          </div>
+          <p class="tubecap" id="h-rule">R8 struck · R3 to R7 did not match · first match wins</p>
+          <p class="sr" id="h-live" aria-live="polite"></p>
+        </div>
       </div>
       <div class="fig"><span class="big" id="h-big">+15.7%</span><span class="say" id="h-say">the old token is worth more than the 1:1 swap, at CMC's quotes</span><p class="vals" id="h-vals">10,000 CPOOL · sell old $243.01 · swap 1:1 $210.06 · excludes fees and gas</p></div>
       <div class="bfoot">
@@ -399,20 +300,20 @@ footer nav { display: flex; gap: 18px; flex-wrap: wrap; }
 
 <section class="receipts" aria-label="Receipts">
   <div class="wrap">
-    <div class="rc"><div class="flaps" data-count="161" style="--n:3"><span class="t"><b>1</b></span><span class="t"><b>6</b></span><span class="t"><b>1</b></span></div><p>coins in CMC's top 2000 carry a migration or other notice</p><code class="proof">docs/proof/assets/census-…T0349Z.json</code></div>
-    <div class="rc"><div class="flaps" data-count="80" style="--n:2"><span class="t"><b>8</b></span><span class="t"><b>0</b></span></div><p>name the successor only in prose, which no endpoint returns as data</p><code class="proof">census · prose_only</code></div>
-    <div class="rc"><div class="flaps" data-count="83" style="--n:2"><span class="t"><b>8</b></span><span class="t"><b>3</b></span></div><p>tests pass, 82&nbsp;% coverage, plus 10/10 evals on real CMC rows</p><code class="proof">docs/proof/gates/local-gates-2026-11-22.txt</code></div>
-    <div class="rc"><div class="num"><div class="flaps" data-count="1.007" style="--n:5"><span class="t"><b>1</b></span><span class="t"><b>.</b></span><span class="t"><b>0</b></span><span class="t"><b>0</b></span><span class="t"><b>7</b></span></div><span class="unit">s</span></div><p>p50 lookup with a cached read and live CMC calls (n=12)</p><code class="proof">docs/proof/bench/bench-2026-11-22.json</code></div>
+    <div class="rc"><span class="num" data-ghost="888" data-count="161">161</span><p>coins in CMC's top 2000 carry a migration or other notice</p><code class="proof">docs/proof/assets/census-…T0349Z.json</code></div>
+    <div class="rc"><span class="num" data-ghost="88" data-count="80">80</span><p>name the successor only in prose, which no endpoint returns as data</p><code class="proof">census · prose_only</code></div>
+    <div class="rc"><span class="num" data-ghost="88" data-count="83">83</span><p>tests pass, 82&nbsp;% coverage, plus 10/10 evals on real CMC rows</p><code class="proof">docs/proof/gates/local-gates-2026-11-22.txt</code></div>
+    <div class="rc"><span class="num" data-ghost="8.888" data-count="1.007">1.007</span><span class="num u">s</span><p>p50 lookup with a cached read and live CMC calls (n=12)</p><code class="proof">docs/proof/bench/bench-2026-11-22.json</code></div>
   </div>
 </section>
 
 <section class="s" id="demo" aria-labelledby="demo-h">
   <div class="wrap">
-    <p class="eyebrow">Arrivals · the demo</p>
+    <p class="ct-eyebrow">Bench 01 · the demo</p>
     <h2 id="demo-h">One lookup, shown twice.</h2>
     <p class="sub">Left, the live board, captured about two hours after the stream on the right. Same coin, same verdict, a different margin: the market moved. That is why every verdict carries its capture time.</p>
     <div class="pair">
-      <figure class="browser" style="margin:0">
+      <figure class="browser">
         <div class="bar" aria-hidden="true"><i></i><i></i><i></i><span>successor.edycu.dev/?q=CPOOL</span></div>
         <img src="/assets/shot-cpool.webp" width="1626" height="968" loading="lazy" alt="The live Successor board after a CPOOL lookup: CPOOL flaps to CLEAR, verdict SELL OLD, the CMC notice underlined, and seven checks C1 to C6 lit green (captured 2026-11-22 05:58 UTC).">
         <figcaption>The live board, 2026-11-22 05:58 UTC: SELL OLD, old token 7.3% above the swap. Raw stream: <code>docs/proof/landing/</code>.</figcaption>
@@ -425,10 +326,10 @@ footer nav { display: flex; gap: 18px; flex-wrap: wrap; }
                    (CLEAR) and undergone a 1:1 swap…"
 <span class="p">  61ms reader      qwen4-max · cached read</span>
 <span class="p">  61ms proposal #1 CLEAR · 0x5200…0e00 · 1:1</span>
-<span class="ok"> 126ms verify   C2 ✓ = CMC's CLEAR, id 42884</span>
-<span class="ok"> 425ms market   C5 ✓ CPOOL $1,385,625 / 24 h</span>
-<span class="ok"> 456ms market   C5 ✓ CLEAR $603,140 / 24 h</span>
-<span class="ok"> 457ms ratio    C4 ✓ 1.04342 vs 1 → confirms</span>
+<span class="ok"> 126ms verify   C2 ok = CMC's CLEAR, id 42884</span>
+<span class="ok"> 425ms market   C5 ok CPOOL $1,385,625 / 24 h</span>
+<span class="ok"> 456ms market   C5 ok CLEAR $603,140 / 24 h</span>
+<span class="ok"> 457ms ratio    C4 ok 1.04342 vs 1 → confirms</span>
 <span class="c"> 457ms verdict  R8 SELL_OLD · old +15.7%</span>
       8 CMC credits · 2026-11-22T03:49:23Z</pre>
       </div>
@@ -436,27 +337,27 @@ footer nav { display: flex; gap: 18px; flex-wrap: wrap; }
   </div>
 </section>
 
-<section class="s why" id="why" aria-labelledby="why-h">
+<section class="s" id="why" aria-labelledby="why-h">
   <div class="wrap">
     <h2 id="why-h">No endpoint returns “CPOOL became CLEAR, 1:1”.</h2>
     <p class="sub">CMC knows the coin migrated. It says so in prose. Turning that paragraph into a decision takes a reader, and a checker that does not trust the reader.</p>
     <div class="flow">
-      <div><span class="step-n">Stop 01</span><svg class="ico" viewBox="0 0 40 40" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M6 10h28M6 17h28M6 24h18M6 31h24"/></svg><h3>One API call returns prose</h3><p class="who">GET /v2/cryptocurrency/info?aux=notice</p>
+      <div><span class="stop">Stop 01</span><svg class="ico" viewBox="0 0 40 40" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" aria-hidden="true"><path d="M7 10h26M7 16h26M7 22h17M7 28h22"/></svg><h3>One API call returns prose</h3><p class="who">GET /v2/cryptocurrency/info?aux=notice</p>
         <p class="json"><span class="k">"notice":</span> "Clearpool (CPOOL) has rebranded to Clearpool (CLEAR) and undergone a 1:1 swap from the [old contract](https://etherscan.io/token/0x6676…fac5) to [new contract](https://etherscan.io/token/0x5200…0e00)…"</p></div>
-      <div><span class="step-n">Stop 02</span><svg class="ico" viewBox="0 0 40 40" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M7 11h11v11h-5l-5 6v-6H7zM22 11h11v11h-5l-5 6v-6h-1z"/></svg><h3>The Reader proposes</h3><p class="who">qwen4-max · tool loop · every field quoted</p>
+      <div><span class="stop">Stop 02</span><svg class="ico" viewBox="0 0 40 40" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M7 11h12v11h-5l-5 6v-6H7zM22 11h11v11h-5l-5 6v-6h-1z"/></svg><h3>The Reader proposes</h3><p class="who">qwen4-max · tool loop · every field quoted</p>
         <ul>
-          <li><span class="lamp prop" aria-hidden="true"></span><span>successor <b>CLEAR</b><q>rebranded to Clearpool (CLEAR)</q></span></li>
-          <li><span class="lamp prop" aria-hidden="true"></span><span>contract <b class="mono">0x5200…0e00</b><q>new contract</q></span></li>
-          <li><span class="lamp prop" aria-hidden="true"></span><span>ratio <b>1 new per old</b><q>undergone a 1:1 swap</q></span></li>
+          <li><span class="ct-lamp after" aria-hidden="true"></span><span>successor <b>CLEAR</b><q>rebranded to Clearpool (CLEAR)</q></span></li>
+          <li><span class="ct-lamp after" aria-hidden="true"></span><span>contract <b>0x5200…0e00</b><q>new contract</q></span></li>
+          <li><span class="ct-lamp after" aria-hidden="true"></span><span>ratio <b>1 new per old</b><q>undergone a 1:1 swap</q></span></li>
         </ul></div>
-      <div><span class="step-n">Stop 03</span><svg class="ico" viewBox="0 0 40 40" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="6" y="6" width="28" height="28" rx="3"/><path d="M13 20l5 5 9-10"/></svg><h3>Code checks</h3><p class="who">map · info · quotes · market-pairs · historical</p>
+      <div><span class="stop">Stop 03</span><svg class="ico" viewBox="0 0 40 40" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="12" r="4"/><circle cx="12" cy="28" r="4"/><path d="M20 12h13M20 28h13M10 12l1.5 1.5 3-3M10 28l1.5 1.5 3-3"/></svg><h3>Code checks</h3><p class="who">map · info · quotes · market-pairs · historical</p>
         <ul>
-          <li><span class="lamp ok" aria-hidden="true"></span><span><b>C2</b> the contract equals CMC's row for CLEAR, id 42884</span></li>
-          <li><span class="lamp ok" aria-hidden="true"></span><span><b>C4</b> old/new = 1.04342 on 2026-11-19, stated 1</span></li>
-          <li><span class="lamp ok" aria-hidden="true"></span><span><b>C5</b> both tokens still trade</span></li>
+          <li><span class="ct-lamp lit" aria-hidden="true"></span><span><b>C2</b> the contract equals CMC's row for CLEAR, id 42884</span></li>
+          <li><span class="ct-lamp lit" aria-hidden="true"></span><span><b>C4</b> old/new = 1.04342 on 2026-11-19, stated 1</span></li>
+          <li><span class="ct-lamp lit" aria-hidden="true"></span><span><b>C5</b> both tokens still trade</span></li>
         </ul></div>
-      <div><span class="step-n">Stop 04</span><svg class="ico" viewBox="0 0 40 40" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="5" y="8" width="30" height="24" rx="2"/><path d="M5 16h30M5 24h30M15 8v24"/></svg><h3>Successor returns a verdict</h3><p class="who">successor/verify/verdict.py · R1–R10</p>
-        <p class="stamp">Sell<br>old</p><p class="who" style="margin:0">R8 · old worth 15.7% more than the swap</p></div>
+      <div><span class="stop">Stop 04</span><svg class="ico" viewBox="0 0 40 40" fill="none" stroke="currentColor" stroke-width="1.6" aria-hidden="true"><path d="M12 34V14a8 8 0 0 1 16 0v20M10 34h20"/><path d="M15 21h10" stroke-linecap="round"/></svg><h3>Successor returns a verdict</h3><p class="who">successor/verify/verdict.py · R1–R10</p>
+        <p class="struck">Sell old</p><p class="who">R8 · old worth 15.7% more than the swap</p></div>
     </div>
 
     <div class="agix">
@@ -464,12 +365,12 @@ footer nav { display: flex; gap: 18px; flex-wrap: wrap; }
         <h3>When the notice won't say, the agent goes and reads.</h3>
         <p>AGIX's notice states no ratio. The Reader opens <code>fetch.ai</code>, a host CMC lists for the coin, and reads <b>0.43335</b>. Code checks it against CMC prices on 2024-07-01: <b>0.430753</b>, within 0.6%. Verdict: SWAP, if the issuer's swap is still open.</p>
         <div class="vs">
-          <div><strong>$5,924.93</strong><span>10,000 AGIX on a tracker</span></div>
+          <div><strong class="x">$5,924.93</strong><span>10,000 AGIX on a tracker</span></div>
           <div><strong>$463.42</strong><span>the same coins swapped to FET</span></div>
         </div>
-        <p class="note">CMC quotes, 2026-11-22 03:49 UTC. Raw stream: <code>docs/proof/assets/lookup-AGIX-…ndjson</code>.</p>
+        <p class="small">CMC quotes, 2026-11-22 03:49 UTC. Raw stream: <code>docs/proof/assets/lookup-AGIX-…ndjson</code>.</p>
       </div>
-      <figure class="browser" style="margin:0">
+      <figure class="browser">
         <div class="bar" aria-hidden="true"><i></i><i></i><i></i><span>successor.edycu.dev/?q=AGIX</span></div>
         <img src="/assets/shot-agix.webp" width="1626" height="1004" loading="lazy" alt="The live Successor board after an AGIX lookup: AGIX flaps to FET, verdict SWAP if the issuer's swap is still open, the notice linking fetch.ai, and the checks with the old market marked stale (captured 2026-11-22 05:58 UTC).">
       </figure>
@@ -479,20 +380,19 @@ footer nav { display: flex; gap: 18px; flex-wrap: wrap; }
 
 <section class="s" id="guards" aria-labelledby="guards-h">
   <div class="wrap">
-    <p class="eyebrow">Signals · the guards</p>
     <h2 id="guards-h">What the code refuses to do.</h2>
     <p class="sub">The model reads; it never rules. Each refusal below is a named test in the repo.</p>
     <div class="refusals" role="list">
       <div class="rf" role="listitem"><span class="n" aria-hidden="true">01</span><div><h3>One hex digit off is refuted, never repaired</h3><p>A Reader that mistypes a contract cannot talk the code into a verdict.</p></div>
-        <div class="demo"><span><i class="lamp ok" aria-hidden="true"></i>0x5200f539…5e550e00</span><span><i class="lamp bad" aria-hidden="true"></i><s>0x5200f539…5e550e0<mark>1</mark></s></span></div><code class="chip">test_successor_c2.py</code></div>
+        <div class="demo"><span><i class="ct-lamp lit" aria-hidden="true"></i>0x5200f539…5e550e00</span><span><i class="ct-lamp refused" aria-hidden="true"></i><s>0x5200f539…5e550e0<mark>1</mark></s></span></div><code class="ct-chip">test_successor_c2.py</code></div>
       <div class="rf" role="listitem"><span class="n" aria-hidden="true">02</span><div><h3>SWAP needs both proofs</h3><p>A successor verified against CMC's data and a price-confirmed ratio, for every combination of check results.</p></div>
-        <div class="demo"><span><i class="lamp ok" aria-hidden="true"></i>contract</span><span><i class="lamp prop" aria-hidden="true"></i>ratio unconfirmed → no SWAP</span></div><code class="chip">test_never_swap_on_fail.py</code></div>
+        <div class="demo"><span><i class="ct-lamp lit" aria-hidden="true"></i>contract</span><span><i class="ct-lamp after" aria-hidden="true"></i>ratio unconfirmed → no SWAP</span></div><code class="ct-chip">test_never_swap_on_fail.py</code></div>
       <div class="rf" role="listitem"><span class="n" aria-hidden="true">03</span><div><h3>Injection test case: verdict kept</h3><p>Eval case 10: a hand-made notice that tries to instruct the model, replayed offline over recorded CMC rows and the Reader's recorded output, still gets the checked verdict from the table.</p></div>
-        <div class="demo"><span><i class="lamp bad" aria-hidden="true"></i>instructions in the notice</span><span><i class="lamp ok" aria-hidden="true"></i>verdict from R1–R10 only</span></div><code class="chip">eval case 10 · injection</code></div>
+        <div class="demo"><span><i class="ct-lamp refused" aria-hidden="true"></i>instructions in the notice</span><span><i class="ct-lamp lit" aria-hidden="true"></i>verdict from R1–R10 only</span></div><code class="ct-chip">eval case 10 · injection</code></div>
       <div class="rf" role="listitem"><span class="n" aria-hidden="true">04</span><div><h3>Links stay on CMC's map</h3><p><code>follow_link</code> opens only hosts CMC lists for the coin or its successor.</p></div>
-        <div class="demo"><span><i class="lamp ok" aria-hidden="true"></i>fetch.ai · listed by CMC</span><span><i class="lamp bad" aria-hidden="true"></i>private address · refused</span></div><code class="chip">test_fetch_link.py</code></div>
+        <div class="demo"><span><i class="ct-lamp lit" aria-hidden="true"></i>fetch.ai · listed by CMC</span><span><i class="ct-lamp refused" aria-hidden="true"></i>private address · refused</span></div><code class="ct-chip">test_fetch_link.py</code></div>
       <div class="rf" role="listitem"><span class="n" aria-hidden="true">05</span><div><h3>Silence is not an answer</h3><p>A hung upstream ends the stream with an error event after a hard 55 s cancel.</p></div>
-        <div class="demo"><span><i class="lamp bad" aria-hidden="true"></i>55 s → error event</span></div><code class="chip">test_flow_guards.py</code></div>
+        <div class="demo"><span><i class="ct-lamp refused" aria-hidden="true"></i>55 s → error event</span></div><code class="ct-chip">test_flow_guards.py</code></div>
     </div>
     <p class="capline">evals: 10/10 counted cases + 4/4 variants, replayed offline on saved CMC rows, misreads included · scripts/run_evals.py</p>
   </div>
@@ -500,15 +400,15 @@ footer nav { display: flex; gap: 18px; flex-wrap: wrap; }
 
 <section class="s census" id="census" aria-labelledby="census-h">
   <div class="wrap">
-    <p class="eyebrow">Timetable · the census</p>
+    <p class="ct-eyebrow">The census</p>
     <h2 id="census-h">Every notice in the top 2000, looked up.</h2>
-    <p class="sub">The real lookup flow, run on all 161 coins that carry a notice. One tile per coin.</p>
+    <p class="sub">The real lookup flow, run on all 161 coins that carry a notice. One tick per coin.</p>
     <div class="rows" role="list">
-      <div class="crow" role="listitem"><div class="flaps" data-board="NOT VERIFIABLE" style="--n:14"><span class="t"><b>N</b></span><span class="t"><b>O</b></span><span class="t"><b>T</b></span><span class="t blank"><b>&nbsp;</b></span><span class="t"><b>V</b></span><span class="t"><b>E</b></span><span class="t"><b>R</b></span><span class="t"><b>I</b></span><span class="t"><b>F</b></span><span class="t"><b>I</b></span><span class="t"><b>A</b></span><span class="t"><b>B</b></span><span class="t"><b>L</b></span><span class="t"><b>E</b></span></div><span class="count">130</span><svg class="units" viewBox="0 0 612 96" width="612" height="96" aria-hidden="true"><rect x="0" y="5" width="13" height="11" rx="1.5" fill="#2E2A23"/><rect x="0" y="10" width="13" height="1.5" fill="#0D0C0A"/><rect x="17" y="5" width="13" height="11" rx="1.5" fill="#2E2A23"/><rect x="17" y="10" width="13" height="1.5" fill="#0D0C0A"/><rect x="34" y="5" width="13" height="11" rx="1.5" fill="#2E2A23"/><rect x="34" y="10" width="13" height="1.5" fill="#0D0C0A"/><rect x="51" y="5" width="13" height="11" rx="1.5" fill="#2E2A23"/><rect x="51" y="10" width="13" height="1.5" fill="#0D0C0A"/><rect x="68" y="5" width="13" height="11" rx="1.5" fill="#2E2A23"/><rect x="68" y="10" width="13" height="1.5" fill="#0D0C0A"/><rect x="85" y="5" width="13" height="11" rx="1.5" fill="#2E2A23"/><rect x="85" y="10" width="13" height="1.5" fill="#0D0C0A"/><rect x="102" y="5" width="13" height="11" rx="1.5" fill="#2E2A23"/><rect x="102" y="10" width="13" height="1.5" fill="#0D0C0A"/><rect x="119" y="5" width="13" height="11" rx="1.5" fill="#2E2A23"/><rect x="119" y="10" width="13" height="1.5" fill="#0D0C0A"/><rect x="136" y="5" width="13" height="11" rx="1.5" fill="#2E2A23"/><rect x="136" y="10" width="13" height="1.5" fill="#0D0C0A"/><rect x="153" y="5" width="13" height="11" rx="1.5" fill="#2E2A23"/><rect x="153" y="10" width="13" height="1.5" fill="#0D0C0A"/><rect x="170" y="5" width="13" height="11" rx="1.5" fill="#2E2A23"/><rect x="170" y="10" width="13" height="1.5" fill="#0D0C0A"/><rect x="187" y="5" width="13" height="11" rx="1.5" fill="#2E2A23"/><rect x="187" y="10" width="13" height="1.5" fill="#0D0C0A"/><rect x="204" y="5" width="13" height="11" rx="1.5" fill="#2E2A23"/><rect x="204" y="10" width="13" height="1.5" fill="#0D0C0A"/><rect x="221" y="5" width="13" height="11" rx="1.5" fill="#2E2A23"/><rect x="221" y="10" width="13" height="1.5" fill="#0D0C0A"/><rect x="238" y="5" width="13" height="11" rx="1.5" fill="#2E2A23"/><rect x="238" y="10" width="13" height="1.5" fill="#0D0C0A"/><rect x="255" y="5" width="13" height="11" rx="1.5" fill="#2E2A23"/><rect x="255" y="10" width="13" height="1.5" fill="#0D0C0A"/><rect x="272" y="5" width="13" height="11" rx="1.5" fill="#2E2A23"/><rect x="272" y="10" width="13" height="1.5" fill="#0D0C0A"/><rect x="289" y="5" width="13" height="11" rx="1.5" fill="#2E2A23"/><rect x="289" y="10" width="13" height="1.5" fill="#0D0C0A"/><rect x="306" y="5" width="13" height="11" rx="1.5" fill="#2E2A23"/><rect x="306" y="10" width="13" height="1.5" fill="#0D0C0A"/><rect x="323" y="5" width="13" height="11" rx="1.5" fill="#2E2A23"/><rect x="323" y="10" width="13" height="1.5" fill="#0D0C0A"/><rect x="340" y="5" width="13" height="11" rx="1.5" fill="#2E2A23"/><rect x="340" y="10" width="13" height="1.5" fill="#0D0C0A"/><rect x="357" y="5" width="13" height="11" rx="1.5" fill="#2E2A23"/><rect x="357" y="10" width="13" height="1.5" fill="#0D0C0A"/><rect x="374" y="5" width="13" height="11" rx="1.5" fill="#2E2A23"/><rect x="374" y="10" width="13" height="1.5" fill="#0D0C0A"/><rect x="391" y="5" width="13" height="11" rx="1.5" fill="#2E2A23"/><rect x="391" y="10" width="13" height="1.5" fill="#0D0C0A"/><rect x="408" y="5" width="13" height="11" rx="1.5" fill="#2E2A23"/><rect x="408" y="10" width="13" height="1.5" fill="#0D0C0A"/><rect x="425" y="5" width="13" height="11" rx="1.5" fill="#2E2A23"/><rect x="425" y="10" width="13" height="1.5" fill="#0D0C0A"/><rect x="442" y="5" width="13" height="11" rx="1.5" fill="#2E2A23"/><rect x="442" y="10" width="13" height="1.5" fill="#0D0C0A"/><rect x="459" y="5" width="13" height="11" rx="1.5" fill="#2E2A23"/><rect x="459" y="10" width="13" height="1.5" fill="#0D0C0A"/><rect x="476" y="5" width="13" height="11" rx="1.5" fill="#2E2A23"/><rect x="476" y="10" width="13" height="1.5" fill="#0D0C0A"/><rect x="493" y="5" width="13" height="11" rx="1.5" fill="#2E2A23"/><rect x="493" y="10" width="13" height="1.5" fill="#0D0C0A"/><rect x="510" y="5" width="13" height="11" rx="1.5" fill="#2E2A23"/><rect x="510" y="10" width="13" height="1.5" fill="#0D0C0A"/><rect x="527" y="5" width="13" height="11" rx="1.5" fill="#2E2A23"/><rect x="527" y="10" width="13" height="1.5" fill="#0D0C0A"/><rect x="544" y="5" width="13" height="11" rx="1.5" fill="#2E2A23"/><rect x="544" y="10" width="13" height="1.5" fill="#0D0C0A"/><rect x="561" y="5" width="13" height="11" rx="1.5" fill="#2E2A23"/><rect x="561" y="10" width="13" height="1.5" fill="#0D0C0A"/><rect x="578" y="5" width="13" height="11" rx="1.5" fill="#2E2A23"/><rect x="578" y="10" width="13" height="1.5" fill="#0D0C0A"/><rect x="595" y="5" width="13" height="11" rx="1.5" fill="#2E2A23"/><rect x="595" y="10" width="13" height="1.5" fill="#0D0C0A"/><rect x="0" y="29" width="13" height="11" rx="1.5" fill="#2E2A23"/><rect x="0" y="34" width="13" height="1.5" fill="#0D0C0A"/><rect x="17" y="29" width="13" height="11" rx="1.5" fill="#2E2A23"/><rect x="17" y="34" width="13" height="1.5" fill="#0D0C0A"/><rect x="34" y="29" width="13" height="11" rx="1.5" fill="#2E2A23"/><rect x="34" y="34" width="13" height="1.5" fill="#0D0C0A"/><rect x="51" y="29" width="13" height="11" rx="1.5" fill="#2E2A23"/><rect x="51" y="34" width="13" height="1.5" fill="#0D0C0A"/><rect x="68" y="29" width="13" height="11" rx="1.5" fill="#2E2A23"/><rect x="68" y="34" width="13" height="1.5" fill="#0D0C0A"/><rect x="85" y="29" width="13" height="11" rx="1.5" fill="#2E2A23"/><rect x="85" y="34" width="13" height="1.5" fill="#0D0C0A"/><rect x="102" y="29" width="13" height="11" rx="1.5" fill="#2E2A23"/><rect x="102" y="34" width="13" height="1.5" fill="#0D0C0A"/><rect x="119" y="29" width="13" height="11" rx="1.5" fill="#2E2A23"/><rect x="119" y="34" width="13" height="1.5" fill="#0D0C0A"/><rect x="136" y="29" width="13" height="11" rx="1.5" fill="#2E2A23"/><rect x="136" y="34" width="13" height="1.5" fill="#0D0C0A"/><rect x="153" y="29" width="13" height="11" rx="1.5" fill="#2E2A23"/><rect x="153" y="34" width="13" height="1.5" fill="#0D0C0A"/><rect x="170" y="29" width="13" height="11" rx="1.5" fill="#2E2A23"/><rect x="170" y="34" width="13" height="1.5" fill="#0D0C0A"/><rect x="187" y="29" width="13" height="11" rx="1.5" fill="#2E2A23"/><rect x="187" y="34" width="13" height="1.5" fill="#0D0C0A"/><rect x="204" y="29" width="13" height="11" rx="1.5" fill="#2E2A23"/><rect x="204" y="34" width="13" height="1.5" fill="#0D0C0A"/><rect x="221" y="29" width="13" height="11" rx="1.5" fill="#2E2A23"/><rect x="221" y="34" width="13" height="1.5" fill="#0D0C0A"/><rect x="238" y="29" width="13" height="11" rx="1.5" fill="#2E2A23"/><rect x="238" y="34" width="13" height="1.5" fill="#0D0C0A"/><rect x="255" y="29" width="13" height="11" rx="1.5" fill="#2E2A23"/><rect x="255" y="34" width="13" height="1.5" fill="#0D0C0A"/><rect x="272" y="29" width="13" height="11" rx="1.5" fill="#2E2A23"/><rect x="272" y="34" width="13" height="1.5" fill="#0D0C0A"/><rect x="289" y="29" width="13" height="11" rx="1.5" fill="#2E2A23"/><rect x="289" y="34" width="13" height="1.5" fill="#0D0C0A"/><rect x="306" y="29" width="13" height="11" rx="1.5" fill="#2E2A23"/><rect x="306" y="34" width="13" height="1.5" fill="#0D0C0A"/><rect x="323" y="29" width="13" height="11" rx="1.5" fill="#2E2A23"/><rect x="323" y="34" width="13" height="1.5" fill="#0D0C0A"/><rect x="340" y="29" width="13" height="11" rx="1.5" fill="#2E2A23"/><rect x="340" y="34" width="13" height="1.5" fill="#0D0C0A"/><rect x="357" y="29" width="13" height="11" rx="1.5" fill="#2E2A23"/><rect x="357" y="34" width="13" height="1.5" fill="#0D0C0A"/><rect x="374" y="29" width="13" height="11" rx="1.5" fill="#2E2A23"/><rect x="374" y="34" width="13" height="1.5" fill="#0D0C0A"/><rect x="391" y="29" width="13" height="11" rx="1.5" fill="#2E2A23"/><rect x="391" y="34" width="13" height="1.5" fill="#0D0C0A"/><rect x="408" y="29" width="13" height="11" rx="1.5" fill="#2E2A23"/><rect x="408" y="34" width="13" height="1.5" fill="#0D0C0A"/><rect x="425" y="29" width="13" height="11" rx="1.5" fill="#2E2A23"/><rect x="425" y="34" width="13" height="1.5" fill="#0D0C0A"/><rect x="442" y="29" width="13" height="11" rx="1.5" fill="#2E2A23"/><rect x="442" y="34" width="13" height="1.5" fill="#0D0C0A"/><rect x="459" y="29" width="13" height="11" rx="1.5" fill="#2E2A23"/><rect x="459" y="34" width="13" height="1.5" fill="#0D0C0A"/><rect x="476" y="29" width="13" height="11" rx="1.5" fill="#2E2A23"/><rect x="476" y="34" width="13" height="1.5" fill="#0D0C0A"/><rect x="493" y="29" width="13" height="11" rx="1.5" fill="#2E2A23"/><rect x="493" y="34" width="13" height="1.5" fill="#0D0C0A"/><rect x="510" y="29" width="13" height="11" rx="1.5" fill="#2E2A23"/><rect x="510" y="34" width="13" height="1.5" fill="#0D0C0A"/><rect x="527" y="29" width="13" height="11" rx="1.5" fill="#2E2A23"/><rect x="527" y="34" width="13" height="1.5" fill="#0D0C0A"/><rect x="544" y="29" width="13" height="11" rx="1.5" fill="#2E2A23"/><rect x="544" y="34" width="13" height="1.5" fill="#0D0C0A"/><rect x="561" y="29" width="13" height="11" rx="1.5" fill="#2E2A23"/><rect x="561" y="34" width="13" height="1.5" fill="#0D0C0A"/><rect x="578" y="29" width="13" height="11" rx="1.5" fill="#2E2A23"/><rect x="578" y="34" width="13" height="1.5" fill="#0D0C0A"/><rect x="595" y="29" width="13" height="11" rx="1.5" fill="#2E2A23"/><rect x="595" y="34" width="13" height="1.5" fill="#0D0C0A"/><rect x="0" y="53" width="13" height="11" rx="1.5" fill="#2E2A23"/><rect x="0" y="58" width="13" height="1.5" fill="#0D0C0A"/><rect x="17" y="53" width="13" height="11" rx="1.5" fill="#2E2A23"/><rect x="17" y="58" width="13" height="1.5" fill="#0D0C0A"/><rect x="34" y="53" width="13" height="11" rx="1.5" fill="#2E2A23"/><rect x="34" y="58" width="13" height="1.5" fill="#0D0C0A"/><rect x="51" y="53" width="13" height="11" rx="1.5" fill="#2E2A23"/><rect x="51" y="58" width="13" height="1.5" fill="#0D0C0A"/><rect x="68" y="53" width="13" height="11" rx="1.5" fill="#2E2A23"/><rect x="68" y="58" width="13" height="1.5" fill="#0D0C0A"/><rect x="85" y="53" width="13" height="11" rx="1.5" fill="#2E2A23"/><rect x="85" y="58" width="13" height="1.5" fill="#0D0C0A"/><rect x="102" y="53" width="13" height="11" rx="1.5" fill="#2E2A23"/><rect x="102" y="58" width="13" height="1.5" fill="#0D0C0A"/><rect x="119" y="53" width="13" height="11" rx="1.5" fill="#2E2A23"/><rect x="119" y="58" width="13" height="1.5" fill="#0D0C0A"/><rect x="136" y="53" width="13" height="11" rx="1.5" fill="#2E2A23"/><rect x="136" y="58" width="13" height="1.5" fill="#0D0C0A"/><rect x="153" y="53" width="13" height="11" rx="1.5" fill="#2E2A23"/><rect x="153" y="58" width="13" height="1.5" fill="#0D0C0A"/><rect x="170" y="53" width="13" height="11" rx="1.5" fill="#2E2A23"/><rect x="170" y="58" width="13" height="1.5" fill="#0D0C0A"/><rect x="187" y="53" width="13" height="11" rx="1.5" fill="#2E2A23"/><rect x="187" y="58" width="13" height="1.5" fill="#0D0C0A"/><rect x="204" y="53" width="13" height="11" rx="1.5" fill="#2E2A23"/><rect x="204" y="58" width="13" height="1.5" fill="#0D0C0A"/><rect x="221" y="53" width="13" height="11" rx="1.5" fill="#2E2A23"/><rect x="221" y="58" width="13" height="1.5" fill="#0D0C0A"/><rect x="238" y="53" width="13" height="11" rx="1.5" fill="#2E2A23"/><rect x="238" y="58" width="13" height="1.5" fill="#0D0C0A"/><rect x="255" y="53" width="13" height="11" rx="1.5" fill="#2E2A23"/><rect x="255" y="58" width="13" height="1.5" fill="#0D0C0A"/><rect x="272" y="53" width="13" height="11" rx="1.5" fill="#2E2A23"/><rect x="272" y="58" width="13" height="1.5" fill="#0D0C0A"/><rect x="289" y="53" width="13" height="11" rx="1.5" fill="#2E2A23"/><rect x="289" y="58" width="13" height="1.5" fill="#0D0C0A"/><rect x="306" y="53" width="13" height="11" rx="1.5" fill="#2E2A23"/><rect x="306" y="58" width="13" height="1.5" fill="#0D0C0A"/><rect x="323" y="53" width="13" height="11" rx="1.5" fill="#2E2A23"/><rect x="323" y="58" width="13" height="1.5" fill="#0D0C0A"/><rect x="340" y="53" width="13" height="11" rx="1.5" fill="#2E2A23"/><rect x="340" y="58" width="13" height="1.5" fill="#0D0C0A"/><rect x="357" y="53" width="13" height="11" rx="1.5" fill="#2E2A23"/><rect x="357" y="58" width="13" height="1.5" fill="#0D0C0A"/><rect x="374" y="53" width="13" height="11" rx="1.5" fill="#2E2A23"/><rect x="374" y="58" width="13" height="1.5" fill="#0D0C0A"/><rect x="391" y="53" width="13" height="11" rx="1.5" fill="#2E2A23"/><rect x="391" y="58" width="13" height="1.5" fill="#0D0C0A"/><rect x="408" y="53" width="13" height="11" rx="1.5" fill="#2E2A23"/><rect x="408" y="58" width="13" height="1.5" fill="#0D0C0A"/><rect x="425" y="53" width="13" height="11" rx="1.5" fill="#2E2A23"/><rect x="425" y="58" width="13" height="1.5" fill="#0D0C0A"/><rect x="442" y="53" width="13" height="11" rx="1.5" fill="#2E2A23"/><rect x="442" y="58" width="13" height="1.5" fill="#0D0C0A"/><rect x="459" y="53" width="13" height="11" rx="1.5" fill="#2E2A23"/><rect x="459" y="58" width="13" height="1.5" fill="#0D0C0A"/><rect x="476" y="53" width="13" height="11" rx="1.5" fill="#2E2A23"/><rect x="476" y="58" width="13" height="1.5" fill="#0D0C0A"/><rect x="493" y="53" width="13" height="11" rx="1.5" fill="#2E2A23"/><rect x="493" y="58" width="13" height="1.5" fill="#0D0C0A"/><rect x="510" y="53" width="13" height="11" rx="1.5" fill="#2E2A23"/><rect x="510" y="58" width="13" height="1.5" fill="#0D0C0A"/><rect x="527" y="53" width="13" height="11" rx="1.5" fill="#2E2A23"/><rect x="527" y="58" width="13" height="1.5" fill="#0D0C0A"/><rect x="544" y="53" width="13" height="11" rx="1.5" fill="#2E2A23"/><rect x="544" y="58" width="13" height="1.5" fill="#0D0C0A"/><rect x="561" y="53" width="13" height="11" rx="1.5" fill="#2E2A23"/><rect x="561" y="58" width="13" height="1.5" fill="#0D0C0A"/><rect x="578" y="53" width="13" height="11" rx="1.5" fill="#2E2A23"/><rect x="578" y="58" width="13" height="1.5" fill="#0D0C0A"/><rect x="595" y="53" width="13" height="11" rx="1.5" fill="#2E2A23"/><rect x="595" y="58" width="13" height="1.5" fill="#0D0C0A"/><rect x="0" y="77" width="13" height="11" rx="1.5" fill="#2E2A23"/><rect x="0" y="82" width="13" height="1.5" fill="#0D0C0A"/><rect x="17" y="77" width="13" height="11" rx="1.5" fill="#2E2A23"/><rect x="17" y="82" width="13" height="1.5" fill="#0D0C0A"/><rect x="34" y="77" width="13" height="11" rx="1.5" fill="#2E2A23"/><rect x="34" y="82" width="13" height="1.5" fill="#0D0C0A"/><rect x="51" y="77" width="13" height="11" rx="1.5" fill="#2E2A23"/><rect x="51" y="82" width="13" height="1.5" fill="#0D0C0A"/><rect x="68" y="77" width="13" height="11" rx="1.5" fill="#2E2A23"/><rect x="68" y="82" width="13" height="1.5" fill="#0D0C0A"/><rect x="85" y="77" width="13" height="11" rx="1.5" fill="#2E2A23"/><rect x="85" y="82" width="13" height="1.5" fill="#0D0C0A"/><rect x="102" y="77" width="13" height="11" rx="1.5" fill="#2E2A23"/><rect x="102" y="82" width="13" height="1.5" fill="#0D0C0A"/><rect x="119" y="77" width="13" height="11" rx="1.5" fill="#2E2A23"/><rect x="119" y="82" width="13" height="1.5" fill="#0D0C0A"/><rect x="136" y="77" width="13" height="11" rx="1.5" fill="#2E2A23"/><rect x="136" y="82" width="13" height="1.5" fill="#0D0C0A"/><rect x="153" y="77" width="13" height="11" rx="1.5" fill="#2E2A23"/><rect x="153" y="82" width="13" height="1.5" fill="#0D0C0A"/><rect x="170" y="77" width="13" height="11" rx="1.5" fill="#2E2A23"/><rect x="170" y="82" width="13" height="1.5" fill="#0D0C0A"/><rect x="187" y="77" width="13" height="11" rx="1.5" fill="#2E2A23"/><rect x="187" y="82" width="13" height="1.5" fill="#0D0C0A"/><rect x="204" y="77" width="13" height="11" rx="1.5" fill="#2E2A23"/><rect x="204" y="82" width="13" height="1.5" fill="#0D0C0A"/><rect x="221" y="77" width="13" height="11" rx="1.5" fill="#2E2A23"/><rect x="221" y="82" width="13" height="1.5" fill="#0D0C0A"/><rect x="238" y="77" width="13" height="11" rx="1.5" fill="#2E2A23"/><rect x="238" y="82" width="13" height="1.5" fill="#0D0C0A"/><rect x="255" y="77" width="13" height="11" rx="1.5" fill="#2E2A23"/><rect x="255" y="82" width="13" height="1.5" fill="#0D0C0A"/><rect x="272" y="77" width="13" height="11" rx="1.5" fill="#2E2A23"/><rect x="272" y="82" width="13" height="1.5" fill="#0D0C0A"/><rect x="289" y="77" width="13" height="11" rx="1.5" fill="#2E2A23"/><rect x="289" y="82" width="13" height="1.5" fill="#0D0C0A"/><rect x="306" y="77" width="13" height="11" rx="1.5" fill="#2E2A23"/><rect x="306" y="82" width="13" height="1.5" fill="#0D0C0A"/><rect x="323" y="77" width="13" height="11" rx="1.5" fill="#2E2A23"/><rect x="323" y="82" width="13" height="1.5" fill="#0D0C0A"/><rect x="340" y="77" width="13" height="11" rx="1.5" fill="#2E2A23"/><rect x="340" y="82" width="13" height="1.5" fill="#0D0C0A"/><rect x="357" y="77" width="13" height="11" rx="1.5" fill="#2E2A23"/><rect x="357" y="82" width="13" height="1.5" fill="#0D0C0A"/></svg></div>
-      <div class="crow" role="listitem"><div class="flaps" data-board="NOTHING TO DO" style="--n:14"><span class="t"><b>N</b></span><span class="t"><b>O</b></span><span class="t"><b>T</b></span><span class="t"><b>H</b></span><span class="t"><b>I</b></span><span class="t"><b>N</b></span><span class="t"><b>G</b></span><span class="t blank"><b>&nbsp;</b></span><span class="t"><b>T</b></span><span class="t"><b>O</b></span><span class="t blank"><b>&nbsp;</b></span><span class="t"><b>D</b></span><span class="t"><b>O</b></span><span class="t blank"><b>&nbsp;</b></span></div><span class="count">26</span><svg class="units" viewBox="0 0 442 24" width="442" height="24" aria-hidden="true"><rect x="0" y="0" width="13" height="19" rx="2" fill="#24211C"/><rect x="0" y="9" width="13" height="1" fill="#0D0C0A"/><rect x="17" y="0" width="13" height="19" rx="2" fill="#24211C"/><rect x="17" y="9" width="13" height="1" fill="#0D0C0A"/><rect x="34" y="0" width="13" height="19" rx="2" fill="#24211C"/><rect x="34" y="9" width="13" height="1" fill="#0D0C0A"/><rect x="51" y="0" width="13" height="19" rx="2" fill="#24211C"/><rect x="51" y="9" width="13" height="1" fill="#0D0C0A"/><rect x="68" y="0" width="13" height="19" rx="2" fill="#24211C"/><rect x="68" y="9" width="13" height="1" fill="#0D0C0A"/><rect x="85" y="0" width="13" height="19" rx="2" fill="#24211C"/><rect x="85" y="9" width="13" height="1" fill="#0D0C0A"/><rect x="102" y="0" width="13" height="19" rx="2" fill="#24211C"/><rect x="102" y="9" width="13" height="1" fill="#0D0C0A"/><rect x="119" y="0" width="13" height="19" rx="2" fill="#24211C"/><rect x="119" y="9" width="13" height="1" fill="#0D0C0A"/><rect x="136" y="0" width="13" height="19" rx="2" fill="#24211C"/><rect x="136" y="9" width="13" height="1" fill="#0D0C0A"/><rect x="153" y="0" width="13" height="19" rx="2" fill="#24211C"/><rect x="153" y="9" width="13" height="1" fill="#0D0C0A"/><rect x="170" y="0" width="13" height="19" rx="2" fill="#24211C"/><rect x="170" y="9" width="13" height="1" fill="#0D0C0A"/><rect x="187" y="0" width="13" height="19" rx="2" fill="#24211C"/><rect x="187" y="9" width="13" height="1" fill="#0D0C0A"/><rect x="204" y="0" width="13" height="19" rx="2" fill="#24211C"/><rect x="204" y="9" width="13" height="1" fill="#0D0C0A"/><rect x="221" y="0" width="13" height="19" rx="2" fill="#24211C"/><rect x="221" y="9" width="13" height="1" fill="#0D0C0A"/><rect x="238" y="0" width="13" height="19" rx="2" fill="#24211C"/><rect x="238" y="9" width="13" height="1" fill="#0D0C0A"/><rect x="255" y="0" width="13" height="19" rx="2" fill="#24211C"/><rect x="255" y="9" width="13" height="1" fill="#0D0C0A"/><rect x="272" y="0" width="13" height="19" rx="2" fill="#24211C"/><rect x="272" y="9" width="13" height="1" fill="#0D0C0A"/><rect x="289" y="0" width="13" height="19" rx="2" fill="#24211C"/><rect x="289" y="9" width="13" height="1" fill="#0D0C0A"/><rect x="306" y="0" width="13" height="19" rx="2" fill="#24211C"/><rect x="306" y="9" width="13" height="1" fill="#0D0C0A"/><rect x="323" y="0" width="13" height="19" rx="2" fill="#24211C"/><rect x="323" y="9" width="13" height="1" fill="#0D0C0A"/><rect x="340" y="0" width="13" height="19" rx="2" fill="#24211C"/><rect x="340" y="9" width="13" height="1" fill="#0D0C0A"/><rect x="357" y="0" width="13" height="19" rx="2" fill="#24211C"/><rect x="357" y="9" width="13" height="1" fill="#0D0C0A"/><rect x="374" y="0" width="13" height="19" rx="2" fill="#24211C"/><rect x="374" y="9" width="13" height="1" fill="#0D0C0A"/><rect x="391" y="0" width="13" height="19" rx="2" fill="#24211C"/><rect x="391" y="9" width="13" height="1" fill="#0D0C0A"/><rect x="408" y="0" width="13" height="19" rx="2" fill="#24211C"/><rect x="408" y="9" width="13" height="1" fill="#0D0C0A"/><rect x="425" y="0" width="13" height="19" rx="2" fill="#24211C"/><rect x="425" y="9" width="13" height="1" fill="#0D0C0A"/></svg></div>
-      <div class="crow" role="listitem"><div class="flaps" data-board="WRITE OFF" style="--n:14"><span class="t"><b>W</b></span><span class="t"><b>R</b></span><span class="t"><b>I</b></span><span class="t"><b>T</b></span><span class="t"><b>E</b></span><span class="t blank"><b>&nbsp;</b></span><span class="t"><b>O</b></span><span class="t"><b>F</b></span><span class="t"><b>F</b></span><span class="t blank"><b>&nbsp;</b></span><span class="t blank"><b>&nbsp;</b></span><span class="t blank"><b>&nbsp;</b></span><span class="t blank"><b>&nbsp;</b></span><span class="t blank"><b>&nbsp;</b></span></div><span class="count">3</span><svg class="units" viewBox="0 0 51 24" width="51" height="24" aria-hidden="true"><rect x="0" y="0" width="13" height="19" rx="2" fill="#24211C"/><rect x="0" y="9" width="13" height="1" fill="#0D0C0A"/><rect x="17" y="0" width="13" height="19" rx="2" fill="#24211C"/><rect x="17" y="9" width="13" height="1" fill="#0D0C0A"/><rect x="34" y="0" width="13" height="19" rx="2" fill="#24211C"/><rect x="34" y="9" width="13" height="1" fill="#0D0C0A"/></svg></div>
-      <div class="crow" role="listitem"><div class="flaps" data-board="SWAP" style="--n:14"><span class="t"><b>S</b></span><span class="t"><b>W</b></span><span class="t"><b>A</b></span><span class="t"><b>P</b></span><span class="t blank"><b>&nbsp;</b></span><span class="t blank"><b>&nbsp;</b></span><span class="t blank"><b>&nbsp;</b></span><span class="t blank"><b>&nbsp;</b></span><span class="t blank"><b>&nbsp;</b></span><span class="t blank"><b>&nbsp;</b></span><span class="t blank"><b>&nbsp;</b></span><span class="t blank"><b>&nbsp;</b></span><span class="t blank"><b>&nbsp;</b></span><span class="t blank"><b>&nbsp;</b></span></div><span class="count">2</span><svg class="units" viewBox="0 0 34 24" width="34" height="24" aria-hidden="true"><rect x="0" y="0" width="13" height="19" rx="2" fill="#EFE9DC"/><rect x="0" y="9" width="13" height="1" fill="#0D0C0A"/><rect x="17" y="0" width="13" height="19" rx="2" fill="#EFE9DC"/><rect x="17" y="9" width="13" height="1" fill="#0D0C0A"/></svg></div>
-      <div class="crow" role="listitem"><div class="flaps" data-board="SELL OLD" style="--n:14"><span class="t"><b>S</b></span><span class="t"><b>E</b></span><span class="t"><b>L</b></span><span class="t"><b>L</b></span><span class="t blank"><b>&nbsp;</b></span><span class="t"><b>O</b></span><span class="t"><b>L</b></span><span class="t"><b>D</b></span><span class="t blank"><b>&nbsp;</b></span><span class="t blank"><b>&nbsp;</b></span><span class="t blank"><b>&nbsp;</b></span><span class="t blank"><b>&nbsp;</b></span><span class="t blank"><b>&nbsp;</b></span><span class="t blank"><b>&nbsp;</b></span></div><span class="count">0</span><div class="units"><span class="zero">none in the census; CPOOL is a featured coin outside it</span></div></div>
+      <div class="crow" role="listitem"><span class="w">Not verifiable</span><span class="c">130</span><span class="ticks" data-n="130" aria-hidden="true"></span></div>
+      <div class="crow" role="listitem"><span class="w">Nothing to do</span><span class="c">26</span><span class="ticks" data-n="26" aria-hidden="true"></span></div>
+      <div class="crow" role="listitem"><span class="w">Write off</span><span class="c">3</span><span class="ticks" data-n="3" aria-hidden="true"></span></div>
+      <div class="crow" role="listitem"><span class="w">Swap</span><span class="c">2</span><span class="ticks" data-n="2" aria-hidden="true"></span></div>
+      <div class="crow" role="listitem"><span class="w">Sell old</span><span class="c">0</span><span class="zero">none in the census; CPOOL is a featured coin outside it</span></div>
     </div>
     <div class="why130">
       <div>
@@ -532,9 +432,9 @@ footer nav { display: flex; gap: 18px; flex-wrap: wrap; }
     <h2 id="honest-h">Honest by design.</h2>
     <p class="sub">Lifted from the README, where we list nine limits and what we got wrong.</p>
     <ol>
-      <li><blockquote>“Most notices end NOT VERIFIABLE (130 of 161, 2026-11-22).”<cite>— README · Honest limits 1</cite></blockquote></li>
-      <li><blockquote>“The Reader is slow. <code>qwen4-max</code> takes a median 8.6 s per call.”<cite>— README · Honest limits 3</cite></blockquote></li>
-      <li><blockquote>“We expected RZUSD to be WRITE OFF and then watched it flip when the old token traded again.”<cite>— README · What we got wrong</cite></blockquote></li>
+      <li><blockquote>“Most notices end NOT VERIFIABLE (130 of 161, 2026-11-22).”<cite>README · Honest limits 1</cite></blockquote></li>
+      <li><blockquote>“The Reader is slow. <code>qwen4-max</code> takes a median 8.6 s per call.”<cite>README · Honest limits 3</cite></blockquote></li>
+      <li><blockquote>“We expected RZUSD to be WRITE OFF and then watched it flip when the old token traded again.”<cite>README · What we got wrong</cite></blockquote></li>
     </ol>
   </div>
 </section>
@@ -542,7 +442,7 @@ footer nav { display: flex; gap: 18px; flex-wrap: wrap; }
 <section class="s faq" id="faq" aria-labelledby="faq-h">
   <div class="wrap">
     <div>
-      <p class="eyebrow">Information desk</p>
+      <p class="ct-eyebrow">Information desk</p>
       <h2 id="faq-h">Questions a judge would ask.</h2>
     </div>
     <div>
@@ -560,9 +460,9 @@ footer nav { display: flex; gap: 18px; flex-wrap: wrap; }
   <div class="wrap">
     <h2 id="final-h">Found an old coin? Ask the board.</h2>
     <form class="look" action="/" method="get" role="search">
-      <label class="skip" for="fq">Coin, slug or contract</label>
+      <label class="sr" for="fq">Coin, slug or contract</label>
       <input id="fq" name="q" placeholder="CPOOL, agix, or a contract address" autocomplete="off" spellcheck="false" maxlength="80">
-      <button class="btn primary" type="submit">Look it up</button>
+      <button class="ct-btn solid" type="submit">Look it up</button>
     </form>
   </div>
 </section>
@@ -571,95 +471,57 @@ footer nav { display: flex; gap: 18px; flex-wrap: wrap; }
 <footer>
   <div class="wrap">
     <span>Successor · MIT · data from the CoinMarketCap Pro API · reader: Qwen <code>qwen4-max</code> · not financial advice</span>
-    <nav aria-label="Footer"><a href="/">Live board</a><a href="/judge">Judge path</a><a href="/pitch">Pitch deck</a><a href="https://github.com/edycutjong/successor">GitHub</a><a href="/api/health">API health</a></nav>
+    <nav aria-label="Footer"><a href="/">Live board</a><a href="/judge">Judge path</a><a href="/pitch">Pitch deck</a><a href="/architecture">Architecture</a><a href="https://github.com/edycutjong/successor">GitHub</a><a href="/api/health">API health</a></nav>
   </div>
 </footer>
 
 <script>
 (() => {
   const RM = matchMedia('(prefers-reduced-motion: reduce)').matches;
-  const ALPHA = " ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789.,:+-%$/";
   const $ = (id) => document.getElementById(id);
   const sleep = (ms) => new Promise((r) => setTimeout(r, RM ? 0 : ms));
-
-  function tiles(el, n) {
-    while (el.children.length < n) { const t = document.createElement('span'); t.className = 't blank'; t.innerHTML = '<b>&nbsp;</b>'; el.appendChild(t); }
-    while (el.children.length > n) el.lastChild.remove();
-    return [...el.children];
-  }
-  function paint(t, ch) {
-    t.firstChild.textContent = ch === ' ' ? ' ' : ch;
-    t.classList.toggle('blank', ch === ' ');
-  }
-  function turnTile(t, target, delay) {
-    const cur = t.firstChild.textContent.replace(' ', ' ');
-    if (RM) { paint(t, target); return Promise.resolve(); }
-    let i = Math.max(0, ALPHA.indexOf(cur)), j = ALPHA.indexOf(target);
-    if (j < 0) j = 0;
-    let steps = (j - i + ALPHA.length) % ALPHA.length;
-    if (steps > 8) { i = (j - 8 + ALPHA.length) % ALPHA.length; steps = 8; }
-    return new Promise((res) => {
-      setTimeout(function step() {
-        i = (i + 1) % ALPHA.length;
-        if (steps === 0) { res(); return; }
-        paint(t, ALPHA[i]); t.classList.remove('f'); void t.offsetWidth; t.classList.add('f');
-        if (--steps > 0) setTimeout(step, 62); else { paint(t, target); res(); }
-      }, delay);
-    });
-  }
-  function setFlaps(el, text, animate = true) {
-    const n = Number(getComputedStyle(el).getPropertyValue('--n')) || text.length;
-    const s = text.toUpperCase().padEnd(n, ' ').slice(0, n);
-    const ts = tiles(el, n);
-    return Promise.all(ts.map((t, k) => animate ? turnTile(t, s[k], k * 38) : (paint(t, s[k]), null)));
-  }
-
-  // static boards (census + receipts) render their final state immediately, no-JS-safe after this runs
-  document.querySelectorAll('[data-board]').forEach((el) => setFlaps(el, el.dataset.board, false));
-  const counts = [...document.querySelectorAll('[data-count]')];
-  counts.forEach((el) => setFlaps(el, el.dataset.count, false));
-  if (!RM && 'IntersectionObserver' in window) {
-    const io = new IntersectionObserver((es) => es.forEach((e) => {
-      if (!e.isIntersecting) return; io.unobserve(e.target);
-      const el = e.target; setFlaps(el, '0'.repeat(el.dataset.count.length), false);
-      setTimeout(() => setFlaps(el, el.dataset.count), 120);
-    }), { threshold: 0.6 });
-    counts.forEach((el) => io.observe(el));
-  }
-
-  // ---------- hero board ----------
-  const hOld = $('h-old'), hNew = $('h-new'), hVd = $('h-vd'), hl = $('hl');
-  const lampFor = { C2: null, C4: null, C5o: null, C5n: null };
-  document.querySelectorAll('#h-checks li').forEach((li) => { lampFor[li.dataset.c] = li; });
+  const tube = $('tube'); const cath = {}; tube.querySelectorAll('.ct-cath').forEach((c) => { cath[c.dataset.v] = c; });
+  const hNew = $('h-new'); const hOld = $('h-old');
+  const lampFor = {}; document.querySelectorAll('#h-checks li').forEach((li) => { lampFor[li.dataset.c] = li; });
+  const SR = { lit: 'verified', refused: 'refuted', after: 'proposed, not checked yet', off: 'waiting' };
   function lamp(c, st, text, key) {
     const li = lampFor[c]; if (!li) return;
-    const l = li.querySelector('.lamp'); l.className = 'lamp ' + st;
-    const v = li.querySelector('.v');
-    if (text !== undefined) li.querySelector('.v').textContent = text;
+    li.querySelector('.ct-lamp').className = 'ct-lamp ' + (st === 'off' ? '' : st);
     if (key !== undefined) li.querySelector('.k').innerHTML = key + '<span class="sr"></span>';
-    const sr = li.querySelector('.sr'); if (sr) sr.textContent = ' ' + ({ ok: 'verified', bad: 'refuted', prop: 'pending', off: 'waiting' }[st]);
-    if (text !== undefined) v.title = text;
+    li.querySelector('.k .sr').textContent = ' ' + SR[st];
+    if (text !== undefined) { const v = li.querySelector('.v'); v.textContent = text; v.title = text; }
   }
   function field(f, st) { document.querySelectorAll('#h-notice u[data-f="' + f + '"]').forEach((u) => { u.className = st; }); }
-  const okState = (s) => ['verified', 'alive', 'P', 'confirmed'].includes(s) ? 'ok' : ['refuted', 'R', 'failed', 'mismatch'].includes(s) ? 'bad' : 'prop';
+  const stateOf = (s) => ['verified', 'alive', 'P', 'confirmed'].includes(s) ? 'lit' : ['refuted', 'R', 'failed', 'mismatch'].includes(s) ? 'refused' : 'after';
   const money = (v) => v == null ? null : '$' + Number(v).toLocaleString('en-US', { minimumFractionDigits: 2, maximumFractionDigits: 2 });
   const VWORD = { SELL_OLD: 'SELL OLD', SWAP: 'SWAP', WRITE_OFF: 'WRITE OFF', NOT_VERIFIABLE: 'NOT VERIFIABLE', NOTHING_TO_DO: 'NOTHING TO DO' };
+  // successor/verify/verdict.py: rules are tried in this order and the first match wins
+  const RULES = [['R3', 'NOT_VERIFIABLE'], ['R4', 'NOTHING_TO_DO'], ['R5', 'NOT_VERIFIABLE'], ['R6', 'WRITE_OFF'], ['R7', 'SELL_OLD'], ['R8', 'SELL_OLD'], ['R9', 'SWAP'], ['R10', 'NOT_VERIFIABLE']];
 
-  function resetBoard(sym, notice) {
-    hNew.classList.remove('half');
-    setFlaps(hOld, sym, false); setFlaps(hNew, '', false); setFlaps(hVd, '', false);
-    hl.classList.add('run');
-    $('h-big').textContent = '…'; $('h-say').textContent = 'reading the notice';
-    $('h-vals').textContent = '';
+  function darkTube() { Object.values(cath).forEach((c) => c.classList.remove('on', 'flick')); tube.setAttribute('aria-label', 'Verdict tube: dark, no verdict yet'); }
+  async function strike(verdict, rule, ctx) {
+    const k = RULES.findIndex((r) => r[0] === rule);
+    const missed = (k > 0 ? RULES.slice(0, k) : []).map((r) => r[1]).filter((v, i, a) => v !== verdict && v !== a[i - 1]);
+    if (!RM) for (const v of missed) {
+      if (ctx.id !== runId) return;
+      cath[v].classList.add('flick'); await sleep(95); cath[v].classList.remove('flick'); await sleep(45);
+    }
+    if (ctx.id !== runId) return;
+    darkTube(); if (cath[verdict]) cath[verdict].classList.add('on');
+    tube.setAttribute('aria-label', 'Verdict tube: ' + (VWORD[verdict] || verdict) + ' is lit');
+    $('h-rule').textContent = k > 0 ? rule + ' struck · R3 to ' + RULES[k - 1][0] + ' did not match · first match wins' : rule + ' struck · first match wins';
+  }
+  function reset(sym, notice) {
+    darkTube(); hOld.textContent = sym; hNew.textContent = '?'; hNew.classList.remove('lit');
+    $('h-big').textContent = '…'; $('h-say').textContent = 'reading the notice'; $('h-vals').textContent = ''; $('h-rule').textContent = 'the tube stays dark until the checks are in';
     ['C2', 'C4', 'C5o', 'C5n'].forEach((c) => lamp(c, 'off', 'waiting'));
     if (notice !== undefined) $('h-notice').innerHTML = '<span class="src">1 · CMC notice, read by qwen4-max</span>' + notice;
     else document.querySelectorAll('#h-notice u').forEach((u) => { u.className = ''; });
   }
-
   async function onEvent(e, ctx) {
     if (ctx.id !== runId) return;
-    const s = e.type && e.type !== 'step' ? e.type : e.step;  // server errors carry a step too; the type decides
-    if (s === 'resolve' && ctx.live) { setFlaps(hOld, (e.chosen && e.chosen.symbol) || ctx.q, true); }
+    const s = e.type && e.type !== 'step' ? e.type : e.step;
+    if (s === 'resolve' && ctx.live) { hOld.textContent = (e.chosen && e.chosen.symbol) || ctx.q; }
     else if (s === 'notice' && ctx.live) {
       const txt = (e.notice || 'no notice on this coin').replace(/\[([^\]]+)\]\([^)]+\)/g, '$1');
       $('h-notice').innerHTML = '<span class="src">1 · CMC notice, read by qwen4-max</span>' + txt.replace(/[<>&]/g, (c) => ({ '<': '&lt;', '>': '&gt;', '&': '&amp;' }[c]));
@@ -668,73 +530,49 @@ footer nav { display: flex; gap: 18px; flex-wrap: wrap; }
     else if (s === 'follow_link') { $('h-say').textContent = e.ok === false ? 'a link was refused: ' + (e.error || 'not a host CMC lists') : 'the Reader opened ' + (e.host || 'a link') + ' (a host CMC lists)'; }
     else if (s === 'proposal') {
       $('h-say').textContent = 'proposal #' + (e.n || 1) + ' in · code is checking it';
-      field('sym', 'prop'); field('ratio', 'prop'); field('contract', 'prop');
-      lamp('C2', 'prop', 'proposed: ' + ((e.fields && e.fields.successor_symbol) || '?'));
-      lamp('C4', 'prop', 'proposed ratio: ' + ((e.fields && e.fields.ratio_new_per_old) ?? 'not stated'));
+      field('sym', 'after'); field('ratio', 'after'); field('contract', 'after');
+      hNew.textContent = (e.fields && e.fields.successor_symbol) || '?';
+      lamp('C2', 'after', 'proposed: ' + ((e.fields && e.fields.successor_symbol) || '?'));
+      lamp('C4', 'after', 'proposed ratio: ' + ((e.fields && e.fields.ratio_new_per_old) ?? 'not stated'));
     }
     else if (s === 'successor') {
-      const st = okState(e.state);
+      const st = stateOf(e.state);
       lamp('C2', st, e.reason || e.state, '<i>C2</i>Contract');
       field('sym', st); field('contract', st);
-      if (st === 'ok' && e.successor) { ctx.newSym = e.successor.symbol; await setFlaps(hNew, e.successor.symbol, true); }
-      if (ctx.id !== runId) return;
+      if (st === 'lit' && e.successor) { hNew.textContent = e.successor.symbol; hNew.classList.add('lit'); }
     }
-    else if (s === 'market_old') lamp('C5o', okState(e.state), e.reason || e.state, '<i>C5</i>Old market');
-    else if (s === 'market_new') lamp('C5n', okState(e.state), e.reason || e.state, '<i>C5</i>New market');
+    else if (s === 'market_old') lamp('C5o', stateOf(e.state), e.reason || e.state, '<i>C5</i>Old market');
+    else if (s === 'market_new') lamp('C5n', stateOf(e.state), e.reason || e.state, '<i>C5</i>New market');
     else if (s === 'ratio') {
-      const st = e.state === 'none' ? 'prop' : okState(e.state);
+      const st = e.state === 'none' ? 'after' : stateOf(e.state);
       lamp('C4', st, e.reason || 'ratio not stated', '<i>C4</i>Ratio' + (e.stated ? ' 1:' + e.stated : ''));
       field('ratio', st);
     }
     else if (s === 'verdict') {
-      const w = VWORD[e.verdict] || e.verdict;
-      if (e.verdict === 'WRITE_OFF') await setFlaps(hNew, '', true);
-      if (e.verdict === 'NOT_VERIFIABLE') hNew.classList.add('half');
-      await setFlaps(hVd, w, true);
-      if (ctx.id !== runId) return;
-      hVd.setAttribute('aria-label', 'Verdict ' + w); $('h-live').textContent = 'Verdict: ' + w;
-      const so = e.value_sell_old_usd, sw = e.value_swap_usd, tr = e.tracker_value_usd;
-      const qty = Number(e.qty || 10000).toLocaleString('en-US');
       ctx.done = true;
-      if (e.verdict === 'NOT_VERIFIABLE') {
-        $('h-big').textContent = e.rule_id || '';
-        $('h-say').textContent = e.reason || '';
-        $('h-vals').textContent = so != null ? qty + ' ' + ctx.sym + ' · market value ' + money(so) + ', no verdict · excludes fees and gas' : '';
-      } else if (so != null && sw != null && sw > 0) {
+      $('h-say').textContent = 'checks in · the rule table decides';
+      await strike(e.verdict, e.rule_id, ctx);
+      if (ctx.id !== runId) return;
+      const w = VWORD[e.verdict] || e.verdict; $('h-live').textContent = 'Verdict: ' + w;
+      const so = e.value_sell_old_usd, sw = e.value_swap_usd, tr = e.tracker_value_usd; const qty = Number(e.qty || 10000).toLocaleString('en-US');
+      if (e.verdict === 'NOT_VERIFIABLE') { $('h-big').textContent = e.rule_id || ''; $('h-say').textContent = e.reason || ''; $('h-vals').textContent = so != null ? qty + ' ' + ctx.sym + ' · market value ' + money(so) + ', no verdict · excludes fees and gas' : ''; }
+      else if (so != null && sw != null && sw > 0) {
         const pct = (so / sw - 1) * 100;
         $('h-big').textContent = (pct >= 0 ? '+' : '') + pct.toFixed(1) + '%';
         $('h-say').textContent = pct >= 0 ? 'the old token is worth more than the swap, at CMC\'s quotes' : 'the swap is worth more than the old token, at CMC\'s quotes';
         $('h-vals').textContent = qty + ' ' + ctx.sym + ' · sell old ' + money(so) + ' · swap ' + money(sw) + ' · excludes fees and gas';
-      } else if (sw != null && tr != null) {
-        $('h-big').textContent = money(sw);
-        $('h-say').textContent = 'what ' + qty + ' ' + ctx.sym + ' are worth swapped, not the tracker\'s ' + money(tr);
-        $('h-vals').textContent = 'rule ' + e.rule_id + ' · ' + (e.reason || '');
-      } else {
-        $('h-big').textContent = e.rule_id || '';
-        $('h-say').textContent = e.reason || '';
-        $('h-vals').textContent = '';
-      }
-      hl.classList.remove('run');
+      } else if (sw != null && tr != null) { $('h-big').textContent = money(sw); $('h-say').textContent = 'what ' + qty + ' ' + ctx.sym + ' are worth swapped, not the tracker\'s ' + money(tr); $('h-vals').textContent = 'rule ' + e.rule_id + ' · ' + (e.reason || ''); }
+      else { $('h-big').textContent = e.rule_id || ''; $('h-say').textContent = e.reason || ''; $('h-vals').textContent = ''; }
       const when = (e.captured_at || '').replace('T', ' ').replace(/:\d\dZ$/, ' UTC');
       $('h-cap').textContent = (ctx.live ? 'live · ' : 'replay · ') + 'lookup captured ' + when + ' · ' + (e.credits_used ?? '?') + ' CMC credits · ' + (ctx.live ? Math.round(performance.now() - ctx.t0) + ' ms in your browser' : e.t_ms + ' ms');
     }
-    else if (s === 'outcome') {
-      ctx.done = true; hl.classList.remove('run');
-      $('h-big').textContent = e.outcome === 'no_notice' ? 'no notice' : 'pick a coin';
-      $('h-say').textContent = e.message || '';
-      $('h-cap').textContent = (ctx.live ? 'live · ' : 'replay · ') + 'no verdict to give · ' + (e.outcome || 'outcome');
-    }
-    else if (s === 'error') {
-      ctx.done = true; hl.classList.remove('run');
-      $('h-big').textContent = '✗'; $('h-say').textContent = 'error: ' + (e.message || e.error || 'lookup failed');
-      $('h-cap').textContent = (ctx.live ? 'live' : 'replay') + ' · error · press Replay for the captured run';
-    }
+    else if (s === 'outcome') { ctx.done = true; darkTube(); $('h-rule').textContent = 'no verdict to give: the tube stays dark (' + (e.rule_id || 'outcome') + ')'; $('h-big').textContent = e.outcome === 'no_notice' ? 'no notice' : 'pick a coin'; $('h-say').textContent = e.message || ''; $('h-cap').textContent = (ctx.live ? 'live · ' : 'replay · ') + 'no verdict to give · ' + (e.outcome || 'outcome'); }
+    else if (s === 'error') { ctx.done = true; darkTube(); $('h-rule').textContent = 'error: the tube stays dark'; $('h-big').textContent = 'error'; $('h-say').textContent = e.message || e.error || 'lookup failed'; $('h-cap').textContent = (ctx.live ? 'live' : 'replay') + ' · error · press Replay for the captured run'; }
   }
 
   // the captured 2026-11-22 03:49 UTC CPOOL stream (docs/proof/assets/lookup-CPOOL-2026-11-22T0349Z.ndjson), condensed
   const CAPTURED = [
-    { step: 'resolve' }, { step: 'notice' },
-    { step: 'reader' },
+    { step: 'resolve' }, { step: 'notice' }, { step: 'reader' },
     { step: 'proposal', n: 1, fields: { successor_symbol: 'CLEAR', ratio_new_per_old: 1 } },
     { step: 'successor', state: 'verified', successor: { symbol: 'CLEAR' }, reason: "0x5200…0e00 = CMC's CLEAR contract, id 42884" },
     { step: 'market_old', state: 'alive', reason: '$1,385,625 / 24 h, top venue Upbit' },
@@ -742,17 +580,15 @@ footer nav { display: flex; gap: 18px; flex-wrap: wrap; }
     { step: 'ratio', state: 'P', stated: 1, reason: 'old/new 1.04342 after the event → confirms' },
     { type: 'verdict', verdict: 'SELL_OLD', rule_id: 'R8', qty: 10000, value_sell_old_usd: 243.01140164267096, value_swap_usd: 210.05630413463496, captured_at: '2026-11-22T03:49:23Z', credits_used: 8, t_ms: 457 }
   ];
-  const GAP = { resolve: 300, notice: 500, reader: 500, proposal: 700, successor: 250, market_old: 380, market_new: 380, ratio: 420, verdict: 200 };
+  const GAP = { resolve: 260, notice: 420, reader: 420, proposal: 620, successor: 520, market_old: 420, market_new: 420, ratio: 460, verdict: 520 };
   let runId = 0;
-  const CAP_NOTICE = $('h-notice').innerHTML;  // the captured CPOOL notice; a live run replaces it, replay must restore it
+  const CAP_NOTICE = $('h-notice').innerHTML.replace(/^<span class="src">[^<]*<\/span>/, '');
   async function replay() {
     const id = ++runId; const ctx = { id, sym: 'CPOOL', live: false };
     document.querySelectorAll('.runs button[data-q]').forEach((b) => b.setAttribute('aria-pressed', 'false'));
-    resetBoard('CPOOL', CAP_NOTICE.replace(/^<span class="src">[^<]*<\/span>/, ''));
-    document.querySelectorAll('#h-notice u').forEach((u) => { u.className = ''; });
-    $('h-cap').textContent = 'replay · playing the lookup captured 2026-11-22 03:49 UTC …';
-    hVd.setAttribute('aria-label', 'Verdict pending'); $('h-live').textContent = 'Playing the captured CPOOL lookup';
-    await sleep(500);
+    reset('CPOOL', CAP_NOTICE); document.querySelectorAll('#h-notice u').forEach((u) => { u.className = ''; });
+    $('h-cap').textContent = 'replay · playing the lookup captured 2026-11-22 03:49 UTC …'; $('h-live').textContent = 'Playing the captured CPOOL lookup';
+    await sleep(400);
     for (const e of CAPTURED) { if (id !== runId) return; await sleep(GAP[e.step || e.type] || 300); if (id !== runId) return; await onEvent(e, ctx); }
   }
   async function live(q, btn) {
@@ -760,10 +596,9 @@ footer nav { display: flex; gap: 18px; flex-wrap: wrap; }
     const all = document.querySelectorAll('.runs button');
     document.querySelectorAll('.runs button[data-q]').forEach((b) => b.setAttribute('aria-pressed', String(b === btn)));
     all.forEach((b) => { b.disabled = true; });
-    resetBoard(q, '');
-    $('h-cap').textContent = 'live · streaming GET /api/lookup?q=' + q + ' …';
+    reset(q, ''); $('h-cap').textContent = 'live · streaming GET /api/lookup?q=' + q + ' …';
     try {
-      const ac = new AbortController(); ctx.timer = setTimeout(() => ac.abort(), 75000);  // the server gives up at 52 s
+      const ac = new AbortController(); ctx.timer = setTimeout(() => ac.abort(), 75000);
       const r = await fetch('/api/lookup?q=' + encodeURIComponent(q) + '&qty=10000', { signal: ac.signal });
       if (!r.ok || !r.body) throw new Error('HTTP ' + r.status);
       const rd = r.body.getReader(); const dec = new TextDecoder(); let buf = '';
@@ -776,36 +611,32 @@ footer nav { display: flex; gap: 18px; flex-wrap: wrap; }
       if (id === runId && !ctx.done) throw new Error('the stream ended without a verdict');
     } catch (err) {
       if (id !== runId) return;
-      hl.classList.remove('run'); $('h-big').textContent = '✗';
+      darkTube(); $('h-big').textContent = 'error';
       $('h-say').textContent = 'live lookup failed (' + err.message + '); the replay still shows a real captured run';
       $('h-cap').textContent = 'live · failed · press Replay for the captured run';
     } finally { clearTimeout(ctx.timer); all.forEach((b) => { b.disabled = false; }); }
   }
   document.querySelectorAll('.runs button[data-q]').forEach((b) => b.addEventListener('click', () => live(b.dataset.q, b)));
   $('replay').addEventListener('click', replay);
-  // no-JS / print default = the final captured state in the HTML; with JS, paint flaps then play the replay once
-  setFlaps(hOld, 'CPOOL', false); setFlaps(hNew, 'CLEAR', false); setFlaps(hVd, 'SELL OLD', false);
-  if (!RM) replay();
+  // no-JS, print and reduced motion keep the settled capture in the HTML; with motion, play the replay once when the bench is in view
+  if (!RM) {
+    if ('IntersectionObserver' in window) { const io = new IntersectionObserver((es) => { if (es[0].isIntersecting) { io.disconnect(); replay(); } }, { threshold: 0.35 }); io.observe($('bench')); }
+    else replay();
+  }
 
-  // ---------- terminal replay ----------
+  // census ticks (one per coin) and terminal replay
+  document.querySelectorAll('.ticks[data-n]').forEach((t) => { t.innerHTML = '<i></i>'.repeat(+t.dataset.n); });
   const term = $('term'); const termHTML = term.innerHTML; let typing = 0;
   function typeTerm() {
-    if (RM) return; const id = ++typing; const lines = termHTML.split('\n');
-    term.innerHTML = ''; let k = 0;
+    if (RM) return; const id = ++typing; const lines = termHTML.split('\n'); term.innerHTML = ''; let k = 0;
     (function next() {
       if (id !== typing) return;
       if (k >= lines.length) { term.insertAdjacentHTML('beforeend', '\n<span class="cursor"></span>'); return; }
-      term.insertAdjacentHTML('beforeend', (k ? '\n' : '') + lines[k]); k++;
-      setTimeout(next, k === 1 ? 520 : 170);
+      term.insertAdjacentHTML('beforeend', (k ? '\n' : '') + lines[k]); k++; setTimeout(next, k === 1 ? 520 : 170);
     })();
   }
   $('term-replay').addEventListener('click', typeTerm);
-  if ('IntersectionObserver' in window && !RM) {
-    const tio = new IntersectionObserver((es) => { if (es[0].isIntersecting) { tio.disconnect(); typeTerm(); } }, { threshold: 0.4 });
-    tio.observe(term);
-  }
-
-  // ---------- copy ----------
+  if ('IntersectionObserver' in window && !RM) { const tio = new IntersectionObserver((es) => { if (es[0].isIntersecting) { tio.disconnect(); typeTerm(); } }, { threshold: 0.4 }); tio.observe(term); }
   document.querySelectorAll('[data-copy]').forEach((b) => b.addEventListener('click', async () => {
     try { await navigator.clipboard.writeText(b.dataset.copy); b.textContent = 'Copied'; } catch { b.textContent = 'Select ↑'; }
     setTimeout(() => { b.textContent = 'Copy'; }, 1600);
