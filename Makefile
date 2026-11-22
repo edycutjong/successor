@@ -1,7 +1,7 @@
 PY ?= .venv/bin/python
 BASE ?= https://successor.edycu.dev
 
-.PHONY: help install lint lint-fix typecheck test test-coverage evals unplug e2e bench bench-cold lighthouse audit secrets security-scan ci
+.PHONY: unplug-e2e help install lint lint-fix typecheck test test-coverage evals unplug e2e bench bench-cold lighthouse audit secrets security-scan ci
 
 help: ## list targets
 	@grep -E '^[a-z-]+:.*##' Makefile | sed 's/:.*## /\t/'
@@ -29,6 +29,9 @@ evals: ## offline replay of the 10 counted cases + variants (an eval, not the pr
 
 unplug: ## unplug the keys: the demo path must fail, never fall back to canned output
 	$(PY) -m pytest -q tests/test_unplugged.py tests/test_unplugged_http.py
+
+unplug-e2e: ## run the app with NO keys and point the live-flow tests at it; they must fail
+	./scripts/unplug_e2e.sh
 
 e2e: ## browser tests against $(BASE) (default: the live URL)
 	E2E_BASE_URL=$(BASE) $(PY) -m pytest e2e -q -p no:cacheprovider --override-ini="norecursedirs="

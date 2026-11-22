@@ -30,7 +30,7 @@ def one(base: str, q: str, fresh: bool) -> tuple[float, str]:
     r = httpx.get(f"{base}/api/lookup", params=params, headers={"Accept": "application/json"}, timeout=70)
     dt = time.perf_counter() - t0
     body = r.json()
-    return dt, f"{r.status_code} {body.get('type')} {body.get('verdict')}/{body.get('rule')}"
+    return dt, f"{r.status_code} {body.get('type')} {body.get('verdict')}/{body.get('rule_id')}"
 
 
 def pct(xs: list[float], p: float) -> float:

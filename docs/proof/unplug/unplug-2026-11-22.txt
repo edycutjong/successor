@@ -1,0 +1,12 @@
+# unplug test 2026-11-22T04:49:56Z: app started with no CMC_API_KEY, no DASHSCOPE_API_KEY, empty HOME
+$ curl -H 'Accept: application/json' http://127.0.0.1:8765/api/lookup?q=CPOOL
+{"type":"error","t_ms":43,"step":"config","error":"CMC_API_KEY is not set","http_status":null}
+HTTP 502
+$ pytest e2e -k 'json or cpool'   (expected: FAIL)
+
+e2e/test_live_flow.py:69: AssertionError
+=========================== short test summary info ============================
+FAILED e2e/test_live_flow.py::test_api_lookup_json_is_a_verdict_event - asser...
+FAILED e2e/test_live_flow.py::test_health_reports_a_working_cmc_key_and_the_model
+2 failed, 10 deselected in 0.08s
+UNPLUG OK: with the sources removed the product errors and the tests fail

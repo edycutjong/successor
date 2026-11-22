@@ -61,7 +61,7 @@ def test_api_lookup_json_is_a_verdict_event(base_url):
     )
     assert r.status_code == 200
     body = r.json()
-    assert body["type"] == "verdict" and body["verdict"] in VERDICTS and body["rule"]
+    assert body["type"] == "verdict" and body["verdict"] in VERDICTS and body["rule_id"]
 
 
 def test_health_reports_a_working_cmc_key_and_the_model(base_url):
