@@ -10,9 +10,10 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v7
-      - uses: astral-sh/setup-uv@v7
+      - uses: actions/setup-python@v7
         with:
           python-version: "3.12"
+      - uses: astral-sh/setup-uv@v7
       - run: uv pip install --system -e .
       - name: deadline freeze (no bot commits after the 2026-12-09 23:59 UTC submission deadline)
         id: gate

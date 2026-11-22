@@ -14,9 +14,10 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v7
-      - uses: astral-sh/setup-uv@v7
+      - uses: actions/setup-python@v7
         with:
           python-version: "3.12"
+      - uses: astral-sh/setup-uv@v7
       - run: uv pip install --system -e '.[dev,e2e]'
       - run: playwright install --with-deps chromium
       - run: E2E_BASE_URL=https://successor.edycu.dev pytest e2e -q -p no:cacheprovider --override-ini="norecursedirs="
