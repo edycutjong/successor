@@ -1,6 +1,6 @@
 [project]
 name = "successor"
-version = "0.1.0"
+version = "1.0.0"
 description = "Reads CoinMarketCap migration notices, verifies the successor token against CMC data, returns one verdict with the proving rows."
 requires-python = ">=3.11"
 license = { text = "MIT" }

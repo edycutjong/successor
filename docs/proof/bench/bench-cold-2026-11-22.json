@@ -1,0 +1,22 @@
+{
+  "url": "https://successor.edycu.dev",
+  "query": "CPOOL",
+  "n": 6,
+  "kind": "cold: fresh=1, the Reader re-reads the notice live (one Qwen call), live CMC calls, full JSON answer",
+  "captured_at": "2026-11-22T04:55:25Z",
+  "samples_s": [
+    14.461,
+    23.719,
+    16.216,
+    0.36,
+    0.347,
+    0.341
+  ],
+  "p50_s": 7.41,
+  "p95_s": 23.719,
+  "max_s": 23.719,
+  "outcomes": [
+    "200 verdict SELL_OLD/None",
+    "429 error None/None"
+  ]
+}

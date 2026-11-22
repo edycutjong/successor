@@ -146,5 +146,7 @@ jobs:
         run: npx --yes @lhci/cli@0.14 autorun --config=lighthouserc.json
       - uses: actions/upload-artifact@v4
         with:
-          name: bench
-          path: docs/proof/bench/
+          name: perf
+          path: |
+            docs/proof/bench/
+            .lighthouseci/

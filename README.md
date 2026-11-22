@@ -16,6 +16,7 @@
   ![Vercel](https://img.shields.io/badge/Vercel-black?style=flat&logo=vercel)
   ![Qwen](https://img.shields.io/badge/Qwen_qwen4--max-615CED?style=flat)
   ![CoinMarketCap API](https://img.shields.io/badge/CoinMarketCap_Pro_API-17181B?style=flat)
+  [![Release](https://img.shields.io/github/v/release/edycutjong/successor?style=flat)](https://github.com/edycutjong/successor/releases)
   [![License](https://img.shields.io/badge/License-MIT-yellow)](https://opensource.org/licenses/MIT)
 
 </div>
@@ -23,7 +24,7 @@
 ---
 
 **No wallet needed anywhere. Every lookup is a read-only call to CoinMarketCap and, when a notice is new, one Qwen call.**
-Try it: https://successor.edycu.dev, or `curl -N 'https://successor.edycu.dev/api/lookup?q=CPOOL&qty=10000'`.
+Try it: https://successor.edycu.dev (judges: [/judge](https://successor.edycu.dev/judge), the 30-second path), or `curl -N 'https://successor.edycu.dev/api/lookup?q=CPOOL&qty=10000'`.
 
 ## 📸 See it in Action
 
@@ -122,12 +123,15 @@ copied from old to new coin, `convert=EUR` scaling supply, and the notice being 
 
 | Metric | Value | How to reproduce |
 |---|---|---|
-| Tests | **81 passed** | `pytest -q` |
+| Tests | **83 passed**, 82 % line coverage (gate 70 %), mypy clean | `make test-coverage`, `make typecheck` |
 | Evals | **10/10** counted cases + 4/4 variants | `python scripts/run_evals.py` (replays real saved CMC rows and recorded Reader output) |
 | Lookup latency, cached Reader read, live CMC calls | **p50 1.007 s · p95 1.454 s (= max at n=12)** (n=12, 2026-11-22 04:29 UTC) | `python scripts/bench.py https://successor.edycu.dev CPOOL 12`, samples in `docs/proof/bench/` |
 | Lookup latency, cold Reader read | 16.89 s (CPOOL), 8.79 s (MKR), single samples on the day-one spike engine; final engine, fresh CPOOL read 14.5 s | `docs/proof/deploy/` (`p1c-cpool-fresh-live.json`) |
 | Census | 161 notices; verdicts over them: NOT VERIFIABLE 130 · NOTHING TO DO 26 · WRITE OFF 3 · SWAP 2 · SELL OLD 0 (verdicts captured 2026-11-22T03:45:14Z) | `GET /api/census`, `python scripts/census.py` |
-| Unplug test | No CMC key: error and no verdict. No LLM key on a cold notice: NOT VERIFIABLE | `tests/test_unplugged.py` |
+| Live-URL E2E | **12 browser + API tests pass** on https://successor.edycu.dev (open, click CPOOL/AGIX, assert verdict + receipt, `/judge` with no auth, 3 viewports), 2026-11-22 | `make e2e` |
+| Unplug test | No CMC key: error and no verdict. No LLM key on a cold notice: NOT VERIFIABLE. With every key removed the E2E tests fail | `tests/test_unplugged.py`, `tests/test_unplugged_http.py`, `make unplug-e2e` (`docs/proof/unplug/`) |
+| Security | pip-audit: no known vulnerabilities (after moving to fastapi 0.165 / starlette 1.10: 11 advisories on 0.46.2); gitleaks: no leaks in the full history; CodeQL + Dependabot configured | `make audit`, `make secrets`, `docs/proof/gates/` |
+| Lighthouse (desktop, live) | home: performance 82-83, accessibility 96, best practices 100, SEO 100; `/judge`: 100 / 93 / 100 / 100 (2026-11-22) | `make lighthouse` |
 
 The census numbers are the honest headline: **most notices cannot be confirmed from CMC's data alone.** 130 of 161 end in NOT
 VERIFIABLE, and the page says why (61: old and new token share one CMC page, 26: CMC's data refutes the notice, 22: the notice
@@ -164,6 +168,7 @@ names no successor, 10: no ratio or announcement unfetchable). A tool that said 
 - **We expected a second proposal for AGIX and it never happened.** We planned for the Reader to "change its mind" on AGIX. In the real run the Reader opens the `fetch.ai` link before its first proposal, proposes `$ASI`, and code maps it to FET through CMC's own `/currencies/fetch/` link. One proposal, so we do not claim a repair turn.
 - **We expected RZUSD to be WRITE OFF and then watched it flip** when the old token traded again (limit 2). Evals pin the recorded WRITE OFF outcome; the SELL OLD (R7) branch is covered by `tests/test_never_swap_on_fail.py`, not by an RZUSD eval.
 - **The spec assumed the checksummed contract address would work in `info?address=`.** It returns HTTP 400 `Invalid value for 'slug'`; we lowercase `0x` addresses (`docs/DX-REPORT.md`).
+- **We added CI and could not run it.** The repository was private and its GitHub Actions jobs never started (a billing limit on the account), so the workflows are linted (actionlint) but have no green run behind them; the gates were run by hand and recorded in `docs/proof/gates/`.
 - **"Agent needed" was the wrong label** for the 99 notices where the Reader opened or tried a link. That counts attempts, not necessity, and the census now says so.
 
 ## 🚀 Getting Started
@@ -187,11 +192,19 @@ Keys are read server-side only and never appear in a response; the receipt's `cu
 ## 🧪 Testing & CI
 
 ```bash
-pytest -q                      # 81 passed
-python scripts/run_evals.py    # 10/10 counted cases, 4/4 variants (offline, replayed real CMC rows)
-ruff check .
-python scripts/bench.py https://successor.edycu.dev CPOOL 12
+make ci                        # ruff, mypy, pytest + coverage, unplug tests, pip-audit, gitleaks (full history)
+make e2e                       # 12 browser/API tests against the live URL (BASE=http://localhost:8000 for a local run)
+make unplug-e2e                # app with no keys: it errors and the live-flow tests must fail
+make bench                     # cached lookup p50/p95, gate p95 <= 3 s;  make bench-cold  for fresh Reader reads
+make lighthouse                # accessibility >= 0.9 is a hard gate
+python scripts/run_evals.py    # 10/10 counted cases, 4/4 variants (offline replay of recorded rows; an eval, not the product)
 ```
+
+`.github/workflows/` runs the same gates in six stages (quality, security, build, deploy, live-URL E2E, performance) plus CodeQL
+(`python`, `javascript-typescript`, `actions`), gitleaks over the full history, a release workflow on `v*.*.*` tags, a daily
+live check, and Dependabot (pip + actions, monthly, grouped, no major bumps). Every gate also ran locally on 2026-11-22; the
+outputs are in `docs/proof/gates/`. GitHub Actions did not start jobs while the repository was private (an account billing
+limit), so no workflow run is claimed here; see "What we got wrong".
 
 ## 📁 Project Structure
 
@@ -202,7 +215,10 @@ successor/verify/         resolve, successor (C2), quotes, ratio (C4), market (C
 successor/flow.py         stream orchestrator; receipt.py builds the proof drawer
 public/                   the board (index.html, board.css, app.js)
 data/                     cached Reader extractions, notices, census
-evals/ tests/ scripts/    10 eval cases, 81 tests, census / evals / bench
+evals/ tests/ e2e/        10 eval cases, 83 unit tests, 12 live-URL browser/API tests
+scripts/                  census, evals, bench (cached + cold), unplug E2E
+.github/                  CI/CD, CodeQL, gitleaks, Dependabot, release, community files
+JUDGE.md, /judge         the 30-second path for a judge, no login
 docs/proof/               verbatim CMC + Qwen responses, lookup captures, deploy and bench proof
 docs/DX-REPORT.md         what made the CMC API possible, what got in the way
 ```
