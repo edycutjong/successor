@@ -20,12 +20,12 @@
    "verdict": "NOT_VERIFIABLE",
    "rule_id": "R10",
    "reason": "ratio not stated; the linked announcement was not fetchable",
-   "verdict_captured_at": "2026-11-22T03:11:10Z",
+   "verdict_captured_at": "2026-11-22T03:34:07Z",
    "agent_needed": true,
-   "cold_ms": 4167,
+   "cold_ms": 5382,
    "successor": "USDS",
-   "old_volume_24h_usd": 22009406.72494794,
-   "old_price_usd": 0.9997158899804024
+   "old_volume_24h_usd": 21935254.4020597,
+   "old_price_usd": 0.9997235274173105
   },
   {
    "id": 11419,
@@ -43,12 +43,12 @@
    "verdict": "NOTHING_TO_DO",
    "rule_id": "R4",
    "reason": "the coin you hold is the successor itself (same CMC id): a rename, a ticker change or the new token; nothing to swap",
-   "verdict_captured_at": "2026-11-22T03:11:14Z",
+   "verdict_captured_at": "2026-11-22T03:34:05Z",
    "agent_needed": false,
-   "cold_ms": 8053,
+   "cold_ms": 3539,
    "successor": "GRAM",
-   "old_volume_24h_usd": 90004369.95062123,
-   "old_price_usd": 0.9349597992727805
+   "old_volume_24h_usd": 84577580.28340346,
+   "old_price_usd": 0.933180357134843
   },
   {
    "id": 19891,
@@ -66,12 +66,12 @@
    "verdict": "NOT_VERIFIABLE",
    "rule_id": "R10",
    "reason": "successor not named in the notice",
-   "verdict_captured_at": "2026-11-22T03:11:08Z",
+   "verdict_captured_at": "2026-11-22T03:34:04Z",
    "agent_needed": false,
-   "cold_ms": 2575,
+   "cold_ms": 1863,
    "successor": null,
-   "old_volume_24h_usd": 6113028.987650129,
-   "old_price_usd": 0.9956236187458376
+   "old_volume_24h_usd": 6093934.13098466,
+   "old_price_usd": 0.996072632560501
   },
   {
    "id": 33251,
@@ -89,12 +89,12 @@
    "verdict": "NOT_VERIFIABLE",
    "rule_id": "R10",
    "reason": "successor not named in the notice",
-   "verdict_captured_at": "2026-11-22T03:11:14Z",
+   "verdict_captured_at": "2026-11-22T03:34:06Z",
    "agent_needed": false,
-   "cold_ms": 5830,
+   "cold_ms": 1976,
    "successor": null,
-   "old_volume_24h_usd": 38273713.49284812,
-   "old_price_usd": 0.04381478878357045
+   "old_volume_24h_usd": 36952835.2274986,
+   "old_price_usd": 0.04392425911125902
   },
   {
    "id": 27075,
@@ -112,12 +112,12 @@
    "verdict": "NOT_VERIFIABLE",
    "rule_id": "R10",
    "reason": "merged CMC page: the old contract has no CMC id of its own, and continuity did not confirm the ratio",
-   "verdict_captured_at": "2026-11-22T03:11:12Z",
+   "verdict_captured_at": "2026-11-22T03:34:07Z",
    "agent_needed": true,
-   "cold_ms": 2311,
+   "cold_ms": 1944,
    "successor": "MNT",
    "old_volume_24h_usd": null,
-   "old_price_usd": 0.3688159719452747
+   "old_price_usd": 0.3682521542766672
   },
   {
    "id": 33038,
@@ -135,12 +135,12 @@
    "verdict": "NOTHING_TO_DO",
    "rule_id": "R4",
    "reason": "the coin you hold is the successor itself (same CMC id): a rename, a ticker change or the new token; nothing to swap",
-   "verdict_captured_at": "2026-11-22T03:11:15Z",
+   "verdict_captured_at": "2026-11-22T03:34:08Z",
    "agent_needed": true,
-   "cold_ms": 2597,
+   "cold_ms": 2420,
    "successor": "SKY",
-   "old_volume_24h_usd": 19254720.738142774,
-   "old_price_usd": 0.043726488524237654
+   "old_volume_24h_usd": 18817184.37278904,
+   "old_price_usd": 0.04369557035889913
   },
   {
    "id": 13502,
@@ -158,12 +158,12 @@
    "verdict": "NOT_VERIFIABLE",
    "rule_id": "R10",
    "reason": "successor not named in the notice",
-   "verdict_captured_at": "2026-11-22T03:11:15Z",
+   "verdict_captured_at": "2026-11-22T03:34:09Z",
    "agent_needed": false,
-   "cold_ms": 1304,
+   "cold_ms": 1333,
    "successor": null,
-   "old_volume_24h_usd": 264233108.2096856,
-   "old_price_usd": 0.22550210583196342
+   "old_volume_24h_usd": 258191096.5770926,
+   "old_price_usd": 0.22618591343939184
   },
   {
    "id": 5690,
@@ -181,12 +181,12 @@
    "verdict": "NOT_VERIFIABLE",
    "rule_id": "R10",
    "reason": "merged CMC page: the old contract has no CMC id of its own, and continuity did not confirm the ratio",
-   "verdict_captured_at": "2026-11-22T03:11:17Z",
+   "verdict_captured_at": "2026-11-22T03:34:09Z",
    "agent_needed": false,
-   "cold_ms": 2682,
+   "cold_ms": 1354,
    "successor": "RENDER",
    "old_volume_24h_usd": null,
-   "old_price_usd": 1.2955423819794567
+   "old_price_usd": 1.3010922909581983
   },
   {
    "id": 29270,
@@ -204,12 +204,12 @@
    "verdict": "NOT_VERIFIABLE",
    "rule_id": "R10",
    "reason": "merged CMC page: the old contract has no CMC id of its own, and continuity did not confirm the ratio",
-   "verdict_captured_at": "2026-11-22T03:11:17Z",
+   "verdict_captured_at": "2026-11-22T03:34:10Z",
    "agent_needed": true,
-   "cold_ms": 2388,
+   "cold_ms": 2163,
    "successor": "AERO",
    "old_volume_24h_usd": null,
-   "old_price_usd": 0.39549630621312987
+   "old_price_usd": 0.39513752162718513
   },
   {
    "id": 3773,
@@ -227,12 +227,12 @@
    "verdict": "NOT_VERIFIABLE",
    "rule_id": "R10",
    "reason": "merged CMC page: the old contract has no CMC id of its own, and continuity did not confirm the ratio",
-   "verdict_captured_at": "2026-11-22T03:11:18Z",
+   "verdict_captured_at": "2026-11-22T03:34:14Z",
    "agent_needed": true,
-   "cold_ms": 2677,
+   "cold_ms": 5368,
    "successor": "FET",
    "old_volume_24h_usd": null,
-   "old_price_usd": 0.10717060211106437
+   "old_price_usd": 0.10738419758939091
   },
   {
    "id": 32880,
@@ -249,13 +249,13 @@
    "only_unfetchable_hosts": false,
    "verdict": "NOT_VERIFIABLE",
    "rule_id": "R10",
-   "reason": "merged CMC page: the old contract has no CMC id of its own, and continuity did not confirm the ratio",
-   "verdict_captured_at": "2026-11-22T03:11:18Z",
+   "reason": "the Reader labelled this a swap, but the notice has no swap wording, contract change or ratio, and the coin keeps one CMC id: no textual evidence of a swap",
+   "verdict_captured_at": "2026-11-22T03:34:11Z",
    "agent_needed": true,
-   "cold_ms": 1648,
+   "cold_ms": 1970,
    "successor": "KAIA",
    "old_volume_24h_usd": null,
-   "old_price_usd": 0.027401233323462858
+   "old_price_usd": 0.027427819390144003
   },
   {
    "id": 10508,
@@ -273,12 +273,12 @@
    "verdict": "NOTHING_TO_DO",
    "rule_id": "R4",
    "reason": "the coin you hold is the successor itself (same CMC id): a rename, a ticker change or the new token; nothing to swap",
-   "verdict_captured_at": "2026-11-22T03:11:20Z",
+   "verdict_captured_at": "2026-11-22T03:34:13Z",
    "agent_needed": true,
-   "cold_ms": 3062,
+   "cold_ms": 3159,
    "successor": "FLUID",
-   "old_volume_24h_usd": 1344429.8830692945,
-   "old_price_usd": 1.5957511034310996
+   "old_volume_24h_usd": 1288057.3366213099,
+   "old_price_usd": 1.593878285482896
   },
   {
    "id": 2394,
@@ -296,12 +296,12 @@
    "verdict": "NOT_VERIFIABLE",
    "rule_id": "R10",
    "reason": "C3 dropped old_contract: the Reader proposed it without a verbatim quote that contains it, so SWAP is withheld",
-   "verdict_captured_at": "2026-11-22T03:11:20Z",
+   "verdict_captured_at": "2026-11-22T03:34:13Z",
    "agent_needed": false,
-   "cold_ms": 2517,
+   "cold_ms": 2081,
    "successor": "TEL",
    "old_volume_24h_usd": null,
-   "old_price_usd": 0.001387526956479823
+   "old_price_usd": 0.001385345258630622
   },
   {
    "id": 36462,
@@ -319,12 +319,12 @@
    "verdict": "NOT_VERIFIABLE",
    "rule_id": "R10",
    "reason": "merged CMC page: the old contract has no CMC id of its own, and continuity did not confirm the ratio",
-   "verdict_captured_at": "2026-11-22T03:11:21Z",
+   "verdict_captured_at": "2026-11-22T03:34:16Z",
    "agent_needed": true,
-   "cold_ms": 3111,
+   "cold_ms": 3442,
    "successor": "A",
    "old_volume_24h_usd": null,
-   "old_price_usd": 0.06386058170865716
+   "old_price_usd": 0.06398257890356643
   },
   {
    "id": 4006,
@@ -342,12 +342,12 @@
    "verdict": "NOTHING_TO_DO",
    "rule_id": "R4",
    "reason": "the coin you hold is the successor itself (same CMC id): a rename, a ticker change or the new token; nothing to swap",
-   "verdict_captured_at": "2026-11-22T03:11:22Z",
+   "verdict_captured_at": "2026-11-22T03:34:15Z",
    "agent_needed": true,
-   "cold_ms": 1592,
+   "cold_ms": 1994,
    "successor": "AWE",
-   "old_volume_24h_usd": 1540131.7418126091,
-   "old_price_usd": 0.053599587247614155
+   "old_volume_24h_usd": 1463581.7174000607,
+   "old_price_usd": 0.05364096914910246
   },
   {
    "id": 1455,
@@ -365,12 +365,12 @@
    "verdict": "NOT_VERIFIABLE",
    "rule_id": "R10",
    "reason": "merged CMC page: the old contract has no CMC id of its own, and continuity did not confirm the ratio",
-   "verdict_captured_at": "2026-11-22T03:11:22Z",
+   "verdict_captured_at": "2026-11-22T03:34:16Z",
    "agent_needed": true,
-   "cold_ms": 2325,
+   "cold_ms": 1732,
    "successor": "GLM",
    "old_volume_24h_usd": null,
-   "old_price_usd": 0.08616757277839318
+   "old_price_usd": 0.08630822974918542
   },
   {
    "id": 1698,
@@ -388,12 +388,12 @@
    "verdict": "NOT_VERIFIABLE",
    "rule_id": "R10",
    "reason": "merged CMC page: the old contract has no CMC id of its own, and continuity did not confirm the ratio",
-   "verdict_captured_at": "2026-11-22T03:11:24Z",
+   "verdict_captured_at": "2026-11-22T03:34:23Z",
    "agent_needed": true,
-   "cold_ms": 2871,
+   "cold_ms": 7022,
    "successor": "ZEN",
    "old_volume_24h_usd": null,
-   "old_price_usd": 3.560971100526944
+   "old_price_usd": 3.5549185782077606
   },
   {
    "id": 7080,
@@ -411,12 +411,12 @@
    "verdict": "NOT_VERIFIABLE",
    "rule_id": "R10",
    "reason": "merged CMC page: the old contract has no CMC id of its own, and continuity did not confirm the ratio",
-   "verdict_captured_at": "2026-11-22T03:11:24Z",
+   "verdict_captured_at": "2026-11-22T03:34:19Z",
    "agent_needed": true,
-   "cold_ms": 2605,
+   "cold_ms": 2955,
    "successor": "GALA",
    "old_volume_24h_usd": null,
-   "old_price_usd": 0.001212563757842463
+   "old_price_usd": 0.001213193209179969
   },
   {
    "id": 1785,
@@ -434,12 +434,12 @@
    "verdict": "NOT_VERIFIABLE",
    "rule_id": "R5",
    "reason": "successor refuted by CMC's data: no CMC coin carries the quoted contract 0xd2a4cff31913016155e38e474a2c06d08be276cf",
-   "verdict_captured_at": "2026-11-22T03:11:24Z",
+   "verdict_captured_at": "2026-11-22T03:34:18Z",
    "agent_needed": true,
-   "cold_ms": 1603,
+   "cold_ms": 1600,
    "successor": null,
-   "old_volume_24h_usd": 1246024.4510479565,
-   "old_price_usd": 0.9059604563198835
+   "old_volume_24h_usd": 1150826.378424656,
+   "old_price_usd": 0.9095404377176929
   },
   {
    "id": 37745,
@@ -457,12 +457,12 @@
    "verdict": "NOT_VERIFIABLE",
    "rule_id": "R10",
    "reason": "C3 dropped new_contract: the Reader proposed it without a verbatim quote that contains it, so SWAP is withheld",
-   "verdict_captured_at": "2026-11-22T03:11:26Z",
+   "verdict_captured_at": "2026-11-22T03:34:19Z",
    "agent_needed": false,
-   "cold_ms": 2304,
+   "cold_ms": 1337,
    "successor": null,
-   "old_volume_24h_usd": 3167190.245148979,
-   "old_price_usd": 0.1923693869199454
+   "old_volume_24h_usd": 3164127.751846586,
+   "old_price_usd": 0.19243780320453693
   },
   {
    "id": 20279,
@@ -480,12 +480,12 @@
    "verdict": "NOT_VERIFIABLE",
    "rule_id": "R10",
    "reason": "merged CMC page: the old contract has no CMC id of its own, and continuity did not confirm the ratio",
-   "verdict_captured_at": "2026-11-22T03:11:27Z",
+   "verdict_captured_at": "2026-11-22T03:34:21Z",
    "agent_needed": false,
-   "cold_ms": 2281,
+   "cold_ms": 2470,
    "successor": "DHN",
    "old_volume_24h_usd": null,
-   "old_price_usd": 500.24325693599536
+   "old_price_usd": 499.4194225701737
   },
   {
    "id": 3987,
@@ -503,12 +503,12 @@
    "verdict": "NOT_VERIFIABLE",
    "rule_id": "R10",
    "reason": "merged CMC page: the old contract has no CMC id of its own, and continuity did not confirm the ratio",
-   "verdict_captured_at": "2026-11-22T03:11:28Z",
+   "verdict_captured_at": "2026-11-22T03:34:22Z",
    "agent_needed": true,
-   "cold_ms": 3236,
+   "cold_ms": 2970,
    "successor": "BDX",
    "old_volume_24h_usd": null,
-   "old_price_usd": 0.06767734015885045
+   "old_price_usd": 0.06761468522029207
   },
   {
    "id": 40986,
@@ -526,9 +526,9 @@
    "verdict": "NOT_VERIFIABLE",
    "rule_id": "R5",
    "reason": "successor refuted by CMC's data: no CMC coin carries the quoted contract 0x0B7C6c138dc75622f4200d157B13FB93e6BD94FA",
-   "verdict_captured_at": "2026-11-22T03:11:28Z",
+   "verdict_captured_at": "2026-11-22T03:34:23Z",
    "agent_needed": true,
-   "cold_ms": 1665,
+   "cold_ms": 1594,
    "successor": null,
    "old_volume_24h_usd": 0.0,
    "old_price_usd": 0.17893639208254455
@@ -549,12 +549,12 @@
    "verdict": "NOT_VERIFIABLE",
    "rule_id": "R10",
    "reason": "merged CMC page: the old contract has no CMC id of its own, and continuity did not confirm the ratio",
-   "verdict_captured_at": "2026-11-22T03:11:29Z",
+   "verdict_captured_at": "2026-11-22T03:34:24Z",
    "agent_needed": true,
-   "cold_ms": 2491,
+   "cold_ms": 2225,
    "successor": "D",
    "old_volume_24h_usd": null,
-   "old_price_usd": 0.2164628837370173
+   "old_price_usd": 0.21646698551171342
   },
   {
    "id": 2499,
@@ -572,12 +572,12 @@
    "verdict": "NOT_VERIFIABLE",
    "rule_id": "R10",
    "reason": "merged CMC page: the old contract has no CMC id of its own, and continuity did not confirm the ratio",
-   "verdict_captured_at": "2026-11-22T03:11:29Z",
+   "verdict_captured_at": "2026-11-22T03:34:25Z",
    "agent_needed": true,
-   "cold_ms": 1927,
+   "cold_ms": 2125,
    "successor": "BORG",
    "old_volume_24h_usd": null,
-   "old_price_usd": 0.12713535982066712
+   "old_price_usd": 0.12693509883837825
   },
   {
    "id": 2099,
@@ -595,9 +595,9 @@
    "verdict": "SWAP",
    "rule_id": "R9",
    "reason": "ratio 1 price-confirmed (event-date); the notice states no window: SWAP, if the issuer's swap is still open",
-   "verdict_captured_at": "2026-11-22T03:11:32Z",
+   "verdict_captured_at": "2026-11-22T03:34:26Z",
    "agent_needed": true,
-   "cold_ms": 4258,
+   "cold_ms": 3670,
    "successor": "SODA",
    "old_volume_24h_usd": 0.0,
    "old_price_usd": 0.106818578366247
@@ -618,12 +618,12 @@
    "verdict": "NOT_VERIFIABLE",
    "rule_id": "R10",
    "reason": "merged CMC page: the old contract has no CMC id of its own, and continuity did not confirm the ratio",
-   "verdict_captured_at": "2026-11-22T03:11:32Z",
+   "verdict_captured_at": "2026-11-22T03:34:26Z",
    "agent_needed": true,
-   "cold_ms": 2713,
+   "cold_ms": 2110,
    "successor": "NES",
    "old_volume_24h_usd": null,
-   "old_price_usd": 0.2993168025377124
+   "old_price_usd": 0.3107907391574422
   },
   {
    "id": 37166,
@@ -641,12 +641,12 @@
    "verdict": "NOTHING_TO_DO",
    "rule_id": "R4",
    "reason": "the coin you hold is the successor itself (same CMC id): a rename, a ticker change or the new token; nothing to swap",
-   "verdict_captured_at": "2026-11-22T03:11:32Z",
+   "verdict_captured_at": "2026-11-22T03:34:27Z",
    "agent_needed": false,
-   "cold_ms": 2773,
+   "cold_ms": 2199,
    "successor": "ONE",
-   "old_volume_24h_usd": 3920610.0042892206,
-   "old_price_usd": 0.1509706019392368
+   "old_volume_24h_usd": 3906320.6400266727,
+   "old_price_usd": 0.14975154271878233
   },
   {
    "id": 40212,
@@ -664,12 +664,12 @@
    "verdict": "NOT_VERIFIABLE",
    "rule_id": "R10",
    "reason": "successor not named in the notice; the linked announcement was not fetchable",
-   "verdict_captured_at": "2026-11-22T03:11:34Z",
+   "verdict_captured_at": "2026-11-22T03:34:28Z",
    "agent_needed": true,
-   "cold_ms": 2109,
+   "cold_ms": 1358,
    "successor": null,
-   "old_volume_24h_usd": 35372894.443685964,
-   "old_price_usd": 606.6099827892554
+   "old_volume_24h_usd": 35022708.22766006,
+   "old_price_usd": 606.5377556089927
   },
   {
    "id": 4195,
@@ -687,12 +687,12 @@
    "verdict": "NOT_VERIFIABLE",
    "rule_id": "R10",
    "reason": "successor not named in the notice",
-   "verdict_captured_at": "2026-11-22T03:11:34Z",
+   "verdict_captured_at": "2026-11-22T03:34:28Z",
    "agent_needed": false,
-   "cold_ms": 1330,
+   "cold_ms": 1451,
    "successor": null,
-   "old_volume_24h_usd": 1917526.0325431665,
-   "old_price_usd": 0.17561153087467699
+   "old_volume_24h_usd": 1909301.3020509917,
+   "old_price_usd": 0.17391480095773237
   },
   {
    "id": 23635,
@@ -710,12 +710,12 @@
    "verdict": "NOTHING_TO_DO",
    "rule_id": "R4",
    "reason": "the coin you hold is the successor itself (same CMC id): a rename, a ticker change or the new token; nothing to swap",
-   "verdict_captured_at": "2026-11-22T03:11:34Z",
+   "verdict_captured_at": "2026-11-22T03:34:29Z",
    "agent_needed": true,
-   "cold_ms": 2117,
+   "cold_ms": 2481,
    "successor": "FORM",
-   "old_volume_24h_usd": 3253051.2786510778,
-   "old_price_usd": 0.14241759212095442
+   "old_volume_24h_usd": 3050378.6877370127,
+   "old_price_usd": 0.1426444419291152
   },
   {
    "id": 5350,
@@ -733,12 +733,12 @@
    "verdict": "NOTHING_TO_DO",
    "rule_id": "R4",
    "reason": "the coin you hold is the successor itself (same CMC id): a rename, a ticker change or the new token; nothing to swap",
-   "verdict_captured_at": "2026-11-22T03:11:35Z",
+   "verdict_captured_at": "2026-11-22T03:34:30Z",
    "agent_needed": true,
-   "cold_ms": 1591,
+   "cold_ms": 1818,
    "successor": "XPR",
-   "old_volume_24h_usd": 2098974.8637112514,
-   "old_price_usd": 0.001551048487713451
+   "old_volume_24h_usd": 2082495.012577285,
+   "old_price_usd": 0.001544712941862996
   },
   {
    "id": 4944,
@@ -756,12 +756,12 @@
    "verdict": "NOT_VERIFIABLE",
    "rule_id": "R10",
    "reason": "successor not named in the notice",
-   "verdict_captured_at": "2026-11-22T03:11:35Z",
+   "verdict_captured_at": "2026-11-22T03:34:29Z",
    "agent_needed": false,
-   "cold_ms": 1346,
+   "cold_ms": 1356,
    "successor": null,
-   "old_volume_24h_usd": 9408765.01416884,
-   "old_price_usd": 11.970388820746562
+   "old_volume_24h_usd": 9157753.809512809,
+   "old_price_usd": 11.964100152428845
   },
   {
    "id": 6748,
@@ -779,12 +779,12 @@
    "verdict": "NOT_VERIFIABLE",
    "rule_id": "R10",
    "reason": "merged CMC page: the old contract has no CMC id of its own, and continuity did not confirm the ratio",
-   "verdict_captured_at": "2026-11-22T03:11:36Z",
+   "verdict_captured_at": "2026-11-22T03:34:31Z",
    "agent_needed": true,
-   "cold_ms": 1602,
+   "cold_ms": 2087,
    "successor": "CFG",
    "old_volume_24h_usd": null,
-   "old_price_usd": 0.0529880533711374
+   "old_price_usd": 0.052923689431641344
   },
   {
    "id": 36896,
@@ -802,9 +802,9 @@
    "verdict": "NOTHING_TO_DO",
    "rule_id": "R4",
    "reason": "the coin you hold is the successor itself (same CMC id): a rename, a ticker change or the new token; nothing to swap",
-   "verdict_captured_at": "2026-11-22T03:11:38Z",
+   "verdict_captured_at": "2026-11-22T03:34:31Z",
    "agent_needed": false,
-   "cold_ms": 3066,
+   "cold_ms": 2032,
    "successor": "VANTA",
    "old_volume_24h_usd": 0.0,
    "old_price_usd": 6.9350550025718
@@ -825,12 +825,12 @@
    "verdict": "NOTHING_TO_DO",
    "rule_id": "R4",
    "reason": "the coin you hold is the successor itself (same CMC id): a rename, a ticker change or the new token; nothing to swap",
-   "verdict_captured_at": "2026-11-22T03:11:38Z",
+   "verdict_captured_at": "2026-11-22T03:34:32Z",
    "agent_needed": false,
-   "cold_ms": 3235,
+   "cold_ms": 2110,
    "successor": "DATA",
-   "old_volume_24h_usd": 9916473.931810666,
-   "old_price_usd": 0.07968549881160021
+   "old_volume_24h_usd": 9687254.078259453,
+   "old_price_usd": 0.07986197893726331
   },
   {
    "id": 4950,
@@ -848,12 +848,12 @@
    "verdict": "NOT_VERIFIABLE",
    "rule_id": "R10",
    "reason": "merged CMC page: the old contract has no CMC id of its own, and continuity did not confirm the ratio",
-   "verdict_captured_at": "2026-11-22T03:11:39Z",
+   "verdict_captured_at": "2026-11-22T03:34:34Z",
    "agent_needed": false,
-   "cold_ms": 2680,
+   "cold_ms": 2734,
    "successor": "LCX",
    "old_volume_24h_usd": null,
-   "old_price_usd": 0.027618931796731205
+   "old_price_usd": 0.027443089700789555
   },
   {
    "id": 32299,
@@ -871,12 +871,12 @@
    "verdict": "NOTHING_TO_DO",
    "rule_id": "R4",
    "reason": "the coin you hold is the successor itself (same CMC id): a rename, a ticker change or the new token; nothing to swap",
-   "verdict_captured_at": "2026-11-22T03:11:41Z",
+   "verdict_captured_at": "2026-11-22T03:34:34Z",
    "agent_needed": false,
-   "cold_ms": 2840,
+   "cold_ms": 2910,
    "successor": "SANC",
-   "old_volume_24h_usd": 1277567.3892164812,
-   "old_price_usd": 0.05256214286838378
+   "old_volume_24h_usd": 1228538.1236364918,
+   "old_price_usd": 0.05245032274375315
   },
   {
    "id": 2943,
@@ -894,12 +894,12 @@
    "verdict": "NOT_VERIFIABLE",
    "rule_id": "R10",
    "reason": "merged CMC page: the old contract has no CMC id of its own, and continuity did not confirm the ratio",
-   "verdict_captured_at": "2026-11-22T03:11:41Z",
+   "verdict_captured_at": "2026-11-22T03:34:34Z",
    "agent_needed": true,
-   "cold_ms": 2322,
+   "cold_ms": 1941,
    "successor": "RPL",
    "old_volume_24h_usd": null,
-   "old_price_usd": 1.1151082235745309
+   "old_price_usd": 1.1171720179047326
   },
   {
    "id": 4679,
@@ -917,12 +917,12 @@
    "verdict": "NOTHING_TO_DO",
    "rule_id": "R4",
    "reason": "the coin you hold is the successor itself (same CMC id): a rename, a ticker change or the new token; nothing to swap",
-   "verdict_captured_at": "2026-11-22T03:11:40Z",
+   "verdict_captured_at": "2026-11-22T03:34:36Z",
    "agent_needed": true,
-   "cold_ms": 1581,
+   "cold_ms": 2035,
    "successor": "BAND",
-   "old_volume_24h_usd": 1057888.0412014003,
-   "old_price_usd": 0.13582640724168063
+   "old_volume_24h_usd": 1041199.3157348761,
+   "old_price_usd": 0.13593703242582167
   },
   {
    "id": 38299,
@@ -940,12 +940,12 @@
    "verdict": "NOTHING_TO_DO",
    "rule_id": "R4",
    "reason": "the coin you hold is the successor itself (same CMC id): a rename, a ticker change or the new token; nothing to swap",
-   "verdict_captured_at": "2026-11-22T03:11:42Z",
+   "verdict_captured_at": "2026-11-22T03:34:37Z",
    "agent_needed": false,
-   "cold_ms": 1853,
+   "cold_ms": 2757,
    "successor": "AVNT",
-   "old_volume_24h_usd": 6023704.17276138,
-   "old_price_usd": 0.0609861100143018
+   "old_volume_24h_usd": 5851673.578109234,
+   "old_price_usd": 0.06094157790183623
   },
   {
    "id": 693,
@@ -963,12 +963,12 @@
    "verdict": "NOT_VERIFIABLE",
    "rule_id": "R10",
    "reason": "successor not named in the notice",
-   "verdict_captured_at": "2026-11-22T03:11:42Z",
+   "verdict_captured_at": "2026-11-22T03:34:36Z",
    "agent_needed": false,
-   "cold_ms": 1367,
+   "cold_ms": 1473,
    "successor": null,
-   "old_volume_24h_usd": 1356539.2034908736,
-   "old_price_usd": 0.001415635913441021
+   "old_volume_24h_usd": 1324443.8011650273,
+   "old_price_usd": 0.001416827889897018
   },
   {
    "id": 42884,
@@ -986,12 +986,12 @@
    "verdict": "NOTHING_TO_DO",
    "rule_id": "R4",
    "reason": "the coin you hold is the successor itself (same CMC id): a rename, a ticker change or the new token; nothing to swap",
-   "verdict_captured_at": "2026-11-22T03:11:45Z",
+   "verdict_captured_at": "2026-11-22T03:34:39Z",
    "agent_needed": false,
-   "cold_ms": 4206,
+   "cold_ms": 3202,
    "successor": "CLEAR",
-   "old_volume_24h_usd": 753848.4424250376,
-   "old_price_usd": 0.021008681655564816
+   "old_volume_24h_usd": 632673.0367417642,
+   "old_price_usd": 0.021000756082915555
   },
   {
    "id": 36922,
@@ -1009,12 +1009,12 @@
    "verdict": "NOT_VERIFIABLE",
    "rule_id": "R10",
    "reason": "merged CMC page: the old contract has no CMC id of its own, and continuity did not confirm the ratio",
-   "verdict_captured_at": "2026-11-22T03:11:45Z",
+   "verdict_captured_at": "2026-11-22T03:34:38Z",
    "agent_needed": false,
-   "cold_ms": 2540,
+   "cold_ms": 2123,
    "successor": "H",
    "old_volume_24h_usd": null,
-   "old_price_usd": 0.010969302780389502
+   "old_price_usd": 0.010780896715140657
   },
   {
    "id": 3330,
@@ -1032,12 +1032,12 @@
    "verdict": "NOTHING_TO_DO",
    "rule_id": "R4",
    "reason": "the coin you hold is the successor itself (same CMC id): a rename, a ticker change or the new token; nothing to swap",
-   "verdict_captured_at": "2026-11-22T03:11:45Z",
+   "verdict_captured_at": "2026-11-22T03:34:39Z",
    "agent_needed": true,
-   "cold_ms": 2565,
+   "cold_ms": 2448,
    "successor": "USDP",
-   "old_volume_24h_usd": 1652137.9462606478,
-   "old_price_usd": 0.9958178910949481
+   "old_volume_24h_usd": 1621293.28505089,
+   "old_price_usd": 0.9958142890601785
   },
   {
    "id": 29318,
@@ -1055,9 +1055,9 @@
    "verdict": "NOT_VERIFIABLE",
    "rule_id": "R10",
    "reason": "merged CMC page: the old contract has no CMC id of its own, and continuity did not confirm the ratio",
-   "verdict_captured_at": "2026-11-22T03:11:47Z",
+   "verdict_captured_at": "2026-11-22T03:34:40Z",
    "agent_needed": true,
-   "cold_ms": 2113,
+   "cold_ms": 2004,
    "successor": "WUSD",
    "old_volume_24h_usd": null,
    "old_price_usd": 0.9960583095516488
@@ -1078,12 +1078,12 @@
    "verdict": "NOTHING_TO_DO",
    "rule_id": "R4",
    "reason": "the coin you hold is the successor itself (same CMC id): a rename, a ticker change or the new token; nothing to swap",
-   "verdict_captured_at": "2026-11-22T03:11:47Z",
+   "verdict_captured_at": "2026-11-22T03:34:41Z",
    "agent_needed": true,
-   "cold_ms": 1924,
+   "cold_ms": 2327,
    "successor": "FRAX",
-   "old_volume_24h_usd": 301726.4498426416,
-   "old_price_usd": 0.18732327153703485
+   "old_volume_24h_usd": 293449.54067924776,
+   "old_price_usd": 0.18741322140785371
   },
   {
    "id": 3801,
@@ -1101,12 +1101,12 @@
    "verdict": "NOT_VERIFIABLE",
    "rule_id": "R5",
    "reason": "successor refuted by CMC's data: contract 0x02cbe46fb8a1f579254a9b485788f2d86cad51aa is on CMC, but not on the named chain Klaytn Network",
-   "verdict_captured_at": "2026-11-22T03:11:47Z",
+   "verdict_captured_at": "2026-11-22T03:34:41Z",
    "agent_needed": false,
-   "cold_ms": 1588,
+   "cold_ms": 1596,
    "successor": null,
-   "old_volume_24h_usd": 337565.1016507057,
-   "old_price_usd": 0.01886648000048319
+   "old_volume_24h_usd": 322656.6398933553,
+   "old_price_usd": 0.018809057607562702
   },
   {
    "id": 39094,
@@ -1124,12 +1124,12 @@
    "verdict": "NOT_VERIFIABLE",
    "rule_id": "R10",
    "reason": "merged CMC page: the old contract has no CMC id of its own, and continuity did not confirm the ratio",
-   "verdict_captured_at": "2026-11-22T03:11:49Z",
+   "verdict_captured_at": "2026-11-22T03:34:42Z",
    "agent_needed": false,
-   "cold_ms": 2735,
+   "cold_ms": 2554,
    "successor": "ANTFUN",
    "old_volume_24h_usd": null,
-   "old_price_usd": 0.010966527689787809
+   "old_price_usd": 0.010920795224334534
   },
   {
    "id": 35114,
@@ -1147,12 +1147,12 @@
    "verdict": "NOTHING_TO_DO",
    "rule_id": "R4",
    "reason": "the coin you hold is the successor itself (same CMC id): a rename, a ticker change or the new token; nothing to swap",
-   "verdict_captured_at": "2026-11-22T03:11:49Z",
+   "verdict_captured_at": "2026-11-22T03:34:43Z",
    "agent_needed": false,
-   "cold_ms": 1921,
+   "cold_ms": 2159,
    "successor": "NAORIS",
-   "old_volume_24h_usd": 5779139.436839917,
-   "old_price_usd": 0.03554893915597458
+   "old_volume_24h_usd": 5785947.673690692,
+   "old_price_usd": 0.03598683761823202
   },
   {
    "id": 30168,
@@ -1170,12 +1170,12 @@
    "verdict": "NOTHING_TO_DO",
    "rule_id": "R4",
    "reason": "the coin you hold is the successor itself (same CMC id): a rename, a ticker change or the new token; nothing to swap",
-   "verdict_captured_at": "2026-11-22T03:11:49Z",
+   "verdict_captured_at": "2026-11-22T03:34:43Z",
    "agent_needed": true,
-   "cold_ms": 2187,
+   "cold_ms": 2146,
    "successor": "STRAX",
-   "old_volume_24h_usd": 907635.3912830697,
-   "old_price_usd": 0.007175915236623146
+   "old_volume_24h_usd": 930893.3212836684,
+   "old_price_usd": 0.007157999213791068
   },
   {
    "id": 8719,
@@ -1193,12 +1193,12 @@
    "verdict": "NOT_VERIFIABLE",
    "rule_id": "R10",
    "reason": "successor not named in the notice",
-   "verdict_captured_at": "2026-11-22T03:11:50Z",
+   "verdict_captured_at": "2026-11-22T03:34:44Z",
    "agent_needed": false,
-   "cold_ms": 1471,
+   "cold_ms": 1392,
    "successor": null,
-   "old_volume_24h_usd": 1145384.5920711274,
-   "old_price_usd": 2.1815942850852403
+   "old_volume_24h_usd": 1100091.8401149332,
+   "old_price_usd": 2.1795909241520017
   },
   {
    "id": 13524,
@@ -1216,12 +1216,12 @@
    "verdict": "NOT_VERIFIABLE",
    "rule_id": "R10",
    "reason": "successor has no live market; no swap value to compare",
-   "verdict_captured_at": "2026-11-22T03:11:51Z",
+   "verdict_captured_at": "2026-11-22T03:34:45Z",
    "agent_needed": true,
-   "cold_ms": 2177,
+   "cold_ms": 2308,
    "successor": "SAVE",
-   "old_volume_24h_usd": 28.394561050805283,
-   "old_price_usd": 0.1543649753031434
+   "old_volume_24h_usd": 27.317053391403746,
+   "old_price_usd": 0.15500924769761132
   },
   {
    "id": 1414,
@@ -1239,12 +1239,12 @@
    "verdict": "NOT_VERIFIABLE",
    "rule_id": "R5",
    "reason": "successor refuted by CMC's data: the named successor Firo matches no CMC id",
-   "verdict_captured_at": "2026-11-22T03:11:51Z",
+   "verdict_captured_at": "2026-11-22T03:34:45Z",
    "agent_needed": true,
-   "cold_ms": 1295,
+   "cold_ms": 1576,
    "successor": null,
-   "old_volume_24h_usd": 85409.25967699742,
-   "old_price_usd": 0.7605168434610029
+   "old_volume_24h_usd": 85379.52087899858,
+   "old_price_usd": 0.7588048156980093
   },
   {
    "id": 1762,
@@ -1261,13 +1261,13 @@
    "only_unfetchable_hosts": false,
    "verdict": "NOT_VERIFIABLE",
    "rule_id": "R10",
-   "reason": "merged CMC page: the old contract has no CMC id of its own, and continuity did not confirm the ratio",
-   "verdict_captured_at": "2026-11-22T03:11:52Z",
+   "reason": "the Reader labelled this a swap, but the notice has no swap wording, contract change or ratio, and the coin keeps one CMC id: no textual evidence of a swap",
+   "verdict_captured_at": "2026-11-22T03:34:46Z",
    "agent_needed": true,
-   "cold_ms": 1548,
+   "cold_ms": 1936,
    "successor": "ERG",
    "old_volume_24h_usd": null,
-   "old_price_usd": 0.17481246365442818
+   "old_price_usd": 0.17459302593970444
   },
   {
    "id": 38430,
@@ -1285,12 +1285,12 @@
    "verdict": "NOT_VERIFIABLE",
    "rule_id": "R5",
    "reason": "successor refuted by CMC's data: no CMC coin carries the quoted contract 0x53EC33Cd4fA46b9ecED9cA3f6dB626C5FfCd55cC",
-   "verdict_captured_at": "2026-11-22T03:11:52Z",
+   "verdict_captured_at": "2026-11-22T03:34:48Z",
    "agent_needed": false,
-   "cold_ms": 1616,
+   "cold_ms": 2588,
    "successor": null,
-   "old_volume_24h_usd": 2763456.596188187,
-   "old_price_usd": 0.06886610603634637
+   "old_volume_24h_usd": 2747423.2213846133,
+   "old_price_usd": 0.068829870840174
   },
   {
    "id": 41996,
@@ -1308,12 +1308,12 @@
    "verdict": "NOTHING_TO_DO",
    "rule_id": "R4",
    "reason": "the coin you hold is the successor itself (same CMC id): a rename, a ticker change or the new token; nothing to swap",
-   "verdict_captured_at": "2026-11-22T03:11:54Z",
+   "verdict_captured_at": "2026-11-22T03:34:48Z",
    "agent_needed": true,
-   "cold_ms": 3228,
+   "cold_ms": 3096,
    "successor": "RZUSD",
-   "old_volume_24h_usd": 1697.9546035558822,
-   "old_price_usd": 0.99740412885107
+   "old_volume_24h_usd": 1698.08009746864,
+   "old_price_usd": 0.9974362067601426
   },
   {
    "id": 7978,
@@ -1331,12 +1331,12 @@
    "verdict": "NOT_VERIFIABLE",
    "rule_id": "R10",
    "reason": "successor has no live market; no swap value to compare",
-   "verdict_captured_at": "2026-11-22T03:11:55Z",
+   "verdict_captured_at": "2026-11-22T03:34:50Z",
    "agent_needed": true,
-   "cold_ms": 3048,
+   "cold_ms": 3797,
    "successor": "SNS",
-   "old_volume_24h_usd": 8219986.148922676,
-   "old_price_usd": 0.012392594038344758
+   "old_volume_24h_usd": 8264269.1667134985,
+   "old_price_usd": 0.01247516753029443
   },
   {
    "id": 39611,
@@ -1354,12 +1354,12 @@
    "verdict": "NOT_VERIFIABLE",
    "rule_id": "R10",
    "reason": "merged CMC page: the old contract has no CMC id of its own, and continuity did not confirm the ratio",
-   "verdict_captured_at": "2026-11-22T03:11:54Z",
+   "verdict_captured_at": "2026-11-22T03:34:49Z",
    "agent_needed": true,
-   "cold_ms": 2101,
+   "cold_ms": 1613,
    "successor": "MANTRA",
    "old_volume_24h_usd": null,
-   "old_price_usd": 0.001772428206769864
+   "old_price_usd": 0.00177459495335236
   },
   {
    "id": 38651,
@@ -1377,12 +1377,12 @@
    "verdict": "NOT_VERIFIABLE",
    "rule_id": "R10",
    "reason": "successor not named in the notice",
-   "verdict_captured_at": "2026-11-22T03:11:56Z",
+   "verdict_captured_at": "2026-11-22T03:34:51Z",
    "agent_needed": false,
-   "cold_ms": 1310,
+   "cold_ms": 2362,
    "successor": null,
-   "old_volume_24h_usd": 28125219.94144917,
-   "old_price_usd": 0.05296960342137942
+   "old_volume_24h_usd": 28039599.364637714,
+   "old_price_usd": 0.05245960088082992
   },
   {
    "id": 40946,
@@ -1400,9 +1400,9 @@
    "verdict": "NOT_VERIFIABLE",
    "rule_id": "R10",
    "reason": "merged CMC page: the old contract has no CMC id of its own, and continuity did not confirm the ratio",
-   "verdict_captured_at": "2026-11-22T03:11:56Z",
+   "verdict_captured_at": "2026-11-22T03:34:52Z",
    "agent_needed": false,
-   "cold_ms": 1925,
+   "cold_ms": 2369,
    "successor": "ANSEMCAT",
    "old_volume_24h_usd": null,
    "old_price_usd": 2.8070403938226e-05
@@ -1422,13 +1422,13 @@
    "only_unfetchable_hosts": false,
    "verdict": "NOT_VERIFIABLE",
    "rule_id": "R10",
-   "reason": "merged CMC page: the old contract has no CMC id of its own, and continuity did not confirm the ratio",
-   "verdict_captured_at": "2026-11-22T03:11:57Z",
+   "reason": "the Reader labelled this a swap, but the notice has no swap wording, contract change or ratio, and the coin keeps one CMC id: no textual evidence of a swap",
+   "verdict_captured_at": "2026-11-22T03:34:52Z",
    "agent_needed": true,
-   "cold_ms": 1956,
+   "cold_ms": 2324,
    "successor": "NOW",
    "old_volume_24h_usd": null,
-   "old_price_usd": 0.12849645822327657
+   "old_price_usd": 0.12817558179638655
   },
   {
    "id": 7463,
@@ -1446,12 +1446,12 @@
    "verdict": "NOT_VERIFIABLE",
    "rule_id": "R10",
    "reason": "successor has no live market; no swap value to compare",
-   "verdict_captured_at": "2026-11-22T03:11:58Z",
+   "verdict_captured_at": "2026-11-22T03:34:54Z",
    "agent_needed": true,
-   "cold_ms": 2521,
+   "cold_ms": 2747,
    "successor": "LEVER",
-   "old_volume_24h_usd": 488.2255201305323,
-   "old_price_usd": 0.01401970354768965
+   "old_volume_24h_usd": 507.01068531188827,
+   "old_price_usd": 0.013981463570677017
   },
   {
    "id": 38569,
@@ -1469,12 +1469,12 @@
    "verdict": "NOT_VERIFIABLE",
    "rule_id": "R5",
    "reason": "successor refuted by CMC's data: the named successor Capricorn matches no CMC id",
-   "verdict_captured_at": "2026-11-22T03:11:58Z",
+   "verdict_captured_at": "2026-11-22T03:34:53Z",
    "agent_needed": true,
-   "cold_ms": 1774,
+   "cold_ms": 1300,
    "successor": null,
-   "old_volume_24h_usd": 1908173.7873054878,
-   "old_price_usd": 0.02631926594020188
+   "old_volume_24h_usd": 1854021.6415806115,
+   "old_price_usd": 0.026131975717307996
   },
   {
    "id": 6731,
@@ -1492,12 +1492,12 @@
    "verdict": "NOT_VERIFIABLE",
    "rule_id": "R10",
    "reason": "successor not named in the notice",
-   "verdict_captured_at": "2026-11-22T03:11:59Z",
+   "verdict_captured_at": "2026-11-22T03:34:54Z",
    "agent_needed": false,
-   "cold_ms": 2388,
+   "cold_ms": 1705,
    "successor": null,
-   "old_volume_24h_usd": 368054.89419029246,
-   "old_price_usd": 0.23102968221974107
+   "old_volume_24h_usd": 368038.28270886966,
+   "old_price_usd": 0.22983357462624246
   },
   {
    "id": 36556,
@@ -1515,12 +1515,12 @@
    "verdict": "NOT_VERIFIABLE",
    "rule_id": "R5",
    "reason": "successor refuted by CMC's data: the quoted old contract 0xfE39C384D702914127a005523f9915ADDB9bd59b is not among CMC's contracts for HP",
-   "verdict_captured_at": "2026-11-22T03:12:01Z",
+   "verdict_captured_at": "2026-11-22T03:34:55Z",
    "agent_needed": true,
-   "cold_ms": 2552,
+   "cold_ms": 1898,
    "successor": null,
-   "old_volume_24h_usd": 647371.8169840996,
-   "old_price_usd": 0.006414213928274699
+   "old_volume_24h_usd": 645682.6603661967,
+   "old_price_usd": 0.006404191190959406
   },
   {
    "id": 16334,
@@ -1538,12 +1538,12 @@
    "verdict": "NOT_VERIFIABLE",
    "rule_id": "R10",
    "reason": "ratio not stated",
-   "verdict_captured_at": "2026-11-22T03:12:02Z",
+   "verdict_captured_at": "2026-11-22T03:34:58Z",
    "agent_needed": true,
-   "cold_ms": 3364,
+   "cold_ms": 4214,
    "successor": "ASTER",
-   "old_volume_24h_usd": 4334.042151013415,
-   "old_price_usd": 0.2142107752508877
+   "old_volume_24h_usd": 3882.763232524216,
+   "old_price_usd": 0.2142549736577532
   },
   {
    "id": 35395,
@@ -1561,12 +1561,12 @@
    "verdict": "NOT_VERIFIABLE",
    "rule_id": "R5",
    "reason": "successor refuted by CMC's data: no CMC coin carries the quoted contract 0x7Cc9c624Efa62C2Decf0a2a028f7885eCea95A17",
-   "verdict_captured_at": "2026-11-22T03:12:01Z",
+   "verdict_captured_at": "2026-11-22T03:34:56Z",
    "agent_needed": false,
-   "cold_ms": 2123,
+   "cold_ms": 2113,
    "successor": null,
-   "old_volume_24h_usd": 270433.94723112416,
-   "old_price_usd": 0.000833514638195327
+   "old_volume_24h_usd": 270393.240076677,
+   "old_price_usd": 0.000834296312270695
   },
   {
    "id": 37534,
@@ -1584,12 +1584,12 @@
    "verdict": "NOT_VERIFIABLE",
    "rule_id": "R10",
    "reason": "merged CMC page: the old contract has no CMC id of its own, and continuity did not confirm the ratio",
-   "verdict_captured_at": "2026-11-22T03:12:04Z",
+   "verdict_captured_at": "2026-11-22T03:34:57Z",
    "agent_needed": false,
-   "cold_ms": 2818,
+   "cold_ms": 2723,
    "successor": "PLAY",
    "old_volume_24h_usd": null,
-   "old_price_usd": 0.007060102332558331
+   "old_price_usd": 0.007082420461053501
   },
   {
    "id": 2868,
@@ -1607,12 +1607,12 @@
    "verdict": "NOT_VERIFIABLE",
    "rule_id": "R10",
    "reason": "merged CMC page: the old contract has no CMC id of its own, and continuity did not confirm the ratio",
-   "verdict_captured_at": "2026-11-22T03:12:04Z",
+   "verdict_captured_at": "2026-11-22T03:34:58Z",
    "agent_needed": false,
-   "cold_ms": 2437,
+   "cold_ms": 1848,
    "successor": "DAG",
    "old_volume_24h_usd": null,
-   "old_price_usd": 0.002926650683974044
+   "old_price_usd": 0.002927091187829769
   },
   {
    "id": 32089,
@@ -1630,12 +1630,12 @@
    "verdict": "NOT_VERIFIABLE",
    "rule_id": "R5",
    "reason": "successor refuted by CMC's data: the named successor Verona matches no CMC id",
-   "verdict_captured_at": "2026-11-22T03:12:03Z",
+   "verdict_captured_at": "2026-11-22T03:34:59Z",
    "agent_needed": false,
-   "cold_ms": 1327,
+   "cold_ms": 1713,
    "successor": null,
-   "old_volume_24h_usd": 294838.3453337867,
-   "old_price_usd": 0.09018970937755053
+   "old_volume_24h_usd": 295030.5305062789,
+   "old_price_usd": 0.09034223137333838
   },
   {
    "id": 2320,
@@ -1653,9 +1653,9 @@
    "verdict": "NOT_VERIFIABLE",
    "rule_id": "R5",
    "reason": "successor refuted by CMC's data: the named successor xMoney matches no CMC id",
-   "verdict_captured_at": "2026-11-22T03:12:04Z",
+   "verdict_captured_at": "2026-11-22T03:34:59Z",
    "agent_needed": false,
-   "cold_ms": 1326,
+   "cold_ms": 1339,
    "successor": null,
    "old_volume_24h_usd": 0.0,
    "old_price_usd": 0.01178880376632181
@@ -1676,12 +1676,12 @@
    "verdict": "NOT_VERIFIABLE",
    "rule_id": "R10",
    "reason": "successor not named in the notice",
-   "verdict_captured_at": "2026-11-22T03:12:05Z",
+   "verdict_captured_at": "2026-11-22T03:35:00Z",
    "agent_needed": true,
-   "cold_ms": 1436,
+   "cold_ms": 1998,
    "successor": null,
-   "old_volume_24h_usd": 250453.31663767455,
-   "old_price_usd": 0.11771325547107463
+   "old_volume_24h_usd": 249705.4334919652,
+   "old_price_usd": 0.11771320076990911
   },
   {
    "id": 5956,
@@ -1699,9 +1699,9 @@
    "verdict": "NOT_VERIFIABLE",
    "rule_id": "R5",
    "reason": "successor refuted by CMC's data: the named successor MUX Protocol matches no CMC id",
-   "verdict_captured_at": "2026-11-22T03:12:05Z",
+   "verdict_captured_at": "2026-11-22T03:35:01Z",
    "agent_needed": true,
-   "cold_ms": 1345,
+   "cold_ms": 1738,
    "successor": null,
    "old_volume_24h_usd": 0.0,
    "old_price_usd": 2.1449602433724446
@@ -1722,9 +1722,9 @@
    "verdict": "WRITE_OFF",
    "rule_id": "R6",
    "reason": "CMC's data shows no market to exit through: the old token has no live market and the successor has no live market either. This does not rule out an issuer claim process.",
-   "verdict_captured_at": "2026-11-22T03:12:07Z",
+   "verdict_captured_at": "2026-11-22T03:35:02Z",
    "agent_needed": true,
-   "cold_ms": 2818,
+   "cold_ms": 3115,
    "successor": "EPX",
    "old_volume_24h_usd": 0.0,
    "old_price_usd": 0.011203358519189405
@@ -1745,12 +1745,12 @@
    "verdict": "NOT_VERIFIABLE",
    "rule_id": "R10",
    "reason": "merged CMC page: the old contract has no CMC id of its own, and continuity did not confirm the ratio",
-   "verdict_captured_at": "2026-11-22T03:12:07Z",
+   "verdict_captured_at": "2026-11-22T03:35:02Z",
    "agent_needed": true,
-   "cold_ms": 1591,
+   "cold_ms": 1810,
    "successor": "GLMR",
    "old_volume_24h_usd": null,
-   "old_price_usd": 0.00644003869352855
+   "old_price_usd": 0.00643701835699765
   },
   {
    "id": 37338,
@@ -1768,12 +1768,12 @@
    "verdict": "SWAP",
    "rule_id": "R9",
    "reason": "ratio 1 price-confirmed (continuity); the notice states no window: SWAP, if the issuer's swap is still open",
-   "verdict_captured_at": "2026-11-22T03:12:08Z",
+   "verdict_captured_at": "2026-11-22T03:35:04Z",
    "agent_needed": false,
-   "cold_ms": 3015,
+   "cold_ms": 3459,
    "successor": "TAC",
    "old_volume_24h_usd": null,
-   "old_price_usd": 0.001176571616638686
+   "old_price_usd": 0.001157998697719496
   },
   {
    "id": 2915,
@@ -1791,12 +1791,12 @@
    "verdict": "NOT_VERIFIABLE",
    "rule_id": "R10",
    "reason": "merged CMC page: the old contract has no CMC id of its own, and continuity did not confirm the ratio",
-   "verdict_captured_at": "2026-11-22T03:12:09Z",
+   "verdict_captured_at": "2026-11-22T03:35:04Z",
    "agent_needed": true,
-   "cold_ms": 2375,
+   "cold_ms": 2570,
    "successor": "MOC",
    "old_volume_24h_usd": null,
-   "old_price_usd": 0.01611442281794822
+   "old_price_usd": 0.015904195736092575
   },
   {
    "id": 34828,
@@ -1814,9 +1814,9 @@
    "verdict": "NOT_VERIFIABLE",
    "rule_id": "R5",
    "reason": "successor refuted by CMC's data: the named successor Save matches no CMC id",
-   "verdict_captured_at": "2026-11-22T03:12:09Z",
+   "verdict_captured_at": "2026-11-22T03:35:04Z",
    "agent_needed": true,
-   "cold_ms": 1736,
+   "cold_ms": 2134,
    "successor": null,
    "old_volume_24h_usd": 0.0,
    "old_price_usd": 0.1561242012257378
@@ -1837,12 +1837,12 @@
    "verdict": "NOT_VERIFIABLE",
    "rule_id": "R5",
    "reason": "successor refuted by CMC's data: the named successor SLERF v2 matches no CMC id",
-   "verdict_captured_at": "2026-11-22T03:12:11Z",
+   "verdict_captured_at": "2026-11-22T03:35:06Z",
    "agent_needed": true,
-   "cold_ms": 2985,
+   "cold_ms": 1611,
    "successor": null,
-   "old_volume_24h_usd": 109.5737203858626,
-   "old_price_usd": 0.013597716777197788
+   "old_volume_24h_usd": 109.29673032874115,
+   "old_price_usd": 0.013597690004210879
   },
   {
    "id": 37562,
@@ -1860,12 +1860,12 @@
    "verdict": "NOT_VERIFIABLE",
    "rule_id": "R5",
    "reason": "successor refuted by CMC's data: no CMC coin carries the quoted contract 0x81a7DA4074b8e0eD51beA40f9dCbDF4d9d4832b4",
-   "verdict_captured_at": "2026-11-22T03:12:10Z",
+   "verdict_captured_at": "2026-11-22T03:35:06Z",
    "agent_needed": false,
-   "cold_ms": 1655,
+   "cold_ms": 2025,
    "successor": null,
-   "old_volume_24h_usd": 1074154.143567782,
-   "old_price_usd": 0.028520910775307443
+   "old_volume_24h_usd": 1072990.9261757007,
+   "old_price_usd": 0.028375449060413335
   },
   {
    "id": 5966,
@@ -1883,9 +1883,9 @@
    "verdict": "NOT_VERIFIABLE",
    "rule_id": "R10",
    "reason": "successor not named in the notice",
-   "verdict_captured_at": "2026-11-22T03:12:11Z",
+   "verdict_captured_at": "2026-11-22T03:35:06Z",
    "agent_needed": true,
-   "cold_ms": 1992,
+   "cold_ms": 1626,
    "successor": null,
    "old_volume_24h_usd": 0.0,
    "old_price_usd": 0.00125800300699235
@@ -1906,12 +1906,12 @@
    "verdict": "NOT_VERIFIABLE",
    "rule_id": "R10",
    "reason": "merged CMC page: the old contract has no CMC id of its own, and continuity did not confirm the ratio",
-   "verdict_captured_at": "2026-11-22T03:12:12Z",
+   "verdict_captured_at": "2026-11-22T03:35:08Z",
    "agent_needed": true,
-   "cold_ms": 2000,
+   "cold_ms": 2065,
    "successor": "HEI",
    "old_volume_24h_usd": null,
-   "old_price_usd": 0.07948088411206516
+   "old_price_usd": 0.07927303045694858
   },
   {
    "id": 30528,
@@ -1929,12 +1929,12 @@
    "verdict": "NOT_VERIFIABLE",
    "rule_id": "R10",
    "reason": "ratio not stated; the linked announcement was not fetchable",
-   "verdict_captured_at": "2026-11-22T03:12:14Z",
+   "verdict_captured_at": "2026-11-22T03:35:08Z",
    "agent_needed": true,
-   "cold_ms": 2678,
+   "cold_ms": 2331,
    "successor": "RYFT",
-   "old_volume_24h_usd": 3043.9473236193567,
-   "old_price_usd": 0.6424145293524401
+   "old_volume_24h_usd": 0.0,
+   "old_price_usd": 0.6424141410869327
   },
   {
    "id": 24203,
@@ -1952,12 +1952,12 @@
    "verdict": "NOT_VERIFIABLE",
    "rule_id": "R10",
    "reason": "ratio not stated",
-   "verdict_captured_at": "2026-11-22T03:12:14Z",
+   "verdict_captured_at": "2026-11-22T03:35:09Z",
    "agent_needed": true,
-   "cold_ms": 3250,
+   "cold_ms": 3022,
    "successor": "EV",
-   "old_volume_24h_usd": 8177.33677632954,
-   "old_price_usd": 0.000627404632087733
+   "old_volume_24h_usd": 9434.498001677322,
+   "old_price_usd": 0.000625706111161847
   },
   {
    "id": 12623,
@@ -1975,12 +1975,12 @@
    "verdict": "NOT_VERIFIABLE",
    "rule_id": "R10",
    "reason": "successor not named in the notice",
-   "verdict_captured_at": "2026-11-22T03:12:14Z",
+   "verdict_captured_at": "2026-11-22T03:35:09Z",
    "agent_needed": false,
-   "cold_ms": 1385,
+   "cold_ms": 1379,
    "successor": null,
-   "old_volume_24h_usd": 845270.5261958735,
-   "old_price_usd": 0.08139956720247066
+   "old_volume_24h_usd": 862961.5691343136,
+   "old_price_usd": 0.08142596223890892
   },
   {
    "id": 8206,
@@ -1998,12 +1998,12 @@
    "verdict": "NOT_VERIFIABLE",
    "rule_id": "R10",
    "reason": "successor not named in the notice; the linked announcement was not fetchable",
-   "verdict_captured_at": "2026-11-22T03:12:16Z",
+   "verdict_captured_at": "2026-11-22T03:35:10Z",
    "agent_needed": true,
-   "cold_ms": 2124,
+   "cold_ms": 2096,
    "successor": null,
-   "old_volume_24h_usd": 4808.418619476147,
-   "old_price_usd": 9.110715452722328
+   "old_volume_24h_usd": 4065.6410395631324,
+   "old_price_usd": 9.102360714673766
   },
   {
    "id": 35670,
@@ -2021,12 +2021,12 @@
    "verdict": "NOTHING_TO_DO",
    "rule_id": "R4",
    "reason": "the coin you hold is the successor itself (same CMC id): a rename, a ticker change or the new token; nothing to swap",
-   "verdict_captured_at": "2026-11-22T03:12:17Z",
+   "verdict_captured_at": "2026-11-22T03:35:11Z",
    "agent_needed": false,
-   "cold_ms": 2694,
+   "cold_ms": 2094,
    "successor": "BUSD",
-   "old_volume_24h_usd": 79488.65385870707,
-   "old_price_usd": 0.9797560908947872
+   "old_volume_24h_usd": 76470.24147280885,
+   "old_price_usd": 0.9983269045270746
   },
   {
    "id": 2866,
@@ -2044,12 +2044,12 @@
    "verdict": "NOT_VERIFIABLE",
    "rule_id": "R10",
    "reason": "merged CMC page: the old contract has no CMC id of its own, and continuity did not confirm the ratio",
-   "verdict_captured_at": "2026-11-22T03:12:16Z",
+   "verdict_captured_at": "2026-11-22T03:35:11Z",
    "agent_needed": false,
-   "cold_ms": 1985,
+   "cold_ms": 2202,
    "successor": "BOUNTY",
    "old_volume_24h_usd": null,
-   "old_price_usd": 0.010389968751446061
+   "old_price_usd": 0.010398098545593891
   },
   {
    "id": 36939,
@@ -2067,12 +2067,12 @@
    "verdict": "NOT_VERIFIABLE",
    "rule_id": "R10",
    "reason": "successor not named in the notice",
-   "verdict_captured_at": "2026-11-22T03:12:18Z",
+   "verdict_captured_at": "2026-11-22T03:35:12Z",
    "agent_needed": false,
-   "cold_ms": 1781,
+   "cold_ms": 1395,
    "successor": null,
-   "old_volume_24h_usd": 43559.88618957959,
-   "old_price_usd": 0.001897087998009335
+   "old_volume_24h_usd": 43521.13481102848,
+   "old_price_usd": 0.001881298327831797
   },
   {
    "id": 30651,
@@ -2090,12 +2090,12 @@
    "verdict": "NOT_VERIFIABLE",
    "rule_id": "R10",
    "reason": "merged CMC page: the old contract has no CMC id of its own, and continuity did not confirm the ratio",
-   "verdict_captured_at": "2026-11-22T03:12:20Z",
+   "verdict_captured_at": "2026-11-22T03:35:14Z",
    "agent_needed": false,
-   "cold_ms": 3307,
+   "cold_ms": 2654,
    "successor": "QFI",
    "old_volume_24h_usd": null,
-   "old_price_usd": 5.267693539775168
+   "old_price_usd": 5.268244680810541
   },
   {
    "id": 38789,
@@ -2113,12 +2113,12 @@
    "verdict": "NOT_VERIFIABLE",
    "rule_id": "R10",
    "reason": "merged CMC page: the old contract has no CMC id of its own, and continuity did not confirm the ratio",
-   "verdict_captured_at": "2026-11-22T03:12:19Z",
+   "verdict_captured_at": "2026-11-22T03:35:14Z",
    "agent_needed": false,
-   "cold_ms": 2829,
+   "cold_ms": 2495,
    "successor": "PAYAI",
    "old_volume_24h_usd": null,
-   "old_price_usd": 0.004817936964853857
+   "old_price_usd": 0.004815372163553511
   },
   {
    "id": 27178,
@@ -2136,12 +2136,12 @@
    "verdict": "NOT_VERIFIABLE",
    "rule_id": "R10",
    "reason": "merged CMC page: the old contract has no CMC id of its own, and continuity did not confirm the ratio",
-   "verdict_captured_at": "2026-11-22T03:12:19Z",
+   "verdict_captured_at": "2026-11-22T03:35:14Z",
    "agent_needed": true,
-   "cold_ms": 1781,
+   "cold_ms": 1850,
    "successor": "PAAL",
    "old_volume_24h_usd": null,
-   "old_price_usd": 0.004946406477066341
+   "old_price_usd": 0.004917761757784651
   },
   {
    "id": 29593,
@@ -2159,9 +2159,9 @@
    "verdict": "NOT_VERIFIABLE",
    "rule_id": "R10",
    "reason": "merged CMC page: the old contract has no CMC id of its own, and continuity did not confirm the ratio",
-   "verdict_captured_at": "2026-11-22T03:12:21Z",
+   "verdict_captured_at": "2026-11-22T03:35:16Z",
    "agent_needed": true,
-   "cold_ms": 1564,
+   "cold_ms": 1948,
    "successor": "ASTRA",
    "old_volume_24h_usd": null,
    "old_price_usd": 0.4929307162485154
@@ -2182,12 +2182,12 @@
    "verdict": "NOT_VERIFIABLE",
    "rule_id": "R10",
    "reason": "merged CMC page: the old contract has no CMC id of its own, and continuity did not confirm the ratio",
-   "verdict_captured_at": "2026-11-22T03:12:21Z",
+   "verdict_captured_at": "2026-11-22T03:35:16Z",
    "agent_needed": false,
-   "cold_ms": 1806,
+   "cold_ms": 2196,
    "successor": "MAPO",
    "old_volume_24h_usd": null,
-   "old_price_usd": 0.000726682821127548
+   "old_price_usd": 0.000726731925626521
   },
   {
    "id": 24225,
@@ -2205,12 +2205,12 @@
    "verdict": "NOT_VERIFIABLE",
    "rule_id": "R5",
    "reason": "successor refuted by CMC's data: no CMC coin carries the quoted contract 0x3E7f1039896454B9cb27c53CC7383e1AB9D9512a",
-   "verdict_captured_at": "2026-11-22T03:12:22Z",
+   "verdict_captured_at": "2026-11-22T03:35:16Z",
    "agent_needed": true,
-   "cold_ms": 2014,
+   "cold_ms": 1607,
    "successor": null,
-   "old_volume_24h_usd": 26610.36847175304,
-   "old_price_usd": 0.01230906420042695
+   "old_volume_24h_usd": 26169.5735510659,
+   "old_price_usd": 0.012300595205287687
   },
   {
    "id": 10372,
@@ -2228,12 +2228,12 @@
    "verdict": "NOT_VERIFIABLE",
    "rule_id": "R10",
    "reason": "merged CMC page: the old contract has no CMC id of its own, and continuity did not confirm the ratio",
-   "verdict_captured_at": "2026-11-22T03:12:23Z",
+   "verdict_captured_at": "2026-11-22T03:35:19Z",
    "agent_needed": true,
-   "cold_ms": 1870,
+   "cold_ms": 2952,
    "successor": "DXI",
    "old_volume_24h_usd": null,
-   "old_price_usd": 0.000517934372549903
+   "old_price_usd": 0.000522887203060359
   },
   {
    "id": 20305,
@@ -2251,12 +2251,12 @@
    "verdict": "NOT_VERIFIABLE",
    "rule_id": "R10",
    "reason": "merged CMC page: the old contract has no CMC id of its own, and continuity did not confirm the ratio",
-   "verdict_captured_at": "2026-11-22T03:12:24Z",
+   "verdict_captured_at": "2026-11-22T03:35:18Z",
    "agent_needed": false,
-   "cold_ms": 2335,
+   "cold_ms": 2473,
    "successor": "KCT",
    "old_volume_24h_usd": null,
-   "old_price_usd": 0.00040186715770712
+   "old_price_usd": 0.000401109447283534
   },
   {
    "id": 22359,
@@ -2274,12 +2274,12 @@
    "verdict": "NOTHING_TO_DO",
    "rule_id": "R4",
    "reason": "the coin you hold is the successor itself (same CMC id): a rename, a ticker change or the new token; nothing to swap",
-   "verdict_captured_at": "2026-11-22T03:12:24Z",
+   "verdict_captured_at": "2026-11-22T03:35:18Z",
    "agent_needed": true,
-   "cold_ms": 2522,
+   "cold_ms": 1614,
    "successor": "XPLA",
-   "old_volume_24h_usd": 54516.35621976391,
-   "old_price_usd": 0.003801926955767337
+   "old_volume_24h_usd": 54871.88031616175,
+   "old_price_usd": 0.003791847350573418
   },
   {
    "id": 16399,
@@ -2297,12 +2297,12 @@
    "verdict": "NOT_VERIFIABLE",
    "rule_id": "R10",
    "reason": "ratio stated but not price-confirmed, and the contracts are not both verified",
-   "verdict_captured_at": "2026-11-22T03:12:27Z",
+   "verdict_captured_at": "2026-11-22T03:35:23Z",
    "agent_needed": true,
-   "cold_ms": 3911,
+   "cold_ms": 4909,
    "successor": "TX",
-   "old_volume_24h_usd": 142.13048395951964,
-   "old_price_usd": 0.010135260630647548
+   "old_volume_24h_usd": 141.673003012408,
+   "old_price_usd": 0.010102637870889322
   },
   {
    "id": 37656,
@@ -2320,12 +2320,12 @@
    "verdict": "NOT_VERIFIABLE",
    "rule_id": "R10",
    "reason": "merged CMC page: the old contract has no CMC id of its own, and continuity did not confirm the ratio",
-   "verdict_captured_at": "2026-11-22T03:12:26Z",
+   "verdict_captured_at": "2026-11-22T03:35:21Z",
    "agent_needed": true,
-   "cold_ms": 2078,
+   "cold_ms": 2871,
    "successor": "SPACEX",
    "old_volume_24h_usd": null,
-   "old_price_usd": 528.0727128630191
+   "old_price_usd": 525.1404867344894
   },
   {
    "id": 34348,
@@ -2343,12 +2343,12 @@
    "verdict": "NOT_VERIFIABLE",
    "rule_id": "R10",
    "reason": "merged CMC page: the old contract has no CMC id of its own, and continuity did not confirm the ratio",
-   "verdict_captured_at": "2026-11-22T03:12:27Z",
+   "verdict_captured_at": "2026-11-22T03:35:22Z",
    "agent_needed": false,
-   "cold_ms": 2440,
+   "cold_ms": 2977,
    "successor": "EMT",
    "old_volume_24h_usd": null,
-   "old_price_usd": 0.002679313140578465
+   "old_price_usd": 0.002679349671283239
   },
   {
    "id": 7311,
@@ -2366,12 +2366,12 @@
    "verdict": "NOT_VERIFIABLE",
    "rule_id": "R10",
    "reason": "merged CMC page: the old contract has no CMC id of its own, and continuity did not confirm the ratio",
-   "verdict_captured_at": "2026-11-22T03:12:28Z",
+   "verdict_captured_at": "2026-11-22T03:35:23Z",
    "agent_needed": true,
-   "cold_ms": 2476,
+   "cold_ms": 2212,
    "successor": "BIFI",
    "old_volume_24h_usd": null,
-   "old_price_usd": 45.75436311141096
+   "old_price_usd": 45.75744334700131
   },
   {
    "id": 1552,
@@ -2389,12 +2389,12 @@
    "verdict": "NOT_VERIFIABLE",
    "rule_id": "R5",
    "reason": "successor refuted by CMC's data: the named successor Enzyme matches no CMC id",
-   "verdict_captured_at": "2026-11-22T03:12:28Z",
+   "verdict_captured_at": "2026-11-22T03:35:23Z",
    "agent_needed": true,
-   "cold_ms": 1788,
+   "cold_ms": 1816,
    "successor": null,
-   "old_volume_24h_usd": 255063.47717370602,
-   "old_price_usd": 1.1174278538793736
+   "old_volume_24h_usd": 255133.02696228804,
+   "old_price_usd": 1.117849894468138
   },
   {
    "id": 38464,
@@ -2412,12 +2412,12 @@
    "verdict": "NOTHING_TO_DO",
    "rule_id": "R4",
    "reason": "the coin you hold is the successor itself (same CMC id): a rename, a ticker change or the new token; nothing to swap",
-   "verdict_captured_at": "2026-11-22T03:12:30Z",
+   "verdict_captured_at": "2026-11-22T03:35:26Z",
    "agent_needed": true,
-   "cold_ms": 3092,
+   "cold_ms": 3025,
    "successor": "NOM",
-   "old_volume_24h_usd": 3335972.5240118955,
-   "old_price_usd": 0.00115580408866329
+   "old_volume_24h_usd": 3189949.594196415,
+   "old_price_usd": 0.001154531754350658
   },
   {
    "id": 5468,
@@ -2435,12 +2435,12 @@
    "verdict": "NOT_VERIFIABLE",
    "rule_id": "R10",
    "reason": "merged CMC page: the old contract has no CMC id of its own, and continuity did not confirm the ratio",
-   "verdict_captured_at": "2026-11-22T03:12:30Z",
+   "verdict_captured_at": "2026-11-22T03:35:25Z",
    "agent_needed": true,
-   "cold_ms": 2088,
+   "cold_ms": 2239,
    "successor": "ISIKC",
    "old_volume_24h_usd": null,
-   "old_price_usd": 0.0324248404101499
+   "old_price_usd": 0.03232746078007369
   },
   {
    "id": 37693,
@@ -2458,12 +2458,12 @@
    "verdict": "NOT_VERIFIABLE",
    "rule_id": "R10",
    "reason": "merged CMC page: the old contract has no CMC id of its own, and continuity did not confirm the ratio",
-   "verdict_captured_at": "2026-11-22T03:12:30Z",
+   "verdict_captured_at": "2026-11-22T03:35:26Z",
    "agent_needed": true,
-   "cold_ms": 1832,
+   "cold_ms": 2676,
    "successor": "ANTHROPIC",
    "old_volume_24h_usd": null,
-   "old_price_usd": 603.1000980190905
+   "old_price_usd": 604.5692221842093
   },
   {
    "id": 5866,
@@ -2481,12 +2481,12 @@
    "verdict": "NOT_VERIFIABLE",
    "rule_id": "R10",
    "reason": "merged CMC page: the old contract has no CMC id of its own, and continuity did not confirm the ratio",
-   "verdict_captured_at": "2026-11-22T03:12:32Z",
+   "verdict_captured_at": "2026-11-22T03:35:27Z",
    "agent_needed": false,
-   "cold_ms": 2071,
+   "cold_ms": 1581,
    "successor": "DEXT",
    "old_volume_24h_usd": null,
-   "old_price_usd": 0.04258598957821377
+   "old_price_usd": 0.04285567963885845
   },
   {
    "id": 20435,
@@ -2504,12 +2504,12 @@
    "verdict": "NOT_VERIFIABLE",
    "rule_id": "R10",
    "reason": "ratio not stated; the linked announcement was not fetchable",
-   "verdict_captured_at": "2026-11-22T03:12:34Z",
+   "verdict_captured_at": "2026-11-22T03:35:31Z",
    "agent_needed": true,
-   "cold_ms": 3715,
+   "cold_ms": 5455,
    "successor": "AERO",
-   "old_volume_24h_usd": 2712.9254250586105,
-   "old_price_usd": 0.01808490459735382
+   "old_volume_24h_usd": 2633.6404243486786,
+   "old_price_usd": 0.018026426713266198
   },
   {
    "id": 21822,
@@ -2527,12 +2527,12 @@
    "verdict": "NOT_VERIFIABLE",
    "rule_id": "R10",
    "reason": "merged CMC page: the old contract has no CMC id of its own, and continuity did not confirm the ratio",
-   "verdict_captured_at": "2026-11-22T03:12:33Z",
+   "verdict_captured_at": "2026-11-22T03:35:28Z",
    "agent_needed": true,
-   "cold_ms": 2659,
+   "cold_ms": 2413,
    "successor": "BKN",
    "old_volume_24h_usd": null,
-   "old_price_usd": 0.056453305439280524
+   "old_price_usd": 0.056609287962140285
   },
   {
    "id": 1680,
@@ -2550,9 +2550,9 @@
    "verdict": "WRITE_OFF",
    "rule_id": "R6",
    "reason": "CMC's data shows no market to exit through: the old token has no live market and the quoted swap deadline (2024-11-02) has passed. This does not rule out an issuer claim process.",
-   "verdict_captured_at": "2026-11-22T03:12:33Z",
+   "verdict_captured_at": "2026-11-22T03:35:29Z",
    "agent_needed": true,
-   "cold_ms": 1343,
+   "cold_ms": 1734,
    "successor": null,
    "old_volume_24h_usd": 0.0,
    "old_price_usd": 0.06736114008993666
@@ -2573,12 +2573,12 @@
    "verdict": "NOT_VERIFIABLE",
    "rule_id": "R10",
    "reason": "merged CMC page: the old contract has no CMC id of its own, and continuity did not confirm the ratio",
-   "verdict_captured_at": "2026-11-22T03:12:34Z",
+   "verdict_captured_at": "2026-11-22T03:35:30Z",
    "agent_needed": true,
-   "cold_ms": 1589,
+   "cold_ms": 1652,
    "successor": "TX",
    "old_volume_24h_usd": null,
-   "old_price_usd": 0.001167641915327816
+   "old_price_usd": 0.001172214213801508
   },
   {
    "id": 11156,
@@ -2596,12 +2596,12 @@
    "verdict": "NOT_VERIFIABLE",
    "rule_id": "R10",
    "reason": "successor not verified against CMC: only one CMC id (DYDX, id 28324) matches, but the notice gives neither its contract nor its CMC page, and not both name and symbol",
-   "verdict_captured_at": "2026-11-22T03:12:36Z",
+   "verdict_captured_at": "2026-11-22T03:35:31Z",
    "agent_needed": true,
-   "cold_ms": 2436,
+   "cold_ms": 2098,
    "successor": null,
-   "old_volume_24h_usd": 2709119.9510032763,
-   "old_price_usd": 0.06772348158949941
+   "old_volume_24h_usd": 2637268.983063599,
+   "old_price_usd": 0.0677014233035438
   },
   {
    "id": 5358,
@@ -2619,12 +2619,12 @@
    "verdict": "NOT_VERIFIABLE",
    "rule_id": "R5",
    "reason": "successor refuted by CMC's data: no CMC coin carries the quoted contract 0xB9dF5FDa1c435cD4017a1F1F9111996520b64439",
-   "verdict_captured_at": "2026-11-22T03:12:35Z",
+   "verdict_captured_at": "2026-11-22T03:35:32Z",
    "agent_needed": false,
-   "cold_ms": 1567,
+   "cold_ms": 2054,
    "successor": null,
-   "old_volume_24h_usd": 113089.60054506715,
-   "old_price_usd": 0.000697010620938034
+   "old_volume_24h_usd": 113047.73447020905,
+   "old_price_usd": 0.000696941144251203
   },
   {
    "id": 11212,
@@ -2642,12 +2642,12 @@
    "verdict": "NOT_VERIFIABLE",
    "rule_id": "R10",
    "reason": "successor not named in the notice",
-   "verdict_captured_at": "2026-11-22T03:12:36Z",
+   "verdict_captured_at": "2026-11-22T03:35:32Z",
    "agent_needed": false,
-   "cold_ms": 1599,
+   "cold_ms": 1354,
    "successor": null,
-   "old_volume_24h_usd": 29377.24585020836,
-   "old_price_usd": 8.9371776544133e-05
+   "old_volume_24h_usd": 28348.957387501243,
+   "old_price_usd": 8.9185824631892e-05
   },
   {
    "id": 38888,
@@ -2665,12 +2665,12 @@
    "verdict": "NOT_VERIFIABLE",
    "rule_id": "R10",
    "reason": "merged CMC page: the old contract has no CMC id of its own, and continuity did not confirm the ratio",
-   "verdict_captured_at": "2026-11-22T03:12:37Z",
+   "verdict_captured_at": "2026-11-22T03:35:33Z",
    "agent_needed": true,
    "cold_ms": 1591,
    "successor": "ELIZAOS",
    "old_volume_24h_usd": null,
-   "old_price_usd": 0.000209571818487895
+   "old_price_usd": 0.000201889737441176
   },
   {
    "id": 17235,
@@ -2688,12 +2688,12 @@
    "verdict": "NOT_VERIFIABLE",
    "rule_id": "R10",
    "reason": "ratio not stated; the linked announcement was not fetchable",
-   "verdict_captured_at": "2026-11-22T03:12:38Z",
+   "verdict_captured_at": "2026-11-22T03:35:37Z",
    "agent_needed": true,
-   "cold_ms": 2437,
+   "cold_ms": 4542,
    "successor": "BNBTIGER",
-   "old_volume_24h_usd": 0.0,
-   "old_price_usd": 5.14903e-19
+   "old_volume_24h_usd": 1237.1406799481483,
+   "old_price_usd": 5.0802e-19
   },
   {
    "id": 28366,
@@ -2711,12 +2711,12 @@
    "verdict": "NOT_VERIFIABLE",
    "rule_id": "R10",
    "reason": "merged CMC page: the old contract has no CMC id of its own, and continuity did not confirm the ratio",
-   "verdict_captured_at": "2026-11-22T03:12:39Z",
+   "verdict_captured_at": "2026-11-22T03:35:35Z",
    "agent_needed": false,
-   "cold_ms": 2557,
+   "cold_ms": 2815,
    "successor": "CA",
    "old_volume_24h_usd": null,
-   "old_price_usd": 0.22248347258189735
+   "old_price_usd": 0.2231039414731989
   },
   {
    "id": 2588,
@@ -2734,12 +2734,12 @@
    "verdict": "NOT_VERIFIABLE",
    "rule_id": "R10",
    "reason": "merged CMC page: the old contract has no CMC id of its own, and continuity did not confirm the ratio",
-   "verdict_captured_at": "2026-11-22T03:12:39Z",
+   "verdict_captured_at": "2026-11-22T03:35:35Z",
    "agent_needed": true,
-   "cold_ms": 1550,
+   "cold_ms": 2320,
    "successor": "LOOM",
    "old_volume_24h_usd": null,
-   "old_price_usd": 0.001699825320840381
+   "old_price_usd": 0.001698977810695388
   },
   {
    "id": 33320,
@@ -2757,9 +2757,9 @@
    "verdict": "NOT_VERIFIABLE",
    "rule_id": "R5",
    "reason": "successor refuted by CMC's data: the named successor PUPS•WORLD•PEACE matches no CMC id",
-   "verdict_captured_at": "2026-11-22T03:12:40Z",
+   "verdict_captured_at": "2026-11-22T03:35:37Z",
    "agent_needed": true,
-   "cold_ms": 2274,
+   "cold_ms": 2330,
    "successor": null,
    "old_volume_24h_usd": 7134.387090636001,
    "old_price_usd": 0.002110164040152776
@@ -2780,9 +2780,9 @@
    "verdict": "WRITE_OFF",
    "rule_id": "R6",
    "reason": "CMC's data shows no market to exit through: the old token has no live market and the quoted swap deadline (2026-08-03) has passed. This does not rule out an issuer claim process.",
-   "verdict_captured_at": "2026-11-22T03:12:40Z",
+   "verdict_captured_at": "2026-11-22T03:35:37Z",
    "agent_needed": true,
-   "cold_ms": 1320,
+   "cold_ms": 1835,
    "successor": null,
    "old_volume_24h_usd": 0.0,
    "old_price_usd": 0.1854057367245006
@@ -2803,12 +2803,12 @@
    "verdict": "NOTHING_TO_DO",
    "rule_id": "R4",
    "reason": "the coin you hold is the successor itself (same CMC id): a rename, a ticker change or the new token; nothing to swap",
-   "verdict_captured_at": "2026-11-22T03:12:41Z",
+   "verdict_captured_at": "2026-11-22T03:35:39Z",
    "agent_needed": false,
-   "cold_ms": 2054,
+   "cold_ms": 2675,
    "successor": "VAL",
-   "old_volume_24h_usd": 18701.71357578026,
-   "old_price_usd": 0.4223752790896637
+   "old_volume_24h_usd": 18644.372492917482,
+   "old_price_usd": 0.4210802396923737
   },
   {
    "id": 27966,
@@ -2826,9 +2826,9 @@
    "verdict": "NOT_VERIFIABLE",
    "rule_id": "R10",
    "reason": "merged CMC page: the old contract has no CMC id of its own, and continuity did not confirm the ratio",
-   "verdict_captured_at": "2026-11-22T03:12:42Z",
+   "verdict_captured_at": "2026-11-22T03:35:39Z",
    "agent_needed": true,
-   "cold_ms": 2013,
+   "cold_ms": 2163,
    "successor": "DORA",
    "old_volume_24h_usd": null,
    "old_price_usd": 0.003593549215712541
@@ -2849,12 +2849,12 @@
    "verdict": "NOT_VERIFIABLE",
    "rule_id": "R10",
    "reason": "merged CMC page: the old contract has no CMC id of its own, and continuity did not confirm the ratio",
-   "verdict_captured_at": "2026-11-22T03:12:42Z",
+   "verdict_captured_at": "2026-11-22T03:35:40Z",
    "agent_needed": false,
-   "cold_ms": 1995,
+   "cold_ms": 2599,
    "successor": "OPENAI",
    "old_volume_24h_usd": null,
-   "old_price_usd": 1202.5761178401128
+   "old_price_usd": 1200.1102728184037
   },
   {
    "id": 16352,
@@ -2871,13 +2871,13 @@
    "only_unfetchable_hosts": false,
    "verdict": "NOT_VERIFIABLE",
    "rule_id": "R10",
-   "reason": "successor has no live market; no swap value to compare",
-   "verdict_captured_at": "2026-11-22T03:12:43Z",
+   "reason": "ratio not stated; the linked announcement was not fetchable",
+   "verdict_captured_at": "2026-11-22T03:35:43Z",
    "agent_needed": true,
-   "cold_ms": 2681,
+   "cold_ms": 3961,
    "successor": "GST",
-   "old_volume_24h_usd": 48917.11765022563,
-   "old_price_usd": 0.000369318525895912
+   "old_volume_24h_usd": 48811.63797083346,
+   "old_price_usd": 0.000370852518127213
   },
   {
    "id": 36963,
@@ -2895,12 +2895,12 @@
    "verdict": "NOT_VERIFIABLE",
    "rule_id": "R10",
    "reason": "merged CMC page: the old contract has no CMC id of its own, and continuity did not confirm the ratio",
-   "verdict_captured_at": "2026-11-22T03:12:44Z",
+   "verdict_captured_at": "2026-11-22T03:35:42Z",
    "agent_needed": false,
-   "cold_ms": 2072,
+   "cold_ms": 2555,
    "successor": "YURU",
    "old_volume_24h_usd": null,
-   "old_price_usd": 0.21476016477221996
+   "old_price_usd": 0.214780511325837
   },
   {
    "id": 42610,
@@ -2918,12 +2918,12 @@
    "verdict": "NOT_VERIFIABLE",
    "rule_id": "R10",
    "reason": "successor not named in the notice",
-   "verdict_captured_at": "2026-11-22T03:12:44Z",
+   "verdict_captured_at": "2026-11-22T03:35:42Z",
    "agent_needed": false,
-   "cold_ms": 1462,
+   "cold_ms": 1840,
    "successor": null,
-   "old_volume_24h_usd": 267960.2241684547,
-   "old_price_usd": 0.024966551923951853
+   "old_volume_24h_usd": 270608.3618488217,
+   "old_price_usd": 0.024754603164827242
   },
   {
    "id": 32933,
@@ -2941,12 +2941,12 @@
    "verdict": "NOT_VERIFIABLE",
    "rule_id": "R5",
    "reason": "successor refuted by CMC's data: the named successor ZyFAI matches no CMC id",
-   "verdict_captured_at": "2026-11-22T03:12:45Z",
+   "verdict_captured_at": "2026-11-22T03:35:43Z",
    "agent_needed": true,
-   "cold_ms": 1849,
+   "cold_ms": 1447,
    "successor": null,
    "old_volume_24h_usd": 30743.851549077543,
-   "old_price_usd": 0.008150914164750415
+   "old_price_usd": 0.008150908395620058
   },
   {
    "id": 10841,
@@ -2964,12 +2964,12 @@
    "verdict": "NOT_VERIFIABLE",
    "rule_id": "R10",
    "reason": "successor has no live market; no swap value to compare",
-   "verdict_captured_at": "2026-11-22T03:12:46Z",
+   "verdict_captured_at": "2026-11-22T03:35:44Z",
    "agent_needed": true,
-   "cold_ms": 1883,
+   "cold_ms": 2313,
    "successor": "WSPP",
-   "old_volume_24h_usd": 3806.264315028045,
-   "old_price_usd": 1.10107926459971e-10
+   "old_volume_24h_usd": 3669.409352867242,
+   "old_price_usd": 1.10274185069835e-10
   },
   {
    "id": 10776,
@@ -2987,12 +2987,12 @@
    "verdict": "NOT_VERIFIABLE",
    "rule_id": "R5",
    "reason": "successor refuted by CMC's data: the named successor Signum matches no CMC id",
-   "verdict_captured_at": "2026-11-22T03:12:46Z",
+   "verdict_captured_at": "2026-11-22T03:35:45Z",
    "agent_needed": true,
-   "cold_ms": 2285,
+   "cold_ms": 2213,
    "successor": null,
    "old_volume_24h_usd": 0.0,
-   "old_price_usd": 0.000698485667245269
+   "old_price_usd": 0.000698489893555579
   },
   {
    "id": 19650,
@@ -3010,12 +3010,12 @@
    "verdict": "NOT_VERIFIABLE",
    "rule_id": "R10",
    "reason": "merged CMC page: the old contract has no CMC id of its own, and continuity did not confirm the ratio",
-   "verdict_captured_at": "2026-11-22T03:12:48Z",
+   "verdict_captured_at": "2026-11-22T03:35:45Z",
    "agent_needed": false,
-   "cold_ms": 2404,
+   "cold_ms": 1988,
    "successor": "VOLT",
    "old_volume_24h_usd": null,
-   "old_price_usd": 2.6970080775591887e-08
+   "old_price_usd": 2.4669146076514016e-08
   },
   {
    "id": 37695,
@@ -3033,12 +3033,12 @@
    "verdict": "NOT_VERIFIABLE",
    "rule_id": "R10",
    "reason": "merged CMC page: the old contract has no CMC id of its own, and continuity did not confirm the ratio",
-   "verdict_captured_at": "2026-11-22T03:12:48Z",
+   "verdict_captured_at": "2026-11-22T03:35:46Z",
    "agent_needed": true,
-   "cold_ms": 1998,
+   "cold_ms": 2028,
    "successor": "ANDURIL",
    "old_volume_24h_usd": null,
-   "old_price_usd": 135.62647684828656
+   "old_price_usd": 133.65742511255402
   },
   {
    "id": 19966,
@@ -3056,12 +3056,12 @@
    "verdict": "NOT_VERIFIABLE",
    "rule_id": "R5",
    "reason": "successor refuted by CMC's data: the named successor Quickswap matches no CMC id",
-   "verdict_captured_at": "2026-11-22T03:12:48Z",
+   "verdict_captured_at": "2026-11-22T03:35:47Z",
    "agent_needed": true,
-   "cold_ms": 1476,
+   "cold_ms": 1832,
    "successor": null,
-   "old_volume_24h_usd": 62963.208438517606,
-   "old_price_usd": 0.002853235442818747
+   "old_volume_24h_usd": 63534.33726089814,
+   "old_price_usd": 0.002857652689388263
   },
   {
    "id": 7094,
@@ -3079,12 +3079,12 @@
    "verdict": "NOTHING_TO_DO",
    "rule_id": "R4",
    "reason": "the coin you hold is the successor itself (same CMC id): a rename, a ticker change or the new token; nothing to swap",
-   "verdict_captured_at": "2026-11-22T03:12:50Z",
+   "verdict_captured_at": "2026-11-22T03:35:47Z",
    "agent_needed": true,
-   "cold_ms": 2086,
+   "cold_ms": 1650,
    "successor": "DHT",
-   "old_volume_24h_usd": 19.59639212514819,
-   "old_price_usd": 0.0266926679681081
+   "old_volume_24h_usd": 37.90301485795473,
+   "old_price_usd": 0.026587028088004745
   },
   {
    "id": 35943,
@@ -3102,12 +3102,12 @@
    "verdict": "NOT_VERIFIABLE",
    "rule_id": "R10",
    "reason": "merged CMC page: the old contract has no CMC id of its own, and continuity did not confirm the ratio",
-   "verdict_captured_at": "2026-11-22T03:12:50Z",
+   "verdict_captured_at": "2026-11-22T03:35:49Z",
    "agent_needed": false,
-   "cold_ms": 2718,
+   "cold_ms": 2312,
    "successor": "PUNDIAI",
    "old_volume_24h_usd": null,
-   "old_price_usd": 0.19621362003318613
+   "old_price_usd": 0.19603162075981506
   },
   {
    "id": 3826,
@@ -3125,12 +3125,12 @@
    "verdict": "NOT_VERIFIABLE",
    "rule_id": "R10",
    "reason": "merged CMC page: the old contract has no CMC id of its own, and continuity did not confirm the ratio",
-   "verdict_captured_at": "2026-11-22T03:12:50Z",
+   "verdict_captured_at": "2026-11-22T03:35:49Z",
    "agent_needed": true,
-   "cold_ms": 1695,
+   "cold_ms": 2144,
    "successor": "TOP",
    "old_volume_24h_usd": null,
-   "old_price_usd": 9.2581887313793e-05
+   "old_price_usd": 9.2665206992469e-05
   },
   {
    "id": 19819,
@@ -3148,12 +3148,12 @@
    "verdict": "NOT_VERIFIABLE",
    "rule_id": "R10",
    "reason": "merged CMC page: the old contract has no CMC id of its own, and continuity did not confirm the ratio",
-   "verdict_captured_at": "2026-11-22T03:12:52Z",
+   "verdict_captured_at": "2026-11-22T03:35:49Z",
    "agent_needed": true,
-   "cold_ms": 2044,
+   "cold_ms": 1600,
    "successor": "REI",
    "old_volume_24h_usd": null,
-   "old_price_usd": 0.001404583420838595
+   "old_price_usd": 0.001395666276650782
   },
   {
    "id": 18411,
@@ -3171,9 +3171,9 @@
    "verdict": "NOT_VERIFIABLE",
    "rule_id": "R10",
    "reason": "merged CMC page: the old contract has no CMC id of its own, and continuity did not confirm the ratio",
-   "verdict_captured_at": "2026-11-22T03:12:52Z",
+   "verdict_captured_at": "2026-11-22T03:35:51Z",
    "agent_needed": true,
-   "cold_ms": 2629,
+   "cold_ms": 2198,
    "successor": "TOTO",
    "old_volume_24h_usd": null,
    "old_price_usd": 0.004320328640940918
@@ -3194,12 +3194,12 @@
    "verdict": "NOTHING_TO_DO",
    "rule_id": "R4",
    "reason": "the coin you hold is the successor itself (same CMC id): a rename, a ticker change or the new token; nothing to swap",
-   "verdict_captured_at": "2026-11-22T03:12:52Z",
+   "verdict_captured_at": "2026-11-22T03:35:51Z",
    "agent_needed": true,
-   "cold_ms": 2039,
+   "cold_ms": 2310,
    "successor": "P2P",
-   "old_volume_24h_usd": 14641.181754036674,
-   "old_price_usd": 3.5577075128853e-05
+   "old_volume_24h_usd": 14287.270781489622,
+   "old_price_usd": 3.5483905933169e-05
   },
   {
    "id": 33011,
@@ -3217,12 +3217,12 @@
    "verdict": "NOTHING_TO_DO",
    "rule_id": "R4",
    "reason": "the coin you hold is the successor itself (same CMC id): a rename, a ticker change or the new token; nothing to swap",
-   "verdict_captured_at": "2026-11-22T03:12:53Z",
+   "verdict_captured_at": "2026-11-22T03:35:52Z",
    "agent_needed": true,
-   "cold_ms": 1881,
+   "cold_ms": 2452,
    "successor": "NYA",
-   "old_volume_24h_usd": 0.0,
-   "old_price_usd": 3.566561520509381e-08
+   "old_volume_24h_usd": 2533.7873212057725,
+   "old_price_usd": 3.5456741185488646e-08
   },
   {
    "id": 25252,
@@ -3240,9 +3240,9 @@
    "verdict": "NOT_VERIFIABLE",
    "rule_id": "R10",
    "reason": "merged CMC page: the old contract has no CMC id of its own, and continuity did not confirm the ratio",
-   "verdict_captured_at": "2026-11-22T03:12:54Z",
+   "verdict_captured_at": "2026-11-22T03:35:54Z",
    "agent_needed": true,
-   "cold_ms": 1973,
+   "cold_ms": 2825,
    "successor": "QCAD",
    "old_volume_24h_usd": null,
    "old_price_usd": 0.7042
@@ -3263,12 +3263,12 @@
    "verdict": "NOT_VERIFIABLE",
    "rule_id": "R10",
    "reason": "C3 dropped successor_symbol: the Reader proposed it without a verbatim quote that contains it, so SWAP is withheld",
-   "verdict_captured_at": "2026-11-22T03:12:55Z",
+   "verdict_captured_at": "2026-11-22T03:35:53Z",
    "agent_needed": true,
-   "cold_ms": 2734,
+   "cold_ms": 1889,
    "successor": "STMX",
    "old_volume_24h_usd": null,
-   "old_price_usd": 9.9766923101802e-05
+   "old_price_usd": 9.9795399184999e-05
   },
   {
    "id": 15563,
@@ -3286,12 +3286,12 @@
    "verdict": "NOT_VERIFIABLE",
    "rule_id": "R10",
    "reason": "merged CMC page: the old contract has no CMC id of its own, and continuity did not confirm the ratio",
-   "verdict_captured_at": "2026-11-22T03:12:56Z",
+   "verdict_captured_at": "2026-11-22T03:35:54Z",
    "agent_needed": false,
-   "cold_ms": 2152,
+   "cold_ms": 2633,
    "successor": "RISE",
    "old_volume_24h_usd": null,
-   "old_price_usd": 0.001018062703786154
+   "old_price_usd": 0.001018064143058768
   },
   {
    "id": 8936,
@@ -3309,9 +3309,9 @@
    "verdict": "NOT_VERIFIABLE",
    "rule_id": "R10",
    "reason": "merged CMC page: the old contract has no CMC id of its own, and continuity did not confirm the ratio",
-   "verdict_captured_at": "2026-11-22T03:12:56Z",
+   "verdict_captured_at": "2026-11-22T03:35:56Z",
    "agent_needed": false,
-   "cold_ms": 1791,
+   "cold_ms": 2803,
    "successor": "TRIAS",
    "old_volume_24h_usd": null,
    "old_price_usd": 0.24580824433428813
@@ -3332,12 +3332,12 @@
    "verdict": "NOT_VERIFIABLE",
    "rule_id": "R5",
    "reason": "successor refuted by CMC's data: the named successor Fuse matches no CMC id",
-   "verdict_captured_at": "2026-11-22T03:12:57Z",
+   "verdict_captured_at": "2026-11-22T03:35:56Z",
    "agent_needed": false,
-   "cold_ms": 1442,
+   "cold_ms": 1885,
    "successor": null,
-   "old_volume_24h_usd": 78574.09773199668,
-   "old_price_usd": 0.005480312228622285
+   "old_volume_24h_usd": 78564.46103112571,
+   "old_price_usd": 0.005472128314903432
   },
   {
    "id": 39458,
@@ -3355,12 +3355,12 @@
    "verdict": "NOT_VERIFIABLE",
    "rule_id": "R5",
    "reason": "successor refuted by CMC's data: quoted contract 0xdEDed835ffD079c871070c77FC7C9F2582143a04 ≠ CMC's contract for YOM (none listed)",
-   "verdict_captured_at": "2026-11-22T03:12:57Z",
+   "verdict_captured_at": "2026-11-22T03:35:56Z",
    "agent_needed": true,
-   "cold_ms": 1833,
+   "cold_ms": 2140,
    "successor": null,
-   "old_volume_24h_usd": 900431.8340899973,
-   "old_price_usd": 0.009660236952688007
+   "old_volume_24h_usd": 896955.8017369364,
+   "old_price_usd": 0.009661494878108223
   },
   {
    "id": 15185,
@@ -3378,9 +3378,9 @@
    "verdict": "NOT_VERIFIABLE",
    "rule_id": "R10",
    "reason": "ratio not stated",
-   "verdict_captured_at": "2026-11-22T03:12:59Z",
+   "verdict_captured_at": "2026-11-22T03:35:58Z",
    "agent_needed": false,
-   "cold_ms": 2609,
+   "cold_ms": 2695,
    "successor": "RUJI",
    "old_volume_24h_usd": 0.0,
    "old_price_usd": 0.009593599370190612
@@ -3401,12 +3401,12 @@
    "verdict": "NOT_VERIFIABLE",
    "rule_id": "R10",
    "reason": "merged CMC page: the old contract has no CMC id of its own, and continuity did not confirm the ratio",
-   "verdict_captured_at": "2026-11-22T03:12:58Z",
+   "verdict_captured_at": "2026-11-22T03:35:58Z",
    "agent_needed": true,
-   "cold_ms": 1819,
+   "cold_ms": 1754,
    "successor": "VANRY",
    "old_volume_24h_usd": null,
-   "old_price_usd": 0.000294313855045603
+   "old_price_usd": 0.000294117302929596
   },
   {
    "id": 24477,
@@ -3424,12 +3424,12 @@
    "verdict": "NOT_VERIFIABLE",
    "rule_id": "R10",
    "reason": "successor not named in the notice",
-   "verdict_captured_at": "2026-11-22T03:12:59Z",
+   "verdict_captured_at": "2026-11-22T03:35:58Z",
    "agent_needed": false,
-   "cold_ms": 1375,
+   "cold_ms": 1556,
    "successor": null,
-   "old_volume_24h_usd": 100726.5921692572,
-   "old_price_usd": 6.449767730423e-12
+   "old_volume_24h_usd": 101304.3214136985,
+   "old_price_usd": 6.362172188395e-12
   },
   {
    "id": 5583,
@@ -3447,12 +3447,12 @@
    "verdict": "NOT_VERIFIABLE",
    "rule_id": "R5",
    "reason": "successor refuted by CMC's data: the named successor Hacken Token matches no CMC id",
-   "verdict_captured_at": "2026-11-22T03:13:01Z",
+   "verdict_captured_at": "2026-11-22T03:36:00Z",
    "agent_needed": false,
-   "cold_ms": 2566,
+   "cold_ms": 2178,
    "successor": null,
-   "old_volume_24h_usd": 83118.67945241326,
-   "old_price_usd": 0.001297808712433082
+   "old_volume_24h_usd": 83095.07657497347,
+   "old_price_usd": 0.001283260422923215
   },
   {
    "id": 8255,
@@ -3470,12 +3470,12 @@
    "verdict": "NOT_VERIFIABLE",
    "rule_id": "R10",
    "reason": "merged CMC page: the old contract has no CMC id of its own, and continuity did not confirm the ratio",
-   "verdict_captured_at": "2026-11-22T03:13:01Z",
+   "verdict_captured_at": "2026-11-22T03:36:01Z",
    "agent_needed": true,
-   "cold_ms": 2640,
+   "cold_ms": 3257,
    "successor": "PROS",
    "old_volume_24h_usd": null,
-   "old_price_usd": 0.020884652548737056
+   "old_price_usd": 0.020902503515625784
   },
   {
    "id": 32526,
@@ -3493,12 +3493,12 @@
    "verdict": "NOT_VERIFIABLE",
    "rule_id": "R10",
    "reason": "C3 dropped successor_symbol: the Reader proposed it without a verbatim quote that contains it, so SWAP is withheld",
-   "verdict_captured_at": "2026-11-22T03:13:01Z",
+   "verdict_captured_at": "2026-11-22T03:36:00Z",
    "agent_needed": true,
-   "cold_ms": 1809,
+   "cold_ms": 1626,
    "successor": null,
-   "old_volume_24h_usd": 7043.100773268763,
-   "old_price_usd": 0.001071361411050348
+   "old_volume_24h_usd": 7085.012952086147,
+   "old_price_usd": 0.001071825437562094
   },
   {
    "id": 18966,
@@ -3516,9 +3516,9 @@
    "verdict": "NOT_VERIFIABLE",
    "rule_id": "R10",
    "reason": "merged CMC page: the old contract has no CMC id of its own, and continuity did not confirm the ratio",
-   "verdict_captured_at": "2026-11-22T03:13:03Z",
+   "verdict_captured_at": "2026-11-22T03:36:02Z",
    "agent_needed": true,
-   "cold_ms": 1954,
+   "cold_ms": 2396,
    "successor": "MAY",
    "old_volume_24h_usd": null,
    "old_price_usd": 0.0023790683592214
@@ -3539,12 +3539,12 @@
    "verdict": "NOT_VERIFIABLE",
    "rule_id": "R10",
    "reason": "C3 dropped successor_name, successor_symbol: the Reader proposed it without a verbatim quote that contains it, so SWAP is withheld",
-   "verdict_captured_at": "2026-11-22T03:13:02Z",
+   "verdict_captured_at": "2026-11-22T03:36:02Z",
    "agent_needed": false,
-   "cold_ms": 1334,
+   "cold_ms": 1757,
    "successor": null,
-   "old_volume_24h_usd": 6434.119089884073,
-   "old_price_usd": 0.012816040541774959
+   "old_volume_24h_usd": 7800.559117136622,
+   "old_price_usd": 0.01277140935572247
   },
   {
    "id": 11409,
@@ -3562,12 +3562,12 @@
    "verdict": "NOT_VERIFIABLE",
    "rule_id": "R5",
    "reason": "successor refuted by CMC's data: no CMC coin carries the quoted contract 0x1F514A61bcde34F94Bc39731235690ab9da737F7",
-   "verdict_captured_at": "2026-11-22T03:13:03Z",
+   "verdict_captured_at": "2026-11-22T03:36:03Z",
    "agent_needed": true,
-   "cold_ms": 1560,
+   "cold_ms": 1657,
    "successor": null,
    "old_volume_24h_usd": 0.0,
-   "old_price_usd": 0.014252295362528818
+   "old_price_usd": 0.014244820636460865
   },
   {
    "id": 28382,
@@ -3585,12 +3585,12 @@
    "verdict": "NOT_VERIFIABLE",
    "rule_id": "R10",
    "reason": "merged CMC page: the old contract has no CMC id of its own, and continuity did not confirm the ratio",
-   "verdict_captured_at": "2026-11-22T03:13:05Z",
+   "verdict_captured_at": "2026-11-22T03:36:04Z",
    "agent_needed": false,
-   "cold_ms": 2811,
+   "cold_ms": 2242,
    "successor": "MYRO",
    "old_volume_24h_usd": null,
-   "old_price_usd": 0.000996931556892916
+   "old_price_usd": 0.000999628168202506
   },
   {
    "id": 27463,
@@ -3608,12 +3608,12 @@
    "verdict": "NOTHING_TO_DO",
    "rule_id": "R4",
    "reason": "the coin you hold is the successor itself (same CMC id): a rename, a ticker change or the new token; nothing to swap",
-   "verdict_captured_at": "2026-11-22T03:13:04Z",
+   "verdict_captured_at": "2026-11-22T03:36:04Z",
    "agent_needed": true,
-   "cold_ms": 1912,
+   "cold_ms": 2049,
    "successor": "STUFF",
-   "old_volume_24h_usd": 1159.1651813229794,
-   "old_price_usd": 0.000264209938987724
+   "old_volume_24h_usd": 0.0,
+   "old_price_usd": 0.000264216723139774
   },
   {
    "id": 11877,
@@ -3631,9 +3631,9 @@
    "verdict": "NOT_VERIFIABLE",
    "rule_id": "R10",
    "reason": "ratio stated but not price-confirmed, and the contracts are not both verified",
-   "verdict_captured_at": "2026-11-22T03:13:08Z",
+   "verdict_captured_at": "2026-11-22T03:36:07Z",
    "agent_needed": true,
-   "cold_ms": 5226,
+   "cold_ms": 3896,
    "successor": "G",
    "old_volume_24h_usd": 0.0,
    "old_price_usd": 0.35035646722765634
@@ -3654,12 +3654,12 @@
    "verdict": "NOT_VERIFIABLE",
    "rule_id": "R10",
    "reason": "successor not named in the notice; the linked announcement was not fetchable",
-   "verdict_captured_at": "2026-11-22T03:13:06Z",
+   "verdict_captured_at": "2026-11-22T03:36:06Z",
    "agent_needed": true,
-   "cold_ms": 1342,
+   "cold_ms": 1905,
    "successor": null,
-   "old_volume_24h_usd": 0.0,
-   "old_price_usd": 0.002732556322334575
+   "old_volume_24h_usd": 13199.4793904609,
+   "old_price_usd": 0.002728107921109172
   },
   {
    "id": 15257,
@@ -3677,12 +3677,12 @@
    "verdict": "NOT_VERIFIABLE",
    "rule_id": "R10",
    "reason": "successor has no live market; no swap value to compare",
-   "verdict_captured_at": "2026-11-22T03:13:07Z",
+   "verdict_captured_at": "2026-11-22T03:36:07Z",
    "agent_needed": true,
-   "cold_ms": 2298,
+   "cold_ms": 2871,
    "successor": "RISE",
    "old_volume_24h_usd": null,
-   "old_price_usd": 1.2429209849097e-05
+   "old_price_usd": 1.24238869672e-05
   },
   {
    "id": 22556,
@@ -3700,12 +3700,12 @@
    "verdict": "NOT_VERIFIABLE",
    "rule_id": "R5",
    "reason": "successor refuted by CMC's data: no CMC coin carries the quoted contract 0xdCE40c14D5956F8b8bA912402bA73B4D4d599612",
-   "verdict_captured_at": "2026-11-22T03:13:07Z",
+   "verdict_captured_at": "2026-11-22T03:36:08Z",
    "agent_needed": false,
-   "cold_ms": 1664,
+   "cold_ms": 1841,
    "successor": null,
-   "old_volume_24h_usd": 37063.255076151334,
-   "old_price_usd": 0.00637588890907217
+   "old_volume_24h_usd": 42719.33067317395,
+   "old_price_usd": 0.006390852634946241
   },
   {
    "id": 12573,
@@ -3723,13 +3723,13 @@
    "only_unfetchable_hosts": false,
    "verdict": "SELL_OLD",
    "rule_id": "R8",
-   "reason": "at CMC's quotes the old token is worth 15.1% more than the 1:1 swap (old $0.0241924 vs 1 × new $0.0210104)",
+   "reason": "at CMC's quotes the old token is worth 15.7% more than the 1:1 swap (old $0.0242508 vs 1 × new $0.0209664)",
    "successor": "CLEAR",
-   "verdict_captured_at": "2026-11-22T03:13:13Z",
+   "verdict_captured_at": "2026-11-22T03:36:10Z",
    "agent_needed": false,
-   "cold_ms": 5324,
-   "old_volume_24h_usd": 1721305.970831771,
-   "old_price_usd": 0.024192411867530184
+   "cold_ms": 3328,
+   "old_volume_24h_usd": 1554176.4725321317,
+   "old_price_usd": 0.024250815732416827
   },
   {
    "id": 2424,
@@ -3749,11 +3749,11 @@
    "rule_id": "R9",
    "reason": "ratio 0.43335 price-confirmed (event-date); the notice states no window: SWAP, if the issuer's swap is still open",
    "successor": "FET",
-   "verdict_captured_at": "2026-11-22T03:13:11Z",
+   "verdict_captured_at": "2026-11-22T03:36:11Z",
    "agent_needed": true,
-   "cold_ms": 3783,
+   "cold_ms": 3571,
    "old_volume_24h_usd": 0.0,
-   "old_price_usd": 0.59248751026217
+   "old_price_usd": 0.5925350001914175
   },
   {
    "id": 35716,
@@ -3773,11 +3773,11 @@
    "rule_id": "R7",
    "reason": "the swap window closed (2026-10-25); the old token still trades",
    "successor": "RZUSD",
-   "verdict_captured_at": "2026-11-22T03:13:12Z",
+   "verdict_captured_at": "2026-11-22T03:36:11Z",
    "agent_needed": true,
-   "cold_ms": 4252,
-   "old_volume_24h_usd": 4288.987398371473,
-   "old_price_usd": 0.21243998534646946
+   "cold_ms": 3136,
+   "old_volume_24h_usd": 3939.974656655351,
+   "old_price_usd": 0.2122284097602309
   },
   {
    "id": 11221,
@@ -3797,9 +3797,9 @@
    "rule_id": "R9",
    "reason": "ratio 1 price-confirmed (event-date); the notice states no window: SWAP, if the issuer's swap is still open",
    "successor": "MNT",
-   "verdict_captured_at": "2026-11-22T03:13:15Z",
+   "verdict_captured_at": "2026-11-22T03:36:14Z",
    "agent_needed": true,
-   "cold_ms": 3575,
+   "cold_ms": 4090,
    "old_volume_24h_usd": 0.0,
    "old_price_usd": 0.3610943253191962
   }
