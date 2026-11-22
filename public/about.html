@@ -104,7 +104,7 @@ b, strong { font-weight: 700; color: var(--ink); }
 .label { display: inline-flex; align-items: center; gap: 10px; font: 700 14px/1 var(--font-display); letter-spacing: .16em; text-transform: uppercase; color: var(--muted); }
 .label .lamp { width: 12px; height: 12px; font-size: 0; }
 .label .lamp::before { content: none; }
-.hero h1 { font: 900 clamp(42px, 4.9vw, 70px)/.94 var(--font-display); text-transform: uppercase; letter-spacing: .005em; margin: 14px 0 12px; max-width: 17em; }
+.hero h1 { font: 900 clamp(40px, 4.4vw, 64px)/.94 var(--font-display); text-transform: uppercase; letter-spacing: .005em; margin: 14px 0 12px; max-width: 17em; }
 .hsub { font: 700 clamp(19px, 1.7vw, 23px)/1.35 var(--font-body); margin: 0 0 18px; max-width: 46em; }
 .sr { position: absolute; width: 1px; height: 1px; overflow: hidden; clip: rect(0 0 0 0); white-space: nowrap; }
 .hero h1 .hl { text-decoration: underline; text-decoration-color: var(--ink); text-decoration-thickness: .085em; text-underline-offset: .09em; text-decoration-skip-ink: none; transition: text-decoration-color .3s ease; }
@@ -131,8 +131,8 @@ b, strong { font-weight: 700; color: var(--ink); }
 .fig { display: flex; align-items: baseline; gap: 18px; flex-wrap: wrap; margin-top: 14px; }
 .fig .big { font: 900 clamp(44px, 4.4vw, 64px)/.9 var(--font-display); letter-spacing: .01em; }
 .fig .say { color: var(--muted); font-size: 14.5px; line-height: 1.4; max-width: 24em; }
-.vb { margin-top: 8px; }
-#h-vd { --max: 70px; --g: 6px; }
+.vb { margin-top: 14px; }
+#h-vd { --max: 58px; --g: 5px; }
 .vals { font-size: 15px; color: #CFC8BA; margin: 0; min-height: 24px; flex-basis: 100%; }
 .checks { list-style: none; margin: 0; padding: 0; border-top: 1px solid var(--rule); }
 .checks li { display: grid; grid-template-columns: 22px 7.4em minmax(0, 1fr); gap: 10px; align-items: center; padding: 6px 0; border-bottom: 1px solid var(--rule); }
@@ -164,7 +164,7 @@ b, strong { font-weight: 700; color: var(--ink); }
 .rc .unit { font: 800 26px/1 var(--font-display); color: var(--muted); margin-left: 6px; align-self: flex-end; }
 .rc .num { display: flex; align-items: flex-end; }
 .rc .num .flaps { flex: 1; margin-bottom: 0; }
-.rc .proof { display: block; margin-top: 8px; color: var(--muted); font-size: 12px; overflow-wrap: anywhere; }
+.rc .proof { display: block; margin-top: 8px; color: var(--muted); font-size: 13px; overflow-wrap: anywhere; }
 
 /* ---------- sections ---------- */
 section.s { padding: 104px 0; }
@@ -361,12 +361,15 @@ footer nav { display: flex; gap: 18px; flex-wrap: wrap; }
     <div class="board" id="board" aria-label="Departure board: a CPOOL lookup replayed from a captured stream">
       <p class="notice" id="h-notice"><span class="src">1 · CMC notice, read by qwen4-max</span>Clearpool (CPOOL) has <u class="ok" data-f="sym">rebranded to Clearpool (CLEAR)</u> and <u class="ok" data-f="ratio">undergone a 1:1 swap</u> from the old contract to <u class="ok" data-f="contract">new contract</u>. For more details, please click here.</p>
       <div class="ba">
+        <div>
         <div class="ren">
           <div><span class="bh">Old</span><div class="flaps" id="h-old" style="--n:6" role="img" aria-label="Old token CPOOL"></div></div>
           <span class="arr" aria-hidden="true">→</span>
           <div><span class="bh">Successor</span><div class="flaps" id="h-new" style="--n:6" role="img" aria-label="Successor token CLEAR"></div></div>
         </div>
-        <div><span class="bh">2 · Checked by code against CMC rows</span>
+        <div class="vb"><span class="bh">3 · Verdict</span><div class="flaps" id="h-vd" style="--n:14" role="img" aria-label="Verdict SELL OLD"></div><p class="sr" id="h-live" aria-live="polite"></p></div>
+      </div>
+        <div><span class="bh">2 · Checked by code against CMC rows · 4 of 7 shown</span>
         <ol class="checks" id="h-checks">
           <li data-c="C2"><span class="lamp ok" aria-hidden="true"></span><span class="k"><i>C2</i>Contract<span class="sr"> verified</span></span><span class="v">0x5200…0e00 = CMC's CLEAR contract, id 42884</span></li>
           <li data-c="C4"><span class="lamp ok" aria-hidden="true"></span><span class="k"><i>C4</i>Ratio 1:1<span class="sr"> verified</span></span><span class="v">old/new 1.04342 after the event → confirms</span></li>
@@ -374,7 +377,6 @@ footer nav { display: flex; gap: 18px; flex-wrap: wrap; }
           <li data-c="C5n"><span class="lamp ok" aria-hidden="true"></span><span class="k"><i>C5</i>New market<span class="sr"> verified</span></span><span class="v">$603,140 / 24 h, top venue Uniswap v4</span></li>
         </ol></div>
       </div>
-      <div class="vb"><span class="bh">3 · Verdict</span><div class="flaps" id="h-vd" style="--n:14" role="img" aria-label="Verdict SELL OLD"></div><p class="sr" id="h-live" aria-live="polite"></p></div>
       <div class="fig"><span class="big" id="h-big">+15.7%</span><span class="say" id="h-say">the old token is worth more than the 1:1 swap, at CMC's quotes</span><p class="vals" id="h-vals">10,000 CPOOL · sell old $243.01 · swap 1:1 $210.06 · excludes fees and gas</p></div>
       <div class="bfoot">
         <p class="cap" id="h-cap">replay · lookup captured 2026-11-22 03:49 UTC · 8 CMC credits · 457 ms</p>
@@ -394,7 +396,7 @@ footer nav { display: flex; gap: 18px; flex-wrap: wrap; }
 <section class="receipts" aria-label="Receipts">
   <div class="wrap">
     <div class="rc"><div class="flaps" data-count="161" style="--n:3"></div><p>coins in CMC's top 2000 carry a migration or other notice</p><code class="proof">docs/proof/assets/census-…T0349Z.json</code></div>
-    <div class="rc"><div class="flaps" data-count="80" style="--n:2"></div><p>name the successor only in prose, a field no program can read</p><code class="proof">census · prose_only</code></div>
+    <div class="rc"><div class="flaps" data-count="80" style="--n:2"></div><p>name the successor only in prose, which no endpoint returns as data</p><code class="proof">census · prose_only</code></div>
     <div class="rc"><div class="flaps" data-count="83" style="--n:2"></div><p>tests pass, 82&nbsp;% coverage, plus 10/10 evals on real CMC rows</p><code class="proof">docs/proof/gates/local-gates-2026-11-22.txt</code></div>
     <div class="rc"><div class="num"><div class="flaps" data-count="1.007" style="--n:5"></div><span class="unit">s</span></div><p>p50 lookup with a cached read and live CMC calls (n=12)</p><code class="proof">docs/proof/bench/bench-2026-11-22.json</code></div>
   </div>

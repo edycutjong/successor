@@ -71,8 +71,8 @@ code, .mono { font-family: var(--font-data); }
 .lamp.prop::before { content: "·"; }
 
 /* 1 cover */
-.cover { display: grid; grid-template-columns: 1fr 780px; gap: 80px; align-items: center; height: 100%; padding-bottom: 40px; }
-.cover h1 { font-size: 118px; }
+.cover { display: grid; grid-template-columns: 1fr 680px; gap: 80px; align-items: center; height: 100%; padding-bottom: 40px; }
+.cover h1 { font-size: 98px; }
 .cover .sub { font-size: 34px; color: #CFC8BA; margin: 36px 0 0; max-width: 24em; line-height: 1.4; }
 .cover .icon { position: absolute; top: 0; right: 0; width: 88px; height: 88px; }
 .bcard { background: var(--steel); border: 2px solid var(--rule); border-radius: 10px; padding: 40px 44px; }
@@ -107,7 +107,8 @@ code, .mono { font-family: var(--font-data); }
 .frame .bar i { width: 14px; height: 14px; border-radius: 50%; background: var(--rule); }
 .frame .bar span { margin-left: 12px; font: 400 20px/1 var(--font-data); color: var(--muted); background: var(--bg); padding: 9px 14px; border-radius: 4px; }
 .frame img { display: block; width: 100%; height: auto; }
-.sol { display: grid; grid-template-columns: 640px 1fr; gap: 72px; align-items: center; height: 100%; padding-bottom: 50px; }
+.cap4 { font-size: 26px; color: var(--muted); margin-top: 16px; }
+.sol { display: grid; grid-template-columns: 560px 1fr; gap: 72px; align-items: center; height: 100%; padding-bottom: 50px; }
 
 /* 5 flow */
 .flow { display: grid; grid-template-columns: repeat(4, 1fr); gap: 0; margin-top: 50px; border: 2px solid var(--rule); border-radius: 10px; overflow: hidden; }
@@ -145,6 +146,9 @@ code, .mono { font-family: var(--font-data); }
 .hex div { display: flex; gap: 22px; align-items: center; }
 .hex s { color: var(--muted); text-decoration-color: var(--refuted); text-decoration-thickness: 3px; }
 .hex mark { background: none; color: var(--refuted); }
+.mini { display: flex; gap: 26px; flex-wrap: wrap; margin-top: 22px; font: 800 30px/1 var(--font-display); letter-spacing: .04em; text-transform: uppercase; }
+.mini span { display: flex; gap: 12px; align-items: center; }
+.mini .lamp { width: 38px; height: 38px; font-size: 22px; }
 .g .chip { display: inline-block; margin-top: 16px; font: 400 19px/1.3 var(--font-data); color: var(--muted); border: 1px solid var(--rule); border-radius: 4px; padding: 8px 12px; }
 
 /* 8 honesty */
@@ -218,7 +222,7 @@ body.portrait .hud { display: none; }
   <div class="cover">
     <div>
       <h1>Your coin left the station. Successor <span class="hl">checks where it went.</span></h1>
-      <p class="sub">AI reads CMC's migration notice. Code checks CMC's rows.</p>
+      <p class="sub">AI reads CMC's notice. Code checks the rows.</p>
     </div>
     <div class="bcard">
       <div class="cols"><span>Old</span><span></span><span>Successor</span></div>
@@ -265,9 +269,9 @@ body.portrait .hud { display: none; }
       <h2>Reads the notice. Checks the rows.</h2>
       <p class="body">One coin in. <b>SWAP</b>, <b>SELL OLD</b>, <b>WRITE OFF</b> or <b>NOT VERIFIABLE</b> out, with its proof.</p>
     </div>
-    <div class="frame"><div class="bar"><i></i><i></i><i></i><span>successor.edycu.dev/?q=CPOOL</span></div><img src="/assets/shot-cpool.webp" width="1626" height="968" alt="The live Successor board: CPOOL to CLEAR, verdict SELL OLD, seven checks lit (captured 2026-11-22 05:58 UTC)"></div>
+    <figure style="margin:0"><div class="frame"><div class="bar"><i></i><i></i><i></i><span>successor.edycu.dev/?q=CPOOL</span></div><img src="/assets/shot-cpool-hero.webp" width="1840" height="1148" alt="The live Successor board: CPOOL to CLEAR, verdict SELL OLD, R8 reason, the notice underlined and checks C1 to C4 lit (captured 2026-11-22 06:20 UTC)"></div><figcaption class="cap4">Same coin, later: the margin moved.</figcaption></figure>
   </div>
-  <div class="foot"><b>SUCCESSOR</b><span>live board · 2026-11-22 05:58 UTC · 04/10</span></div>
+  <div class="foot"><b>SUCCESSOR</b><span>live board · 2026-11-22 06:20 UTC · 04/10</span></div>
   <aside class="notes">One input, one verdict, and the receipts behind it. The verdict is market-sensitive, so every board carries its capture time.</aside>
 </section>
 
@@ -278,10 +282,10 @@ body.portrait .hud { display: none; }
   <div class="flow">
     <div><h3>One API call returns prose</h3><p>“…rebranded to … (CLEAR) … 1:1 swap…”</p><span class="chip">/info</span></div>
     <div><h3>Reader proposes</h3><div class="st"><span class="lamp prop"></span>quotes each field</div><span class="chip">qwen4-max</span></div>
-    <div><h3>Code checks</h3><div class="st"><span class="lamp ok"></span>contract</div><div class="st"><span class="lamp ok"></span>ratio</div><div class="st"><span class="lamp ok"></span>markets</div><span class="chip">5 CMC endpoints</span></div>
-    <div><h3>Successor returns a verdict</h3><span class="chip">R1–R10</span></div>
+    <div><h3>Code checks</h3><div class="st"><span class="lamp ok"></span>contract</div><div class="st"><span class="lamp ok"></span>ratio</div><div class="st"><span class="lamp ok"></span>markets</div></div>
+    <div><h3>Successor returns a verdict</h3><div class="flaps" data-f="SELL OLD" style="--tw:34px;--g:4px"></div><span class="chip">R1–R10</span></div>
   </div>
-  <div class="foot"><b>SUCCESSOR</b><span>05/10</span></div>
+  <div class="foot"><b>SUCCESSOR</b><span>the CPOOL run · 2026-11-22 03:49 UTC · 05/10</span></div>
   <aside class="notes">The split is the design. The LLM proposes, quoting its source. Code verifies against map, info, quotes latest, quotes historical and market pairs. A deterministic table picks the verdict. The LLM never decides.</aside>
 </section>
 
@@ -306,8 +310,8 @@ body.portrait .hud { display: none; }
     <div class="g big"><div><h3>One hex digit off: refuted</h3><p>Mistypes never become verdicts.</p></div>
       <div class="hex"><div><span class="lamp ok"></span>0x5200…5e550e00</div><div><span class="lamp bad"></span><s>0x5200…5e550e0<mark>1</mark></s></div></div>
       <span class="chip">test_one_hex_digit_off_is_refuted_and_never_repairable</span></div>
-    <div class="g"><h3>SWAP needs both proofs</h3><p>Verified contract, price-confirmed ratio.</p></div>
-    <div class="g"><h3>Injection loses</h3><p>Eval case 10: an injected notice, clean verdict.</p></div>
+    <div class="g"><h3>SWAP needs both proofs</h3><div class="mini"><span><i class="lamp ok"></i>contract</span><span><i class="lamp prop"></i>ratio</span><span>→ no SWAP</span></div></div>
+    <div class="g"><h3>Injection loses</h3><p>Eval case 10: an injected notice.</p><div class="mini"><span><i class="lamp ok"></i>clean verdict</span></div></div>
   </div>
   <div class="foot"><b>SUCCESSOR</b><span>07/10</span></div>
   <aside class="notes">Each refusal is a named test. Property test over every combination of check results. Evals replay saved CMC responses offline, including a notice that tries to instruct the model.</aside>
@@ -360,7 +364,7 @@ body.portrait .hud { display: none; }
       <p class="label">Try it now</p>
       <h2>Look up your oldest coin.</h2>
       <p class="url">successor.edycu.dev</p>
-      <ul><li>judges: /judge</li><li>github.com/edycutjong/successor</li><li>#BuildwithCMC</li></ul>
+      <ul><li>successor.edycu.dev/judge</li><li>github.com/edycutjong/successor</li><li>#BuildwithCMC</li></ul>
     </div>
     <div class="qr">
 <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 29 29" width="300" height="300" role="img" aria-label="QR code for https://successor.edycu.dev" shape-rendering="crispEdges"><path class="qrline" stroke="#efe9dc" d="M0 0.5h7m1 0h1m1 0h1m1 0h5m1 0h1m3 0h7m-29 1h1m5 0h1m2 0h2m1 0h2m1 0h4m3 0h1m5 0h1m-29 1h1m1 0h3m1 0h1m2 0h1m1 0h2m2 0h1m3 0h2m1 0h1m1 0h3m1 0h1m-29 1h1m1 0h3m1 0h1m2 0h2m1 0h1m2 0h3m4 0h1m1 0h3m1 0h1m-29 1h1m1 0h3m1 0h1m1 0h1m3 0h3m3 0h3m1 0h1m1 0h3m1 0h1m-29 1h1m5 0h1m1 0h2m1 0h3m1 0h1m2 0h1m1 0h1m1 0h1m5 0h1m-29 1h7m1 0h1m1 0h1m1 0h1m1 0h1m1 0h1m1 0h1m1 0h1m1 0h7m-18 1h1m3 0h1m2 0h1m1 0h1m-20 1h7m1 0h1m1 0h1m1 0h2m1 0h1m1 0h1m1 0h1m2 0h2m3 0h1m-29 1h2m2 0h1m2 0h1m2 0h2m2 0h1m1 0h1m1 0h3m1 0h5m1 0h1m-28 1h3m1 0h8m1 0h2m1 0h2m1 0h4m2 0h1m-27 1h1m2 0h2m2 0h2m1 0h3m3 0h1m3 0h3m1 0h2m1 0h1m-27 1h1m1 0h4m3 0h1m1 0h2m1 0h1m1 0h1m2 0h2m1 0h1m2 0h3m-28 1h2m1 0h2m3 0h2m1 0h1m4 0h6m1 0h2m1 0h2m-28 1h1m1 0h2m1 0h1m1 0h3m1 0h1m3 0h2m2 0h1m2 0h1m3 0h1m-26 1h1m1 0h1m2 0h1m4 0h1m1 0h6m4 0h2m1 0h2m-29 1h7m2 0h1m1 0h1m4 0h1m4 0h1m3 0h3m-28 1h3m1 0h1m4 0h1m1 0h1m1 0h3m2 0h8m1 0h2m-29 1h1m1 0h2m2 0h3m2 0h6m5 0h4m-26 1h1m2 0h3m1 0h1m1 0h1m2 0h1m1 0h2m4 0h1m1 0h1m2 0h1m2 0h1m-29 1h1m1 0h1m3 0h2m1 0h2m4 0h1m1 0h1m2 0h5m1 0h3m-21 1h2m1 0h1m1 0h1m2 0h1m2 0h2m3 0h2m2 0h1m-29 1h7m1 0h1m1 0h4m1 0h2m1 0h3m1 0h1m1 0h1m-25 1h1m5 0h1m1 0h2m2 0h2m5 0h2m3 0h2m2 0h1m-29 1h1m1 0h3m1 0h1m1 0h2m1 0h5m2 0h1m1 0h7m1 0h1m-29 1h1m1 0h3m1 0h1m1 0h1m1 0h2m2 0h3m2 0h3m1 0h1m1 0h1m-26 1h1m1 0h3m1 0h1m1 0h2m1 0h3m3 0h8m2 0h1m-28 1h1m5 0h1m1 0h3m1 0h1m1 0h1m1 0h1m3 0h1m1 0h1m1 0h2m1 0h1m-28 1h7m2 0h1m1 0h1m4 0h2m1 0h1m1 0h2m1 0h3"/></svg>
