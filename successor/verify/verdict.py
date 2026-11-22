@@ -136,7 +136,7 @@ def decide(f: Facts) -> Decision:
             "the coin you hold is the successor itself (same CMC id): a rename, a ticker change or the new token; nothing to swap",
         )
     if f.c2 == "refuted":
-        return Decision(NOT_VERIFIABLE, "R5", f"successor refuted by CMC's data: {f.c2_reason}")
+        return Decision(NOT_VERIFIABLE, "R5", f"successor fails a check against CMC's data: {f.c2_reason}")
     new_dead = f.c2 == "verified" and f.new_market == "dead"
     if f.old_market == "dead" and (new_dead or f.deadline_passed or f.ended_no_successor):
         why = (
