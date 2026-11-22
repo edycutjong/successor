@@ -31,7 +31,7 @@ code, kbd, pre { font-family: var(--font-data); }
 
 /* buttons: bone, never orange (orange means lit) */
 .ct-btn { display: inline-flex; align-items: center; gap: 9px; font: 700 17px/1 var(--font-display); letter-spacing: .16em; text-transform: uppercase;
-  padding: 14px 20px; border: 1px solid var(--gauze); color: var(--bone); background: rgba(19, 14, 20, .55); text-decoration: none; cursor: pointer;
+  padding: 14px 20px; border: 1px solid rgba(239, 233, 220, .38); color: var(--bone); background: rgba(19, 14, 20, .55); text-decoration: none; cursor: pointer;
   transition: border-color .15s, background .15s, transform .12s; }
 .ct-btn:hover { border-color: var(--bone); background: rgba(239, 230, 218, .07); }
 .ct-btn:active { transform: translateY(1px); }
@@ -45,8 +45,8 @@ code, kbd, pre { font-family: var(--font-data); }
 .ct-lamp { flex: none; display: inline-block; width: 16px; height: 16px; border-radius: 50%; border: 1.5px solid #4A3C48; background: #1F171F center/10px no-repeat; transition: background-color .25s, box-shadow .25s, border-color .25s; }
 .ct-lamp.lit { background-color: var(--lit); border-color: var(--lit-hot); box-shadow: 0 0 10px rgba(255, 122, 42, .85), 0 0 22px rgba(255, 122, 42, .35);
   background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 10 10'%3E%3Cpath d='M2 5.2l2 2 4-4.6' fill='none' stroke='%23130E14' stroke-width='1.8' stroke-linecap='round' stroke-linejoin='round'/%3E%3C/svg%3E"); }
-.ct-lamp.after { border-color: var(--after); background-color: #2A1D1B;
-  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 10 10'%3E%3Ccircle cx='5' cy='5' r='1.7' fill='%23C98A4B'/%3E%3C/svg%3E"); }
+.ct-lamp.after { border-color: var(--after); background-color: #22201B;
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 10 10'%3E%3Ccircle cx='5' cy='5' r='1.7' fill='%23BFA77F'/%3E%3C/svg%3E"); }
 .ct-lamp.refused { border-color: var(--refused); background-color: #120D12;
   background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 10 10'%3E%3Cpath d='M3 3l4 4M7 3l-4 4' stroke='%23F06A55' stroke-width='1.7' stroke-linecap='round'/%3E%3C/svg%3E"); }
 

@@ -24,7 +24,7 @@
 <style>
 :root {
   --bg: #130E14; --bench: #1B141B; --bench-2: #221922; --gauze: #8A6A45; --ghost: rgba(196, 160, 118, .2);
-  --bone: #EFE9DC; --muted: #9A9284; --lit: #FF7A2A; --lit-hot: #FFC08A; --after: #C98A4B; --refused: #F06A55;
+  --bone: #EFE9DC; --muted: #9A9284; --lit: #FF7A2A; --lit-hot: #FFC08A; --after: #BFA77F; --refused: #F06A55;
   --rule: rgba(138, 106, 69, .32);
   --font-display: "Sofia Sans Extra Condensed", "Arial Narrow", sans-serif;
   --font-body: "Sofia Sans", "Helvetica Neue", Arial, sans-serif;
@@ -48,14 +48,14 @@ h3 { font: 600 26px/1.05 var(--font-display); letter-spacing: .04em; text-transf
 .hero .wrap { display: grid; grid-template-columns: minmax(0, .92fr) minmax(0, 1.08fr); gap: clamp(28px, 4vw, 64px); align-items: center; }
 h1 { font: 300 clamp(56px, 6.4vw, 104px)/.9 var(--font-display); text-transform: uppercase; letter-spacing: .005em; margin: 16px 0 18px; }
 h1 em { font-style: normal; font-weight: 500; color: var(--bone); transition: color .25s, text-shadow .25s; }
-h1 em.lit { color: var(--lit); text-shadow: 0 0 18px rgba(255, 122, 42, .3); }
+h1 em.lit { color: #FFE2C4; text-shadow: var(--glow); }
 .hsub { font: 600 19px/1.4 var(--font-body); margin: 0 0 12px; max-width: 34ch; }
 .lede { color: var(--muted); max-width: 52ch; margin: 0; }
 .lede b { color: var(--bone); }
 .ctas { display: flex; flex-wrap: wrap; gap: 12px; margin: 26px 0 16px; }
-.runline { display: flex; align-items: center; max-width: 560px; border: 1px dashed rgba(138, 106, 69, .55); }
+.runline { display: flex; align-items: center; max-width: 560px; border: 1px dashed rgba(239, 233, 220, .3); }
 .runline code { flex: 1; min-width: 0; padding: 10px 12px; font-size: 13px; color: var(--muted); white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
-.copy { align-self: stretch; font: 600 13px var(--font-body); color: var(--bone); background: var(--bench-2); border: 0; border-left: 1px dashed rgba(138, 106, 69, .55); padding: 0 14px; cursor: pointer; transition: background .15s; }
+.copy { align-self: stretch; font: 600 13px var(--font-body); color: var(--bone); background: var(--bench-2); border: 0; border-left: 1px dashed rgba(239, 233, 220, .3); padding: 0 14px; cursor: pointer; transition: background .15s; }
 .copy:hover { background: #2C222C; }
 .note { font-size: 14px; color: var(--muted); margin: 12px 0 0; }
 
@@ -99,7 +99,6 @@ h1 em.lit { color: var(--lit); text-shadow: 0 0 18px rgba(255, 122, 42, .3); }
 .rc { padding: 24px 24px 20px; border-left: 1px solid var(--rule); }
 .rc:first-child { border-left: 0; }
 .num { position: relative; display: inline-block; font: 300 76px/1 var(--font-display); letter-spacing: .03em; }
-.num::before { content: attr(data-ghost); position: absolute; left: 0; top: 0; white-space: nowrap; color: transparent; -webkit-text-stroke: 1px var(--ghost); }
 .num .u { font-size: 34px; color: var(--muted); margin-left: 4px; }
 .rc p { margin: 10px 0 8px; color: var(--muted); font-size: 15px; line-height: 1.4; }
 .proof { font: 12.5px var(--font-data); color: var(--muted); overflow-wrap: anywhere; }
@@ -201,7 +200,7 @@ details code { color: var(--bone); font-size: 14px; }
 /* final */
 .final { padding: 104px 0 112px; border-top: 1px solid var(--rule); background: radial-gradient(700px 360px at 50% 100%, rgba(255, 122, 42, .1), transparent 70%); text-align: center; }
 .final h2 { margin: 0 auto 26px; }
-.look { display: flex; max-width: 620px; margin: 0 auto; border: 1px solid var(--gauze); }
+.look { display: flex; max-width: 620px; margin: 0 auto; border: 1px solid rgba(239, 233, 220, .38); }
 .look input { flex: 1; min-width: 0; font: 500 16px var(--font-data); color: var(--bone); background: rgba(19, 14, 20, .7); border: 0; padding: 16px; }
 .look input::placeholder { color: var(--muted); }
 .look .ct-btn { border: 0; }
@@ -220,7 +219,7 @@ footer a:hover { color: var(--bone); text-decoration: underline; text-underline-
   .rf { grid-template-columns: 52px minmax(0, 1fr); } .rf .demo, .rf .ct-chip { grid-column: 2; justify-self: start; }
 }
 @media (max-width: 640px) {
-  .s { padding: 64px 0; } h1 { font-size: 12.6vw; } .hero .ct-eyebrow { font-size: 12px; letter-spacing: .2em; } .inst { grid-template-columns: minmax(0, 1fr) 150px; gap: 14px; } .checks .v { display: none; } .checks li { padding: 7px 0; } .checks .k { font-size: 14px; } .ren { font-size: 30px; margin-bottom: 8px; } .ren .arr { font-size: 22px; } .inst .ct-tube { --th: 236px; --cs: 22px; --k: .64; } .tubecap { font-size: 12px; } .runs button { min-height: 44px; padding: 10px 12px; } .copy { min-width: 64px; } .notice { font-size: 14px; } .bench { padding: 16px 14px 14px; } .ctas .ct-btn { padding: 12px 14px; font-size: 15px; }
+  .s { padding: 64px 0; } h1 { font-size: 12.6vw; } .hero .ct-eyebrow { font-size: 12px; letter-spacing: .2em; } .inst { grid-template-columns: minmax(0, 1fr) 150px; gap: 14px; } .inst > div:last-child > .bh { display: none; } .checks .v { display: none; } .checks li { padding: 7px 0; } .checks .k { font-size: 14px; } .ren { font-size: 30px; margin-bottom: 8px; } .ren .arr { font-size: 22px; } .inst .ct-tube { --th: 236px; --cs: 22px; --k: .64; } .tubecap { font-size: 12px; } .runs button { min-height: 44px; padding: 10px 12px; } .copy { min-width: 64px; } .notice { font-size: 14px; } .bench { padding: 16px 14px 14px; } .ctas .ct-btn { padding: 12px 14px; font-size: 15px; }
 .flow { grid-template-columns: 1fr; } .flow > div { border-left: 0; border-top: 1px solid var(--rule); } .flow > div:first-child { border-top: 0; }
   .num { font-size: 56px; } .crow { grid-template-columns: minmax(0, 1fr) 64px; } .crow .ticks, .crow .zero { grid-column: 1 / -1; } .crow .w { font-size: 30px; }
   .vs strong { font-size: 36px; } .look { flex-direction: column; }
@@ -242,7 +241,7 @@ footer a:hover { color: var(--bone); text-decoration: underline; text-underline-
   <div class="wrap">
     <div class="hcopy">
       <p class="ct-eyebrow">CMC API Hackathon · AI Agents and Automation</p>
-      <h1 id="h1">Five verdicts in the glass. <em class="lit" id="h-em">Only a checked one lights.</em></h1>
+      <h1 id="h1">Five verdicts in the glass. Only a checked one <em class="lit" id="h-em">lights.</em></h1>
       <p class="hsub">An AI reads CoinMarketCap's migration notice. Code verifies it against CMC's own rows.</p>
       <p class="lede">CPOOL's notice says it became CLEAR at 1:1, in one paragraph of prose. <b>161 coins</b> in CMC's top 2000 carry a notice, <b>141</b> of them migrations, and <b>80</b> name the successor only in prose. You get one verdict, with the rows that prove it.</p>
       <div class="ctas">
@@ -302,10 +301,10 @@ footer a:hover { color: var(--bone); text-decoration: underline; text-underline-
 
 <section class="receipts" aria-label="Receipts">
   <div class="wrap">
-    <div class="rc"><span class="num" data-ghost="888" data-count="161">161</span><p>coins in CMC's top 2000 carry a migration or other notice</p><code class="proof">docs/proof/assets/census-…T0349Z.json</code></div>
-    <div class="rc"><span class="num" data-ghost="88" data-count="80">80</span><p>name the successor only in prose, which no endpoint returns as data</p><code class="proof">census · prose_only</code></div>
-    <div class="rc"><span class="num" data-ghost="88" data-count="88">88</span><p>tests pass, 82&nbsp;% coverage (2026-11-22 21:16 UTC run), plus 10/10 evals on real CMC rows</p><code class="proof">docs/proof/gates/local-gates-2026-11-22T2116Z.txt</code></div>
-    <div class="rc"><span class="num" data-ghost="8.888" data-count="1.007">1.007</span><span class="num u">s</span><p>p50 lookup with a cached read and live CMC calls (n=12, 2026-11-22)</p><code class="proof">docs/proof/bench/bench-2026-11-22.json</code></div>
+    <div class="rc"><span class="num" data-count="161">161</span><p>coins in CMC's top 2000 carry a migration or other notice</p><code class="proof">docs/proof/assets/census-…T0349Z.json</code></div>
+    <div class="rc"><span class="num" data-count="80">80</span><p>name the successor only in prose, which no endpoint returns as data</p><code class="proof">census · prose_only</code></div>
+    <div class="rc"><span class="num" data-count="88">88</span><p>tests pass, 82&nbsp;% coverage (2026-11-22 21:16 UTC run), plus 10/10 evals on real CMC rows</p><code class="proof">docs/proof/gates/local-gates-2026-11-22T2116Z.txt</code></div>
+    <div class="rc"><span class="num" data-count="1.007">1.007</span><span class="num u">s</span><p>p50 lookup with a cached read and live CMC calls (n=12, 2026-11-22)</p><code class="proof">docs/proof/bench/bench-2026-11-22.json</code></div>
   </div>
 </section>
 

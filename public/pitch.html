@@ -3,7 +3,7 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>Successor · pitch deck · v1.1.0</title>
+<title>Successor · pitch deck · v1.1.1</title>
 <meta name="description" content="CMC says a coin migrated only in prose. Successor's AI reads the notice, code checks it against CMC's own rows, and only then does one verdict light.">
 <meta name="author" content="Edy Cu">
 <meta name="theme-color" content="#130E14">
@@ -21,7 +21,7 @@
 <style>
 :root {
   --bg: #130E14; --bench: #1B141B; --bench-2: #221922; --gauze: #8A6A45; --ghost: rgba(196, 160, 118, .2);
-  --bone: #EFE9DC; --muted: #9A9284; --lit: #FF7A2A; --lit-hot: #FFC08A; --after: #C98A4B; --refused: #F06A55;
+  --bone: #EFE9DC; --muted: #9A9284; --lit: #FF7A2A; --lit-hot: #FFC08A; --after: #BFA77F; --refused: #F06A55;
   --rule: rgba(138, 106, 69, .32);
   --font-display: "Sofia Sans Extra Condensed", "Arial Narrow", sans-serif;
   --font-body: "Sofia Sans", "Helvetica Neue", Arial, sans-serif;
@@ -44,7 +44,8 @@ body { background: var(--ink-deep); }
 .label { margin: 0 0 18px; font: 600 30px/1 var(--font-display); letter-spacing: .3em; text-transform: uppercase; color: var(--muted); }
 h1 { font: 300 138px/.88 var(--font-display); text-transform: uppercase; margin: 0 0 30px; }
 h2 { font: 300 118px/.9 var(--font-display); text-transform: uppercase; margin: 0 0 48px; max-width: 24ch; }
-h1 em, h2 em { font-style: normal; font-weight: 500; color: var(--lit); text-shadow: 0 0 30px rgba(255, 122, 42, .35); }
+h1 em { font-style: normal; font-weight: 400; color: #FFE2C4; text-shadow: var(--glow); }
+h2 em { font-style: normal; font-weight: 500; color: var(--lit); }
 h3 { font: 600 44px/1 var(--font-display); text-transform: uppercase; letter-spacing: .04em; margin: 0 0 14px; }
 p { margin: 0; }
 .big-p { font-size: 40px; line-height: 1.35; color: var(--muted); max-width: 30ch; }
@@ -90,13 +91,19 @@ p { margin: 0; }
 .capl { margin-top: 14px; font: 500 22px var(--font-data); color: var(--muted); }
 /* 5 how, stepped */
 .flow { display: grid; grid-template-columns: 1.15fr 1fr 1fr 1fr; border: 1px solid var(--rule); }
-.flow > div { padding: 40px 34px; border-left: 1px solid var(--rule); min-height: 470px; transition: opacity .3s; }
+.rail { position: relative; display: grid; grid-template-columns: 1.15fr 1fr 1fr 1fr; margin: 0 0 22px; }
+.rail::before { content: ""; position: absolute; left: 17px; right: 25%; top: 17px; height: 2px; background: linear-gradient(90deg, rgba(239, 233, 220, .25), var(--after) 40%, var(--lit) 75%); }
+.rail span { position: relative; display: flex; align-items: center; gap: 14px; font: 600 26px var(--font-display); letter-spacing: .2em; text-transform: uppercase; color: var(--muted); transition: opacity .3s; }
+.rail .ct-lamp { width: 36px; height: 36px; background-size: 20px; }
+.rail .node0 { width: 36px; height: 36px; border-radius: 50%; border: 2px solid rgba(239, 233, 220, .3); background: var(--bg); }
+.flow > div { padding: 40px 34px; border-left: 1px solid var(--rule); transition: opacity .3s; }
+.flow .q { font-size: 34px; } .flow .st { font-size: 36px; }
 .flow > div:first-child { border-left: 0; }
 .flow .st { display: flex; align-items: center; gap: 16px; margin: 0 0 18px; font-size: 32px; }
 .flow .q { font-size: 30px; line-height: 1.4; color: var(--muted); }
 .chip { display: inline-block; margin-top: 22px; font: 500 22px var(--font-data); color: var(--muted); border: 1px solid var(--rule); padding: 8px 12px; }
 .flow .vd { font: 300 92px/.95 var(--font-display); text-transform: uppercase; color: #FFE2C4; text-shadow: var(--glow); margin: 10px 0; }
-.flow.st-1 .chk, .flow.st-1 .rul, .flow.st-2 .rul { opacity: .25; }
+.flow.st-1 .chk, .flow.st-1 .rul, .flow.st-2 .rul, .rail.st-1 .r-chk, .rail.st-1 .r-rul, .rail.st-2 .r-rul { opacity: .25; }
 .flow.st-1 .chk .ct-lamp, .flow.st-1 .rul .vd, .flow.st-2 .rul .vd { filter: grayscale(1) brightness(.5); text-shadow: none; }
 /* 6 demo */
 .demo2 { display: grid; grid-template-columns: 1fr 1fr; gap: 44px; }
@@ -136,7 +143,6 @@ p { margin: 0; }
 .rcpt div:nth-child(3n+1) { border-left: 0; }
 .rcpt div:nth-child(n+4) { border-top: 1px solid var(--rule); }
 .rcpt strong { position: relative; display: inline-block; white-space: nowrap; font: 300 120px/1 var(--font-display); }
-.rcpt strong::before { content: attr(data-ghost); position: absolute; left: 0; top: 0; white-space: nowrap; color: transparent; -webkit-text-stroke: 1.5px var(--ghost); }
 .rcpt span { display: block; }
 .rcpt span { font-size: 32px; color: var(--muted); }
 /* 10 ask */
@@ -183,7 +189,7 @@ body.portrait .hud { display: none; }
   <div class="cover">
     <div>
       <p class="label"><img src="/icon.svg" alt="" width="52" height="52">CMC API Hackathon · AI Agents and Automation</p>
-      <h1>Five verdicts in the glass. <em>Only a checked one lights.</em></h1>
+      <h1>Five verdicts in the glass. Only a checked one <em>lights.</em></h1>
       <p class="sub">AI reads CMC's notice. Code checks the rows.</p>
       <div class="lamps" aria-label="Checks C2, C4 and C5 verified"><span><i class="ct-lamp lit"></i>C2</span><span><i class="ct-lamp lit"></i>C4</span><span><i class="ct-lamp lit"></i>C5</span></div>
     </div>
@@ -202,14 +208,14 @@ body.portrait .hud { display: none; }
       <p class="cap">CPOOL → CLEAR · +15.7% vs the swap · 03:49 UTC</p>
     </div>
   </div>
-  <div class="foot"><b>SUCCESSOR</b><span>successor.edycu.dev · v1.1.0 · 01/10</span></div>
+  <div class="foot"><b>SUCCESSOR</b><span>successor.edycu.dev · v1.1.1 · 01/10</span></div>
   <aside class="notes">Open on the tube: all five verdicts are always in the glass. One lights only after the checks have run; if the Reader fails, the only light is NOT VERIFIABLE with the reason, and with no notice the glass stays dark. CPOOL's name became CLEAR only once code matched the contract. Keep it to one breath.</aside>
 </section>
 
 <!-- 2 HOOK -->
 <section class="slide" data-n="2" aria-label="Hook">
   <div class="hook">
-    <div><span class="ghostnum" data-ghost="88">80</span><span class="of"> of 161</span></div>
+    <div><span class="ghostnum">80</span><span class="of"> of 161</span></div>
     <div>
       <p>notices name the successor <em style="font-style:normal;font-weight:300;color:var(--after);text-shadow:none">only in prose.</em></p>
       <small>CMC top 2000 by rank, active · scan 2026-11-22T02:32:34Z · GET /api/census</small>
@@ -248,7 +254,8 @@ body.portrait .hud { display: none; }
 <!-- 5 HOW (presenter-stepped: proposal, checks, verdict) -->
 <section class="slide" data-n="5" data-steps="3" aria-label="How it works">
   <p class="label">Four stops · the CPOOL run</p>
-  <h2>The model reads. Code rules.</h2>
+  <h2>The model reads.<br>Code rules.</h2>
+  <div class="rail" id="rail5" aria-hidden="true"><span><i class="node0"></i>prose</span><span><i class="ct-lamp after"></i>proposed</span><span class="r-chk"><i class="ct-lamp lit"></i>checked</span><span class="r-rul"><i class="ct-lamp lit"></i>struck</span></div>
   <div class="flow" id="flow5">
     <div><h3>One API call returns prose</h3><p class="q">“…rebranded to … (CLEAR) … 1:1 swap…”</p><span class="chip">/info</span></div>
     <div><h3>Reader proposes</h3><div class="st"><span class="ct-lamp after"></span>quotes each field</div><span class="chip">qwen4-max</span></div>
@@ -316,12 +323,12 @@ body.portrait .hud { display: none; }
   <p class="label">Measured 2026-11-22</p>
   <h2>Receipts, not adjectives.</h2>
   <div class="rcpt">
-    <div><strong data-ghost="88">88</strong><span>tests pass</span></div>
-    <div><strong data-ghost="88/88">10/10</strong><span>evals</span></div>
-    <div><strong data-ghost="8.888">1.007 s</strong><span>p50, cached read</span></div>
-    <div><strong data-ghost="88.88">15.44 s</strong><span>p50, cold read</span></div>
-    <div><strong data-ghost="88">12</strong><span>live-URL tests</span></div>
-    <div><strong data-ghost="888">161</strong><span>notices looked up</span></div>
+    <div><strong>88</strong><span>tests pass</span></div>
+    <div><strong>10/10</strong><span>evals</span></div>
+    <div><strong>1.007 s</strong><span>p50, cached read</span></div>
+    <div><strong>15.44 s</strong><span>p50, cold read</span></div>
+    <div><strong>12</strong><span>live-URL tests</span></div>
+    <div><strong>161</strong><span>notices looked up</span></div>
   </div>
   <div class="foot"><b>SUCCESSOR</b><span>09/10</span></div>
   <aside class="notes">Every number here greps to a file in the repo; the test count is the 2026-11-22 21:16 UTC gate run. The unplug test: remove the CMC key and no verdict is produced; remove the LLM key and an unseen notice ends NOT VERIFIABLE.</aside>
@@ -341,7 +348,7 @@ body.portrait .hud { display: none; }
       <p>Scan for the live board</p>
     </div>
   </div>
-  <div class="foot"><b>SUCCESSOR</b><span>not financial advice · v1.1.0 · 10/10</span></div>
+  <div class="foot"><b>SUCCESSOR</b><span>not financial advice · v1.1.1 · 10/10</span></div>
   <aside class="notes">Ask: run one lookup yourself. CPOOL or AGIX answer in about a second; a notice the Reader has not seen takes about 15 s, and most end NOT VERIFIABLE with the reason. The verdict comes with its rows.</aside>
 </section>
 
@@ -356,8 +363,7 @@ body.portrait .hud { display: none; }
   let i = Math.max(0, Math.min(slides.length - 1, (parseInt(location.hash.slice(1), 10) || 1) - 1));
   const steps = slides.map((s) => Number(s.dataset.steps || 1)); const at = slides.map((s, k) => steps[k]);  // default: final step
   function paintSteps(k) {
-    const f = slides[k].querySelector('.flow'); if (!f) return;
-    f.classList.remove('st-1', 'st-2'); if (at[k] < steps[k]) f.classList.add('st-' + at[k]);
+    slides[k].querySelectorAll('.flow, .rail').forEach((f) => { f.classList.remove('st-1', 'st-2'); if (at[k] < steps[k]) f.classList.add('st-' + at[k]); });
   }
   function fit() {
     const W = document.documentElement.clientWidth, H = document.documentElement.clientHeight;
