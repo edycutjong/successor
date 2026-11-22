@@ -53,7 +53,7 @@ contract, the ratio and the deadline sit inside prose and markdown links. Tracke
 that no longer means what the holder thinks it means: in the AGIX case above, a tracker shows $5,924.93 for 10,000 AGIX
 while the same coins swapped into FET are $463.42 (CMC quotes, 2026-11-22 03:49 UTC).
 
-How big is it? On the live `/api/census` (scan captured 2026-11-22T02:32:34Z, active top 2000 by CMC rank): **161 coins carry a
+How big is it? On the census served at `/api/census` (scan captured 2026-11-22T02:32:34Z, active top 2000 by CMC rank): **161 coins carry a
 notice, 141 of them migration-type**, and 80 name the successor only in prose. That is a field a program cannot read, and a
 holder should not have to.
 
@@ -143,7 +143,7 @@ Successor's own endpoints: `GET /api/lookup?q=&qty=&id=&fresh=` (NDJSON trace, o
 
 Why this is not "a plain API call": the information is not in a field. `info` returns prose; no endpoint returns "the
 successor of CPOOL is CLEAR, 1:1". The agent has to read, propose and then be checked by the endpoints above. `docs/DX-REPORT.md`
-lists what made this possible and what got in the way (a checksummed-address 400 with a misleading message, `date_added`
+lists what made this possible and what got in the way (`quotes/latest` stamps a fresh `last_updated` on a $0-volume coin, which is how a tracker ends up showing AGIX at full price (`docs/proof/assets/lookup-AGIX-2026-11-22T0349Z.ndjson`); a checksummed-address 400 with a misleading message, `date_added`
 copied from old to new coin, `convert=EUR` scaling supply, and the notice being free text).
 
 ## 📊 Engineering Rigor
@@ -229,7 +229,7 @@ python scripts/run_evals.py    # 10/10 counted cases, 4/4 variants (offline repl
 
 `.github/workflows/` defines the same gates in six stages (quality, security, build, deploy, live-URL E2E, performance) plus CodeQL
 (`python`, `javascript-typescript`, `actions`), gitleaks over the full history, a release workflow on `v*.*.*` tags, a daily
-live check, a nightly notice snapshot (`snapshot.yml`; the figures in this README are pinned to the 2026-11-22 capture and do not move with it), and Dependabot (pip + actions, monthly, grouped, no major bumps). Every gate also ran locally on 2026-11-22; the
+live check, a nightly notice snapshot (`snapshot.yml` writes `data/snapshots/census-<date>.json` and stops at the submission deadline; `data/census.json` and the figures in this README stay pinned to the 2026-11-22 capture), and Dependabot (pip + actions, monthly, grouped, no major bumps). Every gate also ran locally on 2026-11-22; the
 outputs are in `docs/proof/gates/` (local gates, live E2E run, Lighthouse scores). GitHub Actions did not start jobs while the repository was private (an account billing
 limit), so no workflow run is claimed here; see "What we got wrong".
 

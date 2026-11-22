@@ -14,14 +14,24 @@ jobs:
         with:
           python-version: "3.12"
       - run: uv pip install --system -e .
+      - name: deadline freeze (no bot commits after the 2026-12-09 23:59 UTC submission deadline)
+        id: gate
+        run: echo "open=$([ "$(date -u +%s)" -le 1796860740 ] && echo 1 || echo 0)" >> "$GITHUB_OUTPUT"
       - name: scan top 2000 notices (20 CMC credits)
+        if: steps.gate.outputs.open == '1'
         env:
           CMC_API_KEY: ${{ secrets.CMC_API_KEY }}
         run: python scripts/census.py scan
-      - name: commit the dated snapshot
+      - name: commit the dated snapshot (data/census.json stays the pinned 2026-11-22 capture the README quotes)
+        if: steps.gate.outputs.open == '1'
         run: |
+          d=$(date -u +%F)
+          mkdir -p data/snapshots
+          cp data/census.json "data/snapshots/census-$d.json"
+          git checkout -- data/census.json data/notices
+          git clean -fdq data/notices
           git config user.name "successor-snapshot"
           git config user.email "snapshot@users.noreply.github.com"
-          git add data/census.json data/notices
-          git diff --cached --quiet || git commit -m "Nightly notice snapshot $(date -u +%F)"
+          git add data/snapshots
+          git diff --cached --quiet || git commit -m "Nightly notice snapshot $d (data/snapshots/)"
           git push
