@@ -43,7 +43,7 @@ bench-cold: ## cold lookup p50/p95 (3 Qwen reads per 10 min; takes ~12 min)
 	$(PY) scripts/bench.py $(BASE) CPOOL 6 --fresh
 
 lighthouse: ## Lighthouse against $(BASE); gates in lighthouserc.json
-	npx --yes @lhci/cli@0.14 autorun --config=lighthouserc.json
+	npx --yes @lhci/cli@0.14.0 autorun --config=lighthouserc.json
 
 audit: ## dependency CVEs (pip-audit)
 	$(PY) -m pip_audit --skip-editable

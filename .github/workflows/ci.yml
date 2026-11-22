@@ -109,7 +109,7 @@ jobs:
         # Dependabot and fork PRs get no secrets: the build stage still ran above, the live stages are skipped for them.
         if: ${{ env.VERCEL_TOKEN != '' }}
         run: |
-          npm i -g vercel@latest
+          npm i -g vercel@66.6.0 # pinned: the version of the last green run; bump deliberately
           vercel pull --yes --environment="$VERCEL_TARGET" --token="$VERCEL_TOKEN"
           vercel build --target="$VERCEL_TARGET" --token="$VERCEL_TOKEN"
           # production target + --skip-domain = a production-grade deployment that is NOT yet aliased to the domain
@@ -163,7 +163,7 @@ jobs:
           node-version: "22"
       - name: Lighthouse (accessibility is a hard gate)
         run: |
-          npx --yes @lhci/cli@0.14 autorun --config=lighthouserc.json \
+          npx --yes @lhci/cli@0.14.0 autorun --config=lighthouserc.json \
             --collect.url="$TARGET/" --collect.url="$TARGET/judge" \
             --collect.settings.extraHeaders="{\"x-vercel-protection-bypass\":\"$BYPASS\"}"
       - name: Lighthouse scores for the artifact
@@ -207,7 +207,7 @@ jobs:
         env:
           DEPLOYMENT: ${{ needs.build.outputs.url }}
         run: |
-          npm i -g vercel@latest
+          npm i -g vercel@66.6.0 # pinned: the version of the last green run; bump deliberately
           vercel promote "$DEPLOYMENT" --yes --token="$VERCEL_TOKEN"
       - name: Live smoke on the production domain
         run: |
