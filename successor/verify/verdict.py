@@ -45,6 +45,8 @@ class Facts:
     # C3: identity / quantity fields the Reader quoted but the notice does not contain (a2a r03: a dropped
     # contract must not read as "not stated" when the Reader asserted one)
     c3_dropped: list[str] = field(default_factory=list)
+    # same CMC id, the Reader labelled it a swap/migration, but the notice text carries no swap signal (a2a r04)
+    swap_label_only: bool = False
 
 
 @dataclass
@@ -68,17 +70,22 @@ SWAP_CRITICAL = (
 
 
 def _swap_blocked(f: Facts) -> list[str]:
-    return [n for n in f.c3_dropped if n in SWAP_CRITICAL]
+    return [n for n in f.c3_dropped if n in SWAP_CRITICAL] + (["event_type"] if f.swap_label_only else [])
 
 
 def _missing(f: Facts) -> str:
     """R10: name what is missing, most fundamental first."""
     if f.agent_unavailable:
         return f"agent unavailable: {f.agent_unavailable}"
+    if f.swap_label_only and not [n for n in f.c3_dropped if n in SWAP_CRITICAL]:
+        return (
+            "the Reader labelled this a swap, but the notice has no swap wording, contract change or ratio, and the "
+            "coin keeps one CMC id: no textual evidence of a swap"
+        )
     if _swap_blocked(f):
         return (
             "C3 dropped "
-            + ", ".join(_swap_blocked(f))
+            + ", ".join(n for n in f.c3_dropped if n in SWAP_CRITICAL)
             + ": the Reader proposed it without a verbatim quote that contains it,"
             " so SWAP is withheld"
         )

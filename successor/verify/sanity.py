@@ -40,6 +40,13 @@ def check(
         lu = _ts(leg.get("last_updated"))
         if leg.get("is_active") and lu and now - lu > timedelta(hours=48):
             trips.append(f"{lab}: last_updated {leg['last_updated']} is more than 48 h old on an active id")
+        elif leg.get("is_active") and price and vol > 0 and lu is None:
+            # a2a r04: a priced, traded quote must prove when it was priced
+            trips.append(
+                f"{lab}: no readable last_updated on a priced active quote ({leg.get('last_updated')!r})"
+            )
+        elif lu and lu - now > timedelta(hours=1):
+            trips.append(f"{lab}: last_updated {leg['last_updated']} is in the future")
     if ratio is not None and not (1e-9 <= float(ratio) <= 1e9):
         trips.append(f"ratio {ratio} is outside 1e-9..1e9")
     return trips

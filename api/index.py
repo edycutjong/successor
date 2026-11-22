@@ -30,31 +30,35 @@ _hits: dict[str, deque[float]] = defaultdict(deque)
 
 
 def _client_ip(request: Request) -> str:
-    fwd = request.headers.get("x-forwarded-for", "")
-    return (fwd.split(",")[0].strip() or request.headers.get("x-real-ip") or "") or (
-        request.client.host if request.client else "?"
-    )
+    """Platform-set client address first (a2a r04): Vercel writes x-real-ip / x-vercel-forwarded-for itself; the
+    left-most X-Forwarded-For is only a fallback for other hosts."""
+    for h in ("x-real-ip", "x-vercel-forwarded-for"):
+        v = request.headers.get(h, "").split(",")[0].strip()
+        if v:
+            return v
+    fwd = request.headers.get("x-forwarded-for", "").split(",")[0].strip()
+    return fwd or (request.client.host if request.client else "?")
 
 
-def _take(bucket: str, kind: str) -> float | None:
-    """Records a hit; returns seconds to wait when the window is full, else None."""
+def _wait(bucket: str, kind: str, now: float) -> float | None:
+    """Seconds to wait when the window is full, else None. Prunes the window; records nothing."""
     n, win = LIMITS[kind]
-    q, now = _hits[bucket], time.monotonic()
+    q = _hits.get(bucket)
     while q and now - q[0] > win:
         q.popleft()
-    if len(q) >= n:
-        return win - (now - q[0])
-    q.append(now)
-    return None
+    if q is not None and not q:
+        del _hits[bucket]  # idle keys do not accumulate on a warm instance
+        q = None
+    return win - (now - q[0]) if q is not None and len(q) >= n else None
 
 
 def _limited(request: Request, fresh: bool) -> JSONResponse | None:
-    ip = _client_ip(request)
+    ip, now = _client_ip(request), time.monotonic()
     checks = [(f"lookup:{ip}", "lookup")] + (
         [(f"fresh:{ip}", "fresh"), ("fresh:*", "fresh_all")] if fresh else []
     )
     for bucket, kind in checks:
-        wait = _take(bucket, kind)
+        wait = _wait(bucket, kind, now)
         if wait is not None:
             what = "live re-reads" if kind.startswith("fresh") else "lookups"
             body = {
@@ -65,6 +69,8 @@ def _limited(request: Request, fresh: bool) -> JSONResponse | None:
                 "t_ms": 0,
             }
             return JSONResponse(body, status_code=429, headers={"Retry-After": str(int(wait) + 1)})
+    for bucket, _ in checks:  # a hit is recorded only once every bucket agreed (a2a r04)
+        _hits[bucket].append(now)
     return None
 
 

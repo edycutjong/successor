@@ -390,6 +390,9 @@ class ReaderSession:
                 self.format_repaired = True
                 self.messages.append({"role": "user", "content": "Call submit_proposal or follow_link."})
                 continue
+            calls = [
+                c for c in calls if isinstance(c, dict)
+            ]  # a2a r04: a malformed call must end as ReaderError
             links = [c for c in calls if (c.get("function") or {}).get("name") == "follow_link"]
             submits = [c for c in calls if (c.get("function") or {}).get("name") == "submit_proposal"]
             others = [c for c in calls if c not in links and c not in submits]
@@ -397,18 +400,18 @@ class ReaderSession:
             for tc in links:  # parallel fetches in one turn: one LLM call, several pages
                 args = _args(tc)
                 if isinstance(args, dict):
-                    await self._follow(tc["id"], str(args.get("url", "")))
+                    await self._follow(_tid(tc), str(args.get("url", "")))
                 else:
-                    self._tool_result(tc["id"], 'Error: follow_link needs {"url": ...}.')
+                    self._tool_result(_tid(tc), 'Error: follow_link needs {"url": ...}.')
             for tc in others:
-                err = f"unknown tool {tc['function']['name']}"
-                self._tool_result(tc["id"], f"Error: {err}.")
+                err = f"unknown tool {(tc.get('function') or {}).get('name') or '(unnamed)'}"
+                self._tool_result(_tid(tc), f"Error: {err}.")
             if submits:
                 for extra in submits[1:]:
-                    self._tool_result(extra["id"], "Ignored: submit once.")
+                    self._tool_result(_tid(extra), "Ignored: submit once.")
                 args = _args(submits[0])
                 if args is not None:
-                    got = self._accept(args, submits[0]["id"])
+                    got = self._accept(args, _tid(submits[0]))
                     if got is not None:
                         return got
                     continue
@@ -492,6 +495,10 @@ class ReaderSession:
         return await self._loop()
 
 
+def _tid(tc: dict) -> str:
+    return str(tc.get("id") or "call_missing_id")
+
+
 def _args(tc: dict) -> Any:
     try:
         return unwrap_args(json.loads((tc.get("function") or {}).get("arguments") or "{}"))
@@ -528,9 +535,12 @@ def load_cached(cmc_id: int, notice: str) -> dict | None:
         f = d / f"{cache_key(cmc_id, notice)}.json"
         if f.exists():
             try:
-                return json.loads(f.read_text())
-            except ValueError:
+                d = json.loads(f.read_text())
+            except (ValueError, OSError):
                 continue
+            # a2a r04: an unreadable or mis-shaped cache entry is a cache miss, never a crash downstream
+            if isinstance(d, dict) and isinstance(d.get("proposals"), list) and d["proposals"]:
+                return d
     return None
 
 

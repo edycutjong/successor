@@ -108,6 +108,14 @@ def continuity_check(stated: float, closes: list[dict], day: date) -> tuple[bool
     win.sort(key=lambda c: c["date"])
     if len(win) < 3:
         return False, f"too few CMC closes around {day} to test continuity"
+    # a2a r04: the series must straddle the event (a close before AND after it) on days that traded
+    if not (
+        any(date.fromisoformat(c["date"]) < day for c in win)
+        and any(date.fromisoformat(c["date"]) > day for c in win)
+    ):
+        return False, f"CMC closes around {day} do not straddle the event date"
+    if not all((c.get("volume_24h") or 0) > 0 for c in win):
+        return False, f"a CMC close around {day} has $0 or no volume: a flat print proves no continuity"
     jumps = [abs(b["price"] / a["price"] - 1) for a, b in zip(win, win[1:], strict=False)]
     worst = max(jumps)
     return worst <= TOL, f"largest day-over-day move around {day}: {worst * 100:.1f}% (limit 5%)"

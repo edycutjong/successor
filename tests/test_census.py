@@ -105,3 +105,30 @@ def test_fresh_rereads_are_rate_limited_per_client(
     other = {**h, "x-forwarded-for": "198.51.100.9"}
     assert client.get("/api/lookup?q=CPOOL&fresh=1", headers=other).status_code == 200
     idx._hits.clear()
+
+
+def test_rate_limit_prefers_platform_ip_and_records_only_admitted_hits(
+    client: TestClient, monkeypatch: pytest.MonkeyPatch
+) -> None:
+    # a2a r04: a spoofed left-most X-Forwarded-For must not mint a new bucket; a rejected request costs no slot
+    import api.index as idx
+
+    async def fake(q, qty, cmc_id, fresh):
+        yield {"type": "verdict", "verdict": "NOT_VERIFIABLE"}
+
+    monkeypatch.setattr(idx, "lookup_stream", fake)
+    idx._hits.clear()
+    codes = [
+        client.get(
+            "/api/lookup?q=X&fresh=1",
+            headers={
+                "accept": "application/json",
+                "x-real-ip": "203.0.113.8",
+                "x-forwarded-for": f"10.0.0.{i}",
+            },
+        ).status_code
+        for i in range(4)
+    ]
+    assert codes == [200, 200, 200, 429]
+    assert len(idx._hits["lookup:203.0.113.8"]) == 3  # the rejected 4th request recorded nothing
+    idx._hits.clear()

@@ -9,6 +9,7 @@ harness can replay recorded runs offline.
 
 from __future__ import annotations
 
+import asyncio
 import re
 import time
 from collections.abc import AsyncIterator
@@ -28,11 +29,12 @@ from successor.verify import sanity
 from successor.verify.quotes import bind_ratio, check_quotes, parse_iso_date
 from successor.verify.resolve import coin_ref, pick_holding
 from successor.verify.successor import C2Result, addr_eq, check_successor, has_contract, linked_slugs
-from successor.verify.verdict import Facts, decide
+from successor.verify.verdict import SWAP_CRITICAL, Facts, decide
 
 CREDIT_FLOOR = 5_000
 LOOKUP_BUDGET_S = 52.0  # Vercel maxDuration is 60 s (vercel.json); 8 s margin for cold start + last event
 POST_READER_S = 10.0
+DEADLINE_GRACE_S = 3.0  # hard cancel at 55 s, still inside maxDuration 60
 SWAP_WORDS = re.compile(r"\bswap|migrat|redenominat|new contract|/token/|/address/|contract address", re.I)
 _credit_cache: dict[str, Any] = {}
 
@@ -148,7 +150,7 @@ async def lookup_stream(
         client.deadline = time.monotonic() + LOOKUP_BUDGET_S
         await client.__aenter__()
     try:
-        async for e in _run(
+        agen = _run(
             client,
             q,
             qty,
@@ -162,8 +164,30 @@ async def lookup_stream(
             guard_credits,
             extraction,
             ev,
-        ):
-            yield e
+        )
+        try:
+            while True:
+                dl = getattr(client, "deadline", None)
+                try:
+                    if dl is None:
+                        e = await agen.__anext__()
+                    else:
+                        # a2a r04: httpx timeouts bound each read, not a response that trickles in; this cancels
+                        # whatever is awaited (CMC, Qwen, a fetched page) once the lookup is out of time
+                        async with asyncio.timeout(max(0.01, dl + DEADLINE_GRACE_S - time.monotonic())):
+                            e = await agen.__anext__()
+                except StopAsyncIteration:
+                    break
+                yield e
+        finally:
+            await agen.aclose()
+    except TimeoutError:
+        yield ev(
+            "error",
+            step="deadline",
+            error=f"the lookup ran past its {LOOKUP_BUDGET_S:.0f} s budget; no verdict is shown",
+            http_status=504,
+        )
     except FlowError as exc:
         yield ev("error", step=exc.step, error=exc.message, http_status=exc.http_status)
     except httpx.HTTPError as exc:
@@ -298,7 +322,8 @@ async def _run(
         budget = rd.READER_BUDGET_S
         if getattr(cmc, "deadline", None) is not None:
             # leave ~10 s for the CMC calls after the Reader (history, pairs) inside the lookup deadline
-            budget = max(5.0, min(budget, cmc.deadline - time.monotonic() - POST_READER_S))
+            # (a2a r04) no 5 s floor: with no time left the Reader times out at once and ends R10 with its receipt
+            budget = max(1.0, min(budget, cmc.deadline - time.monotonic() - POST_READER_S))
         session = rd.ReaderSession(notice, label, fetch or _fetch, chat=chat, budget_s=budget)
         yield ev("step", step="reader", cache="miss", model=session.model, live=True, fresh=fresh)
         try:
@@ -399,7 +424,10 @@ async def _run(
         except OSError:
             pass
 
-    c3_state = "refuted" if c3.dropped else "verified"
+    # the lamp follows the same critical set as R9 (a2a r04): a dropped date is listed, not shown as refuted
+    c3_state = (
+        "refuted" if any(n in SWAP_CRITICAL for n in c3.dropped) else "stale" if c3.dropped else "verified"
+    )
     checks.append(
         _check(
             "C3",
@@ -430,17 +458,23 @@ async def _run(
         r_quoted = float(c3.value("ratio_new_per_old")) if c3.value("ratio_new_per_old") is not None else None
     except (TypeError, ValueError):
         r_quoted = None
-    contract_changed = bool(
+    text_changed = bool(
         same_id
         and (
             (old_c and new_c and not addr_eq(str(old_c), str(new_c)))
-            or proposal.get("event_type") in ("contract_swap", "chain_migration", "token_swap", "merger")
             or (r_quoted is not None and r_quoted != 1)
-            # the LLM's event_type alone never makes a swap a rename: swap / migration wording or a token link
-            # in the notice keeps R4 (NOTHING_TO_DO) off
+            # swap / migration wording or a token link in the notice keeps R4 (NOTHING_TO_DO) off
             or SWAP_WORDS.search(notice) is not None
         )
     )
+    # the LLM's event_type alone never makes a swap a rename (keeps R4 off), and never selects SWAP either
+    # (a2a r04): a label with no textual signal blocks R9 and ends NOT VERIFIABLE
+    swap_label_only = bool(
+        same_id
+        and not text_changed
+        and proposal.get("event_type") in ("contract_swap", "chain_migration", "token_swap", "merger")
+    )
+    contract_changed = text_changed or swap_label_only
     if contract_changed and old_c and new_c and has_contract(hrow, new_c):
         # the coin looked up carries the new contract: if the old contract is a CMC id of its own, the holder
         # already holds the successor (someone entering CLEAR); otherwise this is a merged page (BDX)
@@ -638,6 +672,7 @@ async def _run(
             (cached or {}).get("link_errors") or (session.link_errors if session else [])
         ),
         c3_dropped=list(c3.dropped),
+        swap_label_only=swap_label_only,
     )
     d = decide(facts)
 

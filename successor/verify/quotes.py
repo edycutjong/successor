@@ -64,7 +64,7 @@ def dates_in(text: str) -> set[date]:
 
 
 def _value_in_quote(name: str, value: object, quote: str) -> bool:
-    """A contract or symbol value must itself appear in its quote (stops a true quote carrying a false value)."""
+    """A contract, symbol, name or date value must itself appear in its quote (a true quote cannot carry a false value)."""
     if value is None:
         return True
     q = norm(quote).lower()
@@ -74,6 +74,12 @@ def _value_in_quote(name: str, value: object, quote: str) -> bool:
         return (
             re.search(rf"(?<![a-z0-9]){re.escape(str(value).lower().lstrip('$'))}(?![a-z0-9])", q) is not None
         )
+    if (
+        name == "successor_name"
+    ):  # a2a r04: C2 picks among same-ticker assets by name, so the name is bound too
+        return norm(str(value)).lower() in q
+    # new_chain stays unbound by decision: it can only narrow or refute a contract match (has_contract), never
+    # verify one, and 15 of 50 recorded chains are aliases ("Ethereum" for "ERC-20")
     if name in ("effective_date", "deadline"):  # a misread date never survives a true quote
         d = parse_iso_date(value)
         return d is not None and d in dates_in(quote)

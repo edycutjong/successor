@@ -118,3 +118,120 @@ def test_naive_timestamp_does_not_crash_the_sanity_guard():
         "last_updated": "2026-11-01T00:00:00",
     }
     assert any("48 h" in t for t in sanity.check(legs=[leg], ratio=None, now=now))
+
+
+# --- a2a r04 ----------------------------------------------------------------------------------------------
+def test_successor_name_must_appear_in_its_quote():
+    from successor.verify.quotes import _value_in_quote
+
+    assert _value_in_quote("successor_name", "Alpha", "migrates to Alpha (NEW) at 1:1")
+    assert not _value_in_quote("successor_name", "Beta", "migrates to Alpha (NEW) at 1:1")
+
+
+def test_continuity_needs_closes_on_both_sides_of_the_event_with_volume():
+    from datetime import date as d
+
+    from successor.verify.ratio import continuity_check
+
+    day = d(2026, 11, 10)
+
+    def closes(offsets, vol=5.0):
+        return [
+            {"date": str(d.fromordinal(day.toordinal() + o)), "price": 1.0, "volume_24h": vol}
+            for o in offsets
+        ]
+
+    assert continuity_check(1, closes([-2, -1, 0, 1, 2]), day)[0] is True
+    assert continuity_check(1, closes([0, 1, 2]), day)[0] is False  # nothing before the event
+    assert continuity_check(1, closes([-2, -1, 0]), day)[0] is False  # nothing after it
+    assert continuity_check(1, closes([-2, -1, 0, 1, 2], vol=0), day)[0] is False  # flat print, no trades
+
+
+def test_priced_active_quote_needs_a_readable_present_timestamp():
+    now = datetime(2026, 11, 22, tzinfo=UTC)
+    base = {
+        "label": "new",
+        "requested_id": 2,
+        "returned_id": 2,
+        "is_active": 1,
+        "price": 1.0,
+        "volume_24h": 9,
+    }
+    for bad in (None, "bad", "2099-01-01T00:00:00Z"):
+        assert sanity.check(legs=[{**base, "last_updated": bad}], ratio=None, now=now), bad
+    assert sanity.check(legs=[{**base, "last_updated": "2026-11-21T23:00:00Z"}], ratio=None, now=now) == []
+
+
+def test_label_only_swap_never_reaches_swap():
+    from successor.verify.verdict import Facts, decide
+
+    f = Facts(
+        c2="verified",
+        same_id=True,
+        contract_changed=True,
+        swap_label_only=True,
+        old_market="unknown",
+        new_market="alive",
+        ratio_state="P",
+        ratio_route="continuity",
+        ratio=1.0,
+        new_price=1.0,
+    )
+    d = decide(f)
+    assert d.verdict == "NOT_VERIFIABLE" and "labelled this a swap" in d.reason
+    assert decide(Facts(**{**f.__dict__, "swap_label_only": False})).verdict == "SWAP"
+
+
+def test_malformed_tool_calls_end_as_reader_error_not_keyerror():
+    import asyncio
+
+    import pytest
+
+    from successor.agent import reader as rd
+
+    async def chat(_cfg, _body, _timeout):
+        msg = {"role": "assistant", "tool_calls": [{"type": "function"}, "junk"]}
+        return 200, {"choices": [{"message": msg}]}, 5
+
+    s = rd.ReaderSession("notice text", "OLD", lambda *a: None, chat=chat, budget_s=5)
+    with pytest.raises(rd.ReaderError):
+        asyncio.run(s.propose())
+
+
+def test_misshaped_cache_entry_is_a_miss(tmp_path, monkeypatch):
+    from successor.agent import reader as rd
+
+    monkeypatch.setattr(rd, "REPO_CACHE", tmp_path)
+    monkeypatch.setattr(rd, "TMP_CACHE", tmp_path / "none")
+    f = tmp_path / f"{rd.cache_key(1, 'n')}.json"
+    for body in ("[]", '{"proposals": {}}', '{"x": 1}', "not json"):
+        f.write_text(body)
+        assert rd.load_cached(1, "n") is None
+    f.write_text('{"proposals": [{"proposal": {}}]}')
+    assert rd.load_cached(1, "n") is not None
+
+
+def test_hard_deadline_cancels_a_hung_await_and_ends_with_an_error_event():
+    import asyncio
+    import time
+
+    from successor import flow
+    from successor.cmc import CmcClient
+
+    class Hang(CmcClient):
+        async def get(self, path, params=None, *, strict=False):
+            await asyncio.sleep(30)
+
+    async def run(monkey_budget):
+        c = Hang(key="k")
+        c.deadline = time.monotonic() + monkey_budget
+        old = flow.DEADLINE_GRACE_S
+        flow.DEADLINE_GRACE_S = 0.0
+        try:
+            return [e async for e in flow.lookup_stream("CPOOL", cmc=c, guard_credits=False)]
+        finally:
+            flow.DEADLINE_GRACE_S = old
+
+    t0 = time.monotonic()
+    evs = asyncio.run(run(0.3))
+    assert time.monotonic() - t0 < 5 and evs[-1]["step"] == "deadline" and evs[-1]["http_status"] == 504
