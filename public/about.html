@@ -58,7 +58,8 @@ b, strong { font-weight: 700; color: var(--ink); }
 .nav .wrap { display: flex; align-items: center; gap: 22px; height: 64px; }
 .brand { display: flex; align-items: center; gap: 10px; text-decoration: none; }
 .brand img { width: 30px; height: 30px; }
-.brand span { font: 800 24px/1 var(--font-display); letter-spacing: .06em; }
+.brand span { font: 800 24px/1 var(--font-display); letter-spacing: .06em; transition: color .15s; }
+.brand:hover span { color: var(--before); }
 .brand small { font: 400 12px/1 var(--font-data); color: var(--muted); letter-spacing: .04em; margin-left: 4px; }
 .nav ul { list-style: none; display: flex; gap: 20px; margin: 0 0 0 auto; padding: 0; }
 .nav ul a { color: var(--muted); text-decoration: none; font-size: 15px; transition: color .15s; }
@@ -668,6 +669,7 @@ footer nav { display: flex; gap: 18px; flex-wrap: wrap; }
   }
 
   async function onEvent(e, ctx) {
+    if (ctx.id !== runId) return;
     const s = e.step || e.type;
     if (s === 'resolve' && ctx.live) { setFlaps(hOld, (e.chosen && e.chosen.symbol) || ctx.q, true); }
     else if (s === 'notice' && ctx.live) {
@@ -687,12 +689,13 @@ footer nav { display: flex; gap: 18px; flex-wrap: wrap; }
       lamp('C2', st, e.reason || e.state, '<i>C2</i>Contract');
       field('sym', st); field('contract', st);
       if (st === 'ok' && e.successor) { ctx.newSym = e.successor.symbol; await setFlaps(hNew, e.successor.symbol, true); }
+      if (ctx.id !== runId) return;
     }
     else if (s === 'market_old') lamp('C5o', okState(e.state), e.reason || e.state, '<i>C5</i>Old market');
     else if (s === 'market_new') lamp('C5n', okState(e.state), e.reason || e.state, '<i>C5</i>New market');
     else if (s === 'ratio') {
       const st = e.state === 'none' ? 'prop' : okState(e.state);
-      lamp('C4', st, e.reason || 'ratio not stated', '<i>C4</i>Ratio' + (e.stated ? ' ' + e.stated + ':1' : ''));
+      lamp('C4', st, e.reason || 'ratio not stated', '<i>C4</i>Ratio' + (e.stated ? ' 1:' + e.stated : ''));
       field('ratio', st);
     }
     else if (s === 'verdict') {
@@ -700,6 +703,7 @@ footer nav { display: flex; gap: 18px; flex-wrap: wrap; }
       if (e.verdict === 'WRITE_OFF') await setFlaps(hNew, '', true);
       if (e.verdict === 'NOT_VERIFIABLE') hNew.classList.add('half');
       await setFlaps(hVd, w, true);
+      if (ctx.id !== runId) return;
       hVd.setAttribute('aria-label', 'Verdict ' + w);
       const so = e.value_sell_old_usd, sw = e.value_swap_usd, tr = e.tracker_value_usd;
       const qty = Number(e.qty || 10000).toLocaleString('en-US');
@@ -717,7 +721,7 @@ footer nav { display: flex; gap: 18px; flex-wrap: wrap; }
         $('h-say').textContent = e.reason || '';
         $('h-vals').textContent = '';
       }
-      hl.classList.remove('prop');
+      hl.classList.toggle('prop', e.verdict === 'NOT_VERIFIABLE');
       const when = (e.captured_at || '').replace('T', ' ').replace(/:\d\dZ$/, ' UTC');
       $('h-cap').textContent = (ctx.live ? 'live · ' : 'replay · ') + 'lookup captured ' + when + ' · ' + (e.credits_used ?? '?') + ' CMC credits · ' + (ctx.live ? Math.round(performance.now() - ctx.t0) + ' ms in your browser' : e.t_ms + ' ms');
     }
@@ -738,14 +742,14 @@ footer nav { display: flex; gap: 18px; flex-wrap: wrap; }
   const GAP = { resolve: 300, notice: 500, reader: 500, proposal: 700, successor: 250, market_old: 380, market_new: 380, ratio: 420, verdict: 200 };
   let runId = 0;
   async function replay() {
-    const id = ++runId; const ctx = { sym: 'CPOOL', live: false };
+    const id = ++runId; const ctx = { id, sym: 'CPOOL', live: false };
     document.querySelectorAll('.runs button[data-q]').forEach((b) => b.setAttribute('aria-pressed', 'false'));
     resetBoard('CPOOL');
     await sleep(500);
     for (const e of CAPTURED) { if (id !== runId) return; await sleep(GAP[e.step || e.type] || 300); if (id !== runId) return; await onEvent(e, ctx); }
   }
   async function live(q, btn) {
-    const id = ++runId; const ctx = { q, sym: q, live: true, t0: performance.now() };
+    const id = ++runId; const ctx = { id, q, sym: q, live: true, t0: performance.now() };
     const all = document.querySelectorAll('.runs button');
     document.querySelectorAll('.runs button[data-q]').forEach((b) => b.setAttribute('aria-pressed', String(b === btn)));
     all.forEach((b) => { b.disabled = true; });
