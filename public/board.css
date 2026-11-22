@@ -15,6 +15,10 @@ button, input { font: inherit; color: inherit; }
 .top { display: grid; grid-template-columns: auto 1fr auto; gap: 1.5rem; align-items: center; padding: 1rem clamp(1rem, 4vw, 3rem); border-bottom: 1px solid var(--rule); }
 .mark { font: 800 1.9rem/1 var(--font-display); letter-spacing: .06em; color: var(--ink); text-decoration: none; }
 .tag { margin: 0; color: var(--muted); max-width: 52ch; font-size: .95rem; }
+.topr { display: flex; gap: 1.1rem; align-items: center; }
+.toplinks { display: flex; gap: 1rem; }
+.toplinks a { color: var(--muted); text-decoration: none; font-size: .95rem; transition: color .15s; }
+.toplinks a:hover { color: var(--ink); text-decoration: underline; text-underline-offset: 3px; }
 .health { display: inline-flex; gap: .5rem; align-items: center; background: none; border: 1px solid var(--rule); border-radius: 999px; padding: .3rem .8rem; color: var(--muted); cursor: help; transition: border-color .15s, color .15s; }
 .health:hover { border-color: var(--muted); color: var(--ink); }
 .dot { width: 10px; height: 10px; border-radius: 50%; background: var(--muted); }

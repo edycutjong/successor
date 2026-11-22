@@ -1,0 +1,801 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Successor: your coin left the station. Successor checks where it went.</title>
+<meta name="description" content="CoinMarketCap says a coin migrated only in a free-text notice. Successor's AI reads the notice, code checks every field against CMC's own rows, and the holder gets one verdict: SWAP, SELL OLD, WRITE OFF or NOT VERIFIABLE.">
+<meta name="theme-color" content="#15130F">
+<link rel="icon" href="/icon.svg" type="image/svg+xml">
+<link rel="canonical" href="https://successor.edycu.dev/about">
+<meta property="og:site_name" content="Successor">
+<meta property="og:type" content="website">
+<meta property="og:url" content="https://successor.edycu.dev/about">
+<meta property="og:title" content="Your coin left the station. Successor checks where it went.">
+<meta property="og:description" content="CMC says your coin migrated, in prose. An AI reads the notice; code checks the successor against CMC's own rows and returns one verdict.">
+<meta property="og:image" content="https://successor.edycu.dev/og-image.png?v=20261122">
+<meta property="og:image:width" content="2400">
+<meta property="og:image:height" content="1260">
+<meta property="og:image:alt" content="Successor: CMC's CPOOL notice, three code checks against CMC rows, and the board's verdict CPOOL to CLEAR, SELL OLD, +15.7% (CMC data 2026-11-22 03:49 UTC)">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:image" content="https://successor.edycu.dev/og-image.png?v=20261122">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Big+Shoulders+Display:wght@700;800;900&family=Atkinson+Hyperlegible+Next:ital,wght@0,400;0,700;1,400&family=Fragment+Mono&display=swap" rel="stylesheet">
+<style>
+:root {
+  --bg:         #15130F;
+  --flap:       #24211C;
+  --hinge:      #0D0C0A;
+  --ink:        #EFE9DC;
+  --muted:      #9A9284;
+  --rule:       #3A352D;
+  --before:     #E8A33D;
+  --after:      #5FC27E;
+  --refuted:    #EE6650;
+  --font-display: "Big Shoulders Display", "Oswald", "Arial Narrow", sans-serif;
+  --font-body:    "Atkinson Hyperlegible Next", "Atkinson Hyperlegible", "Verdana", sans-serif;
+  --font-data:    "Fragment Mono", "Menlo", monospace;
+  --steel:      #1B1914;
+  --wrap: 1180px;
+}
+*,*::before,*::after { box-sizing: border-box; }
+html { scroll-behavior: smooth; scrollbar-color: var(--rule) var(--bg); }
+@media (prefers-reduced-motion: reduce) { html { scroll-behavior: auto; } }
+body { margin: 0; background: var(--bg); color: var(--ink); font: 400 17px/1.6 var(--font-body); -webkit-font-smoothing: antialiased; overflow-x: hidden; }
+::selection { background: var(--before); color: var(--hinge); }
+a { color: var(--ink); text-underline-offset: 3px; text-decoration-color: var(--muted); }
+a:hover { text-decoration-color: var(--ink); }
+:focus-visible { outline: 2px solid var(--before); outline-offset: 3px; border-radius: 2px; }
+.wrap { width: min(var(--wrap), 100% - 40px); margin-inline: auto; }
+.skip { position: absolute; left: -999px; top: 8px; background: var(--ink); color: var(--bg); padding: 8px 14px; z-index: 50; }
+.skip:focus { left: 12px; }
+code, .mono { font-family: var(--font-data); font-size: .86em; }
+b, strong { font-weight: 700; color: var(--ink); }
+
+/* ---------- nav ---------- */
+.nav { position: sticky; top: 0; z-index: 20; background: var(--bg); border-bottom: 1px solid var(--rule); }
+.nav .wrap { display: flex; align-items: center; gap: 22px; height: 64px; }
+.brand { display: flex; align-items: center; gap: 10px; text-decoration: none; }
+.brand img { width: 30px; height: 30px; }
+.brand span { font: 800 24px/1 var(--font-display); letter-spacing: .06em; }
+.brand small { font: 400 12px/1 var(--font-data); color: var(--muted); letter-spacing: .04em; margin-left: 4px; }
+.nav ul { list-style: none; display: flex; gap: 20px; margin: 0 0 0 auto; padding: 0; }
+.nav ul a { color: var(--muted); text-decoration: none; font-size: 15px; transition: color .15s; }
+.nav ul a:hover { color: var(--ink); }
+.btn { display: inline-flex; align-items: center; gap: 8px; height: 44px; padding: 0 18px; border: 1px solid var(--rule); border-radius: 4px; background: var(--flap); color: var(--ink); font: 800 17px/1 var(--font-display); letter-spacing: .08em; text-transform: uppercase; text-decoration: none; cursor: pointer; transition: transform .12s ease, border-color .15s, background-color .15s; }
+.btn:hover { border-color: var(--ink); transform: translateY(-1px); }
+.btn:active { transform: translateY(1px); }
+.btn.primary { background: var(--ink); color: var(--bg); border-color: var(--ink); }
+.btn.primary:hover { background: #fffaf0; }
+.btn svg { width: 16px; height: 16px; }
+.nav .btn { height: 38px; font-size: 15px; }
+
+/* ---------- flaps (the signature) ---------- */
+.flaps { --g: 4px; container-type: inline-size; display: flex; gap: var(--g); }
+.flaps .t { --tw: min(var(--max, 52px), calc((100cqw - (var(--n) - 1) * var(--g)) / var(--n)));
+  position: relative; flex: 0 0 auto; width: var(--tw); height: calc(var(--tw) * 1.36);
+  display: grid; place-items: center; background: var(--flap); border-radius: 3px; overflow: hidden;
+  font: 800 calc(var(--tw) * 1.0)/1 var(--font-display); color: var(--ink); }
+.flaps .t::after { content: ""; position: absolute; left: 0; right: 0; top: 50%; height: 1px; background: var(--hinge); }
+.flaps .t.blank { background: #1E1B17; }
+.flaps .t b { font-weight: 800; display: block; transform-origin: 50% 50%; }
+.flaps .t.f b { animation: flip 64ms cubic-bezier(.3,1.6,.6,1); }
+.flaps .t.f::before { content: ""; position: absolute; inset: 0 0 50% 0; background: var(--hinge); opacity: .55; transform-origin: 50% 100%; animation: drop 64ms linear forwards; }
+@keyframes flip { 0% { transform: scaleY(.15); } 70% { transform: scaleY(1.06); } 100% { transform: scaleY(1); } }
+@keyframes drop { from { transform: scaleY(1); } to { transform: scaleY(0); } }
+.flaps.half .t b { transform: perspective(140px) rotateX(-62deg); opacity: .8; }
+.flaps.half .t::after { height: 2px; background: #000; }
+
+.lamp { flex: 0 0 auto; width: 22px; height: 22px; border-radius: 50%; display: inline-grid; place-items: center; font: 700 13px/1 var(--font-body); border: 1px solid var(--rule); color: var(--muted); background: transparent; transition: background-color .18s, color .18s, border-color .18s; }
+.lamp::before { content: "·"; }
+.lamp.ok::before { content: "✓"; }
+.lamp.bad::before { content: "✗"; }
+.lamp.prop { background: var(--before); border-color: var(--before); color: var(--hinge); }
+.lamp.ok { background: var(--after); border-color: var(--after); color: var(--hinge); }
+.lamp.bad { background: var(--refuted); border-color: var(--refuted); color: var(--hinge); }
+
+/* ---------- hero ---------- */
+.hero { position: relative; padding: 44px 0 72px; border-bottom: 1px solid var(--rule); }
+.hero::before { content: ""; position: absolute; inset: 0; pointer-events: none; opacity: .5;
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='120' height='56'%3E%3Cpath d='M0 55.5H120' stroke='%23241F19' stroke-width='1'/%3E%3Cpath d='M119.5 0V56' stroke='%231E1A15' stroke-width='1'/%3E%3C/svg%3E"); }
+.hero .wrap { position: relative; display: grid; grid-template-columns: minmax(0, 1fr) minmax(0, 1.08fr); gap: 56px; align-items: start; }
+.label { display: inline-flex; align-items: center; gap: 10px; font: 700 14px/1 var(--font-display); letter-spacing: .16em; text-transform: uppercase; color: var(--muted); }
+.label .lamp { width: 12px; height: 12px; font-size: 0; }
+.hero h1 { font: 900 clamp(46px, 5.7vw, 84px)/.92 var(--font-display); text-transform: uppercase; letter-spacing: .005em; margin: 20px 0 24px; }
+.hero h1 .hl { display: inline; color: var(--after); transition: color .25s ease; box-decoration-break: clone; -webkit-box-decoration-break: clone; }
+.hero h1 .hl.prop { color: var(--before); }
+.hero h1 .hl small { display: block; font: inherit; }
+.lede { max-width: 34em; color: #CFC8BA; font-size: 18px; margin: 0 0 30px; }
+.ctas { display: flex; flex-wrap: wrap; gap: 12px; margin-bottom: 26px; }
+.runline { display: flex; align-items: center; gap: 10px; max-width: 100%; border: 1px solid var(--rule); border-radius: 4px; padding: 8px 8px 8px 14px; background: var(--steel); }
+.runline code { color: var(--muted); white-space: nowrap; overflow: hidden; text-overflow: ellipsis; min-width: 0; flex: 1; font-size: 13.5px; }
+.runline code em { font-style: normal; color: var(--ink); }
+.copy { flex: 0 0 auto; height: 32px; padding: 0 12px; border: 1px solid var(--rule); border-radius: 3px; background: var(--flap); color: var(--ink); font: 700 13px/1 var(--font-body); cursor: pointer; transition: border-color .15s, transform .12s; }
+.copy:hover { border-color: var(--ink); }
+.copy:active { transform: translateY(1px); }
+.note { color: var(--muted); font-size: 14px; margin: 12px 0 0; }
+
+/* the hero board */
+.board { background: var(--steel); border: 1px solid var(--rule); border-radius: 6px; padding: 20px 22px 16px; }
+.bhead { display: grid; grid-template-columns: 5fr 28px 6fr; gap: 10px; font: 700 13px/1 var(--font-display); letter-spacing: .18em; color: var(--muted); text-transform: uppercase; margin-bottom: 10px; }
+.brow { display: grid; grid-template-columns: 5fr 28px 6fr; gap: 10px; align-items: center; }
+.brow .arr { color: var(--muted); font: 800 26px/1 var(--font-display); text-align: center; }
+#h-old { --max: 40px; }
+#h-new { --max: 52px; }
+.vlabel { margin: 14px 0 8px; }
+#h-vd { --max: 46px; }
+.fig { display: flex; align-items: baseline; gap: 14px; flex-wrap: wrap; margin: 12px 0 2px; min-height: 60px; }
+.fig .big { font: 900 60px/1 var(--font-display); letter-spacing: .01em; }
+.fig .say { color: var(--muted); font-size: 15px; line-height: 1.4; max-width: 22em; }
+.vals { font-size: 15px; color: #CFC8BA; margin: 0 0 14px; min-height: 24px; }
+.checks { list-style: none; margin: 0; padding: 0; border-top: 1px solid var(--rule); }
+.checks li { display: grid; grid-template-columns: 22px 8.6em minmax(0, 1fr); gap: 12px; align-items: center; padding: 7px 0; border-bottom: 1px solid var(--rule); }
+.checks .k { font: 800 18px/1.1 var(--font-display); letter-spacing: .06em; text-transform: uppercase; }
+.checks .k i { font-style: normal; color: var(--muted); font-weight: 700; margin-right: 6px; }
+.checks .v { color: var(--muted); font-size: 14px; line-height: 1.4; overflow-wrap: anywhere; }
+.notice { margin: 12px 0 0; padding: 8px 14px; border-left: 2px solid var(--rule); color: #CFC8BA; font-size: 15px; line-height: 1.55; }
+.notice .src { display: block; font: 700 12px/1 var(--font-display); letter-spacing: .16em; color: var(--muted); text-transform: uppercase; margin-bottom: 8px; }
+.notice u { text-decoration: none; border-bottom: 2px solid transparent; transition: border-color .2s, color .2s; }
+.notice u.prop { border-bottom-color: var(--before); color: var(--ink); }
+.notice u.ok { border-bottom-color: var(--after); color: var(--ink); }
+.notice u.bad { border-bottom-color: var(--refuted); color: var(--ink); text-decoration: line-through; text-decoration-color: var(--refuted); }
+.bfoot { display: flex; align-items: center; justify-content: space-between; gap: 10px; flex-wrap: wrap; margin-top: 12px; padding-top: 12px; border-top: 1px solid var(--rule); }
+.bfoot .cap { color: var(--muted); font-size: 13px; margin: 0; font-family: var(--font-data); line-height: 1.5; }
+.runs { display: flex; flex-wrap: wrap; gap: 6px; align-items: center; }
+.runs span { color: var(--muted); font-size: 13px; margin-right: 2px; }
+.runs button { height: 32px; min-width: 44px; padding: 0 10px; border: 1px solid var(--rule); border-radius: 3px; background: var(--flap); color: var(--ink); font: 800 15px/1 var(--font-display); letter-spacing: .1em; cursor: pointer; transition: border-color .15s, transform .12s, background-color .15s; }
+.runs button:hover { border-color: var(--ink); }
+.runs button:active { transform: translateY(1px); }
+.runs button[aria-pressed="true"] { border-color: var(--ink); background: var(--rule); }
+.runs button:disabled { opacity: .5; cursor: wait; }
+
+/* ---------- receipts band ---------- */
+.receipts { background: var(--steel); border-bottom: 1px solid var(--rule); padding: 44px 0 40px; }
+.receipts .wrap { display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); gap: 28px; }
+.rc .flaps { --max: 58px; margin-bottom: 14px; max-width: 280px; }
+.rc .flaps .t { font-weight: 900; }
+.rc p { margin: 0; font-size: 15px; line-height: 1.45; }
+.rc .unit { font: 800 26px/1 var(--font-display); color: var(--muted); margin-left: 6px; align-self: flex-end; }
+.rc .num { display: flex; align-items: flex-end; }
+.rc .num .flaps { flex: 1; margin-bottom: 0; }
+.rc .proof { display: block; margin-top: 8px; color: var(--muted); font-size: 12px; overflow-wrap: anywhere; }
+
+/* ---------- sections ---------- */
+section.s { padding: 104px 0; }
+.why h2 { max-width: 24em; }
+.eyebrow { font: 700 14px/1 var(--font-display); letter-spacing: .18em; text-transform: uppercase; color: var(--muted); margin: 0 0 16px; display: flex; gap: 12px; align-items: center; }
+.eyebrow::before { content: ""; width: 28px; height: 1px; background: var(--muted); }
+h2 { font: 900 clamp(38px, 4.6vw, 64px)/.98 var(--font-display); text-transform: uppercase; margin: 0 0 18px; letter-spacing: .005em; max-width: 18em; }
+.sub { color: #CFC8BA; max-width: 42em; margin: 0 0 44px; font-size: 18px; }
+
+/* demo pair */
+.pair { display: grid; grid-template-columns: minmax(0, 1.15fr) minmax(0, 1fr); gap: 22px; align-items: start; }
+.browser { border: 1px solid var(--rule); border-radius: 6px; overflow: hidden; background: var(--steel); }
+.browser .bar { display: flex; align-items: center; gap: 7px; padding: 10px 12px; border-bottom: 1px solid var(--rule); }
+.browser .bar i { width: 9px; height: 9px; border-radius: 50%; background: var(--rule); }
+.browser .bar span { margin-left: 10px; flex: 1; font: 400 12.5px/1 var(--font-data); color: var(--muted); background: var(--bg); border-radius: 3px; padding: 7px 10px; }
+.browser img { display: block; width: 100%; height: auto; }
+figcaption { color: var(--muted); font-size: 14px; line-height: 1.5; padding: 12px 14px; border-top: 1px solid var(--rule); }
+.term { border: 1px solid var(--rule); border-radius: 6px; background: var(--hinge); overflow: hidden; }
+.term .bar { padding: 10px 14px; border-bottom: 1px solid var(--rule); font: 400 12.5px/1 var(--font-data); color: var(--muted); display: flex; justify-content: space-between; gap: 10px; }
+.term .bar button { background: none; border: 0; color: var(--muted); font: inherit; cursor: pointer; padding: 0; transition: color .15s; }
+.term .bar button:hover { color: var(--ink); }
+.term pre { margin: 0; padding: 16px 18px; font: 400 13px/1.8 var(--font-data); color: var(--muted); overflow-x: auto; min-height: 380px; white-space: pre; }
+.term pre .c { color: var(--ink); }
+.term pre .p { color: var(--before); }
+.term pre .ok { color: var(--after); }
+.term pre .cursor { display: inline-block; width: 8px; height: 15px; background: var(--ink); vertical-align: -3px; animation: blink 1s steps(1) infinite; }
+@keyframes blink { 50% { opacity: 0; } }
+
+/* why not one call */
+.why { background: var(--steel); border-block: 1px solid var(--rule); }
+.flow { display: grid; grid-template-columns: 1.35fr 1.1fr 1.1fr .8fr; gap: 0; border: 1px solid var(--rule); border-radius: 6px; overflow: hidden; background: var(--bg); }
+.flow > div { padding: 22px 20px 24px; border-right: 1px solid var(--rule); position: relative; }
+.flow > div:last-child { border-right: 0; }
+.flow h3 { font: 800 22px/1.05 var(--font-display); letter-spacing: .06em; text-transform: uppercase; margin: 0 0 6px; }
+.flow .who { font: 400 12px/1.4 var(--font-data); color: var(--muted); margin: 0 0 16px; overflow-wrap: anywhere; }
+.flow .json { font: 400 12.5px/1.65 var(--font-data); color: #CFC8BA; overflow-wrap: anywhere; margin: 0; }
+.flow .json .k { color: var(--muted); }
+.flow ul { list-style: none; margin: 0; padding: 0; display: grid; gap: 10px; }
+.flow li { font-size: 14.5px; line-height: 1.4; display: grid; grid-template-columns: 22px 1fr; gap: 10px; align-items: start; }
+.flow li .lamp { margin-top: 1px; }
+.flow li q { display: block; color: var(--muted); font-size: 13px; quotes: "“" "”"; }
+.flow .stamp { font: 900 44px/.95 var(--font-display); text-transform: uppercase; margin: 6px 0 10px; }
+.flow .step-n { position: absolute; top: 18px; right: 18px; font: 800 14px/1 var(--font-display); color: var(--rule); letter-spacing: .1em; }
+.agix { display: grid; grid-template-columns: minmax(0, 1fr) minmax(0, 1.1fr); gap: 36px; align-items: center; margin-top: 56px; }
+.agix h3 { font: 900 clamp(30px, 3.2vw, 42px)/1 var(--font-display); text-transform: uppercase; margin: 0 0 14px; }
+.agix p { color: #CFC8BA; margin: 0 0 14px; max-width: 34em; }
+.vs { display: flex; gap: 26px; margin-top: 18px; flex-wrap: wrap; }
+.vs div { border-left: 2px solid var(--rule); padding-left: 14px; }
+.vs strong { display: block; font: 900 44px/1 var(--font-display); }
+.vs span { color: var(--muted); font-size: 14px; }
+
+/* guards bento */
+.bento { display: grid; grid-template-columns: repeat(6, minmax(0, 1fr)); gap: 14px; }
+.card { background: var(--steel); border: 1px solid var(--rule); border-radius: 6px; padding: 24px; display: flex; flex-direction: column; gap: 10px; transition: border-color .2s, transform .2s; }
+.card:hover { border-color: var(--muted); transform: translateY(-2px); }
+.card.a { grid-column: span 4; grid-row: span 2; }
+.card.b { grid-column: span 2; }
+.card.c { grid-column: span 2; }
+.card.d { grid-column: span 3; }
+.card.e { grid-column: span 3; }
+.card h3 { font: 800 25px/1.05 var(--font-display); text-transform: uppercase; letter-spacing: .03em; margin: 0; }
+.card p { margin: 0; color: #CFC8BA; font-size: 15.5px; line-height: 1.5; }
+.card .chip { align-self: flex-start; margin-top: auto; font: 400 12px/1 var(--font-data); color: var(--muted); border: 1px solid var(--rule); border-radius: 3px; padding: 6px 8px; overflow-wrap: anywhere; line-height: 1.4; }
+.card svg { width: 40px; height: 40px; color: var(--ink); }
+.hexdemo { font: 400 clamp(15px, 1.7vw, 22px)/2 var(--font-data); margin: auto 0; padding: 18px 0; overflow-wrap: anywhere; display: grid; gap: 6px; }
+.hexdemo .lamp { width: 28px; height: 28px; font-size: 16px; }
+.hexdemo div { display: flex; gap: 12px; align-items: center; }
+.hexdemo s { text-decoration-color: var(--refuted); color: var(--muted); }
+.hexdemo mark { background: none; color: var(--refuted); font-weight: 700; }
+
+/* census */
+.census .rows { border-top: 1px solid var(--rule); }
+.crow { display: grid; grid-template-columns: 420px 80px minmax(0, 1fr); gap: 24px; align-items: center; padding: 18px 0; border-bottom: 1px solid var(--rule); }
+.crow .flaps { --max: 30px; --g: 3px; }
+.crow .count { font: 900 44px/1 var(--font-display); text-align: right; }
+.units { display: flex; flex-wrap: wrap; gap: 4px; }
+.units i { width: 13px; height: 19px; background: var(--flap); border-radius: 2px; position: relative; }
+.units i::after { content: ""; position: absolute; left: 0; right: 0; top: 9px; height: 1px; background: var(--hinge); }
+.units.half i { transform: perspective(30px) rotateX(-50deg); background: #2E2A23; }
+.units.lit i { background: var(--ink); }
+.units .zero { color: var(--muted); font-size: 14px; }
+.why130 { display: grid; grid-template-columns: minmax(0, .9fr) minmax(0, 1.1fr); gap: 48px; margin-top: 56px; align-items: start; }
+.why130 h3 { font: 900 clamp(30px, 3.2vw, 42px)/1 var(--font-display); text-transform: uppercase; margin: 0 0 14px; }
+.why130 p { color: #CFC8BA; margin: 0; }
+.leaflet { list-style: none; margin: 0; padding: 0; border-top: 1px solid var(--rule); }
+.leaflet li { display: grid; grid-template-columns: 52px 1fr; gap: 12px; padding: 10px 0; border-bottom: 1px solid var(--rule); font-size: 15px; line-height: 1.45; color: #CFC8BA; }
+.leaflet b { font: 900 26px/1 var(--font-display); text-align: right; }
+.capline { color: var(--muted); font-size: 13px; margin-top: 18px; font-family: var(--font-data); overflow-wrap: anywhere; }
+
+/* honest */
+.honest { background: var(--flap); border-block: 1px solid var(--rule); }
+.honest ol { list-style: none; margin: 0; padding: 0; counter-reset: h; display: grid; gap: 0; }
+.honest li { counter-increment: h; display: grid; grid-template-columns: 74px minmax(0, 1fr); gap: 20px; padding: 26px 0; border-top: 1px solid var(--rule); }
+.honest li::before { content: counter(h, decimal-leading-zero); font: 900 48px/1 var(--font-display); color: var(--muted); }
+.honest blockquote { margin: 0; font-size: clamp(20px, 2vw, 26px); line-height: 1.4; max-width: 38em; }
+.honest cite { display: block; margin-top: 10px; font: 400 13px/1 var(--font-data); color: var(--muted); font-style: normal; }
+
+/* faq */
+.faq .wrap { display: grid; grid-template-columns: minmax(0, .8fr) minmax(0, 1.2fr); gap: 56px; align-items: start; }
+.faq details { border-bottom: 1px solid var(--rule); }
+.faq details:first-of-type { border-top: 1px solid var(--rule); }
+.faq summary { list-style: none; cursor: pointer; display: flex; justify-content: space-between; gap: 18px; align-items: center; padding: 20px 0; font: 800 23px/1.15 var(--font-display); text-transform: uppercase; letter-spacing: .03em; transition: color .15s; }
+.faq summary::-webkit-details-marker { display: none; }
+.faq summary:hover { color: #fffaf0; }
+.faq summary::after { content: "+"; font: 800 26px/1 var(--font-display); color: var(--muted); transition: transform .2s; flex: 0 0 auto; }
+.faq details[open] summary::after { transform: rotate(45deg); }
+.faq details p { margin: 0 0 22px; color: #CFC8BA; max-width: 40em; }
+
+/* final */
+.final { border-top: 1px solid var(--rule); padding: 96px 0; text-align: left; position: relative; }
+.final::before { content: ""; position: absolute; inset: 0; pointer-events: none; opacity: .5; background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='120' height='56'%3E%3Cpath d='M0 55.5H120' stroke='%23241F19' stroke-width='1'/%3E%3C/svg%3E"); }
+.final .wrap { position: relative; }
+.final h2 { max-width: 14em; }
+.look { display: flex; gap: 10px; max-width: 620px; margin-top: 26px; flex-wrap: wrap; }
+.look input { flex: 1; min-width: 200px; height: 52px; border: 1px solid var(--rule); border-radius: 4px; background: var(--steel); color: var(--ink); padding: 0 16px; font: 400 17px/1 var(--font-body); transition: border-color .15s; }
+.look input:hover { border-color: var(--muted); }
+.look input::placeholder { color: var(--muted); }
+.look .btn { height: 52px; }
+footer { border-top: 1px solid var(--rule); padding: 32px 0 48px; color: var(--muted); font-size: 14px; }
+footer .wrap { display: flex; justify-content: space-between; gap: 18px; flex-wrap: wrap; }
+footer a { color: var(--muted); }
+footer a:hover { color: var(--ink); }
+footer nav { display: flex; gap: 18px; flex-wrap: wrap; }
+
+/* ---------- responsive ---------- */
+@media (max-width: 1020px) {
+  .hero .wrap, .pair, .agix, .why130, .faq .wrap { grid-template-columns: minmax(0, 1fr); gap: 36px; }
+  .flow { grid-template-columns: minmax(0, 1fr) minmax(0, 1fr); }
+  .flow > div:nth-child(2) { border-right: 0; }
+  .flow > div:nth-child(-n+2) { border-bottom: 1px solid var(--rule); }
+  .bento { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+  .card.a, .card.b, .card.c, .card.d, .card.e { grid-column: span 2; grid-row: auto; }
+  .receipts .wrap { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+  .nav ul { display: none; }
+  .nav .btn { margin-left: auto; }
+}
+@media (max-width: 640px) {
+  body { font-size: 16px; }
+  .hero { padding: 40px 0 56px; }
+  section.s { padding: 72px 0; }
+  .flow { grid-template-columns: minmax(0, 1fr); }
+  .flow > div { border-right: 0; border-bottom: 1px solid var(--rule); }
+  .crow { grid-template-columns: minmax(0, 1fr) 64px; gap: 10px 14px; }
+  .crow .units { grid-column: 1 / -1; }
+  .crow .count { font-size: 34px; }
+  .checks li { grid-template-columns: 22px minmax(0, 1fr); }
+  .checks .v { grid-column: 2; }
+  .honest li { grid-template-columns: minmax(0, 1fr); gap: 8px; }
+  .brand small { display: none; }
+  .board { padding: 16px 14px 14px; }
+  .fig .big { font-size: 48px; }
+  .term pre { font-size: 11.5px; min-height: 0; }
+  .receipts .wrap { gap: 24px 18px; }
+}
+@media (prefers-reduced-motion: reduce) {
+  .flaps .t.f b, .flaps .t.f::before, .term pre .cursor { animation: none; }
+  .card, .btn { transition: none; }
+}
+@media print { .nav, .runs, .copy, .look { display: none; } body { background: #fff; color: #000; } }
+</style>
+</head>
+<body>
+<a class="skip" href="#main">Skip to content</a>
+<header class="nav">
+  <div class="wrap">
+    <a class="brand" href="/about" aria-label="Successor home"><img src="/assets/icon.svg" alt="" width="30" height="30"><span>SUCCESSOR</span><small>// departures for renamed coins</small></a>
+    <ul>
+      <li><a href="#demo">The demo</a></li>
+      <li><a href="#why">Why an agent</a></li>
+      <li><a href="#census">Census</a></li>
+      <li><a href="#honest">Honest by design</a></li>
+      <li><a href="#faq">FAQ</a></li>
+      <li><a href="/pitch">Pitch deck</a></li>
+    </ul>
+    <a class="btn primary" href="/">Live board</a>
+  </div>
+</header>
+
+<main id="main">
+<section class="hero" aria-labelledby="h1">
+  <div class="wrap">
+    <div>
+      <p class="label"><span class="lamp ok" aria-hidden="true"></span>CMC API Hackathon · AI Agents and Automation</p>
+      <h1 id="h1">Your coin left the station. Successor <span class="hl" id="hl">checks where it went.</span></h1>
+      <p class="lede">CoinMarketCap's notice says CPOOL became CLEAR at 1:1, in one paragraph of prose. <b>161 coins</b> in CMC's top 2000 carry a notice like that, and <b>80</b> name the successor only in prose. An AI reads it, code checks every field against CMC's own rows, and you get one verdict.</p>
+      <div class="ctas">
+        <a class="btn" href="https://github.com/edycutjong/successor"><svg viewBox="0 0 16 16" fill="currentColor" aria-hidden="true"><path d="M8 0a8 8 0 0 0-2.53 15.59c.4.07.55-.17.55-.38v-1.34c-2.23.48-2.7-1.07-2.7-1.07-.36-.92-.89-1.17-.89-1.17-.73-.5.06-.49.06-.49.8.06 1.23.83 1.23.83.72 1.22 1.88.87 2.34.66.07-.52.28-.87.5-1.07-1.78-.2-3.65-.89-3.65-3.95 0-.87.31-1.59.82-2.15-.08-.2-.36-1.02.08-2.12 0 0 .67-.21 2.2.82a7.6 7.6 0 0 1 4 0c1.53-1.04 2.2-.82 2.2-.82.44 1.1.16 1.92.08 2.12.51.56.82 1.28.82 2.15 0 3.07-1.87 3.75-3.66 3.95.29.25.54.73.54 1.48v2.2c0 .21.15.46.55.38A8 8 0 0 0 8 0Z"/></svg>GitHub</a>
+        <a class="btn" href="/pitch">Pitch deck</a>
+        <a class="btn primary" href="/">Open the live board →</a>
+      </div>
+      <div class="runline"><code id="curl">curl -N '<em>https://successor.edycu.dev/api/lookup?q=CPOOL&amp;qty=10000</em>'</code><button class="copy" type="button" data-copy="curl -N 'https://successor.edycu.dev/api/lookup?q=CPOOL&amp;qty=10000'">Copy</button></div>
+      <p class="note">No wallet, no sign-up. Read-only calls to CoinMarketCap and, when a notice is new, one Qwen call. Not financial advice.</p>
+    </div>
+
+    <div class="board" id="board" aria-label="Departure board: a CPOOL lookup replayed from a captured stream">
+      <div class="bhead" aria-hidden="true"><span>Old</span><span></span><span>Successor</span></div>
+      <div class="brow">
+        <div class="flaps" id="h-old" style="--n:6" aria-label="Old token CPOOL"></div>
+        <span class="arr" aria-hidden="true">→</span>
+        <div class="flaps" id="h-new" style="--n:6" aria-label="Successor token CLEAR"></div>
+      </div>
+      <p class="bhead vlabel" aria-hidden="true"><span>Verdict</span></p>
+      <div class="flaps" id="h-vd" style="--n:14" aria-live="polite" aria-label="Verdict SELL OLD"></div>
+      <div class="fig"><span class="big" id="h-big">+15.7%</span><span class="say" id="h-say">the old token is worth more than the 1:1 swap, at CMC's quotes</span></div>
+      <p class="vals" id="h-vals">10,000 CPOOL · sell old $243.01 · swap 1:1 $210.06 · excludes fees and gas</p>
+      <ol class="checks" id="h-checks">
+        <li data-c="C2"><span class="lamp ok" aria-hidden="true"></span><span class="k"><i>C2</i>Contract</span><span class="v">0x5200…0e00 = CMC's CLEAR contract, id 42884</span></li>
+        <li data-c="C4"><span class="lamp ok" aria-hidden="true"></span><span class="k"><i>C4</i>Ratio 1:1</span><span class="v">old/new 1.04342 after the event → confirms</span></li>
+        <li data-c="C5o"><span class="lamp ok" aria-hidden="true"></span><span class="k"><i>C5</i>Old market</span><span class="v">$1,385,625 / 24 h, top venue Upbit</span></li>
+        <li data-c="C5n"><span class="lamp ok" aria-hidden="true"></span><span class="k"><i>C5</i>New market</span><span class="v">$603,140 / 24 h, top venue Uniswap v4</span></li>
+      </ol>
+      <p class="notice" id="h-notice"><span class="src">CMC notice · read by qwen4-max</span>Clearpool (CPOOL) has <u class="ok" data-f="sym">rebranded to Clearpool (CLEAR)</u> and <u class="ok" data-f="ratio">undergone a 1:1 swap</u> from the old contract to <u class="ok" data-f="contract">new contract</u>. For more details, please click here.</p>
+      <div class="bfoot">
+        <p class="cap" id="h-cap">replay · lookup captured 2026-11-22 03:49 UTC · 8 CMC credits · 457 ms</p>
+        <div class="runs" role="group" aria-label="Run a live lookup on CoinMarketCap now">
+          <span>Run live:</span>
+          <button type="button" data-q="CPOOL" aria-pressed="false">CPOOL</button>
+          <button type="button" data-q="AGIX" aria-pressed="false">AGIX</button>
+          <button type="button" data-q="EPS" aria-pressed="false">EPS</button>
+          <button type="button" data-q="DAI" aria-pressed="false">DAI</button>
+          <button type="button" id="replay" title="Replay the captured CPOOL stream">Replay</button>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="receipts" aria-label="Receipts">
+  <div class="wrap">
+    <div class="rc"><div class="flaps" data-count="161" style="--n:3"></div><p>coins in CMC's top 2000 carry a migration or other notice</p><code class="proof">docs/proof/assets/census-…T0349Z.json</code></div>
+    <div class="rc"><div class="flaps" data-count="80" style="--n:2"></div><p>name the successor only in prose, a field no program can read</p><code class="proof">census · prose_only</code></div>
+    <div class="rc"><div class="flaps" data-count="83" style="--n:2"></div><p>tests pass, 82&nbsp;% coverage, plus 10/10 evals on real CMC rows</p><code class="proof">docs/proof/gates/local-gates-2026-11-22.txt</code></div>
+    <div class="rc"><div class="num"><div class="flaps" data-count="1.007" style="--n:5"></div><span class="unit">s</span></div><p>p50 lookup with a cached read and live CMC calls (n=12)</p><code class="proof">docs/proof/bench/bench-2026-11-22.json</code></div>
+  </div>
+</section>
+
+<section class="s" id="demo" aria-labelledby="demo-h">
+  <div class="wrap">
+    <p class="eyebrow">Platform 1 · the demo</p>
+    <h2 id="demo-h">One lookup, shown twice.</h2>
+    <p class="sub">Left, the live board, captured 100 minutes after the stream on the right. Same coin, same verdict, a different margin: the market moved. That is why every verdict carries its capture time.</p>
+    <div class="pair">
+      <figure class="browser" style="margin:0">
+        <div class="bar" aria-hidden="true"><i></i><i></i><i></i><span>successor.edycu.dev/?q=CPOOL</span></div>
+        <img src="/assets/shot-cpool.webp" width="1620" height="960" loading="lazy" alt="The live Successor board after a CPOOL lookup: CPOOL flaps to CLEAR, verdict SELL OLD, seven checks C1 to C6 lit green, the CMC notice underlined, and the agent trace below (captured 2026-11-22 05:29 UTC).">
+        <figcaption>The live board, 2026-11-22 05:29 UTC: SELL OLD, old token 11.3% above the swap. Raw stream: <code>docs/proof/landing/</code>.</figcaption>
+      </figure>
+      <div class="term" aria-label="Terminal replay of the captured CPOOL lookup stream">
+        <div class="bar"><span>zsh · /api/lookup · NDJSON</span><button type="button" id="term-replay">replay</button></div>
+        <pre id="term"><span class="c">$ curl -N "$HOST/api/lookup?q=CPOOL&amp;qty=10000"</span>
+  36ms resolve  C1 CPOOL · CMC id 12573
+  60ms notice      "…has rebranded to Clearpool
+                   (CLEAR) and undergone a 1:1 swap…"
+<span class="p">  61ms reader      qwen4-max · cached read</span>
+<span class="p">  61ms proposal #1 CLEAR · 0x5200…0e00 · 1:1</span>
+<span class="ok"> 126ms verify   C2 ✓ = CMC's CLEAR, id 42884</span>
+<span class="ok"> 425ms market   C5 ✓ CPOOL $1,385,625 / 24 h</span>
+<span class="ok"> 456ms market   C5 ✓ CLEAR $603,140 / 24 h</span>
+<span class="ok"> 457ms ratio    C4 ✓ 1.04342 vs 1 → confirms</span>
+<span class="c"> 457ms verdict  R8 SELL_OLD · old +15.7%</span>
+      8 CMC credits · 2026-11-22T03:49:23Z</pre>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="s why" id="why" aria-labelledby="why-h">
+  <div class="wrap">
+    <h2 id="why-h">No endpoint returns “CPOOL became CLEAR, 1:1”.</h2>
+    <p class="sub">CMC knows the coin migrated. It says so in prose. Turning that paragraph into a decision takes a reader, and a checker that does not trust the reader.</p>
+    <div class="flow">
+      <div><span class="step-n">Stop 01</span><h3>CMC gives prose</h3><p class="who">GET /v2/cryptocurrency/info?aux=notice</p>
+        <p class="json"><span class="k">"notice":</span> "Clearpool (CPOOL) has rebranded to Clearpool (CLEAR) and undergone a 1:1 swap from the [old contract](https://etherscan.io/token/0x6676…fac5) to [new contract](https://etherscan.io/token/0x5200…0e00)…"</p></div>
+      <div><span class="step-n">Stop 02</span><h3>The Reader proposes</h3><p class="who">qwen4-max · tool loop · every field quoted</p>
+        <ul>
+          <li><span class="lamp prop" aria-hidden="true"></span><span>successor <b>CLEAR</b><q>rebranded to Clearpool (CLEAR)</q></span></li>
+          <li><span class="lamp prop" aria-hidden="true"></span><span>contract <b class="mono">0x5200…0e00</b><q>new contract</q></span></li>
+          <li><span class="lamp prop" aria-hidden="true"></span><span>ratio <b>1 new per old</b><q>undergone a 1:1 swap</q></span></li>
+        </ul></div>
+      <div><span class="step-n">Stop 03</span><h3>Code checks</h3><p class="who">map · info · quotes · market-pairs · historical</p>
+        <ul>
+          <li><span class="lamp ok" aria-hidden="true"></span><span><b>C2</b> the contract equals CMC's row for CLEAR, id 42884</span></li>
+          <li><span class="lamp ok" aria-hidden="true"></span><span><b>C4</b> old/new = 1.04342 on 2026-11-19, stated 1</span></li>
+          <li><span class="lamp ok" aria-hidden="true"></span><span><b>C5</b> both tokens still trade</span></li>
+        </ul></div>
+      <div><span class="step-n">Stop 04</span><h3>A table decides</h3><p class="who">successor/verify/verdict.py · R1–R10</p>
+        <p class="stamp">Sell<br>old</p><p class="who" style="margin:0">R8 · old worth 15.7% more than the swap</p></div>
+    </div>
+
+    <div class="agix">
+      <div>
+        <h3>When the notice won't say, the agent goes and reads.</h3>
+        <p>AGIX's notice states no ratio. The Reader opens <code>fetch.ai</code>, a host CMC lists for the coin, and reads <b>0.43335</b>. Code checks it against CMC prices on 2024-07-01: <b>0.430753</b>, within 0.6%. Verdict: SWAP, if the issuer's swap is still open.</p>
+        <div class="vs">
+          <div><strong>$5,924.93</strong><span>10,000 AGIX on a tracker</span></div>
+          <div><strong>$463.42</strong><span>the same coins swapped to FET</span></div>
+        </div>
+        <p class="note">CMC quotes, 2026-11-22 03:49 UTC. Raw stream: <code>docs/proof/assets/lookup-AGIX-…ndjson</code>.</p>
+      </div>
+      <figure class="browser" style="margin:0">
+        <div class="bar" aria-hidden="true"><i></i><i></i><i></i><span>successor.edycu.dev/?q=AGIX</span></div>
+        <img src="/assets/shot-agix.webp" width="1620" height="960" loading="lazy" alt="The live Successor board after an AGIX lookup: AGIX flaps to FET, verdict SWAP, checks lit, and the trace showing the agent opened fetch.ai (captured 2026-11-22 05:29 UTC).">
+      </figure>
+    </div>
+  </div>
+</section>
+
+<section class="s" id="guards" aria-labelledby="guards-h">
+  <div class="wrap">
+    <p class="eyebrow">Platform 2 · the guards</p>
+    <h2 id="guards-h">What the code refuses to do.</h2>
+    <p class="sub">The model reads; it never rules. Each refusal below is a named test in the repo.</p>
+    <div class="bento">
+      <article class="card a">
+        <svg viewBox="0 0 40 40" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><rect x="5" y="8" width="13" height="24" rx="2"/><rect x="22" y="8" width="13" height="24" rx="2"/><path d="M5 20h13M22 20h13"/></svg>
+        <h3>One hex digit off is refuted, never repaired</h3>
+        <p>If the Reader mistypes a contract, it cannot talk the code into a verdict. The board strikes the field through and the lamp goes red.</p>
+        <div class="hexdemo" aria-label="Example: a contract one digit off is refuted">
+          <div><span class="lamp ok" aria-hidden="true"></span><span>0x5200f539…5e550e00</span></div>
+          <div><span class="lamp bad" aria-hidden="true"></span><s>0x5200f539…5e550e0<mark>1</mark></s></div>
+        </div>
+        <span class="chip">tests/test_successor_c2.py · one_hex_digit_off_is_refuted_and_never_repairable</span>
+      </article>
+      <article class="card b">
+        <svg viewBox="0 0 40 40" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path d="M6 30h28M10 30V14M20 30V8M30 30V18"/></svg>
+        <h3>SWAP needs both proofs</h3>
+        <p>A verified contract and a price-confirmed ratio, for every combination of check results.</p>
+        <span class="chip">test_never_swap_on_fail.py</span>
+      </article>
+      <article class="card c">
+        <svg viewBox="0 0 40 40" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path d="M8 10h24v16H18l-6 6v-6H8z"/><path d="M15 16l10 6M25 16l-10 6"/></svg>
+        <h3>Injected notices lose</h3>
+        <p>A notice that tries to instruct the model still gets a clean verdict.</p>
+        <span class="chip">eval 10 · injection</span>
+      </article>
+      <article class="card d">
+        <svg viewBox="0 0 40 40" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path d="M8 20h8M24 20h8"/><path d="M16 14l8 12M24 14l-8 12" /><rect x="4" y="12" width="4" height="16"/><rect x="32" y="12" width="4" height="16"/></svg>
+        <h3>Links stay on CMC's map</h3>
+        <p><code>follow_link</code> opens only hosts CMC lists for the coin or its successor, and refuses private addresses.</p>
+        <span class="chip">tests/test_fetch_link.py · SSRF guard</span>
+      </article>
+      <article class="card e">
+        <svg viewBox="0 0 40 40" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path d="M20 6v14l9 6"/><path d="M34 20a14 14 0 1 1-4.1-9.9"/></svg>
+        <h3>Ten evals, replayed on real rows</h3>
+        <p>10/10 counted cases and 4/4 variants run offline on saved CMC responses, misreads included.</p>
+        <span class="chip">scripts/run_evals.py</span>
+      </article>
+    </div>
+  </div>
+</section>
+
+<section class="s census" id="census" aria-labelledby="census-h">
+  <div class="wrap">
+    <p class="eyebrow">Platform 3 · the census</p>
+    <h2 id="census-h">Every notice in the top 2000, looked up.</h2>
+    <p class="sub">The real lookup flow, run on all 161 coins that carry a notice. One tile per coin.</p>
+    <div class="rows" role="list">
+      <div class="crow" role="listitem"><div class="flaps" data-board="NOT VERIFIABLE" style="--n:14"></div><span class="count">130</span><div class="units half" data-units="130" aria-hidden="true"></div></div>
+      <div class="crow" role="listitem"><div class="flaps" data-board="NOTHING TO DO" style="--n:14"></div><span class="count">26</span><div class="units" data-units="26" aria-hidden="true"></div></div>
+      <div class="crow" role="listitem"><div class="flaps" data-board="WRITE OFF" style="--n:14"></div><span class="count">3</span><div class="units" data-units="3" aria-hidden="true"></div></div>
+      <div class="crow" role="listitem"><div class="flaps" data-board="SWAP" style="--n:14"></div><span class="count">2</span><div class="units lit" data-units="2" aria-hidden="true"></div></div>
+      <div class="crow" role="listitem"><div class="flaps" data-board="SELL OLD" style="--n:14"></div><span class="count">0</span><div class="units"><span class="zero">none in the census; CPOOL is a featured coin outside it</span></div></div>
+    </div>
+    <div class="why130">
+      <div>
+        <h3>130 of 161 end NOT VERIFIABLE.</h3>
+        <p>That is the honest headline. A tool that said SWAP for those would be guessing. Successor says why it cannot confirm, row by row.</p>
+      </div>
+      <ol class="leaflet">
+        <li><b>61</b><span>old and new token share one CMC page, so there is no second price series to test a ratio against</span></li>
+        <li><b>26</b><span>CMC's own data refutes what the notice says</span></li>
+        <li><b>22</b><span>the notice names no successor</span></li>
+        <li><b>10</b><span>no swap ratio stated, or the linked announcement could not be fetched</span></li>
+        <li><b>11</b><span>no live successor market (5), a "swap" the text does not show (3), a quote not in the notice (2), other (1)</span></li>
+      </ol>
+    </div>
+    <p class="capline">active top 2000 by cmc_rank · scan 2026-11-22T02:32:34Z · verdicts 2026-11-22T03:45:14Z · GET /api/census</p>
+  </div>
+</section>
+
+<section class="s honest" id="honest" aria-labelledby="honest-h">
+  <div class="wrap">
+    <h2 id="honest-h">Honest by design.</h2>
+    <p class="sub">Lifted from the README, where we list nine limits and what we got wrong.</p>
+    <ol>
+      <li><blockquote>“Most notices end NOT VERIFIABLE (130 of 161, 2026-11-22).”<cite>— README · Honest limits 1</cite></blockquote></li>
+      <li><blockquote>“The Reader is slow. <code>qwen4-max</code> takes a median 8.6 s per call.”<cite>— README · Honest limits 3</cite></blockquote></li>
+      <li><blockquote>“We expected RZUSD to be WRITE OFF and then watched it flip when the old token traded again.”<cite>— README · What we got wrong</cite></blockquote></li>
+    </ol>
+  </div>
+</section>
+
+<section class="s faq" id="faq" aria-labelledby="faq-h">
+  <div class="wrap">
+    <div>
+      <p class="eyebrow">Platform 4 · questions</p>
+      <h2 id="faq-h">Questions a judge would ask.</h2>
+    </div>
+    <div>
+      <details open><summary>Does the AI decide the verdict?</summary><p>No. <code>qwen4-max</code> reads the notice and proposes fields, each with the quote it came from. Plain code checks every field against CMC rows, and a table of ten rules (R1–R10, <code>successor/verify/verdict.py</code>) picks the verdict.</p></details>
+      <details><summary>Why can't one API call answer this?</summary><p>CMC's <code>info</code> endpoint returns the notice as prose. No field says "the successor of CPOOL is CLEAR, 1:1". Something has to read it, and something else has to check what was read.</p></details>
+      <details><summary>What is live, and what is cached?</summary><p>Every lookup calls CMC live, 5 to 12 calls in the captured streams. The Reader's output is cached per coin and notice text, so a click costs at most one Qwen call. Cached p50 is 1.007 s; a cold read's p50 is 15.44 s.</p></details>
+      <details><summary>What if the notice is wrong?</summary><p>Then a check fails and the verdict says so. In the census, CMC's own data refutes 26 notices, and a Reader quote that is not in the notice is dropped before any check runs.</p></details>
+      <details><summary>Why do most coins end NOT VERIFIABLE?</summary><p>Because CMC's data cannot confirm them. In 61 of the 130, old and new token share one CMC page, so there are no two price series to test a ratio against. Successor shows the reason instead of guessing.</p></details>
+      <details><summary>Is this financial advice?</summary><p>No. The verdict is what CMC's data supports. Values exclude fees, gas and slippage, and a SWAP reads "if the issuer's swap is still open" when the notice states no window.</p></details>
+    </div>
+  </div>
+</section>
+
+<section class="final" aria-labelledby="final-h">
+  <div class="wrap">
+    <h2 id="final-h">Found an old coin? Ask the board.</h2>
+    <form class="look" action="/" method="get" role="search">
+      <label class="skip" for="fq">Coin, slug or contract</label>
+      <input id="fq" name="q" placeholder="CPOOL, agix, or a contract address" autocomplete="off" spellcheck="false" maxlength="80">
+      <button class="btn primary" type="submit">Look it up</button>
+    </form>
+  </div>
+</section>
+</main>
+
+<footer>
+  <div class="wrap">
+    <span>Successor · MIT · data from the CoinMarketCap Pro API · reader: Qwen <code>qwen4-max</code> · not financial advice</span>
+    <nav aria-label="Footer"><a href="/">Live board</a><a href="/judge">Judge path</a><a href="/pitch">Pitch deck</a><a href="https://github.com/edycutjong/successor">GitHub</a><a href="/api/health">API health</a></nav>
+  </div>
+</footer>
+
+<script>
+(() => {
+  const RM = matchMedia('(prefers-reduced-motion: reduce)').matches;
+  const ALPHA = " ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789.,:+-%$/";
+  const $ = (id) => document.getElementById(id);
+  const sleep = (ms) => new Promise((r) => setTimeout(r, RM ? 0 : ms));
+
+  function tiles(el, n) {
+    while (el.children.length < n) { const t = document.createElement('span'); t.className = 't blank'; t.innerHTML = '<b>&nbsp;</b>'; el.appendChild(t); }
+    while (el.children.length > n) el.lastChild.remove();
+    return [...el.children];
+  }
+  function paint(t, ch) {
+    t.firstChild.textContent = ch === ' ' ? ' ' : ch;
+    t.classList.toggle('blank', ch === ' ');
+  }
+  function turnTile(t, target, delay) {
+    const cur = t.firstChild.textContent.replace(' ', ' ');
+    if (RM) { paint(t, target); return Promise.resolve(); }
+    let i = Math.max(0, ALPHA.indexOf(cur)), j = ALPHA.indexOf(target);
+    if (j < 0) j = 0;
+    let steps = (j - i + ALPHA.length) % ALPHA.length;
+    if (steps > 8) { i = (j - 8 + ALPHA.length) % ALPHA.length; steps = 8; }
+    return new Promise((res) => {
+      setTimeout(function step() {
+        i = (i + 1) % ALPHA.length;
+        if (steps === 0) { res(); return; }
+        paint(t, ALPHA[i]); t.classList.remove('f'); void t.offsetWidth; t.classList.add('f');
+        if (--steps > 0) setTimeout(step, 62); else { paint(t, target); res(); }
+      }, delay);
+    });
+  }
+  function setFlaps(el, text, animate = true) {
+    const n = Number(getComputedStyle(el).getPropertyValue('--n')) || text.length;
+    const s = text.toUpperCase().padEnd(n, ' ').slice(0, n);
+    const ts = tiles(el, n);
+    return Promise.all(ts.map((t, k) => animate ? turnTile(t, s[k], k * 38) : (paint(t, s[k]), null)));
+  }
+
+  // static boards (census + receipts) render their final state immediately, no-JS-safe after this runs
+  document.querySelectorAll('[data-board]').forEach((el) => setFlaps(el, el.dataset.board, false));
+  document.querySelectorAll('[data-units]').forEach((el) => { el.innerHTML = '<i></i>'.repeat(Number(el.dataset.units)); });
+  const counts = [...document.querySelectorAll('[data-count]')];
+  counts.forEach((el) => setFlaps(el, el.dataset.count, false));
+  if (!RM && 'IntersectionObserver' in window) {
+    const io = new IntersectionObserver((es) => es.forEach((e) => {
+      if (!e.isIntersecting) return; io.unobserve(e.target);
+      const el = e.target; setFlaps(el, '0'.repeat(el.dataset.count.length), false);
+      setTimeout(() => setFlaps(el, el.dataset.count), 120);
+    }), { threshold: 0.6 });
+    counts.forEach((el) => io.observe(el));
+  }
+
+  // ---------- hero board ----------
+  const hOld = $('h-old'), hNew = $('h-new'), hVd = $('h-vd'), hl = $('hl');
+  const lampFor = { C2: null, C4: null, C5o: null, C5n: null };
+  document.querySelectorAll('#h-checks li').forEach((li) => { lampFor[li.dataset.c] = li; });
+  function lamp(c, st, text, key) {
+    const li = lampFor[c]; if (!li) return;
+    const l = li.querySelector('.lamp'); l.className = 'lamp ' + st;
+    if (text !== undefined) li.querySelector('.v').textContent = text;
+    if (key !== undefined) li.querySelector('.k').innerHTML = key;
+  }
+  function field(f, st) { document.querySelectorAll('#h-notice u[data-f="' + f + '"]').forEach((u) => { u.className = st; }); }
+  const okState = (s) => ['verified', 'alive', 'P', 'confirmed'].includes(s) ? 'ok' : ['refuted', 'dead', 'R', 'failed', 'mismatch'].includes(s) ? 'bad' : 'prop';
+  const money = (v) => v == null ? null : '$' + Number(v).toLocaleString('en-US', { minimumFractionDigits: 2, maximumFractionDigits: 2 });
+  const VWORD = { SELL_OLD: 'SELL OLD', SWAP: 'SWAP', WRITE_OFF: 'WRITE OFF', NOT_VERIFIABLE: 'NOT VERIFIABLE', NOTHING_TO_DO: 'NOTHING TO DO' };
+
+  function resetBoard(sym, notice) {
+    hNew.classList.remove('half');
+    setFlaps(hOld, sym, false); setFlaps(hNew, '', false); setFlaps(hVd, '', false);
+    hl.classList.add('prop');
+    $('h-big').textContent = '…'; $('h-say').textContent = 'reading the notice';
+    $('h-vals').textContent = '';
+    ['C2', 'C4', 'C5o', 'C5n'].forEach((c) => lamp(c, 'off', 'waiting'));
+    if (notice !== undefined) $('h-notice').innerHTML = '<span class="src">CMC notice · read by qwen4-max</span>' + notice;
+    else document.querySelectorAll('#h-notice u').forEach((u) => { u.className = ''; });
+  }
+
+  async function onEvent(e, ctx) {
+    const s = e.step || e.type;
+    if (s === 'resolve' && ctx.live) { setFlaps(hOld, (e.chosen && e.chosen.symbol) || ctx.q, true); }
+    else if (s === 'notice' && ctx.live) {
+      const txt = (e.notice || 'no notice on this coin').replace(/\[([^\]]+)\]\([^)]+\)/g, '$1');
+      $('h-notice').innerHTML = '<span class="src">CMC notice · read by qwen4-max</span>' + txt.replace(/[<>&]/g, (c) => ({ '<': '&lt;', '>': '&gt;', '&': '&amp;' }[c]));
+      $('h-say').textContent = 'the Reader is reading the notice';
+    }
+    else if (s === 'follow_link') { $('h-say').textContent = 'the Reader opened ' + (e.host || 'a link') + ' (a host CMC lists)'; }
+    else if (s === 'proposal') {
+      $('h-say').textContent = 'proposal #' + (e.n || 1) + ' in · code is checking it';
+      field('sym', 'prop'); field('ratio', 'prop'); field('contract', 'prop');
+      lamp('C2', 'prop', 'proposed: ' + ((e.fields && e.fields.successor_symbol) || '?'));
+      lamp('C4', 'prop', 'proposed ratio: ' + ((e.fields && e.fields.ratio_new_per_old) ?? 'not stated'));
+    }
+    else if (s === 'successor') {
+      const st = okState(e.state);
+      lamp('C2', st, e.reason || e.state, '<i>C2</i>Contract');
+      field('sym', st); field('contract', st);
+      if (st === 'ok' && e.successor) { ctx.newSym = e.successor.symbol; await setFlaps(hNew, e.successor.symbol, true); }
+    }
+    else if (s === 'market_old') lamp('C5o', okState(e.state), e.reason || e.state, '<i>C5</i>Old market');
+    else if (s === 'market_new') lamp('C5n', okState(e.state), e.reason || e.state, '<i>C5</i>New market');
+    else if (s === 'ratio') {
+      const st = e.state === 'none' ? 'prop' : okState(e.state);
+      lamp('C4', st, e.reason || 'ratio not stated', '<i>C4</i>Ratio' + (e.stated ? ' ' + e.stated + ':1' : ''));
+      field('ratio', st);
+    }
+    else if (s === 'verdict') {
+      const w = VWORD[e.verdict] || e.verdict;
+      if (e.verdict === 'WRITE_OFF') await setFlaps(hNew, '', true);
+      if (e.verdict === 'NOT_VERIFIABLE') hNew.classList.add('half');
+      await setFlaps(hVd, w, true);
+      hVd.setAttribute('aria-label', 'Verdict ' + w);
+      const so = e.value_sell_old_usd, sw = e.value_swap_usd, tr = e.tracker_value_usd;
+      const qty = Number(e.qty || 10000).toLocaleString('en-US');
+      if (so != null && sw != null && sw > 0) {
+        const pct = (so / sw - 1) * 100;
+        $('h-big').textContent = (pct >= 0 ? '+' : '') + pct.toFixed(1) + '%';
+        $('h-say').textContent = pct >= 0 ? 'the old token is worth more than the swap, at CMC\'s quotes' : 'the swap is worth more than the old token, at CMC\'s quotes';
+        $('h-vals').textContent = qty + ' ' + ctx.sym + ' · sell old ' + money(so) + ' · swap ' + money(sw) + ' · excludes fees and gas';
+      } else if (sw != null && tr != null) {
+        $('h-big').textContent = money(sw);
+        $('h-say').textContent = 'what ' + qty + ' ' + ctx.sym + ' are worth swapped, not the tracker\'s ' + money(tr);
+        $('h-vals').textContent = 'rule ' + e.rule_id + ' · ' + (e.reason || '');
+      } else {
+        $('h-big').textContent = e.rule_id || '';
+        $('h-say').textContent = e.reason || '';
+        $('h-vals').textContent = '';
+      }
+      hl.classList.remove('prop');
+      const when = (e.captured_at || '').replace('T', ' ').replace(/:\d\dZ$/, ' UTC');
+      $('h-cap').textContent = (ctx.live ? 'live · ' : 'replay · ') + 'lookup captured ' + when + ' · ' + (e.credits_used ?? '?') + ' CMC credits · ' + (ctx.live ? Math.round(performance.now() - ctx.t0) + ' ms in your browser' : e.t_ms + ' ms');
+    }
+    else if (s === 'error') { $('h-say').textContent = 'error: ' + (e.message || e.error || 'lookup failed'); }
+  }
+
+  // the captured 2026-11-22 03:49 UTC CPOOL stream (docs/proof/assets/lookup-CPOOL-2026-11-22T0349Z.ndjson), condensed
+  const CAPTURED = [
+    { step: 'resolve' }, { step: 'notice' },
+    { step: 'reader' },
+    { step: 'proposal', n: 1, fields: { successor_symbol: 'CLEAR', ratio_new_per_old: 1 } },
+    { step: 'successor', state: 'verified', successor: { symbol: 'CLEAR' }, reason: "0x5200…0e00 = CMC's CLEAR contract, id 42884" },
+    { step: 'market_old', state: 'alive', reason: '$1,385,625 / 24 h, top venue Upbit' },
+    { step: 'market_new', state: 'alive', reason: '$603,140 / 24 h, top venue Uniswap v4' },
+    { step: 'ratio', state: 'P', stated: 1, reason: 'old/new 1.04342 after the event → confirms' },
+    { type: 'verdict', verdict: 'SELL_OLD', rule_id: 'R8', qty: 10000, value_sell_old_usd: 243.01140164267096, value_swap_usd: 210.05630413463496, captured_at: '2026-11-22T03:49:23Z', credits_used: 8, t_ms: 457 }
+  ];
+  const GAP = { resolve: 300, notice: 500, reader: 500, proposal: 700, successor: 250, market_old: 380, market_new: 380, ratio: 420, verdict: 200 };
+  let runId = 0;
+  async function replay() {
+    const id = ++runId; const ctx = { sym: 'CPOOL', live: false };
+    document.querySelectorAll('.runs button[data-q]').forEach((b) => b.setAttribute('aria-pressed', 'false'));
+    resetBoard('CPOOL');
+    await sleep(500);
+    for (const e of CAPTURED) { if (id !== runId) return; await sleep(GAP[e.step || e.type] || 300); if (id !== runId) return; await onEvent(e, ctx); }
+  }
+  async function live(q, btn) {
+    const id = ++runId; const ctx = { q, sym: q, live: true, t0: performance.now() };
+    const all = document.querySelectorAll('.runs button');
+    document.querySelectorAll('.runs button[data-q]').forEach((b) => b.setAttribute('aria-pressed', String(b === btn)));
+    all.forEach((b) => { b.disabled = true; });
+    resetBoard(q, '');
+    $('h-cap').textContent = 'live · streaming GET /api/lookup?q=' + q + ' …';
+    try {
+      const r = await fetch('/api/lookup?q=' + encodeURIComponent(q) + '&qty=10000');
+      if (!r.ok || !r.body) throw new Error('HTTP ' + r.status);
+      const rd = r.body.getReader(); const dec = new TextDecoder(); let buf = '';
+      for (;;) {
+        const { value, done } = await rd.read(); if (done) break;
+        buf += dec.decode(value, { stream: true });
+        let nl; while ((nl = buf.indexOf('\n')) >= 0) { const line = buf.slice(0, nl).trim(); buf = buf.slice(nl + 1); if (line && id === runId) await onEvent(JSON.parse(line), ctx); }
+      }
+      if (buf.trim() && id === runId) await onEvent(JSON.parse(buf), ctx);
+    } catch (err) {
+      $('h-say').textContent = 'live lookup failed (' + err.message + '); the replay still shows a real captured run';
+      $('h-cap').textContent = 'live · failed · press Replay for the captured run';
+    } finally { all.forEach((b) => { b.disabled = false; }); }
+  }
+  document.querySelectorAll('.runs button[data-q]').forEach((b) => b.addEventListener('click', () => live(b.dataset.q, b)));
+  $('replay').addEventListener('click', replay);
+  // no-JS / print default = the final captured state in the HTML; with JS, paint flaps then play the replay once
+  setFlaps(hOld, 'CPOOL', false); setFlaps(hNew, 'CLEAR', false); setFlaps(hVd, 'SELL OLD', false);
+  if (!RM) replay();
+
+  // ---------- terminal replay ----------
+  const term = $('term'); const termHTML = term.innerHTML; let typing = 0;
+  function typeTerm() {
+    if (RM) return; const id = ++typing; const lines = termHTML.split('\n');
+    term.innerHTML = ''; let k = 0;
+    (function next() {
+      if (id !== typing) return;
+      if (k >= lines.length) { term.insertAdjacentHTML('beforeend', '\n<span class="cursor"></span>'); return; }
+      term.insertAdjacentHTML('beforeend', (k ? '\n' : '') + lines[k]); k++;
+      setTimeout(next, k === 1 ? 520 : 170);
+    })();
+  }
+  $('term-replay').addEventListener('click', typeTerm);
+  if ('IntersectionObserver' in window && !RM) {
+    const tio = new IntersectionObserver((es) => { if (es[0].isIntersecting) { tio.disconnect(); typeTerm(); } }, { threshold: 0.4 });
+    tio.observe(term);
+  }
+
+  // ---------- copy ----------
+  document.querySelectorAll('[data-copy]').forEach((b) => b.addEventListener('click', async () => {
+    try { await navigator.clipboard.writeText(b.dataset.copy); b.textContent = 'Copied'; } catch { b.textContent = 'Select ↑'; }
+    setTimeout(() => { b.textContent = 'Copy'; }, 1600);
+  }));
+})();
+</script>
+</body>
+</html>

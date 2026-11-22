@@ -1,8 +1,27 @@
 {
   "$schema": "https://openapi.vercel.sh/vercel.json",
-  "functions": { "api/index.py": { "maxDuration": 60, "includeFiles": "data/**" } },
+  "functions": {
+    "api/index.py": {
+      "maxDuration": 60,
+      "includeFiles": "data/**"
+    }
+  },
   "rewrites": [
-    { "source": "/judge", "destination": "/judge.html" },
-    { "source": "/api/(.*)", "destination": "/api/index" }
+    {
+      "source": "/judge",
+      "destination": "/judge.html"
+    },
+    {
+      "source": "/pitch",
+      "destination": "/pitch.html"
+    },
+    {
+      "source": "/about",
+      "destination": "/about.html"
+    },
+    {
+      "source": "/api/(.*)",
+      "destination": "/api/index"
+    }
   ]
 }
