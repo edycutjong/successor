@@ -2,7 +2,7 @@
 
 Each file is the event stream (`/api/lookup` NDJSON) of one lookup shown in the demo video, dumped from the board's own
 `state.events` right after the shot (one JSON object per line, in arrival order),
-recorded against https://successor.edycu.dev (build a09efb9; the Re-read and GAS shots at build 4277add, after the tick and
+recorded against https://successor.edycu.dev (build a09efb9; the Re-read shot at build 4277add and the GAS shot at build 5cc9fea, both after the tick and
 'market value, no verdict' fixes). Every number on screen in those shots comes from these files.
 
 | File | Shot | Verdict | Reader |
