@@ -563,7 +563,7 @@ footer a:hover { color: var(--bone); text-decoration: underline; text-underline-
       else if (so != null && sw != null && sw > 0) {
         const pct = (so / sw - 1) * 100;
         $('h-big').textContent = (pct >= 0 ? '+' : '') + pct.toFixed(1) + '%';
-        $('h-say').textContent = pct >= 0 ? 'the old token is worth more than the swap, at CMC\'s quotes' : 'the swap is worth more than the old token, at CMC\'s quotes';
+        $('h-say').textContent = pct >= 0 ? (e.verdict === 'SWAP' ? 'the old token is above the swap at CMC\'s quotes, but under the 5% margin R8 needs for SELL OLD' : 'the old token is worth more than the swap, at CMC\'s quotes') : 'the swap is worth more than the old token, at CMC\'s quotes';
         $('h-vals').textContent = qty + ' ' + ctx.sym + ' · sell old ' + money(so) + ' · swap ' + money(sw) + ' · excludes fees and gas';
       } else if (sw != null && tr != null) { $('h-big').textContent = money(sw); $('h-say').textContent = 'what ' + qty + ' ' + ctx.sym + ' are worth swapped, not the tracker\'s ' + money(tr); $('h-vals').textContent = 'rule ' + e.rule_id + ' · ' + (e.reason || ''); }
       else { $('h-big').textContent = e.rule_id || ''; $('h-say').textContent = e.reason || ''; $('h-vals').textContent = ''; }
