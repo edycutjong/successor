@@ -1,13 +1,17 @@
 # Extends the default rules. CMC responses in docs/proof/ and tests/fixtures/ contain public token contract
 # addresses under "token_address" / "contract_address" (EVM hex and Solana-style base58); those are on-chain
-# identifiers, not secrets.
+# identifiers, not secrets. The recorded notices in data/ quote public token ids and contract addresses too.
 [extend]
 useDefault = true
 
-[allowlist]
+[[allowlists]]
 description = "public token contract addresses in verbatim CMC responses"
 regexTarget = "match"
 regexes = [
   '''(token_address|contract_address)"\s*:\s*"0x[0-9a-fA-F]{40}"''',
   '''(token_address|contract_address)"\s*:\s*"[1-9A-HJ-NP-Za-km-z]{32,44}"''',
 ]
+
+[[allowlists]]
+description = "recorded CMC notices in the pre-warmed extraction cache quote public token ids and contract addresses"
+paths = ['''data/extractions/.*\.json''', '''data/census\.json''', '''data/notices/.*\.json''']
