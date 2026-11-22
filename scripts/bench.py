@@ -2,16 +2,23 @@
 
   python scripts/bench.py https://successor.edycu.dev CPOOL 12                 # cached Reader read (CMC calls are live)
   python scripts/bench.py https://successor.edycu.dev CPOOL 6 --fresh          # cold: Reader re-reads the notice live
-  python scripts/bench.py https://successor.edycu.dev CPOOL 12 --gate-p95 3    # exit 1 if p95 > 3 s (performance gate in CI)
+  python scripts/bench.py https://successor.edycu.dev CPOOL 20 --gate-p95 3    # exit 1 if p95 > 3 s (performance gate in CI)
   add --warmup to discard one untimed call first (CI does: a fresh deployment's first request is a function cold start)
 
-Writes docs/proof/bench/bench-<kind>-<date>.json (every sample, p50/p95, verdicts seen). Cold reads cost one Qwen call each and
-are limited to 3 per 10 min per IP, so --fresh runs in batches of 3 with a 10 min pause between them.
+p95 is the nearest-rank percentile: the ceil(0.95 n)-th fastest sample. At n <= 19 that is the slowest single call (the
+2026-11-22 figures, n=12 and n=6, are maxima), so the CI gate takes n=20, where one slow call no longer decides it alone.
+Each sample also records the server's own t_ms and its slowest CMC call, so a slow sample shows whether the time went to
+the network or a cold start (client >> server) or to CMC (slow call or a 429 retry).
+
+Writes docs/proof/bench/bench-<kind>-<UTC timestamp>.json (every sample, p50/p95, verdicts seen); a re-run never overwrites an
+earlier capture. Cold reads cost one Qwen call each and are limited to 3 per 10 min per IP, so --fresh runs in batches of 3 with
+a 10 min pause between them.
 """
 
 from __future__ import annotations
 
 import json
+import math
 import os
 import statistics
 import sys
@@ -24,7 +31,7 @@ OUT = Path(__file__).resolve().parents[1] / "docs" / "proof" / "bench"
 COLD_BATCH, COLD_PAUSE_S = 3, 610
 
 
-def one(base: str, q: str, fresh: bool) -> tuple[float, str]:
+def one(base: str, q: str, fresh: bool) -> tuple[float, str, dict]:
     params: dict[str, str] = {"q": q}
     if fresh:
         params["fresh"] = "1"
@@ -35,12 +42,18 @@ def one(base: str, q: str, fresh: bool) -> tuple[float, str]:
     r = httpx.get(f"{base}/api/lookup", params=params, headers=headers, timeout=70)
     dt = time.perf_counter() - t0
     body = r.json()
-    return dt, f"{r.status_code} {body.get('type')} {body.get('verdict')}/{body.get('rule_id')}"
+    calls = (body.get("receipt") or {}).get("calls") or []
+    server = {
+        "server_ms": body.get("t_ms"),
+        "slowest_cmc_call_ms": max((c.get("latency_ms") or 0 for c in calls), default=None),
+    }
+    return dt, f"{r.status_code} {body.get('type')} {body.get('verdict')}/{body.get('rule_id')}", server
 
 
 def pct(xs: list[float], p: float) -> float:
+    """Nearest-rank percentile: the smallest sample with at least p % of the samples at or below it."""
     xs = sorted(xs)
-    return xs[min(len(xs) - 1, round(p / 100 * (len(xs) - 1) + 0.4999))]
+    return xs[max(0, math.ceil(p / 100 * len(xs)) - 1)]
 
 
 def main() -> int:
@@ -50,7 +63,7 @@ def main() -> int:
     if gate is not None:
         args.remove(str(sys.argv[sys.argv.index("--gate-p95") + 1]))
     base, q, n = args[0].rstrip("/"), args[1], int(args[2])
-    samples, seen = [], []
+    samples, seen, server = [], [], []
     if (
         "--warmup" in sys.argv and not fresh
     ):  # one untimed call: a just-created deployment pays a function cold start
@@ -59,9 +72,10 @@ def main() -> int:
     for i in range(n):
         if fresh and i and i % COLD_BATCH == 0:
             time.sleep(COLD_PAUSE_S)  # stay under 3 fresh reads / 10 min / IP
-        dt, tag = one(base, q, fresh)
+        dt, tag, srv = one(base, q, fresh)
         samples.append(round(dt, 3))
         seen.append(tag)
+        server.append(srv)
         if not fresh:
             time.sleep(4)  # stay under 20 lookups/min/IP
     kind = "cold" if fresh else "cached"
@@ -76,17 +90,15 @@ def main() -> int:
         ),
         "captured_at": time.strftime("%Y-%m-%dT%H:%M:%SZ", time.gmtime()),
         "samples_s": samples,
+        "server": server,
         "p50_s": round(statistics.median(samples), 3),
         "p95_s": round(pct(samples, 95), 3),
+        "p95_rule": "nearest rank, ceil(0.95 n)-th fastest; equals max_s when n <= 19",
         "max_s": max(samples),
         "outcomes": sorted(set(seen)),
     }
     OUT.mkdir(parents=True, exist_ok=True)
-    name = (
-        f"bench-{time.strftime('%Y-%m-%d', time.gmtime())}.json"
-        if not fresh
-        else f"bench-{kind}-{time.strftime('%Y-%m-%d', time.gmtime())}.json"
-    )
+    name = f"bench-{kind}-{time.strftime('%Y-%m-%dT%H%MZ', time.gmtime())}.json"
     (OUT / name).write_text(json.dumps(out, indent=2) + "\n")
     print(json.dumps({k: v for k, v in out.items() if k != "samples_s"}, indent=2))
     if gate is not None and out["p95_s"] > gate:

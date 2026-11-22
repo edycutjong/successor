@@ -154,10 +154,10 @@ jobs:
           python-version: "3.12"
       - uses: astral-sh/setup-uv@37802adc94f370d6bfd71619e3f0bf239e1f3b78 # v7.6.0
       - run: uv pip install --system httpx
-      - name: "Cached lookup p50/p95, gate p95 <= 3 s"
+      - name: "Cached lookup p50/p95 over 20 calls, gate p95 <= 3 s (nearest rank: one slow call alone does not fail it)"
         env:
           BENCH_BYPASS_SECRET: ${{ secrets.VERCEL_AUTOMATION_BYPASS_SECRET }}
-        run: python scripts/bench.py "$TARGET" CPOOL 12 --gate-p95 3 --warmup
+        run: python scripts/bench.py "$TARGET" CPOOL 20 --gate-p95 3 --warmup
       - uses: actions/setup-node@v7
         with:
           node-version: "22"

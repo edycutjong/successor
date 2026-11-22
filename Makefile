@@ -36,8 +36,8 @@ unplug-e2e: ## run the app with NO keys and point the live-flow tests at it; the
 e2e: ## browser tests against $(BASE) (default: the live URL)
 	E2E_BASE_URL=$(BASE) $(PY) -m pytest e2e -q -p no:cacheprovider --override-ini="norecursedirs="
 
-bench: ## cached lookup p50/p95 against $(BASE), gate p95 <= 3 s
-	$(PY) scripts/bench.py $(BASE) CPOOL 12 --gate-p95 3
+bench: ## cached lookup p50/p95 against $(BASE) over 20 calls, gate p95 <= 3 s
+	$(PY) scripts/bench.py $(BASE) CPOOL 20 --gate-p95 3
 
 bench-cold: ## cold lookup p50/p95 (3 Qwen reads per 10 min; takes ~12 min)
 	$(PY) scripts/bench.py $(BASE) CPOOL 6 --fresh
