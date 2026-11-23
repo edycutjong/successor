@@ -34,12 +34,19 @@ Try it: https://successor.edycu.dev (judges: [/judge](https://successor.edycu.de
 
 ## 📸 See it in Action
 
+Live re-run of the AGIX lookup on **2026-11-23 13:53 UTC**; CMC prices have moved since the 2026-11-22 03:49 UTC table below.
+
+<p align="center">
+  <img src="docs/assets/successor-broll.gif" alt="Screen capture of the live Successor board, 2026-11-23 13:53 UTC. A holder types AGIX. The agent's trace streams, slowed 6x: the recorded extraction follows fetch.ai and proposes ASI at ratio 0.43335, code verifies FET against CMC (C2) and the FET flaps turn. The verdict lands: SWAP, $469 as FET against a $5,932 tracker value for 10,000 AGIX, with checks C1 to C6 (ratio confirmed at -0.6%, AGIX market at $0 volume)." width="100%">
+</p>
+<p align="center"><sub>Live capture of <a href="https://successor.edycu.dev">successor.edycu.dev</a>, 2026-11-23 13:53 UTC · two consecutive AGIX lookups 8 s apart, identical figures · the lookup took 0.87 s: the first 0.57 s after Enter is cut and the agent-to-verdict span is slowed ×6 · the agent's read is the recorded 2026-11-22 extraction · receipts: <a href="docs/proof/broll/"><code>docs/proof/broll/</code></a>. AGIX swapped into FET is $469 here and $463.42 in the table below.</sub></p>
+
+The static board below is six real lookups captured on **2026-11-22 03:49 UTC** (raw streams in `docs/proof/assets/`).
+Every verdict is market-sensitive, so each one carries its capture time.
+
 <p align="center">
   <img src="docs/assets/readme-hero.png" alt="Successor board: six real lookups with their verdicts, checks and capture time (CMC data 2026-11-22 03:49 UTC)" width="100%">
 </p>
-
-The board above is six real lookups captured on **2026-11-22 03:49 UTC** (raw streams in `docs/proof/assets/`).
-Every verdict is market-sensitive, so each one carries its capture time.
 
 | Holding | Verdict | Why (from the captured stream) |
 |---|---|---|
@@ -55,7 +62,7 @@ Every verdict is market-sensitive, so each one carries its capture time.
 ### The Problem
 When a token is renamed, migrated or redenominated, CMC records it in one free-text `notice` field on the coin's page. The
 contract, the ratio and the deadline sit inside prose and markdown links. Trackers keep showing the old ticker at a price
-that no longer means what the holder thinks it means: in the AGIX case above, a tracker shows $5,924.93 for 10,000 AGIX
+that no longer means what the holder thinks it means: in the AGIX row of the table above, a tracker shows $5,924.93 for 10,000 AGIX
 while the same coins swapped into FET are $463.42 (CMC quotes, 2026-11-22 03:49 UTC).
 
 How big is it? On the census served at `/api/census` (scan captured 2026-11-22T02:32:34Z, active top 2000 by CMC rank): **161 coins carry a
