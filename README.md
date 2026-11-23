@@ -36,6 +36,8 @@
 Why it matters, in one example (CMC quotes, 2026-11-22 03:49 UTC): a tracker shows **$5,924.93** for 10,000 AGIX, which has traded $0 in 24 h; swapped into FET at the ratio the agent found and code price-confirmed, the same coins are **$463.42**.
 Try it: https://successor.edycu.dev (judges: [/judge](https://successor.edycu.dev/judge), a 2-minute path whose first three steps take 30 seconds), or `curl -N 'https://successor.edycu.dev/api/lookup?q=CPOOL&qty=10000'`.
 
+**What to expect:** the featured coins answer in about a second (cached agent read: p50 0.796 s, p95 1.363 s). A coin whose notice the agent has not read yet needs a fresh Qwen read first: p50 15.44 s, p95 21.45 s. Successor reads the free-text `notice` field (`/v2/cryptocurrency/info?aux=notice`), CMC's own record of the migration, and checks it against CMC's rows.
+
 ## 📸 See it in Action
 
 Live re-run of the AGIX lookup on **2026-11-23 13:53 UTC**; CMC prices have moved since the 2026-11-22 03:49 UTC table below.
