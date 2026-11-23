@@ -20,6 +20,7 @@
   ![Qwen](https://img.shields.io/badge/Qwen_qwen4--max-615CED?style=flat)
   ![CoinMarketCap API](https://img.shields.io/badge/CoinMarketCap_Pro_API-17181B?style=flat)
   [![CI](https://github.com/edycutjong/successor/actions/workflows/ci.yml/badge.svg?branch=main)](https://github.com/edycutjong/successor/actions/workflows/ci.yml)
+  [![CodeQL](https://github.com/edycutjong/successor/actions/workflows/codeql.yml/badge.svg?branch=main)](https://github.com/edycutjong/successor/security/code-scanning)
   [![Release](https://img.shields.io/github/v/release/edycutjong/successor?style=flat)](https://github.com/edycutjong/successor/releases)
   [![License](https://img.shields.io/badge/License-MIT-yellow)](https://opensource.org/licenses/MIT)
 
