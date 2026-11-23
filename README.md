@@ -7,6 +7,9 @@
   <br/>
 
   [![Live Demo](https://img.shields.io/badge/🚀_Live-Demo-06b6d4?style=for-the-badge)](https://successor.edycu.dev)
+  [![For judges: the 2-minute path](https://img.shields.io/badge/⚖️_For_judges-2--minute_path-1F6B55?style=for-the-badge)](https://successor.edycu.dev/judge)
+  [![Landing page](https://img.shields.io/badge/🌐_Landing-About-0f766e?style=for-the-badge)](https://successor.edycu.dev/about)
+  [![Pitch deck](https://img.shields.io/badge/📊_Pitch-Deck-b45309?style=for-the-badge)](https://successor.edycu.dev/pitch)
   [![Built for CMC API Hackathon Round 2](https://img.shields.io/badge/DoraHacks-CMC_API_Hackathon_R2-8b5cf6?style=for-the-badge)](https://dorahacks.io/hackathon/coinmarketcap-api-202611/detail)
 
   <br/>
