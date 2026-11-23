@@ -195,6 +195,9 @@ jobs:
     if: ${{ github.event_name == 'push' && github.ref == 'refs/heads/main' }}
     needs: [quality, security, build, e2e, perf]
     runs-on: ubuntu-latest
+    environment:
+      name: production
+      url: https://successor.edycu.dev
     env:
       VERCEL_TOKEN: ${{ secrets.VERCEL_TOKEN }}
       VERCEL_ORG_ID: ${{ secrets.VERCEL_ORG_ID }}
