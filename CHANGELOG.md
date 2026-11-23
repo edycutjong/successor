@@ -2,6 +2,12 @@
 
 Generated from Conventional Commits by scripts/release.py.
 
+## v1.1.5 (2026-11-23)
+
+### Bug fixes
+
+- header aligns with the 1360 px content column on wide screens (/about, /judge) (2245a73)
+
 ## v1.1.4 (2026-11-22)
 
 ### Bug fixes
