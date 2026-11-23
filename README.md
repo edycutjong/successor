@@ -11,6 +11,9 @@
   [![Landing page](https://img.shields.io/badge/🌐_Landing-About-0f766e?style=for-the-badge)](https://successor.edycu.dev/about)
   [![Pitch deck](https://img.shields.io/badge/📊_Pitch-Deck-b45309?style=for-the-badge)](https://successor.edycu.dev/pitch)
   [![Demo video](https://img.shields.io/badge/▶_Demo-Video_2:46-FF0000?style=for-the-badge&logo=youtube&logoColor=white)](https://youtu.be/O4n1ZgZMT7I)
+  [![DoraHacks BUIDL](https://img.shields.io/badge/🏗️_DoraHacks-BUIDL-1f2937?style=for-the-badge)](https://dorahacks.io/build/51741)
+  [![X post](https://img.shields.io/badge/Post-000000?style=for-the-badge&logo=x&logoColor=white)](https://x.com/edycutjong/status/2124966800719036845)
+  [![dev.to article](https://img.shields.io/badge/dev.to-Article-0A0A0A?style=for-the-badge&logo=devdotto&logoColor=white)](https://dev.to/edycutjong/i-let-a-model-read-coinmarketcaps-migration-notices-and-made-code-decide-the-verdict-50dg)
   [![Built for CMC API Hackathon Round 2](https://img.shields.io/badge/DoraHacks-CMC_API_Hackathon_R2-8b5cf6?style=for-the-badge)](https://dorahacks.io/hackathon/coinmarketcap-api-202611/detail)
 
   <br/>
