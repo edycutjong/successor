@@ -41,8 +41,8 @@ in `docs/proof/`. First written 2026-11-22 from the day-one spike (`scripts/spik
    Neither response says why the quote includes none of them (the quote's own `num_market_pairs` is 26, the spot
    listing returns 5). Successor's market check (C5) still follows the quote for the price, which is stale on $0 of
    quoted volume either way. Since 2026-11-27 a WRITE OFF also needs `market-pairs/latest` to list under $100 of 24 h
-   volume across unflagged pairs: above that the verdict is NOT VERIFIABLE, and below it the WRITE OFF sentence states
-   both figures instead of "no live market".
+   volume across unflagged pairs: at $100 or more the verdict is NOT VERIFIABLE, and below it the WRITE OFF sentence
+   states both figures instead of "no live market".
    The 2026-11-22 captures hold the same disagreement for EPS (two unflagged pairs, $41.75) and REP (one unflagged
    pair with volume, $49.20; REP's third pair, $195.02 on Indodax, carries `exclusions` ["price", "volume"], so there
    CMC does say why).
@@ -56,8 +56,8 @@ Each ask names the measurement behind it. Counts are from the census of the acti
 
 1. **A structured successor on the coin record.** The successor's CMC id, the swap ratio, the old and new contract
    and the deadline as fields of `/v2/cryptocurrency/info`, next to the notice. 161 coins carry a notice, 141 of them
-   migration-type, and 74 of those name no contract address at all. Of the 130 lookups that ended NOT VERIFIABLE, 22 had a
-   notice that names no successor at all.
+   migration-type, and 74 of those name no contract address at all. Of the 130 lookups that ended NOT VERIFIABLE, 22
+   had a notice in which the Reader found no successor (for 3 of them the linked announcement could not be read).
 2. **An id, or a flag, for the old token on a merged page.** For 61 of those 130 the old and the new token share one
    CMC id, so no endpoint prices the old token on its own and the ratio cannot be confirmed.
 3. **A reason when the quote includes no volume.** A field on `quotes/latest` that says why `volume_24h` is 0 while

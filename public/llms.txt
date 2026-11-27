@@ -12,10 +12,10 @@
 
 ## Reading an answer
 
-- The final event has a `type`: `verdict`, `outcome` (the coin has no notice, or several coins match the query: pass `id`), or `error`.
-- A verdict carries `verdict`, `rule_id` (R3 to R10), `reason`, `checks` (C1 to C6), dollar values for the quantity asked, `captured_at`, and a `receipt` with every CoinMarketCap call made: endpoint, parameters and the verbatim response.
+- The final event has a `type`: `verdict`, `outcome` (the coin has no notice, no coin matches the query, or several do: pass `id`), or `error`.
+- A completed verdict carries `verdict`, `rule_id` (R3 to R10), `reason`, `checks` (C1 to C6), dollar values for the quantity asked, `captured_at`, and a `receipt` with every CoinMarketCap call made: endpoint, parameters and the verbatim response. When the model cannot be reached the answer is NOT_VERIFIABLE with the reason `agent unavailable: ...`; it has `verdict`, `rule_id`, `reason`, `holding`, `checks` (those that ran) and the `receipt`, but no dollar values and no `captured_at`, and `successor` and `proposal` are null.
 - Verdicts follow the market. Quote `captured_at` with any verdict you pass on.
-- Limits, per client and per serverless instance: 20 lookups a minute. `fresh=1` runs the model live instead of using its recorded read (about 20 seconds) and is limited to 3 per 10 minutes.
+- Limits, per client and per serverless instance: 20 lookups a minute. `fresh=1` runs the model live instead of using its recorded read (about 20 seconds) and is limited to 3 per 10 minutes per client, and to 30 an hour across all visitors of one instance; past either limit it answers 429 while cached lookups stay open.
 
 ## Docs
 
