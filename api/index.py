@@ -212,8 +212,16 @@ if os.environ.get("SERVE_STATIC") == "1":  # local development only; Vercel serv
     from fastapi.responses import FileResponse
     from fastapi.staticfiles import StaticFiles
 
-    @app.get("/judge", include_in_schema=False)
-    async def judge_page() -> FileResponse:  # on Vercel this path is a rewrite to /judge.html
-        return FileResponse(Path(__file__).resolve().parents[1] / "public" / "judge.html")
+    _PUBLIC = Path(__file__).resolve().parents[1] / "public"
 
-    app.mount("/", StaticFiles(directory=str(Path(__file__).resolve().parents[1] / "public"), html=True))
+    def _page(name: str):
+        async def page() -> FileResponse:
+            return FileResponse(_PUBLIC / f"{name}.html")
+
+        return page
+
+    # on Vercel these paths are rewrites to <name>.html (vercel.json); a local run serves the same four
+    for _name in ("judge", "about", "pitch", "architecture"):
+        app.add_api_route(f"/{_name}", _page(_name), methods=["GET"], include_in_schema=False)
+
+    app.mount("/", StaticFiles(directory=str(_PUBLIC), html=True))
