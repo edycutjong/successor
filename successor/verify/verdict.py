@@ -19,10 +19,10 @@ SWAP, SELL_OLD, WRITE_OFF, NOT_VERIFIABLE, NOTHING_TO_DO = (
 )
 PREMIUM = 1.05  # old trades ≥ 5% above the swap value → sell the old token
 DISCOUNT = 0.95  # old trades > 5% below the swap value → the market doubts the swap
-# WRITE OFF needs both of CMC's views of the old token to agree: the quote reports $0 of 24 h volume AND market-pairs
-# lists less than this across unflagged spot pairs. Listed volume beside a $0 quote in this repo's captures and
-# fixtures: EPS $41.75 and $51.05, REP $49.20 (dust: WRITE OFF); RZUSD $2,388 and $4,441 (a market: NOT VERIFIABLE).
-# The line sits between the two groups; it is a judgment, like PREMIUM (docs/DX-REPORT.md, finding 5).
+# A $0 quote alone does not make a WRITE OFF: market-pairs must also list less than this across spot pairs CMC flags
+# neither as an outlier nor as excluded. Listed volume beside a $0 quote in this repo's captures and fixtures: EPS $18.54
+# to $51.05, REP $9.28 and $49.20 (WRITE OFF); ANT $142, RZUSD $2,322 to $4,441 (NOT VERIFIABLE). The line is a judgment,
+# like PREMIUM, and ANT is the case nearest to it (docs/DX-REPORT.md, finding 5).
 LISTED_FLOOR_USD = 100.0
 
 
