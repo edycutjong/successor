@@ -6,7 +6,7 @@ the time they were captured; run the commands again and the live figures will di
 
 ## 1. The hero lookup (about 1 s, cached Reader read, live CMC calls)
 
-1. Open https://successor.edycu.dev. The first screen streams `/api/lookup` for CPOOL (`/api/hero` is the same flow on its own rate bucket).
+1. Open https://successor.edycu.dev. The first screen streams `/api/hero` for CPOOL: the same flow as `/api/lookup?q=CPOOL&id=12573`, on its own rate bucket (60 per minute per client, so page loads do not use up the 20 a client gets for its own lookups).
 2. Watch the board: the CMC notice (prose) appears, the Reader proposes CLEAR, the trace streams each check as it runs
    (C2 contract, C5 markets, C4 ratio), the successor column flaps to CLEAR, the status column settles on
    **SELL OLD**, and seven check rows light (C1 holding resolved · C2 successor and contract match CMC · C3 every kept field quoted verbatim · C4 swap ratio · C5 market, once per token · C6 price integrity). On 2026-11-22 03:49 UTC the old token was worth 15.7% more than a 1:1 swap into the new one. R8 needs at least 5%; when the margin is smaller the same lookup reads SWAP (R9), and if the old token is still above the swap its reason states the margin.

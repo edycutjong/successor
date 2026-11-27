@@ -25,7 +25,12 @@ def run_chip(page, base_url: str, symbol: str) -> None:
 
 
 def test_cpool_returns_a_verdict_with_checks_and_a_capture_time(page, base_url):
-    run_chip(page, base_url, "CPOOL")
+    # the first screen: the board looks CPOOL up by itself on load, through /api/hero (its own rate bucket). No click:
+    # this is what a judge sees before touching anything. The CPOOL chip is covered by the receipt test below.
+    with page.expect_response(lambda r: "/api/hero" in r.url) as first:
+        page.goto(base_url + "/")
+    assert first.value.status == 200, f"/api/hero answered {first.value.status} on page load"
+    page.wait_for_function(DONE)
     word, text = verdict_of(page)
     assert word in VERDICTS, f"no verdict class on #f-verdict (got {word!r}, text {text!r})"
     assert text, "verdict flaps are empty"

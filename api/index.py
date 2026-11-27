@@ -57,7 +57,8 @@ def _wait(bucket: str, kind: str, now: float) -> float | None:
 
 def _limited(request: Request, fresh: bool, kind: str = "lookup") -> JSONResponse | None:
     ip, now = _client_ip(request), time.monotonic()
-    # the first-screen hero has its own wider bucket, so a shared-NAT room still sees it (P1d QA r2)
+    # the first-screen hero has its own wider bucket, so a shared-NAT room still sees it (P1d QA r2); the board calls
+    # /api/hero for its page-load CPOOL lookup (public/app.js)
     checks = [(f"{kind}:{ip}", kind)] + (
         [(f"fresh:{ip}", "fresh"), ("fresh:*", "fresh_all")] if fresh else []
     )

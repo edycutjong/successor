@@ -202,8 +202,11 @@ async function lookup(q, id, fresh = false) {
   if (id) p.set("id", id);
   if (fresh) p.set("fresh", "1");
   history.replaceState(null, "", `/?q=${encodeURIComponent(q)}${id ? `&id=${id}` : ""}`);
+  // CPOOL by its id is the first-screen coin. /api/hero runs the same flow for it on its own, wider rate bucket (api/index.py),
+  // so page loads from several people behind one address do not use up the bucket their own lookups need.
+  const hero = q === "CPOOL" && id === 12573 && !fresh;
   try {
-    const r = await fetch(`/api/lookup?${p}`, { headers: { Accept: "application/x-ndjson" }, signal: ctrl.signal });
+    const r = await fetch(hero ? `/api/hero?qty=${encodeURIComponent(p.get("qty"))}` : `/api/lookup?${p}`, { headers: { Accept: "application/x-ndjson" }, signal: ctrl.signal });
     const reader = r.body.getReader();
     const dec = new TextDecoder();
     let buf = "";
