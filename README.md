@@ -54,13 +54,13 @@ Every verdict is market-sensitive, so each one carries its capture time.
   <img src="docs/assets/readme-hero.png" alt="Successor board: six real lookups with their verdicts, checks and capture time (CMC data 2026-11-22 03:49 UTC)" width="100%">
 </p>
 
-| Holding | Verdict | Why (from the captured stream) |
+| Holding | Verdict | Why (from the captured stream and its receipt rows) |
 |---|---|---|
 | CPOOL | **SELL OLD** (rule R8) | CPOOL was renamed to CLEAR with a 1:1 swap; at CMC's quotes the old token is worth 15.7% more than the swap (old $0.0243011 vs 1 × new $0.0210…) |
 | AGIX | **SWAP** (R9) | The notice links `fetch.ai`; the Reader reads ratio 0.43335 there; code confirmed it with CMC prices on the event date. 10,000 AGIX: $5,924.93 at the old price (a tracker), $463.42 as FET after the swap |
 | BIT | **SWAP** (R9) | Ratio 1, price-confirmed on the event date |
-| EPS | **WRITE OFF** (R6) | CMC's quote reports $0 of 24 h volume for the old token and for the successor (its market-pairs endpoint still listed two EPS pairs with $41.75 between them, see limit 2) |
-| REP | **WRITE OFF** (R6) | Same rule: $0 of quoted volume, and the swap deadline the notice quotes has passed (one pair still listed $49.20) |
+| EPS | **WRITE OFF** (R6) | CMC's quote reports $0 of 24 h volume for the old token and for the successor (its market-pairs endpoint still listed two EPS pairs with $41.75 between them; `docs/DX-REPORT.md`, finding 5) |
+| REP | **WRITE OFF** (R6) | Same rule: $0 of quoted volume, and the swap deadline the notice quotes has passed (one unflagged pair still listed $49.20; CMC itself excludes a second pair's $195.02) |
 | DAI | **NOT VERIFIABLE** (R10) | Ratio not stated and the linked announcement could not be fetched |
 
 ## 💡 The Problem & Solution
@@ -165,7 +165,7 @@ copied from old to new coin, `convert=EUR` scaling supply, `quotes/latest` repor
 | Live-URL E2E | **12 browser + API tests pass** on https://successor.edycu.dev (the first screen's own CPOOL lookup with no click, click CPOOL/AGIX, assert verdict + receipt, `/judge` with no auth, 3 viewports). Every pipeline run on main executes them against the staged deployment before it is promoted, and `live-check.yml` runs them daily against the live URL. `make e2e` also runs one stubbed-stream test of the landing's verdict line (11 cases, `e2e/test_landing_verdict.py`), 13 tests in all. Recorded runs in `docs/proof/gates/`: `e2e-live-2026-11-27.txt` (12 passed on build 58a07f1) and `e2e-live-2026-11-22.txt` (the first run, from before the first-screen test replaced a click) | `make e2e` |
 | Unplug test | No CMC key: error and no verdict. No LLM key on a cold notice: NOT VERIFIABLE. With every key removed the E2E tests fail | `tests/test_unplugged.py`, `tests/test_unplugged_http.py`, `make unplug-e2e` (`docs/proof/unplug/`) |
 | Security | pip-audit: no known vulnerabilities (after moving to fastapi 0.165 / starlette 1.10: 11 advisories on 0.46.2); gitleaks: no leaks in the full history; CodeQL + Dependabot configured | `make audit`, `make secrets`, `docs/proof/gates/` |
-| Lighthouse (desktop, live) | home and `/judge`: performance 100, accessibility 100, best practices 100, SEO 100 (2026-11-27 19:02 UTC, build 58a07f1, 2 runs per page, `docs/proof/gates/lighthouse-2026-11-27T1902Z.json`; the same scores on build 61af86e at 18:37 UTC, `lighthouse-2026-11-27T1837Z.json`). On 2026-11-22 04:50 UTC, before the board's font and layout fix and the `/judge` restyle: home 82-83 / 96 / 100 / 100, `/judge` 100 / 93 / 100 / 100 (`docs/proof/gates/lighthouse-2026-11-22.json`) | `make lighthouse` |
+| Lighthouse (desktop, live) | home and `/judge`: performance 100, accessibility 100, best practices 100, SEO 100 (2026-11-27 19:02 UTC, build 58a07f1, 2 runs per page, `docs/proof/gates/lighthouse-2026-11-27T1902Z.json`; the same scores at 18:37 UTC, before that build was deployed, `lighthouse-2026-11-27T1837Z.json`). On 2026-11-22 04:50 UTC, before the board's font and layout fix and the `/judge` restyle: home 82-83 / 96 / 100 / 100, `/judge` 100 / 93 / 100 / 100 (`docs/proof/gates/lighthouse-2026-11-22.json`) | `make lighthouse` |
 
 The census numbers are the honest headline: **most notices cannot be confirmed from CMC's data alone.** 130 of 161 end in NOT
 VERIFIABLE, and the page says why (61: old and new token share one CMC page, 26: the proposed successor fails a check against CMC's records, such as a quoted contract no CMC coin carries, 22: the notice
@@ -200,7 +200,7 @@ names no successor, 10: no ratio or announcement unfetchable, 11 more: no live s
 
 - **First verdict rule was a spike.** The day-one deploy returned `"engine": "spike"` verdicts to rehearse timing; they were replaced by the R1 to R10 table before the board shipped (`docs/proof/deploy/NOTES.md`).
 - **We expected a second proposal for AGIX and it never happened.** We planned for the Reader to "change its mind" on AGIX. In the real run the Reader opens the `fetch.ai` link before its first proposal, proposes `$ASI`, and code maps it to FET through CMC's own `/currencies/fetch/` link. One proposal, so we do not claim a repair turn.
-- **We expected RZUSD to be WRITE OFF and then watched it flip** when the old token traded again (limit 2). We read every flip as the market moving; CMC's quote can also report $0 of volume while its pairs endpoint still lists some, and once the window has closed that alone turns SELL OLD into WRITE OFF (`docs/DX-REPORT.md`, finding 5). Evals pin the recorded WRITE OFF outcome; the SELL OLD (R7) branch is covered by `tests/test_never_swap_on_fail.py`, not by an RZUSD eval.
+- **We expected RZUSD to be WRITE OFF and then watched it flip** when the old token traded again (limit 2). The market moving is one cause. CMC's quote can also report $0 of volume while its pairs endpoint still lists some, and once the window has closed that alone turns SELL OLD into WRITE OFF (`docs/DX-REPORT.md`, finding 5). Evals pin the recorded WRITE OFF outcome; the SELL OLD (R7) branch is covered by `tests/test_never_swap_on_fail.py`, not by an RZUSD eval.
 - **The spec assumed the checksummed contract address would work in `info?address=`.** It returns HTTP 400 `Invalid value for 'slug'`; we lowercase `0x` addresses (`docs/DX-REPORT.md`).
 - **We added CI and could not run it until the repository went public.** While it was private, GitHub Actions jobs never started (a billing limit on the account), so for that time the gates were only run by hand (`docs/proof/gates/`). The first full green pipeline run, all six stages plus release, is [this run](https://github.com/edycutjong/successor/actions/runs/45066344086); the two attempts before it failed (Python setup, then a Deployment Protection bypass for the browser tests) and were fixed before it passed.
 - **"Agent needed" was the wrong label** for the 99 notices where the Reader opened or tried a link. That counts attempts, not necessity, and the census now says so.
