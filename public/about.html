@@ -288,10 +288,10 @@ footer a:hover { color: var(--bone); text-decoration: underline; text-underline-
         <p class="cap" id="h-cap">replay · lookup captured 2026-11-22 03:49 UTC · 8 CMC credits · 457 ms</p>
         <div class="runs" role="group" aria-label="Run a live lookup on CoinMarketCap now">
           <span>Run live on CMC:</span>
-          <button type="button" data-q="CPOOL" aria-pressed="false">CPOOL</button>
-          <button type="button" data-q="AGIX" aria-pressed="false">AGIX</button>
-          <button type="button" data-q="EPS" aria-pressed="false">EPS</button>
-          <button type="button" data-q="DAI" aria-pressed="false">DAI</button>
+          <button type="button" data-q="CPOOL" data-id="12573" aria-pressed="false">CPOOL</button>
+          <button type="button" data-q="AGIX" data-id="2424" aria-pressed="false">AGIX</button>
+          <button type="button" data-q="EPS" data-id="8938" aria-pressed="false">EPS</button>
+          <button type="button" data-q="DAI" data-id="4943" aria-pressed="false">DAI</button>
           <button type="button" id="replay" title="Replay the captured CPOOL stream">Replay</button>
         </div>
       </div>
@@ -610,7 +610,8 @@ footer a:hover { color: var(--bone); text-decoration: underline; text-underline-
     reset(q, ''); $('h-cap').textContent = 'live · streaming GET /api/lookup?q=' + q + ' …';
     try {
       const ac = new AbortController(); ctx.timer = setTimeout(() => ac.abort(), 75000);
-      const r = await fetch('/api/lookup?q=' + encodeURIComponent(q) + '&qty=10000', { signal: ac.signal });
+      // each button names its coin by CMC id, like the board's chips: a ticker alone can match several coins (EPS matches three)
+      const r = await fetch('/api/lookup?q=' + encodeURIComponent(q) + '&qty=10000' + (btn && btn.dataset.id ? '&id=' + encodeURIComponent(btn.dataset.id) : ''), { signal: ac.signal });
       if (!r.ok || !r.body) throw new Error('HTTP ' + r.status);
       const rd = r.body.getReader(); const dec = new TextDecoder(); let buf = '';
       for (;;) {

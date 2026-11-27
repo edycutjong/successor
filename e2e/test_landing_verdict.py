@@ -93,8 +93,9 @@ def _stream(verdict, rule, reason, sell, swap, tracker) -> str:
     return "".join(json.dumps(e) + "\n" for e in events)
 
 
-def _answer(body: str):
+def _answer(body: str, seen: list[str]):
     def handler(route) -> None:  # one parameter: Playwright passes the request too when a handler takes two
+        seen.append(route.request.url)
         route.fulfill(status=200, content_type="application/x-ndjson", body=body)
 
     return handler
@@ -106,13 +107,25 @@ def test_the_landing_says_what_the_rule_says(browser_ctx, base_url):
         pg = ctx.new_page()
         errors: list[str] = []
         pg.on("pageerror", lambda e, errors=errors: errors.append(str(e)))
-        pg.route("**/api/lookup**", _answer(_stream(*fields)))
+        asked: list[str] = []
+        pg.route("**/api/lookup**", _answer(_stream(*fields), asked))
         pg.goto(base_url + "/about")
         pg.click('.runs button[data-q="DAI"]')
         pg.wait_for_function(CAPTION)
+        assert asked and "q=DAI" in asked[-1] and "id=4943" in asked[-1], f"{name}: {asked}"
         line = pg.inner_text("#h-big") + " | " + pg.inner_text("#h-say") + " | " + pg.inner_text("#h-vals")
         assert pg.inner_text("#h-big") == big, f"{name}: {line}"
         assert say in line, f"{name}: {line}"
         assert not [w for w in never if w in line], f"{name}: {line}"
         assert not errors, f"{name}: {errors}"
         ctx.close()
+    # every live button names its coin by CMC id: a ticker alone can match several coins (EPS matches three), and
+    # the lookup then answers "pick one" instead of a verdict
+    ctx = browser_ctx.new_context(viewport={"width": 1280, "height": 900}, reduced_motion="reduce")
+    pg = ctx.new_page()
+    pg.goto(base_url + "/about")
+    ids = pg.eval_on_selector_all(
+        ".runs button[data-q]", "bs => bs.map(b => [b.dataset.q, b.dataset.id || ''])"
+    )
+    assert len(ids) == 4 and all(i.isdigit() for _, i in ids), ids
+    ctx.close()
