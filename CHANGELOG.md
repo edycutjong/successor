@@ -2,6 +2,16 @@
 
 Generated from Conventional Commits by scripts/release.py.
 
+## v1.1.7 (2026-11-27)
+
+### Bug fixes
+
+- the pairs note says what it measures: 'N pairs ... none flagged as an outlier or excluded, which the quote does not include' instead of 'counted pairs' (the filter is this code's reading of CMC's flags, not a CMC label), an amount under a cent reads 'less than $0.01' and never '$0.00', and a pair CMC itself excludes is pinned as not listed volume (a2a r13 evidence check) (25b3351)
+- the landing's EPS button reaches its verdict. The four live buttons sent only a ticker, and EPS matches three CMC coins, so the lookup answered 'pick one by name or contract' and the tube stayed dark: the button meant to show WRITE OFF never showed a verdict. Each button now carries its CMC id, like the board's chips, and the landing test asserts the id is sent and that all four buttons have one (a2a r13) (1e811d0)
+- a local run serves /about, /pitch and /architecture like Vercel's rewrites do (only /judge had a route, so the board's own About and Pitch links answered 404 locally and the landing test could not run against a local app) (a2a r13) (4b37ef4)
+- the landing never prints '+0.0%' beside 'the old token is above the swap': a figure that prints as 0.0 is called equal, to a tenth of a percent. The landing's verdict line now has a committed gate, e2e/test_landing_verdict.py: eleven stubbed streams, each a sentence the page once got wrong or its twin (a SWAP at +4.97% must not read 5.0, an R7 must not say the swap is worth more, a WRITE OFF must not show a swap value). It fails on both earlier versions of the page (a2a r13) (e190d21)
+- a WRITE OFF no longer says 'the old token has no live market' when CMC's own market-pairs endpoint lists volume. CMC's quote can report $0 of 24 h volume while market-pairs/latest still lists counted pairs with volume (old RZUSD, 2026-11-27 19:05 UTC: quote $0, five pairs with $2,388). The market check keeps following the quote, since a price on $0 of quoted volume is stale either way, but its reason and the R6 sentence now state both figures. No verdict changes; whether listed pair volume should stop a WRITE OFF is left open (a2a r13) (12204a4)
+
 ## v1.1.6 (2026-11-27)
 
 ### Bug fixes
