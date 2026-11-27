@@ -45,7 +45,14 @@ def test_cpool_returns_a_verdict_with_checks_and_a_capture_time(page, base_url):
 
 
 def test_the_receipt_opens_and_names_cmc_endpoints(page, base_url):
-    run_chip(page, base_url, "CPOOL")
+    # the CPOOL chip streams /api/hero like the page load does. Wait for the page-load response first, so the one
+    # asserted below can only be the chip's (a receipt alone would look the same over /api/lookup)
+    with page.expect_response(lambda r: "/api/hero" in r.url):
+        page.goto(base_url + "/")
+    with page.expect_response(lambda r: "/api/hero" in r.url) as chip:
+        page.click('#chips button[data-q="CPOOL"]')
+    assert chip.value.status == 200, "the CPOOL chip did not stream /api/hero"
+    page.wait_for_function(DONE)
     page.click("#receipt-btn")
     body = page.locator("body").inner_text()
     assert "pro-api.coinmarketcap.com/v" in body, "receipt shows no CMC Pro API call"
