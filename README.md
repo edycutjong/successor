@@ -146,7 +146,7 @@ The notice is prose; the successor's contract is a field on another coin. The Re
 prose and code compares it with CLEAR's `token_address` (check C2). Every lookup's calls and raw rows are in the receipt drawer.
 
 Successor's own endpoints: `GET /api/lookup?q=&qty=&id=&fresh=` (NDJSON trace, or one JSON answer with
-`Accept: application/json`), `GET /api/hero` (the board's first-screen CPOOL lookup: the same flow on its own rate bucket), `GET /api/notices`, `GET /api/census`, `GET /api/health`.
+`Accept: application/json`), `GET /api/hero` (the board's first-screen CPOOL lookup: the same flow on its own rate bucket), `GET /api/notices`, `GET /api/census`, `GET /api/health`. The API describes itself for tools and agents: OpenAPI at [`/api/openapi.json`](https://successor.edycu.dev/api/openapi.json), interactive docs at [`/api/docs`](https://successor.edycu.dev/api/docs), and a plain-text guide at [`/llms.txt`](https://successor.edycu.dev/llms.txt).
 
 Why this is not "a plain API call": the information is not in a field. `info` returns prose; no endpoint returns "the
 successor of CPOOL is CLEAR, 1:1". The agent has to read, propose and then be checked by the endpoints above. `docs/DX-REPORT.md`

@@ -1,0 +1,24 @@
+# Successor
+
+> Successor reads the free-text migration notice CoinMarketCap keeps for a coin, has a language model propose the successor token, contract, chain, ratio and deadline, checks every proposed field against CoinMarketCap's own data in code, and returns one verdict with the rows behind it: SWAP, SELL_OLD, WRITE_OFF, NOT_VERIFIABLE or NOTHING_TO_DO. Read-only. Not financial advice.
+
+## API
+
+- [OpenAPI document](https://successor.edycu.dev/api/openapi.json): every endpoint and parameter
+- [Lookup, example](https://successor.edycu.dev/api/lookup?q=CPOOL&qty=10000): `GET /api/lookup?q=<symbol, slug or contract>&qty=<amount held>&id=<CMC id, optional>`. The answer is an NDJSON trace, one event per line; send `Accept: application/json` to get only the final event as one JSON object
+- [Census](https://successor.edycu.dev/api/census): counts over every notice in CoinMarketCap's active top 2000 (a pinned capture; its date is in the response)
+- [Notices](https://successor.edycu.dev/api/notices): the census rows, one per coin
+- [Health](https://successor.edycu.dev/api/health): CoinMarketCap key status, model, build commit and version
+
+## Reading an answer
+
+- The final event has a `type`: `verdict`, `outcome` (the coin has no notice, or several coins match the query: pass `id`), or `error`.
+- A verdict carries `verdict`, `rule_id` (R3 to R10), `reason`, `checks` (C1 to C6), dollar values for the quantity asked, `captured_at`, and a `receipt` with every CoinMarketCap call made: endpoint, parameters and the verbatim response.
+- Verdicts follow the market. Quote `captured_at` with any verdict you pass on.
+- Limits, per client and per serverless instance: 20 lookups a minute. `fresh=1` runs the model live instead of using its recorded read (about 20 seconds) and is limited to 3 per 10 minutes.
+
+## Docs
+
+- [README](https://github.com/edycutjong/successor#readme): rules R1 to R10, checks, limits, how to run it
+- [Judge path](https://successor.edycu.dev/judge): what to click in two minutes
+- [CoinMarketCap API notes](https://github.com/edycutjong/successor/blob/main/docs/DX-REPORT.md): what the API made possible and where it got in the way
