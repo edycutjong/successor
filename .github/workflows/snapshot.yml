@@ -5,6 +5,10 @@ on:
   workflow_dispatch:
 permissions:
   contents: write
+# one snapshot run at a time (a manual dispatch beside the schedule would race on the push)
+concurrency:
+  group: notice-snapshot
+  cancel-in-progress: false
 jobs:
   snapshot:
     runs-on: ubuntu-latest
@@ -18,7 +22,7 @@ jobs:
       - name: deadline freeze (no bot commits after the 2026-12-09 23:59 UTC submission deadline)
         id: gate
         run: echo "open=$([ "$(date -u +%s)" -le 1796860740 ] && echo 1 || echo 0)" >> "$GITHUB_OUTPUT"
-      - name: scan top 2000 notices (20 CMC credits)
+      - name: scan top 2000 notices (21 CMC credits)
         if: steps.gate.outputs.open == '1'
         env:
           CMC_API_KEY: ${{ secrets.CMC_API_KEY }}
@@ -35,4 +39,7 @@ jobs:
           git config user.email "snapshot@users.noreply.github.com"
           git add data/snapshots
           git diff --cached --quiet || git commit -m "Nightly notice snapshot $d (data/snapshots/)"
+          # main may have moved while the scan ran (a push, or the release job's own commit): replay this one data-only
+          # commit on top instead of losing the day's snapshot to a rejected push
+          git pull --quiet --rebase origin main
           git push

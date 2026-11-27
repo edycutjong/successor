@@ -235,14 +235,25 @@ jobs:
           fetch-depth: 0
       - name: Decide the version from the commits this run tested
         id: rel
-        # Only the commit stages 1-6 tested is released. If main has moved on, the newer push's own run tests and
-        # releases everything since the last tag, so no untested commit ever sits under a tag.
+        # Only code that stages 1-6 tested is released. If a push has moved main on, that push's own run tests and
+        # releases everything since the last tag, so no untested code ever sits under a tag.
+        # One mover starts no run: the nightly snapshot bot (snapshot.yml) pushes with GITHUB_TOKEN. Its commits add only
+        # data/snapshots/*.json, which no code reads, so the release goes on top of them (a fast-forward, never a rebase)
+        # instead of waiting for a run that would not come while Stage 3 has already stamped this version into the
+        # deployment.
         run: |
-          tip=$(git ls-remote origin refs/heads/main | cut -f1)
+          git fetch --quiet origin main
+          tip=$(git rev-parse FETCH_HEAD)
           if [ "$tip" != "$GITHUB_SHA" ]; then
-            echo "::notice::main moved to $tip after this run's commit; the newer run releases these commits"
-            echo "released=false" >> "$GITHUB_OUTPUT"
-            exit 0
+            if git merge-base --is-ancestor "$GITHUB_SHA" "$tip" \
+              && [ -z "$(git diff --name-only "$GITHUB_SHA" "$tip" -- . ':(exclude)data/snapshots')" ]; then
+              echo "::notice::main moved to $tip by snapshot commits only (data/snapshots/); releasing on top of them"
+              git merge --quiet --ff-only "$tip"
+            else
+              echo "::notice::main moved to $tip after this run's commit; that push's own run releases these commits"
+              echo "released=false" >> "$GITHUB_OUTPUT"
+              exit 0
+            fi
           fi
           python3 scripts/release.py
       - name: Commit, tag and publish the release
@@ -260,5 +271,5 @@ jobs:
           if git push --atomic origin HEAD:main "v${VERSION}"; then
             gh release create "v${VERSION}" --title "Successor v${VERSION}" --notes-file release-notes.md --verify-tag
           else
-            echo "::notice::main moved during the release; the newer run releases these commits"
+            echo "::notice::main moved during the release; the next pipeline run on main releases these commits"
           fi
