@@ -122,6 +122,12 @@ def test_rule_order_examples():
     )
     assert hair.rule_id == "R9" and "less than 0.1% above the swap, under the 5% R8 needs" in hair.reason
     assert decide(Facts(**base, old_market="alive", ratio_state="P", old_price=1.05)).rule_id == "R8"
+    # an unbound ratio's R10 reason is one sentence (a2a r12: it read "ratio ratio quoted without a direction ...")
+    why = "ratio quoted without a direction (which side is old?)"
+    unbound = decide(Facts(**base, old_market="alive", ratio_state="none", ratio_reason=why, old_price=1.0))
+    assert (unbound.rule_id, unbound.reason) == ("R10", why)
+    loose = decide(Facts(**base, old_market="alive", ratio_state="none", ratio_reason="stated but not bound"))
+    assert loose.reason == "ratio stated but not bound"
     assert decide(Facts(**base, old_market="dead", ratio_state="P", ratio_route="event-date")).rule_id == "R9"
     assert decide(Facts(c2="verified", old_market="dead", new_market="dead")).rule_id == "R6"
     assert decide(Facts(c2="verified", same_id=True)).rule_id == "R4"

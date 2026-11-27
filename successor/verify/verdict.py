@@ -122,7 +122,10 @@ def _missing(f: Facts) -> str:
             "; the linked announcement was not fetchable" if f.announcement_unfetchable else ""
         )
     if f.ratio_state == "none":
-        return f"ratio {f.ratio_reason}"
+        # C3b's own reasons already name the subject ("ratio quoted without a direction", "no ratio expression in the
+        # quote"); prefixing them printed "ratio ratio quoted ..."
+        why = f.ratio_reason
+        return why if why.startswith(("ratio ", "no ratio ")) else f"ratio {why}"
     if f.ratio_state == "Q" and f.old_market != "alive":
         return "ratio stated but not price-confirmed, and the old token has no market to compare"
     if (
