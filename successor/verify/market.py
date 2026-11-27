@@ -65,10 +65,24 @@ class Market:
     pairs_checked: bool = True
     flat: bool | None = None
     traded_pairs: int | None = None
+    traded_volume_24h: float | None = None  # what those pairs list between them (market-pairs, not the quote)
     notes: list[str] = field(default_factory=list)
 
     def as_dict(self) -> dict:
         return {k: v for k, v in self.__dict__.items() if v is not None and v != []}
+
+    def pairs_note(self) -> str:
+        """Set when CMC's quote reports $0 of 24 h volume while market-pairs still lists counted pairs with volume
+        (docs/DX-REPORT.md, finding 5). The state stays dead, because the quote's price is stale either way; the
+        note makes every sentence built on that state say what both endpoints show."""
+        if self.state != "dead" or self.volume_24h != 0 or not self.traded_pairs:
+            return ""
+        n, v = self.traded_pairs, self.traded_volume_24h or 0.0
+        amount = f"${v:,.0f}" if v >= 100 else f"${v:,.2f}"
+        return (
+            f"market-pairs still lists {n} counted pair{'s' if n > 1 else ''} with {amount} of 24 h volume "
+            f"{'between them' if n > 1 else 'on it'}, which the quote does not count"
+        )
 
 
 def _num(v) -> float | None:
@@ -99,9 +113,9 @@ def assess(
             and not p.get("exclusions")
         ]
         m.valid_pairs = len(pairs)
-        m.traded_pairs = sum(
-            1 for p in pairs if ((((p.get("quote") or {}).get("USD") or {}).get("volume_24h")) or 0) > 0
-        )
+        own = [_num(((p.get("quote") or {}).get("USD") or {}).get("volume_24h")) or 0.0 for p in pairs]
+        m.traded_pairs = sum(1 for v in own if v > 0)
+        m.traded_volume_24h = sum(own)
         if pairs:
             top = max(pairs, key=lambda p: ((p.get("quote") or {}).get("USD") or {}).get("volume_24h") or 0)
             m.top_venue = (top.get("exchange") or {}).get("name")
@@ -111,6 +125,8 @@ def assess(
         m.reason = "CMC returned no " + ("24 h volume" if vol is None else "price") + " for it"
     elif not vol:
         m.reason = "24 h volume is $0: CMC's price for it is stale"
+        if m.traded_pairs:  # the quote and market-pairs disagree: say what each shows
+            m.reason = f"24 h volume is $0 on CMC's quote, so its price is stale; {m.pairs_note()}"
     elif m.pairs_checked and not m.valid_pairs:
         m.reason = "no spot pair CMC counts (every pair is an outlier or excluded)"
     elif m.flat and not m.traded_pairs:

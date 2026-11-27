@@ -48,6 +48,9 @@ class Facts:
     c3_dropped: list[str] = field(default_factory=list)
     # same CMC id, the Reader labelled it a swap/migration, but the notice text carries no swap signal (a2a r04)
     swap_label_only: bool = False
+    # CMC's quote reports $0 of 24 h volume for the old token while market-pairs still lists counted pairs with volume
+    # (market.Market.pairs_note): the old market stays "dead", and R6 says what both endpoints show (a2a r13)
+    old_pairs_note: str = ""
 
 
 @dataclass
@@ -163,12 +166,13 @@ def decide(f: Facts) -> Decision:
             if f.deadline_passed
             else "the notice states the project ended with no successor"
         )
-        return Decision(
-            WRITE_OFF,
-            "R6",
-            f"CMC's data shows no market to exit through: the old token has no live market and {why}. "
-            "This does not rule out an issuer claim process.",
+        lead = (
+            f"CMC's quote shows no market to exit through: it reports $0 of 24 h volume for the old token "
+            f"({f.old_pairs_note})"
+            if f.old_pairs_note
+            else "CMC's data shows no market to exit through: the old token has no live market"
         )
+        return Decision(WRITE_OFF, "R6", f"{lead} and {why}. This does not rule out an issuer claim process.")
     if alive_old and f.deadline_passed:
         return Decision(
             SELL_OLD, "R7", f"the swap window closed ({f.deadline_text}); the old token still trades"

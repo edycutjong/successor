@@ -130,6 +130,17 @@ def test_rule_order_examples():
     assert loose.reason == "ratio stated but not bound"
     assert decide(Facts(**base, old_market="dead", ratio_state="P", ratio_route="event-date")).rule_id == "R9"
     assert decide(Facts(c2="verified", old_market="dead", new_market="dead")).rule_id == "R6"
+    # a2a r13: when market-pairs still lists volume the quote does not count, WRITE OFF says so instead of "no live market"
+    note = "market-pairs still lists 5 counted pairs with $2,388 of 24 h volume between them, which the quote does not count"
+    plain = decide(Facts(c2="verified", old_market="dead", new_market="dead"))
+    split = decide(Facts(c2="verified", old_market="dead", new_market="dead", old_pairs_note=note))
+    assert plain.reason.startswith(
+        "CMC's data shows no market to exit through: the old token has no live market and "
+    )
+    assert (split.verdict, split.rule_id) == (plain.verdict, plain.rule_id) == ("WRITE_OFF", "R6")
+    assert split.reason.startswith(
+        f"CMC's quote shows no market to exit through: it reports $0 of 24 h volume for the old token ({note}) and "
+    )
     assert decide(Facts(c2="verified", same_id=True)).rule_id == "R4"
     assert decide(Facts(c2="refuted", c2_reason="x")).rule_id == "R5"
     assert (

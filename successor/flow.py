@@ -679,6 +679,7 @@ async def _run(
         ),
         c3_dropped=list(c3.dropped),
         swap_label_only=swap_label_only,
+        old_pairs_note=old_m.pairs_note(),
     )
     d = decide(facts)
 

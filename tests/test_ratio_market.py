@@ -120,4 +120,28 @@ def test_missing_price_or_volume_is_unknown_not_dead():
     assert (
         mk.assess({"quote": {"USD": {"price": float("nan"), "volume_24h": 10}}}, pairs, []).state == "unknown"
     )
-    assert mk.assess({"quote": {"USD": {"price": 0.5, "volume_24h": 0}}}, pairs, []).state == "dead"
+    quiet = mk.assess({"quote": {"USD": {"price": 0.5, "volume_24h": 0}}}, pairs, [])
+    assert quiet.state == "dead" and quiet.pairs_note() == ""
+    # a2a r13: CMC's quote can report $0 of 24 h volume while market-pairs still lists counted pairs with volume
+    # (RZUSD, 2026-11-27 19:05 UTC). The price is stale either way, so the state stays dead, and the reason says what
+    # both endpoints show instead of "no market"
+    listed = {
+        "market_pairs": [
+            {
+                "outlier_detected": 0,
+                "exclusions": None,
+                "exchange": {"name": n},
+                "quote": {"USD": {"volume_24h": v}},
+            }
+            for n, v in (("A", 877.33), ("B", 606.48), ("C", 586.14), ("D", 278.26), ("E", 40.25), ("F", 0))
+        ]
+    }
+    split = mk.assess({"quote": {"USD": {"price": 0.2135, "volume_24h": 0}}}, listed, [])
+    assert (split.state, split.traded_pairs, round(split.traded_volume_24h, 2)) == ("dead", 5, 2388.46)
+    assert split.pairs_note() == (
+        "market-pairs still lists 5 counted pairs with $2,388 of 24 h volume between them, which the quote does not count"
+    )
+    assert split.reason == "24 h volume is $0 on CMC's quote, so its price is stale; " + split.pairs_note()
+    assert (
+        mk.assess({"quote": {"USD": {"price": 0.2135, "volume_24h": 917.0}}}, listed, []).pairs_note() == ""
+    )
