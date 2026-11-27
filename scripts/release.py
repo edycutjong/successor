@@ -2,13 +2,15 @@
 
   python scripts/release.py            # compute, then write __version__ + CHANGELOG.md + release-notes.md
   python scripts/release.py --dry-run  # print the next version (or "none") and the reason
-  python scripts/release.py --stamp    # write only __version__ (CI stage 3, before `vercel build`: the deployment
+  python scripts/release.py --stamp    # write only the version strings (CI stage 3, before `vercel build`: the deployment
                                        # reports the version the release job will tag for this same commit)
 
 Rules, over the commits since the last v*.*.* tag:
   feat -> minor; fix / perf / deps -> patch; "!" after the type or a "BREAKING CHANGE:" footer -> major.
   docs, ci, chore, test, style, refactor, build and any non-conventional subject ("P7: ...") never cause a release.
 The single version source is successor/__init__.py; pyproject.toml reads it (dynamic) and /api/health reports it.
+The pitch deck shows the live version from /api/health; its static fallback (public/pitch.html, shown when that call
+cannot be made) is rewritten here with every release, so it cannot fall behind.
 """
 
 from __future__ import annotations
@@ -22,6 +24,11 @@ from pathlib import Path
 
 ROOT = Path(__file__).resolve().parents[1]
 INIT = ROOT / "successor" / "__init__.py"
+DECK = ROOT / "public" / "pitch.html"
+# the deck's static version fallback: its <title> and every <span data-version>
+DECK_VERSION = re.compile(
+    r"(<title>Successor · pitch deck · |<span data-version>)v\d+\.\d+\.\d+(?=</title>|</span>)"
+)
 SUBJECT = re.compile(r"^(?P<type>[a-z]+)(?:\((?P<scope>[^)]*)\))?(?P<bang>!)?: (?P<desc>.+)$")
 BUMP = {"feat": "minor", "fix": "patch", "perf": "patch", "deps": "patch"}
 SECTIONS = {"feat": "Features", "fix": "Bug fixes", "perf": "Performance", "deps": "Dependencies"}
@@ -99,6 +106,11 @@ def plan(commits: list[tuple[str, str, str]], current: str) -> tuple[str | None,
     return new, "\n".join(lines).rstrip() + "\n"
 
 
+def stamp_deck(html: str, version: str) -> tuple[str, int]:
+    """-> (the deck with `version` in its static fallback, how many places were rewritten)."""
+    return DECK_VERSION.subn(rf"\g<1>v{version}", html)
+
+
 def changelog(old: str, notes: str) -> str:
     """New CHANGELOG.md text: one header, the new notes, then every earlier release (old header dropped)."""
     k = old.find("\n## v")
@@ -124,6 +136,8 @@ def main() -> int:
         print(notes)
         return 0
     INIT.write_text(INIT.read_text().replace(f'__version__ = "{current.group(1)}"', f'__version__ = "{new}"'))
+    if DECK.exists():
+        DECK.write_text(stamp_deck(DECK.read_text(), new)[0])
     if stamp:
         return 0
     cl = ROOT / "CHANGELOG.md"

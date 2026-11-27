@@ -54,3 +54,13 @@ def test_bump_and_plan():
         text = release.changelog(text, f"## v{v} (2026-11-23)\n\n### Bug fixes\n\n- y (d4)\n")
     assert text.count("Generated from Conventional Commits") == 1 and text.count("## v") == 3
     assert text.index("## v1.2.0") < text.index("## v1.1.1") < text.index("## v1.1.0")
+    # a release also rewrites the deck's static version fallback (a2a r12: it said v1.1.2 while v1.1.5 was live); the
+    # committed deck must carry the committed version, in its title and both slide footers
+    from successor import __version__
+
+    deck = release.DECK.read_text()
+    assert f"<title>Successor · pitch deck · v{__version__}</title>" in deck
+    assert deck.count(f"<span data-version>v{__version__}</span>") == 2
+    stamped, places = release.stamp_deck(deck, "9.8.7")
+    assert places == 3 and stamped.count("v9.8.7") == 3 and f"v{__version__}" not in stamped
+    assert release.stamp_deck(stamped, "9.8.7") == (stamped, 3)  # idempotent
