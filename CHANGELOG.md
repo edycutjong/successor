@@ -2,6 +2,18 @@
 
 Generated from Conventional Commits by scripts/release.py.
 
+## v1.1.6 (2026-11-27)
+
+### Bug fixes
+
+- the hourly cap on fresh reads is shared by every visitor of an instance, and its 429 said 'from this client': it now reads 'too many live re-reads right now (all visitors share this limit)'; the per-client messages are unchanged (a2a r12 evidence check) (cc23194)
+- the deck's static version fallback is stamped with every release: the deck reads the live version from /api/health, but the text it falls back to when that call fails still said v1.1.2 while v1.1.5 was live. release.py now rewrites the title and both slide footers (in --stamp for the deployment and in the release commit), the test pins that the committed deck carries the committed version, and the fallback is set to v1.1.5 (a2a r12) (7b895e2)
+- the board's first screen uses the rate bucket that was built for it: /api/hero got its own 60/min bucket so a room behind one address still sees the first screen, but the board never called it (page loads and the CPOOL chip went through /api/lookup, 20/min). The page-load lookup and the CPOOL chip now stream /api/hero; typed lookups, other coins and Re-read live are unchanged. The first E2E test now waits for the page-load verdict itself instead of clicking first (a2a r12) (4ed198b)
+- the 429 message says '(cached reads stay open)' only for the fresh-read limits: a full lookup bucket blocks cached lookups too, and its message said they stay open. The test also pins that /api/hero keeps answering when the lookup bucket is full (a2a r12) (2aceee6)
+- on the landing the rule picks the verdict sentence, the quotes only supply the number: a SELL OLD on R7 (window closed) with the old token below the swap read '-10.0%, the swap is worth more than the old token', and a WRITE OFF carrying a swap value read 'what they are worth swapped'; both now show their own rule and reason. A SWAP just under R8's margin shows +4.97%, not a rounded +5.0% beside 'under the 5% margin' (a2a r12) (7bcd31f)
+- an unbound ratio's R10 reason no longer stammers: C3b's reasons already name the subject, so the prefix printed 'ratio ratio quoted without a direction (which side is old?)' (visible in the rzusd-misread-deadline line of scripts/run_evals.py); the offline eval test now fails on any such reason (a2a r12) (3839a09)
+- the R9 margin is printed so it can never read as the 5% it is under: just below R8's line the reason said 'the old token is 5.0% above the swap, under the 5% R8 needs' (old/swap 1.0495 to 1.05, one decimal rounded up); the figure is now cut to two decimals there (4.96%), and a hair above the swap reads 'less than 0.1%' instead of '0.0%'. R8's gate is unchanged (a2a r12) (31b459a)
+
 ## v1.1.5 (2026-11-23)
 
 ### Bug fixes
