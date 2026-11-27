@@ -6,7 +6,7 @@ the time they were captured; run the commands again and the live figures will di
 
 ## 1. The hero lookup (about 1 s, cached Reader read, live CMC calls)
 
-1. Open https://successor.edycu.dev. The first screen streams `/api/hero` for CPOOL: the same flow as `/api/lookup?q=CPOOL&id=12573`, on its own rate bucket (60 per minute per client, so page loads do not use up the 20 a client gets for its own lookups).
+1. Open https://successor.edycu.dev. The first screen streams `/api/hero` for CPOOL: the same flow as `/api/lookup?q=CPOOL&id=12573&qty=10000` (the board's quantity; `/api/hero` defaults to 10,000 and `/api/lookup` to 1), on its own rate bucket (60 per minute per client, so page loads do not use up the 20 a client gets for its own lookups).
 2. Watch the board: the CMC notice (prose) appears, the Reader proposes CLEAR, the trace streams each check as it runs
    (C2 contract, C5 markets, C4 ratio), the successor column flaps to CLEAR, the status column settles on
    **SELL OLD**, and seven check rows light (C1 holding resolved · C2 successor and contract match CMC · C3 every kept field quoted verbatim · C4 swap ratio · C5 market, once per token · C6 price integrity). On 2026-11-22 03:49 UTC the old token was worth 15.7% more than a 1:1 swap into the new one. R8 needs at least 5%; when the margin is smaller the same lookup reads SWAP (R9), and if the old token is still above the swap its reason states the margin.
@@ -62,7 +62,7 @@ directory and points two of the live-flow tests at it, the JSON lookup and the h
 
 | Item | Value | Source |
 |---|---|---|
-| Tests | 88 passed (82 % coverage, 2026-11-22 21:16 UTC gate run), 12 live-URL E2E | `make test-coverage`, `make e2e` |
+| Tests | 88 passed (82 % coverage, 2026-11-22 21:16 UTC gate run), 12 live-URL E2E plus 1 stubbed-stream test of the landing's verdict line | `make test-coverage`, `make e2e` |
 | Evals | 10/10 cases, 4/4 variants | `python scripts/run_evals.py` |
 | Cached lookup, live CMC calls | p50 1.007 s, p95 1.454 s (n=12, 2026-11-22 04:29 UTC). Re-measured on HEAD 0f2e719, 2026-11-22 11:16 UTC: p50 0.796 s · p95 1.363 s (n=12, `docs/proof/bench/bench-cached-2026-11-22T1116Z.json`); an earlier run that hour hit one slow call (p95 5.148 s, n not recorded, file overwritten), so the p95 is network-dependent. | `docs/proof/bench/` |
 | Cold Reader lookup (`fresh=1`) | p50 15.44 s, p95 21.45 s (n=6, CPOOL, 2026-11-22 05:22 UTC); day-one singles 16.89 s (CPOOL), 8.79 s (MKR) | `docs/proof/bench/bench-cold-2026-11-22.json`, `docs/proof/deploy/` |

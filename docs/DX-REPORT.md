@@ -34,3 +34,13 @@ in `docs/proof/`. First written 2026-11-22 from the day-one spike (`scripts/spik
    Evidence: `07-convert-usd.json`, `07-convert-eur.json`.
 4. **The notice is free text.** Contract addresses, ratios and dates sit inside prose and markdown links, which is
    why Successor reads the notice with an LLM and then verifies every field it proposes against the endpoints above.
+5. **`quotes/latest` can report `volume_24h` 0 while `market-pairs/latest` lists counted pairs with volume.** For the
+   old RZUSD (id 35716) at 2026-11-27 19:05 UTC, `quotes/latest` returned `volume_24h` 0 with `last_updated`
+   19:04:04, and `market-pairs/latest` returned five spot pairs on PancakeSwap v2 (BSC) with $2,388 of 24 h volume
+   between them, each with `outlier_detected` 0 and `exclusions` null, last updated between 14:50 and 17:40 UTC.
+   Neither response says why the quote counts none of them. Successor's market check (C5) follows the quote, because a
+   price on $0 of quoted volume is stale either way; since 2026-11-27 its reason and the WRITE OFF sentence state both
+   figures instead of "no live market". The 2026-11-22 captures hold the same disagreement for EPS (two pairs,
+   $41.75) and REP (one pair with volume, $49.20).
+   Evidence: `docs/proof/assets/lookup-RZUSD-2026-11-27T1905Z.ndjson` (receipt rows r6 and r9),
+   `docs/proof/assets/lookup-EPS-2026-11-22T0349Z.ndjson`, `docs/proof/assets/lookup-REP-2026-11-22T0349Z.ndjson`.

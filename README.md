@@ -59,8 +59,8 @@ Every verdict is market-sensitive, so each one carries its capture time.
 | CPOOL | **SELL OLD** (rule R8) | CPOOL was renamed to CLEAR with a 1:1 swap; at CMC's quotes the old token is worth 15.7% more than the swap (old $0.0243011 vs 1 × new $0.0210…) |
 | AGIX | **SWAP** (R9) | The notice links `fetch.ai`; the Reader reads ratio 0.43335 there; code confirmed it with CMC prices on the event date. 10,000 AGIX: $5,924.93 at the old price (a tracker), $463.42 as FET after the swap |
 | BIT | **SWAP** (R9) | Ratio 1, price-confirmed on the event date |
-| EPS | **WRITE OFF** (R6) | CMC shows no market to exit through for the old token or the successor |
-| REP | **WRITE OFF** (R6) | Same rule |
+| EPS | **WRITE OFF** (R6) | CMC's quote reports $0 of 24 h volume for the old token and for the successor (its market-pairs endpoint still listed two EPS pairs with $41.75 between them, see limit 2) |
+| REP | **WRITE OFF** (R6) | Same rule: $0 of quoted volume, and the swap deadline the notice quotes has passed (one pair still listed $49.20) |
 | DAI | **NOT VERIFIABLE** (R10) | Ratio not stated and the linked announcement could not be fetched |
 
 ## 💡 The Problem & Solution
@@ -151,7 +151,7 @@ Successor's own endpoints: `GET /api/lookup?q=&qty=&id=&fresh=` (NDJSON trace, o
 Why this is not "a plain API call": the information is not in a field. `info` returns prose; no endpoint returns "the
 successor of CPOOL is CLEAR, 1:1". The agent has to read, propose and then be checked by the endpoints above. `docs/DX-REPORT.md`
 lists what made this possible and what got in the way (`quotes/latest` stamps a fresh `last_updated` on a $0-volume coin, which is why a tracker-style last price can look current (AGIX: $0 of 24 h volume, `last_updated` a minute before the capture, `docs/proof/assets/lookup-AGIX-2026-11-22T0349Z.ndjson`); a checksummed-address 400 with a misleading message, `date_added`
-copied from old to new coin, `convert=EUR` scaling supply, and the notice being free text).
+copied from old to new coin, `convert=EUR` scaling supply, `quotes/latest` reporting $0 of 24 h volume while `market-pairs/latest` lists counted pairs with volume, and the notice being free text).
 
 ## 📊 Engineering Rigor
 
@@ -162,7 +162,7 @@ copied from old to new coin, `convert=EUR` scaling supply, and the notice being 
 | Lookup latency, cached Reader read, live CMC calls | **p50 1.007 s · p95 1.454 s (= max at n=12)** (n=12, 2026-11-22 04:29 UTC). Re-measured on HEAD 0f2e719, 2026-11-22 11:16 UTC: p50 0.796 s · p95 1.363 s (n=12, `docs/proof/bench/bench-cached-2026-11-22T1116Z.json`); an earlier run that hour hit one slow call (p95 5.148 s, n not recorded, file overwritten), so the p95 is network-dependent. | `python scripts/bench.py https://successor.edycu.dev CPOOL 12`, samples in `docs/proof/bench/` |
 | Lookup latency, cold Reader read (`fresh=1`: the agent re-reads the notice, up to 3 Qwen calls; CPOOL's recorded read took one, `data/extractions/12573-6835dcd6.json`; live CMC calls) | **p50 15.44 s · p95 21.45 s (= max at n=6)** (n=6, CPOOL, 2026-11-22 05:22 UTC); earlier single samples 16.89 s (CPOOL), 8.79 s (MKR) on the day-one engine | `make bench-cold`, samples in `docs/proof/bench/bench-cold-2026-11-22.json`, `docs/proof/deploy/` |
 | Census | 161 notices; verdicts over them: NOT VERIFIABLE 130 · NOTHING TO DO 26 · WRITE OFF 3 · SWAP 2 · SELL OLD 0 (verdicts captured 2026-11-22T03:45:14Z) | `GET /api/census`, `python scripts/census.py` |
-| Live-URL E2E | **12 browser + API tests pass** on https://successor.edycu.dev (the first screen's own CPOOL lookup with no click, click CPOOL/AGIX, assert verdict + receipt, `/judge` with no auth, 3 viewports). Every pipeline run on main executes them against the staged deployment before it is promoted, and `live-check.yml` runs them daily against the live URL. Recorded runs in `docs/proof/gates/`: `e2e-live-2026-11-27.txt` (12 passed on build 58a07f1) and `e2e-live-2026-11-22.txt` (the first run, from before the first-screen test replaced a click) | `make e2e` |
+| Live-URL E2E | **12 browser + API tests pass** on https://successor.edycu.dev (the first screen's own CPOOL lookup with no click, click CPOOL/AGIX, assert verdict + receipt, `/judge` with no auth, 3 viewports). Every pipeline run on main executes them against the staged deployment before it is promoted, and `live-check.yml` runs them daily against the live URL. `make e2e` also runs one stubbed-stream test of the landing's verdict line (11 cases, `e2e/test_landing_verdict.py`), 13 tests in all. Recorded runs in `docs/proof/gates/`: `e2e-live-2026-11-27.txt` (12 passed on build 58a07f1) and `e2e-live-2026-11-22.txt` (the first run, from before the first-screen test replaced a click) | `make e2e` |
 | Unplug test | No CMC key: error and no verdict. No LLM key on a cold notice: NOT VERIFIABLE. With every key removed the E2E tests fail | `tests/test_unplugged.py`, `tests/test_unplugged_http.py`, `make unplug-e2e` (`docs/proof/unplug/`) |
 | Security | pip-audit: no known vulnerabilities (after moving to fastapi 0.165 / starlette 1.10: 11 advisories on 0.46.2); gitleaks: no leaks in the full history; CodeQL + Dependabot configured | `make audit`, `make secrets`, `docs/proof/gates/` |
 | Lighthouse (desktop, live) | home and `/judge`: performance 100, accessibility 100, best practices 100, SEO 100 (2026-11-27 19:02 UTC, build 58a07f1, 2 runs per page, `docs/proof/gates/lighthouse-2026-11-27T1902Z.json`; the same scores on build 61af86e at 18:37 UTC, `lighthouse-2026-11-27T1837Z.json`). On 2026-11-22 04:50 UTC, before the board's font and layout fix and the `/judge` restyle: home 82-83 / 96 / 100 / 100, `/judge` 100 / 93 / 100 / 100 (`docs/proof/gates/lighthouse-2026-11-22.json`) | `make lighthouse` |
@@ -187,7 +187,7 @@ names no successor, 10: no ratio or announcement unfetchable, 11 more: no live s
 ### Honest limits (9)
 
 1. **Most notices end NOT VERIFIABLE** (130 of 161, 2026-11-22). The 161-coin census has 0 SELL OLD and only 2 SWAP; SELL OLD is demonstrated by the featured coins CPOOL (R8, in the 03:49 UTC capture; it reads SWAP when the margin falls under 5%) and RZUSD (R7).
-2. **Verdicts are market-sensitive and flip between runs.** RZUSD was WRITE OFF in one census run and SELL OLD live a short while later because the old token still trades; RAMP moved from WRITE OFF to NOT VERIFIABLE in a re-run. Every verdict on screen carries its capture time.
+2. **Verdicts are market-sensitive and flip between runs.** RZUSD was WRITE OFF in one census run and SELL OLD live a short while later because the old token still trades; RAMP moved from WRITE OFF to NOT VERIFIABLE in a re-run. Every verdict on screen carries its capture time. WRITE OFF follows CMC's quote: on 2026-11-27 19:05 UTC the quote reported $0 of 24 h volume for the old RZUSD while `market-pairs/latest` listed five pairs with $2,388 between them, so the verdict was WRITE OFF, and its reason now states both figures (`docs/DX-REPORT.md`, finding 5). Whether listed pair volume should stop a WRITE OFF is an open design question.
 3. **The Reader is slow.** `qwen4-max` takes a median 8.6 s per call (p90 16.5 s, max 25 s, over the 297 recorded calls in `data/extractions/`); a cold lookup took 15.44 s median and 21.45 s at worst (n=6, `docs/proof/bench/`); the lookup deadline is 52 s and a hard cancel ends the stream at 55 s. Cached notices answer in about a second. Un-cached coins clicked live can end NOT VERIFIABLE with "agent unavailable".
 4. **The census scope is the active top 2000** by rank. The four featured demo coins (CPOOL, AGIX, RZUSD, BIT) sit outside it and are marked and kept out of every count. Notice classification is a regex over CMC's field, not an LLM.
 5. **Event dates are inferred.** CMC copies `date_added` from the old coin to the new one, so a rename is dated from the X post the notice links; where the successor's history starts later, the ratio falls back to the first common traded day within 7 days, labelled on screen.
@@ -200,7 +200,7 @@ names no successor, 10: no ratio or announcement unfetchable, 11 more: no live s
 
 - **First verdict rule was a spike.** The day-one deploy returned `"engine": "spike"` verdicts to rehearse timing; they were replaced by the R1 to R10 table before the board shipped (`docs/proof/deploy/NOTES.md`).
 - **We expected a second proposal for AGIX and it never happened.** We planned for the Reader to "change its mind" on AGIX. In the real run the Reader opens the `fetch.ai` link before its first proposal, proposes `$ASI`, and code maps it to FET through CMC's own `/currencies/fetch/` link. One proposal, so we do not claim a repair turn.
-- **We expected RZUSD to be WRITE OFF and then watched it flip** when the old token traded again (limit 2). Evals pin the recorded WRITE OFF outcome; the SELL OLD (R7) branch is covered by `tests/test_never_swap_on_fail.py`, not by an RZUSD eval.
+- **We expected RZUSD to be WRITE OFF and then watched it flip** when the old token traded again (limit 2). We read every flip as the market moving; CMC's quote can also report $0 of volume while its pairs endpoint still lists some, and once the window has closed that alone turns SELL OLD into WRITE OFF (`docs/DX-REPORT.md`, finding 5). Evals pin the recorded WRITE OFF outcome; the SELL OLD (R7) branch is covered by `tests/test_never_swap_on_fail.py`, not by an RZUSD eval.
 - **The spec assumed the checksummed contract address would work in `info?address=`.** It returns HTTP 400 `Invalid value for 'slug'`; we lowercase `0x` addresses (`docs/DX-REPORT.md`).
 - **We added CI and could not run it until the repository went public.** While it was private, GitHub Actions jobs never started (a billing limit on the account), so for that time the gates were only run by hand (`docs/proof/gates/`). The first full green pipeline run, all six stages plus release, is [this run](https://github.com/edycutjong/successor/actions/runs/45066344086); the two attempts before it failed (Python setup, then a Deployment Protection bypass for the browser tests) and were fixed before it passed.
 - **"Agent needed" was the wrong label** for the 99 notices where the Reader opened or tried a link. That counts attempts, not necessity, and the census now says so.
@@ -228,7 +228,7 @@ Keys are read server-side only and never appear in a response; the receipt's `cu
 
 ```bash
 make ci                        # ruff, mypy, pytest + coverage, unplug tests, pip-audit, gitleaks (full history)
-make e2e                       # 12 browser/API tests against the live URL (BASE=http://localhost:8000 for a local run)
+make e2e                       # 12 live-URL browser/API tests + 1 stubbed-stream test of the landing (BASE=http://localhost:8000 for a local run)
 make unplug-e2e                # app with no keys: it errors and the live-flow tests must fail
 make bench                     # cached lookup p50/p95 over 20 calls, gate p95 <= 3 s;  make bench-cold  for fresh Reader reads
 make lighthouse                # accessibility >= 0.9 is a hard gate
@@ -250,7 +250,7 @@ successor/verify/         resolve, successor (C2), quotes, ratio (C4), market (C
 successor/flow.py         stream orchestrator; receipt.py builds the proof drawer
 public/                   the board (index.html, board.css, app.js), landing (about.html), deck (pitch.html), judge and architecture pages
 data/                     cached Reader extractions, notices, census
-evals/ tests/ e2e/        10 eval cases, 88 unit tests, 12 live-URL browser/API tests
+evals/ tests/ e2e/        10 eval cases, 88 unit tests, 12 live-URL browser/API tests + 1 stubbed-stream landing test
 scripts/                  census, evals, bench (cached + cold), unplug E2E
 .github/                  CI/CD with the release job, CodeQL, gitleaks, live check, nightly snapshot, Dependabot, community files
 JUDGE.md, /judge         the 2-minute path for a judge, no login
