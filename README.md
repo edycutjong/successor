@@ -263,7 +263,7 @@ docs/architecture.html    the architecture diagram above (self-contained HTML + 
 
 Everything in this repository was written for this hackathon, starting 2026-11-22 (first commit in the history). It uses no
 starter kit or template and no code from other projects. Libraries are installed from PyPI (FastAPI, httpx, pytest, ruff);
-fonts are Big Shoulders Display, Atkinson Hyperlegible Next and Fragment Mono (open licenses).
+fonts are Big Shoulders Display, Atkinson Hyperlegible Next and Fragment Mono on the board, and Sofia Sans Extra Condensed, Sofia Sans and Red Hat Mono on the landing, deck and judge page (all SIL Open Font License 1.1, self-hosted latin subsets, `public/fonts/OFL-NOTE.txt`).
 
 ## 📽️ Demo Materials
 
