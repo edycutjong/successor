@@ -12,7 +12,7 @@ Generated from Conventional Commits by scripts/release.py.
 
 ### Bug fixes
 
-- a WRITE OFF needs both of CMC's views of the old token to agree: $0 of 24 h volume on the quote and under $100 of listed volume across unflagged market pairs (LISTED_FLOOR_USD). The rule followed the quote alone, so the old RZUSD read WRITE OFF at 2026-11-27 19:05 UTC while five pairs listed $2,388; such a lookup now ends NOT VERIFIABLE and says why. EPS and REP, with $41.75 and $49.20 listed in their captures, stay WRITE OFF and state both figures. The RZUSD eval's recorded rows (quote $0, $4,441 listed) pin NOT VERIFIABLE; EPS pins WRITE OFF. README limit 2 and the DX report carry the rule instead of an open question (a2a r13 follow-up, flagged by the rubric's outside check) (6893df6)
+- a $0 quote alone no longer makes a WRITE OFF: market-pairs must also list under $100 of 24 h volume across pairs CMC flags neither as an outlier nor as excluded (LISTED_FLOOR_USD). The rule followed the quote alone, so the old RZUSD read WRITE OFF at 2026-11-27 19:05 UTC while five pairs listed $2,388; such a lookup now ends NOT VERIFIABLE and says why. EPS and REP, with $41.75 and $49.20 listed in their captures, stay WRITE OFF and state both figures. The RZUSD eval's recorded rows (quote $0, $4,441 listed) pin NOT VERIFIABLE; EPS pins WRITE OFF. README limit 2 and the DX report carry the rule instead of an open question (a2a r13 follow-up, flagged by the rubric's outside check) (6893df6)
 
 ## v1.1.7 (2026-11-27)
 
