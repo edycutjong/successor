@@ -12,8 +12,8 @@ Each sample also records the server's own t_ms and its slowest CMC call, so a sl
 the network or a cold start (client >> server) or to CMC (slow call or a 429 retry).
 
 Writes docs/proof/bench/bench-<kind>-<UTC timestamp>.json (every sample, p50/p95, verdicts seen); a re-run never overwrites an
-earlier capture. Cold reads cost one Qwen call each and are limited to 3 per 10 min per IP, so --fresh runs in batches of 3 with
-a 10 min pause between them.
+earlier capture. A cold read costs one agent read (1 to 3 Qwen calls; CPOOL's takes one) and fresh reads are limited to 3 per 10 min
+per IP, so --fresh runs in batches of 3 with a 10 min pause between them.
 """
 
 from __future__ import annotations
@@ -81,7 +81,7 @@ def batch(base: str, q: str, n: int, fresh: bool) -> dict:
         "query": q,
         "n": n,
         "kind": (
-            "cold: fresh=1, the Reader re-reads the notice live (one Qwen call), live CMC calls, full JSON answer"
+            "cold: fresh=1, the Reader re-reads the notice live (1 to 3 Qwen calls), live CMC calls, full JSON answer"
             if fresh
             else "cached Reader read, live CMC calls, full JSON answer"
         ),

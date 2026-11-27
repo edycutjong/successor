@@ -32,7 +32,7 @@
 
 ---
 
-**No wallet needed anywhere. Every lookup is a read-only call to CoinMarketCap and, when a notice is new, one Qwen call.**
+**No wallet needed anywhere. Every lookup makes read-only calls to CoinMarketCap and, when a notice is new, one agent read on Qwen (at most 3 model calls).**
 Why it matters, in one example (CMC quotes, 2026-11-22 03:49 UTC): a tracker shows **$5,924.93** for 10,000 AGIX, which has traded $0 in 24 h; swapped into FET at the ratio the agent found and code price-confirmed, the same coins are **$463.42**.
 Try it: https://successor.edycu.dev (judges: [/judge](https://successor.edycu.dev/judge), a 2-minute path whose first three steps take 30 seconds), or `curl -N 'https://successor.edycu.dev/api/lookup?q=CPOOL&qty=10000'`.
 
@@ -160,7 +160,7 @@ copied from old to new coin, `convert=EUR` scaling supply, and the notice being 
 | Tests | **88 passed**, 82 % line coverage (gate 70 %; run 2026-11-22 21:16 UTC, `docs/proof/gates/local-gates-2026-11-22T2116Z.txt`), mypy clean | `make test-coverage`, `make typecheck` |
 | Evals | **10/10** counted cases + 4/4 variants (a variant re-runs a case with a field stripped or a second capture; reported, not counted) | `python scripts/run_evals.py` (replays real saved CMC rows and recorded Reader output) |
 | Lookup latency, cached Reader read, live CMC calls | **p50 1.007 s · p95 1.454 s (= max at n=12)** (n=12, 2026-11-22 04:29 UTC). Re-measured on HEAD 0f2e719, 2026-11-22 11:16 UTC: p50 0.796 s · p95 1.363 s (n=12, `docs/proof/bench/bench-cached-2026-11-22T1116Z.json`); an earlier run that hour hit one slow call (p95 5.148 s, n not recorded, file overwritten), so the p95 is network-dependent. | `python scripts/bench.py https://successor.edycu.dev CPOOL 12`, samples in `docs/proof/bench/` |
-| Lookup latency, cold Reader read (`fresh=1`, one Qwen call, live CMC calls) | **p50 15.44 s · p95 21.45 s (= max at n=6)** (n=6, CPOOL, 2026-11-22 05:22 UTC); earlier single samples 16.89 s (CPOOL), 8.79 s (MKR) on the day-one engine | `make bench-cold`, samples in `docs/proof/bench/bench-cold-2026-11-22.json`, `docs/proof/deploy/` |
+| Lookup latency, cold Reader read (`fresh=1`: the agent re-reads the notice, up to 3 Qwen calls; CPOOL's recorded read took one, `data/extractions/12573-6835dcd6.json`; live CMC calls) | **p50 15.44 s · p95 21.45 s (= max at n=6)** (n=6, CPOOL, 2026-11-22 05:22 UTC); earlier single samples 16.89 s (CPOOL), 8.79 s (MKR) on the day-one engine | `make bench-cold`, samples in `docs/proof/bench/bench-cold-2026-11-22.json`, `docs/proof/deploy/` |
 | Census | 161 notices; verdicts over them: NOT VERIFIABLE 130 · NOTHING TO DO 26 · WRITE OFF 3 · SWAP 2 · SELL OLD 0 (verdicts captured 2026-11-22T03:45:14Z) | `GET /api/census`, `python scripts/census.py` |
 | Live-URL E2E | **12 browser + API tests pass** on https://successor.edycu.dev (open, click CPOOL/AGIX, assert verdict + receipt, `/judge` with no auth, 3 viewports), 2026-11-22 | `make e2e` |
 | Unplug test | No CMC key: error and no verdict. No LLM key on a cold notice: NOT VERIFIABLE. With every key removed the E2E tests fail | `tests/test_unplugged.py`, `tests/test_unplugged_http.py`, `make unplug-e2e` (`docs/proof/unplug/`) |
