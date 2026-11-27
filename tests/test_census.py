@@ -101,7 +101,8 @@ def test_fresh_rereads_are_rate_limited_per_client(
     assert codes == [200, 200, 200, 429]
     r = client.get("/api/lookup?q=CPOOL&fresh=1", headers=h)
     assert r.status_code == 429 and r.json()["step"] == "rate_limit" and int(r.headers["retry-after"]) > 0
-    assert "live re-reads" in r.json()["error"] and "(cached reads stay open)" in r.json()["error"]
+    assert "live re-reads from this client" in r.json()["error"]
+    assert "(cached reads stay open)" in r.json()["error"]
     assert client.get("/api/lookup?q=CPOOL", headers=h).status_code == 200
     other = {**h, "x-forwarded-for": "198.51.100.9"}
     assert client.get("/api/lookup?q=CPOOL&fresh=1", headers=other).status_code == 200
@@ -142,4 +143,15 @@ def test_rate_limit_prefers_platform_ip_and_records_only_admitted_hits(
     assert full.status_code == 429 and "too many lookups" in full.json()["error"]
     assert "cached reads stay open" not in full.json()["error"]
     assert client.get("/api/hero", headers=h).status_code == 200
+    # the hourly cap on fresh reads is shared by every visitor: its message must not blame "this client"
+    idx._hits.clear()
+    monkeypatch.setitem(idx.LIMITS, "fresh_all", (1, 3600.0))
+    one, two = ({"accept": "application/json", "x-real-ip": f"203.0.113.{n}"} for n in (21, 22))
+    assert client.get("/api/lookup?q=X&fresh=1", headers=one).status_code == 200
+    shared = client.get("/api/lookup?q=X&fresh=1", headers=two)
+    assert shared.status_code == 429 and "all visitors share this limit" in shared.json()["error"]
+    assert (
+        "from this client" not in shared.json()["error"]
+        and "cached reads stay open" in shared.json()["error"]
+    )
     idx._hits.clear()
