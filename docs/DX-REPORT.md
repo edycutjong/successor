@@ -48,3 +48,19 @@ in `docs/proof/`. First written 2026-11-22 from the day-one spike (`scripts/spik
    CMC does say why).
    Evidence: `docs/proof/assets/lookup-RZUSD-2026-11-27T1905Z.ndjson` (receipt rows r6 and r9),
    `docs/proof/assets/lookup-EPS-2026-11-22T0349Z.ndjson`, `docs/proof/assets/lookup-REP-2026-11-22T0349Z.ndjson`.
+
+## What we would ask for
+
+Each ask names the measurement behind it. Counts are from the census of the active top 2,000 by rank, scanned
+2026-11-22 (`data/census.json`, served at `/api/census`).
+
+1. **A structured successor on the coin record.** The successor's CMC id, the swap ratio, the old and new contract
+   and the deadline as fields of `/v2/cryptocurrency/info`, next to the notice. 161 coins carry a notice, 141 of them
+   migration-type, and 80 name the successor only in prose. Of the 130 lookups that ended NOT VERIFIABLE, 22 had a
+   notice that names no successor at all.
+2. **An id, or a flag, for the old token on a merged page.** For 61 of those 130 the old and the new token share one
+   CMC id, so no endpoint prices the old token on its own and the ratio cannot be confirmed.
+3. **A reason when the quote includes no volume.** A field on `quotes/latest` that says why `volume_24h` is 0 while
+   `market-pairs/latest` lists unflagged pairs with volume (finding 5), the way `exclusions` does for one pair.
+4. **`info?address=` that accepts a checksummed address,** or an error that names `address` instead of `slug`
+   (finding 1).
