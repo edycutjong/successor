@@ -2,12 +2,21 @@
 
 from __future__ import annotations
 
+import importlib.util
 import json
+from pathlib import Path
 
 import pytest
 from fastapi.testclient import TestClient
 
 from successor import census as cn
+
+_spec = importlib.util.spec_from_file_location(
+    "census_scan", Path(__file__).resolve().parents[1] / "scripts" / "census.py"
+)
+assert _spec and _spec.loader
+scan = importlib.util.module_from_spec(_spec)
+_spec.loader.exec_module(scan)
 
 DOC = {
     "captured_at": "2026-11-22T00:00:00Z",
@@ -33,6 +42,27 @@ def test_summary_counts_come_from_the_rows() -> None:
     assert s["verdicts"]["NOT_VERIFIABLE"] == 1 and s["verdicts"]["SWAP"] == 1
     assert s["verdicts_total"] == 2 and s["verdicts_errors"] == 1  # ERROR rows are not counted as verdicts
     assert s["verdicts_captured"] == "2026-11-22T02:00:00Z"
+    # the flag those counts read: a contract address on any chain is a named contract, and nothing else is. Until
+    # 2026-11-27 (UTC) the pattern knew only 0x addresses, so 8 pinned notices that link a Solana token on solscan counted as
+    # naming none, and it took any 40-hex 0x string for a contract, so 2 with only the author's wallet in a mirror.xyz
+    # link counted as naming one (80 published, 74 counted)
+    solana = "X has migrated to a [new contract](https://solscan.io/token/Bm3dgkZrjH7eaz1GBH1R2ZHkp7nZUoPNJhjekoxepump)."
+    vote = "X has rebranded, see [here](https://snapshot.box/#/s:x.eth/proposal/0xc81e2268834ec1243e08c5d616c98c8e91e2304f7b38ee1d932f450efb18eb8a)."
+    assert scan.classify(solana)["names_contract"] and not scan.classify(solana)["prose_only"]
+    assert scan.classify("X swapped to https://etherscan.io/token/0x1a2b3c4d at 1:1")["names_contract"]
+    wallet = "X has rebranded, see the [post](https://mirror.xyz/0xB9d761AF53845D1F3C68f99c38f4dB6fcCfB66A1/NLGQRtw4)."
+    for no_address in (
+        vote,
+        wallet,
+    ):  # a proposal hash is no address, nor is the author's wallet in a mirror.xyz link
+        assert scan.classify(no_address)["prose_only"] and not scan.classify(no_address)["names_contract"]
+    assert scan.classify("X moved to a new contract address (0xd33526068d116ce69f19a9ee46f0bd304f21a51f)")[
+        "names_contract"
+    ]
+    pinned = [c for c in cn.load()["coins"] if not c.get("featured")]
+    assert all(c["names_contract"] == bool(scan.CONTRACT_LINK.search(c["notice"])) for c in pinned)
+    real = cn.summary()
+    assert (real["notices"], real["migration_type"], real["prose_only"]) == (161, 141, 74)
 
 
 def test_notices_list_omits_notice_text() -> None:

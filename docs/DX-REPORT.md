@@ -56,7 +56,7 @@ Each ask names the measurement behind it. Counts are from the census of the acti
 
 1. **A structured successor on the coin record.** The successor's CMC id, the swap ratio, the old and new contract
    and the deadline as fields of `/v2/cryptocurrency/info`, next to the notice. 161 coins carry a notice, 141 of them
-   migration-type, and 80 name the successor only in prose. Of the 130 lookups that ended NOT VERIFIABLE, 22 had a
+   migration-type, and 74 of those name no contract address at all. Of the 130 lookups that ended NOT VERIFIABLE, 22 had a
    notice that names no successor at all.
 2. **An id, or a flag, for the old token on a merged page.** For 61 of those 130 the old and the new token share one
    CMC id, so no endpoint prices the old token on its own and the ratio cannot be confirmed.

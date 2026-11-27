@@ -287,7 +287,7 @@ function censusRows() {
   const f = census.f;
   const keep = (r) => f === "all" || (f === "migration" && r.type === "migration") || (f === "prose" && r.prose_only) || r.verdict === f;
   $("cbody").innerHTML = census.rows.filter(keep).map((r) => {
-    const flags = [r.prose_only ? "prose only" : "names a contract", r.names_ratio ? "ratio named" : "no ratio", r.only_unfetchable_hosts ? "links not fetchable" : ""].filter(Boolean).join(" · ");
+    const flags = [r.prose_only ? "no contract named" : "names a contract", r.names_ratio ? "ratio named" : "no ratio", r.only_unfetchable_hosts ? "links not fetchable" : ""].filter(Boolean).join(" · ");
     const v = r.verdict && r.verdict !== "ERROR" ? `<span class="vd ${esc(r.verdict)}">${esc(VLABEL[r.verdict] || r.verdict)}</span>` : `<span class="vd none">not read yet</span>`;
     const when = r.verdict_captured_at ? `<span class="why when">${esc(r.rule_id || "")} · read ${esc(r.verdict_captured_at.replace("T", " ").replace("Z", " UTC"))}</span>` : "";
     const why = r.reason ? `<span class="why block">${esc(r.reason)}</span>` : "";
@@ -303,7 +303,7 @@ async function loadCensus() {
     $("census-meta").textContent = `Captured ${c.captured_at} · ${c.scope} · ${c.method}`;
     $("tiles").innerHTML = [
       tile(c.notices, `coins carry a notice (of ${c.coins_scanned} scanned)`),
-      tile(`${c.prose_only} / ${c.migration_type}`, "migration-type notices state the successor only in prose"),
+      tile(`${c.prose_only} / ${c.migration_type}`, "migration-type notices name no contract address"),
       tile(`${c.no_ratio_named} / ${c.migration_type}`, "migration-type notices name no swap ratio"),
       tile(`${c.only_unfetchable_hosts} / ${c.migration_type}`, "link only to hosts the agent cannot fetch (x.com, t.me, …)"),
       tile(`${c.old_zero_volume} / ${c.market_checked}`, "old tokens CMC still prices on $0 24 h volume (of lookups that reached the market check)"),

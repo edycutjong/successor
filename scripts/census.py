@@ -35,7 +35,15 @@ MIGRATION = re.compile(
     r"ticker|symbol change|changed (?:its )?(?:name|symbol|ticker)|replac|convert|exchange .* for",
     re.I,
 )
-CONTRACT_LINK = re.compile(r"/(?:token|address)/0x[0-9a-fA-F]{6,}|\b0x[0-9a-fA-F]{40}\b")
+# a contract address the notice text carries: an explorer link to a 0x address, a bare 0x address (but not the author's
+# wallet that follows "mirror.xyz/"), or an explorer link to a base58 address (Solana). Corrected 2026-11-27 (UTC): the first
+# version read only 0x forms, so 8 pinned notices that link a token on solscan counted as naming no contract, and it took
+# the mirror.xyz wallet for one in 2 more. The published count was 80; it is 74.
+CONTRACT_LINK = re.compile(
+    r"/(?:token|address)/0x[0-9a-fA-F]{6,}"
+    r"|(?<!mirror\.xyz/)\b0x[0-9a-fA-F]{40}\b"
+    r"|/(?:token|address|account)/[1-9A-HJ-NP-Za-km-z]{32,44}(?![0-9A-Za-z])"
+)
 UNFETCHABLE = ("x.com", "twitter.com", "t.me", "discord.gg", "discord.com", "medium.com")
 RATIO = re.compile(
     r"\b\d+(?:[.,]\d+)?\s*(?::|to|for)\s*\d+(?:[.,]\d+)?\b|\b1\s*[:=]\s*1\b|ratio|per\s+(?:old|1)\b", re.I

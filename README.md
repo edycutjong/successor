@@ -72,7 +72,7 @@ that no longer means what the holder thinks it means: in the AGIX row of the tab
 while the same coins swapped into FET are $463.42 (CMC quotes, 2026-11-22 03:49 UTC).
 
 How big is it? On the census served at `/api/census` (scan captured 2026-11-22T02:32:34Z, active top 2000 by CMC rank): **161 coins carry a
-notice, 141 of them migration-type**, and 80 name the successor only in prose. That is a field a program cannot read, and a
+notice, 141 of them migration-type**, and 74 of those name no contract address at all: the successor, where one is named, is a name or a link in a sentence. That is a field a program cannot read, and a
 holder should not have to.
 
 ### The Solution
@@ -204,6 +204,7 @@ names no successor, 10: no ratio or announcement unfetchable, 11 more: no live s
 - **The spec assumed the checksummed contract address would work in `info?address=`.** It returns HTTP 400 `Invalid value for 'slug'`; we lowercase `0x` addresses (`docs/DX-REPORT.md`).
 - **We added CI and could not run it until the repository went public.** While it was private, GitHub Actions jobs never started (a billing limit on the account), so for that time the gates were only run by hand (`docs/proof/gates/`). The first full green pipeline run, all six stages plus release, is [this run](https://github.com/edycutjong/successor/actions/runs/45066344086); the two attempts before it failed (Python setup, then a Deployment Protection bypass for the browser tests) and were fixed before it passed.
 - **"Agent needed" was the wrong label** for the 99 notices where the Reader opened or tried a link. That counts attempts, not necessity, and the census now says so.
+- **The census's pattern for a contract address was wrong in both directions.** Until 2026-11-27 (UTC) this README, the landing page and the deck said that 80 of the 141 migration notices "name the successor only in prose". The flag behind that number (`prose_only`) means "no contract address in the notice text". Its pattern read only `0x` addresses, so it missed 8 notices that link a Solana token on solscan (PAYAI, YURU, MAY, MYRO and four PreStocks tickers), and it took any 40-hex `0x` string for a contract, so 2 notices whose only one is the author's wallet in a mirror.xyz link (AWE, ZFI) passed as naming one. The count is 74. The pattern (`scripts/census.py`), the two flags on those 10 rows of `data/census.json` and the wording are corrected, and `tests/test_census.py` pins both; the demo video was recorded before that and still says 80.
 - **Two fixes did nothing until their callers were checked.** `/api/hero` got its own rate bucket so the first screen survives a room behind one address, but the board kept calling `/api/lookup`. And the release guard deferred to "the newer run" whenever main moved, a run the nightly snapshot bot never starts. Both were fixed on 2026-11-27 (UTC); `e2e/test_live_flow.py` now waits for the first screen's own lookup through `/api/hero`.
 
 ## 🚀 Getting Started
