@@ -25,6 +25,8 @@ def reason_group(reason: str) -> str:
         return "the Reader quoted a contract, ratio or name the notice does not contain"
     if "returned no price or volume" in r:
         return "CMC returned no price or volume for the successor"
+    if "does not settle whether the old token" in r:
+        return "CMC's quote and its pairs listing disagree on whether the old token trades"
     if "merged cmc page" in r:
         return "old and new token share one CMC page; the ratio could not be confirmed"
     if "successor not named" in r:

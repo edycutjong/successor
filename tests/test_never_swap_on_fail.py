@@ -141,6 +141,28 @@ def test_rule_order_examples():
     assert split.reason.startswith(
         f"CMC's quote shows no market to exit through: it reports $0 of 24 h volume for the old token ({note}) and "
     )
+    # ... and it is a WRITE OFF only while that listed volume is dust. At LISTED_FLOOR_USD or more CMC's two views
+    # disagree on whether the token trades, and the verdict is NOT VERIFIABLE whichever R6 branch applied
+    from successor.verify.verdict import LISTED_FLOOR_USD
+
+    closed = dict(
+        c2="verified", old_market="dead", new_market="alive", deadline_passed=True, deadline_text="2026-10-25"
+    )
+    dust = decide(Facts(**closed, old_pairs_note=note, old_pairs_usd=LISTED_FLOOR_USD - 0.01))
+    real = decide(Facts(**closed, old_pairs_note=note, old_pairs_usd=LISTED_FLOOR_USD))
+    assert (dust.verdict, dust.rule_id) == ("WRITE_OFF", "R6")
+    assert (real.verdict, real.rule_id) == ("NOT_VERIFIABLE", "R10")
+    assert real.reason.startswith(
+        "CMC's data does not settle whether the old token can still be sold: its quote reports"
+    )
+    assert real.reason.endswith(
+        "WRITE OFF needs under $100 of listed volume; the quoted swap deadline (2026-10-25) has passed"
+    )
+    both_dead = decide(
+        Facts(c2="verified", old_market="dead", new_market="dead", old_pairs_note=note, old_pairs_usd=2388.45)
+    )
+    assert (both_dead.verdict, both_dead.rule_id) == ("NOT_VERIFIABLE", "R10")
+    assert decide(Facts(**closed)).rule_id == "R6"  # no listed volume at all: unchanged
     assert decide(Facts(c2="verified", same_id=True)).rule_id == "R4"
     assert decide(Facts(c2="refuted", c2_reason="x")).rule_id == "R5"
     assert (

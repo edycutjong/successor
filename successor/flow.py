@@ -680,6 +680,7 @@ async def _run(
         c3_dropped=list(c3.dropped),
         swap_label_only=swap_label_only,
         old_pairs_note=old_m.pairs_note(),
+        old_pairs_usd=(old_m.traded_volume_24h or 0.0) if old_m.pairs_note() else 0.0,
     )
     d = decide(facts)
 

@@ -19,6 +19,10 @@ SWAP, SELL_OLD, WRITE_OFF, NOT_VERIFIABLE, NOTHING_TO_DO = (
 )
 PREMIUM = 1.05  # old trades ≥ 5% above the swap value → sell the old token
 DISCOUNT = 0.95  # old trades > 5% below the swap value → the market doubts the swap
+# WRITE OFF needs both of CMC's views of the old token to agree: the quote reports $0 of 24 h volume AND market-pairs
+# lists less than this across unflagged spot pairs. Measured when the rule was set (2026-11-27, quote $0 each time):
+# EPS $18.54, REP $10.04, BIT $3.78 of listed volume; RZUSD $2,388 (docs/DX-REPORT.md, finding 5).
+LISTED_FLOOR_USD = 100.0
 
 
 @dataclass
@@ -51,6 +55,9 @@ class Facts:
     # CMC's quote reports $0 of 24 h volume for the old token while market-pairs still lists counted pairs with volume
     # (market.Market.pairs_note): the old market stays "dead", and R6 says what both endpoints show (a2a r13)
     old_pairs_note: str = ""
+    old_pairs_usd: float = (
+        0.0  # what those pairs list between them; at LISTED_FLOOR_USD or more there is no WRITE OFF
+    )
 
 
 @dataclass
@@ -166,6 +173,16 @@ def decide(f: Facts) -> Decision:
             if f.deadline_passed
             else "the notice states the project ended with no successor"
         )
+        if f.old_pairs_usd >= LISTED_FLOOR_USD:
+            # the quote says nothing trades, market-pairs lists real volume: CMC's data does not show "no market".
+            # No later rule can fire here (R7 and R8 need a live old market, R9 a live successor and an open window)
+            return Decision(
+                NOT_VERIFIABLE,
+                "R10",
+                f"CMC's data does not settle whether the old token can still be sold: its quote reports $0 of 24 h "
+                f"volume, but {f.old_pairs_note}. WRITE OFF needs under ${LISTED_FLOOR_USD:,.0f} of listed volume; "
+                f"{why}",
+            )
         lead = (
             f"CMC's quote shows no market to exit through: it reports $0 of 24 h volume for the old token "
             f"({f.old_pairs_note})"

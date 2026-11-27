@@ -110,10 +110,10 @@
   "id": 35716,
   "qty": 1000,
   "expect": {
-   "verdict": "WRITE_OFF",
-   "rule_id": "R6"
+   "verdict": "NOT_VERIFIABLE",
+   "rule_id": "R10"
   },
-  "why": "notice says 1:X; the agent follows the linked announcement: 'The swap ratio is 4:1' and 'closes on 25 October 2026' (passed); old RZUSD has $0 volume",
+  "why": "notice says 1:X; the agent follows the linked announcement: 'The swap ratio is 4:1' and 'closes on 25 October 2026' (passed); CMC's quote reports $0 of 24 h volume for old RZUSD while market-pairs lists 5 unflagged pairs with $4,441 between them, so CMC's data does not show 'no market' and code does not write it off (these rows read WRITE OFF until 2026-11-27, while the rule followed the quote alone)",
   "variants": [
    {
     "name": "rzusd-unfetchable",
