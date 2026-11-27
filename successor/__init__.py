@@ -1,3 +1,3 @@
 """Successor: what happened to your coin, verified against CoinMarketCap's own data."""
 
-__version__ = "1.1.8"
+__version__ = "1.1.9"

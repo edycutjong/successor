@@ -2,6 +2,12 @@
 
 Generated from Conventional Commits by scripts/release.py.
 
+## v1.1.9 (2026-11-27)
+
+### Bug fixes
+
+- 74 migration notices name no contract address, not 80: the pattern was wrong in both directions (a23b759)
+
 ## v1.1.8 (2026-11-27)
 
 ### Bug fixes
