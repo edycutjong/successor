@@ -111,6 +111,17 @@ def test_rule_order_examples():
         Facts(**base, old_market="alive", ratio_state="P", ratio_route="event-date", old_price=1.048)
     )
     assert near.rule_id == "R9" and "4.8% above the swap, under the 5% R8 needs for SELL OLD" in near.reason
+    # just under the margin the figure is cut, never rounded up to the 5 % it is under (a2a r12: 1.0499 printed
+    # "5.0% above the swap, under the 5% R8 needs"); at the margin itself the verdict is R8
+    edge = decide(
+        Facts(**base, old_market="alive", ratio_state="P", ratio_route="event-date", old_price=1.0499)
+    )
+    assert edge.rule_id == "R9" and "4.99% above the swap, under the 5% R8 needs for SELL OLD" in edge.reason
+    hair = decide(
+        Facts(**base, old_market="alive", ratio_state="P", ratio_route="event-date", old_price=1.0003)
+    )
+    assert hair.rule_id == "R9" and "less than 0.1% above the swap, under the 5% R8 needs" in hair.reason
+    assert decide(Facts(**base, old_market="alive", ratio_state="P", old_price=1.05)).rule_id == "R8"
     assert decide(Facts(**base, old_market="dead", ratio_state="P", ratio_route="event-date")).rule_id == "R9"
     assert decide(Facts(c2="verified", old_market="dead", new_market="dead")).rule_id == "R6"
     assert decide(Facts(c2="verified", same_id=True)).rule_id == "R4"

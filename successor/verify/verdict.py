@@ -7,6 +7,7 @@ field of its own, so nothing it writes can choose the outcome.
 
 from __future__ import annotations
 
+import math
 from dataclasses import dataclass, field
 
 SWAP, SELL_OLD, WRITE_OFF, NOT_VERIFIABLE, NOTHING_TO_DO = (
@@ -71,6 +72,19 @@ SWAP_CRITICAL = (
 
 def _swap_blocked(f: Facts) -> list[str]:
     return [n for n in f.c3_dropped if n in SWAP_CRITICAL] + (["event_type"] if f.swap_label_only else [])
+
+
+def _pct_under(pct: float, limit: float) -> str:
+    """A percentage the rules judged to be under `limit`, printed so it never reads as meeting it.
+
+    One decimal, as everywhere else. Where rounding would print the limit itself (4.96 -> "5.0") the figure is cut to
+    two decimals instead ("4.96"), and anything that would print as "0.0" reads "less than 0.1"."""
+    if pct < 0.05:
+        return "less than 0.1"
+    shown = f"{pct:.1f}"
+    if float(shown) >= limit:
+        shown = f"{min(math.floor(pct * 100) / 100, limit - 0.01):.2f}"
+    return shown
 
 
 def _missing(f: Facts) -> str:
@@ -192,9 +206,10 @@ def decide(f: Facts) -> Decision:
         if (
             alive_old and priced and op > rr * np_
         ):  # old above the swap, but under R8's margin: say why it is not SELL OLD
+            need = round((PREMIUM - 1) * 100, 6)  # 5.0, not the float 5.000000000000004
             margin = (
-                f"; at CMC's quotes the old token is {(op / (rr * np_) - 1) * 100:.1f}% above the swap, "
-                f"under the {(PREMIUM - 1) * 100:.0f}% R8 needs for SELL OLD"
+                f"; at CMC's quotes the old token is {_pct_under((op / (rr * np_) - 1) * 100, need)}% above the swap, "
+                f"under the {need:.0f}% R8 needs for SELL OLD"
             )
         return Decision(SWAP, "R9", f"ratio {r:g} price-confirmed ({f.ratio_route}); {window}{margin}")
     return Decision(NOT_VERIFIABLE, "R10", _missing(f))
