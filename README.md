@@ -146,7 +146,7 @@ The notice is prose; the successor's contract is a field on another coin. The Re
 prose and code compares it with CLEAR's `token_address` (check C2). Every lookup's calls and raw rows are in the receipt drawer.
 
 Successor's own endpoints: `GET /api/lookup?q=&qty=&id=&fresh=` (NDJSON trace, or one JSON answer with
-`Accept: application/json`), `GET /api/hero`, `GET /api/notices`, `GET /api/census`, `GET /api/health`.
+`Accept: application/json`), `GET /api/hero` (the board's first-screen CPOOL lookup: the same flow on its own rate bucket), `GET /api/notices`, `GET /api/census`, `GET /api/health`.
 
 Why this is not "a plain API call": the information is not in a field. `info` returns prose; no endpoint returns "the
 successor of CPOOL is CLEAR, 1:1". The agent has to read, propose and then be checked by the endpoints above. `docs/DX-REPORT.md`
@@ -162,7 +162,7 @@ copied from old to new coin, `convert=EUR` scaling supply, and the notice being 
 | Lookup latency, cached Reader read, live CMC calls | **p50 1.007 s · p95 1.454 s (= max at n=12)** (n=12, 2026-11-22 04:29 UTC). Re-measured on HEAD 0f2e719, 2026-11-22 11:16 UTC: p50 0.796 s · p95 1.363 s (n=12, `docs/proof/bench/bench-cached-2026-11-22T1116Z.json`); an earlier run that hour hit one slow call (p95 5.148 s, n not recorded, file overwritten), so the p95 is network-dependent. | `python scripts/bench.py https://successor.edycu.dev CPOOL 12`, samples in `docs/proof/bench/` |
 | Lookup latency, cold Reader read (`fresh=1`: the agent re-reads the notice, up to 3 Qwen calls; CPOOL's recorded read took one, `data/extractions/12573-6835dcd6.json`; live CMC calls) | **p50 15.44 s · p95 21.45 s (= max at n=6)** (n=6, CPOOL, 2026-11-22 05:22 UTC); earlier single samples 16.89 s (CPOOL), 8.79 s (MKR) on the day-one engine | `make bench-cold`, samples in `docs/proof/bench/bench-cold-2026-11-22.json`, `docs/proof/deploy/` |
 | Census | 161 notices; verdicts over them: NOT VERIFIABLE 130 · NOTHING TO DO 26 · WRITE OFF 3 · SWAP 2 · SELL OLD 0 (verdicts captured 2026-11-22T03:45:14Z) | `GET /api/census`, `python scripts/census.py` |
-| Live-URL E2E | **12 browser + API tests pass** on https://successor.edycu.dev (open, click CPOOL/AGIX, assert verdict + receipt, `/judge` with no auth, 3 viewports), 2026-11-22 | `make e2e` |
+| Live-URL E2E | **12 browser + API tests pass** on https://successor.edycu.dev (the first screen's own CPOOL lookup with no click, click CPOOL/AGIX, assert verdict + receipt, `/judge` with no auth, 3 viewports). Every pipeline run on main executes them against the staged deployment before it is promoted, and `live-check.yml` runs them daily against the live URL; first recorded run 2026-11-22 (`docs/proof/gates/e2e-live-2026-11-22.txt`) | `make e2e` |
 | Unplug test | No CMC key: error and no verdict. No LLM key on a cold notice: NOT VERIFIABLE. With every key removed the E2E tests fail | `tests/test_unplugged.py`, `tests/test_unplugged_http.py`, `make unplug-e2e` (`docs/proof/unplug/`) |
 | Security | pip-audit: no known vulnerabilities (after moving to fastapi 0.165 / starlette 1.10: 11 advisories on 0.46.2); gitleaks: no leaks in the full history; CodeQL + Dependabot configured | `make audit`, `make secrets`, `docs/proof/gates/` |
 | Lighthouse (desktop, live) | home: performance 82-83, accessibility 96, best practices 100, SEO 100; `/judge`: 100 / 93 / 100 / 100 (2026-11-22) | `make lighthouse` |
@@ -193,7 +193,7 @@ names no successor, 10: no ratio or announcement unfetchable, 11 more: no live s
 5. **Event dates are inferred.** CMC copies `date_added` from the old coin to the new one, so a rename is dated from the X post the notice links; where the successor's history starts later, the ratio falls back to the first common traded day within 7 days, labelled on screen.
 6. **Only some announcements can be read.** `follow_link` is limited to hosts CMC lists for the coin or its successor (MKR's forum post is not on that list, so MKR ends NOT VERIFIABLE).
 7. **A `project_ended` notice with no successor** is not extracted, so that branch of rule R6 is unreachable today.
-8. **Rate limits are per serverless instance** (20 lookups/min/IP, 3 fresh reads per 10 min/IP), not deployment-wide. The SSRF guard re-checks the peer address after connecting but does not pin the connection (a known time-of-check gap).
+8. **Rate limits are per serverless instance** (20 lookups/min/IP, 60/min/IP for the board's first-screen CPOOL lookup, 3 fresh reads per 10 min/IP), not deployment-wide. The SSRF guard re-checks the peer address after connecting but does not pin the connection (a known time-of-check gap).
 9. **Not financial advice, and no fees.** Values exclude fees, gas and slippage, and a SWAP verdict reads "if the issuer's swap is still open" when the notice states no window.
 
 ### What we got wrong
@@ -204,6 +204,7 @@ names no successor, 10: no ratio or announcement unfetchable, 11 more: no live s
 - **The spec assumed the checksummed contract address would work in `info?address=`.** It returns HTTP 400 `Invalid value for 'slug'`; we lowercase `0x` addresses (`docs/DX-REPORT.md`).
 - **We added CI and could not run it until the repository went public.** While it was private, GitHub Actions jobs never started (a billing limit on the account), so for that time the gates were only run by hand (`docs/proof/gates/`). The first full green pipeline run, all six stages plus release, is [this run](https://github.com/edycutjong/successor/actions/runs/45066344086); the two attempts before it failed (Python setup, then a Deployment Protection bypass for the browser tests) and were fixed before it passed.
 - **"Agent needed" was the wrong label** for the 99 notices where the Reader opened or tried a link. That counts attempts, not necessity, and the census now says so.
+- **Two fixes did nothing until their callers were checked.** `/api/hero` got its own rate bucket so the first screen survives a room behind one address, but the board kept calling `/api/lookup`. And the release guard deferred to "the newer run" whenever main moved, a run the nightly snapshot bot never starts. Both were fixed on 2026-11-27; `e2e/test_live_flow.py` now waits for the first screen's own lookup through `/api/hero`.
 
 ## 🚀 Getting Started
 
@@ -237,7 +238,7 @@ python scripts/run_evals.py    # 10/10 counted cases, 4/4 variants (offline repl
 `.github/workflows/ci.yml` runs six stages: 1 Quality (ruff, mypy, tests, unplug) and 2 Security (pip-audit, gitleaks, kitchen-file guard) in parallel,
 3 Build (evals, import check) plus a Vercel deployment that is not yet on the production domain, 4 E2E and 5 Performance (cached-lookup p95 <= 3 s over 20 calls, nearest rank, a latency-only miss re-measured once with both batches kept; Lighthouse) against that
 deployment, then 6 Deploy Gate (main only), which promotes that same deployment to production and checks `/api/health` reports the pushed commit. CodeQL
-(`python`, `javascript-typescript`, `actions`), gitleaks over the full history, a daily live check, a nightly notice snapshot (`snapshot.yml` writes `data/snapshots/census-<date>.json` and stops at the submission deadline; `data/census.json` and the figures in this README stay pinned to the 2026-11-22 capture), and Dependabot (pip + actions, monthly, grouped, no major bumps) run alongside. Releases are automatic: after Stage 6 is green, Conventional Commits since the last tag set the semver bump (`scripts/release.py`), and the job commits, tags and publishes the GitHub release with no manual step. Only the commit the pipeline tested is released (if main has moved on, the newer run releases), and Stage 3 stamps that version into the deployment, so `/api/health` reports the release it belongs to.
+(`python`, `javascript-typescript`, `actions`), gitleaks over the full history, a daily live check, a nightly notice snapshot (`snapshot.yml` writes `data/snapshots/census-<date>.json` and stops at the submission deadline; `data/census.json` and the figures in this README stay pinned to the 2026-11-22 capture), and Dependabot (pip + actions, monthly, grouped, no major bumps) run alongside. The snapshot bot commits only that one data file and pushes with `GITHUB_TOKEN`, which starts no pipeline run, so main's HEAD can be a few data-only commits ahead of production: `/api/health` `build_sha` names the commit stages 1 to 6 tested and promoted, not the newest snapshot. Releases are automatic: after Stage 6 is green, Conventional Commits since the last tag set the semver bump (`scripts/release.py`), and the job commits, tags and publishes the GitHub release with no manual step. Only code the pipeline tested is released: if another push has moved main on, that push's own run releases, and if only snapshot commits landed in between, the release goes on top of them. Stage 3 stamps that version into the deployment (and into the deck's static fallback), so `/api/health` reports the release it belongs to.
 The CI badge at the top shows the state of main; the first fully green run is [this one](https://github.com/edycutjong/successor/actions/runs/45066344086). The local gate outputs are in `docs/proof/gates/` (local gates, live E2E run, Lighthouse scores).
 
 ## 📁 Project Structure
@@ -247,11 +248,11 @@ api/index.py              one FastAPI function: /api/lookup /hero /notices /cens
 successor/agent/          Reader loop (Qwen) + follow_link (allow-list, SSRF guard)
 successor/verify/         resolve, successor (C2), quotes, ratio (C4), market (C5), sanity, verdict (R1-R10)
 successor/flow.py         stream orchestrator; receipt.py builds the proof drawer
-public/                   the board (index.html, board.css, app.js)
+public/                   the board (index.html, board.css, app.js), landing (about.html), deck (pitch.html), judge and architecture pages
 data/                     cached Reader extractions, notices, census
 evals/ tests/ e2e/        10 eval cases, 88 unit tests, 12 live-URL browser/API tests
 scripts/                  census, evals, bench (cached + cold), unplug E2E
-.github/                  CI/CD, CodeQL, gitleaks, Dependabot, release, community files
+.github/                  CI/CD with the release job, CodeQL, gitleaks, live check, nightly snapshot, Dependabot, community files
 JUDGE.md, /judge         the 2-minute path for a judge, no login
 docs/proof/               verbatim CMC + Qwen responses, lookup captures, deploy and bench proof
 docs/DX-REPORT.md         what made the CMC API possible, what got in the way
