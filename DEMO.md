@@ -55,8 +55,8 @@ Most notices cannot be confirmed from CMC's data alone, and the page lists why.
 
 Without a CMC key the app returns an error and no verdict; without an LLM key a cold notice ends NOT VERIFIABLE
 (`tests/test_unplugged.py`, `tests/test_unplugged_http.py`). `make unplug-e2e` starts the app with no keys and an empty home
-directory and points the live-flow browser tests at it: the app answers HTTP 502 `CMC_API_KEY is not set` and the tests fail
-(`docs/proof/unplug/`). With the sources removed the live-flow tests fail; they pass only against the real product.
+directory and points two of the live-flow tests at it, the JSON lookup and the health check: the app answers HTTP 502
+`CMC_API_KEY is not set` and both tests fail (`docs/proof/unplug/`). They pass only against the real product.
 
 ## 6. Numbers to quote
 
