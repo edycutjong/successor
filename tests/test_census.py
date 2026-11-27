@@ -101,6 +101,7 @@ def test_fresh_rereads_are_rate_limited_per_client(
     assert codes == [200, 200, 200, 429]
     r = client.get("/api/lookup?q=CPOOL&fresh=1", headers=h)
     assert r.status_code == 429 and r.json()["step"] == "rate_limit" and int(r.headers["retry-after"]) > 0
+    assert "live re-reads" in r.json()["error"] and "(cached reads stay open)" in r.json()["error"]
     assert client.get("/api/lookup?q=CPOOL", headers=h).status_code == 200
     other = {**h, "x-forwarded-for": "198.51.100.9"}
     assert client.get("/api/lookup?q=CPOOL&fresh=1", headers=other).status_code == 200
@@ -131,4 +132,14 @@ def test_rate_limit_prefers_platform_ip_and_records_only_admitted_hits(
     ]
     assert codes == [200, 200, 200, 429]
     assert len(idx._hits["lookup:203.0.113.8"]) == 3  # the rejected 4th request recorded nothing
+    # a2a r12: a full lookup bucket blocks cached lookups too, so its message must not say they stay open; the
+    # first-screen route (/api/hero) has its own bucket and still answers
+    idx._hits.clear()
+    monkeypatch.setitem(idx.LIMITS, "lookup", (2, 60.0))
+    h = {"accept": "application/json", "x-real-ip": "203.0.113.9"}
+    assert [client.get("/api/lookup?q=X", headers=h).status_code for _ in range(3)] == [200, 200, 429]
+    full = client.get("/api/lookup?q=X", headers=h)
+    assert full.status_code == 429 and "too many lookups" in full.json()["error"]
+    assert "cached reads stay open" not in full.json()["error"]
+    assert client.get("/api/hero", headers=h).status_code == 200
     idx._hits.clear()

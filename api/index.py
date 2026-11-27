@@ -64,11 +64,16 @@ def _limited(request: Request, fresh: bool, kind: str = "lookup") -> JSONRespons
     for bucket, kind in checks:
         wait = _wait(bucket, kind, now)
         if wait is not None:
-            what = "live re-reads" if kind.startswith("fresh") else "lookups"
+            # only the fresh-read limits leave cached lookups open; a full lookup or hero bucket blocks those too
+            what, still = (
+                ("live re-reads", " (cached reads stay open)")
+                if kind.startswith("fresh")
+                else ("lookups", "")
+            )
             body = {
                 "type": "error",
                 "step": "rate_limit",
-                "error": f"too many {what} from this client; try again in {int(wait) + 1} s (cached reads stay open)",
+                "error": f"too many {what} from this client; try again in {int(wait) + 1} s{still}",
                 "http_status": 429,
                 "t_ms": 0,
             }
