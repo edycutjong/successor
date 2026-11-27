@@ -495,6 +495,8 @@ footer a:hover { color: var(--bone); text-decoration: underline; text-underline-
   function field(f, st) { document.querySelectorAll('#h-notice u[data-f="' + f + '"]').forEach((u) => { u.className = st; }); }
   const stateOf = (s) => ['verified', 'alive', 'P', 'confirmed'].includes(s) ? 'lit' : ['refuted', 'R', 'failed', 'mismatch'].includes(s) ? 'refused' : 'after';
   const money = (v) => v == null ? null : '$' + Number(v).toLocaleString('en-US', { minimumFractionDigits: 2, maximumFractionDigits: 2 });
+  // a figure the rules judged to be under `limit`, printed so it never reads as meeting it (4.96, not a rounded 5.0); verdict.py _pct_under does the same
+  const under = (pct, limit) => { const s = pct.toFixed(1); return Number(s) >= limit ? Math.min(Math.floor(pct * 100) / 100, limit - 0.01).toFixed(2) : s; };
   const VWORD = { SELL_OLD: 'SELL OLD', SWAP: 'SWAP', WRITE_OFF: 'WRITE OFF', NOT_VERIFIABLE: 'NOT VERIFIABLE', NOTHING_TO_DO: 'NOTHING TO DO' };
   // successor/verify/verdict.py: rules are tried in this order and the first match wins
   const RULES = [['R3', 'NOT_VERIFIABLE'], ['R4', 'NOTHING_TO_DO'], ['R5', 'NOT_VERIFIABLE'], ['R6', 'WRITE_OFF'], ['R7', 'SELL_OLD'], ['R8', 'SELL_OLD'], ['R9', 'SWAP'], ['R10', 'NOT_VERIFIABLE']];
@@ -560,13 +562,15 @@ footer a:hover { color: var(--bone); text-decoration: underline; text-underline-
       const w = VWORD[e.verdict] || e.verdict; $('h-live').textContent = 'Verdict: ' + w;
       const so = e.value_sell_old_usd, sw = e.value_swap_usd, tr = e.tracker_value_usd; const qty = Number(e.qty || 10000).toLocaleString('en-US');
       if (e.verdict === 'NOT_VERIFIABLE') { $('h-big').textContent = e.rule_id || ''; $('h-say').textContent = e.reason || ''; $('h-vals').textContent = so != null ? qty + ' ' + ctx.sym + ' · market value ' + money(so) + ', no verdict · excludes fees and gas' : ''; }
-      else if (so != null && sw != null && sw > 0) {
-        const pct = (so / sw - 1) * 100;
-        $('h-big').textContent = (pct >= 0 ? '+' : '') + pct.toFixed(1) + '%';
-        $('h-say').textContent = pct >= 0 ? (e.verdict === 'SWAP' ? 'the old token is above the swap at CMC\'s quotes, but under the 5% margin R8 needs for SELL OLD' : 'the old token is worth more than the swap, at CMC\'s quotes') : 'the swap is worth more than the old token, at CMC\'s quotes';
+      // old against swap is the story only where the rule compared them: R8 (SELL OLD on the 5% margin) and R9 (SWAP).
+      // Any other verdict that happens to carry both values (R7: the window closed) shows its own rule and reason.
+      else if (so != null && sw != null && sw > 0 && (e.rule_id === 'R8' || e.rule_id === 'R9')) {
+        const pct = (so / sw - 1) * 100; const above = pct > 0 && e.verdict === 'SWAP';
+        $('h-big').textContent = (pct >= 0 ? '+' : '') + (above ? under(pct, 5) : pct.toFixed(1)) + '%';
+        $('h-say').textContent = above ? 'the old token is above the swap at CMC\'s quotes, but under the 5% margin R8 needs for SELL OLD' : pct > 0 ? 'the old token is worth more than the swap, at CMC\'s quotes' : pct < 0 ? 'the swap is worth more than the old token, at CMC\'s quotes' : 'the old token and the swap are worth the same, at CMC\'s quotes';
         $('h-vals').textContent = qty + ' ' + ctx.sym + ' · sell old ' + money(so) + ' · swap ' + money(sw) + ' · excludes fees and gas';
-      } else if (sw != null && tr != null) { $('h-big').textContent = money(sw); $('h-say').textContent = 'what ' + qty + ' ' + ctx.sym + ' are worth swapped, not the tracker\'s ' + money(tr); $('h-vals').textContent = 'rule ' + e.rule_id + ' · ' + (e.reason || ''); }
-      else { $('h-big').textContent = e.rule_id || ''; $('h-say').textContent = e.reason || ''; $('h-vals').textContent = ''; }
+      } else if (sw != null && tr != null && e.verdict === 'SWAP') { $('h-big').textContent = money(sw); $('h-say').textContent = 'what ' + qty + ' ' + ctx.sym + ' are worth swapped, not the tracker\'s ' + money(tr); $('h-vals').textContent = 'rule ' + e.rule_id + ' · ' + (e.reason || ''); }
+      else { $('h-big').textContent = e.rule_id || ''; $('h-say').textContent = e.reason || ''; $('h-vals').textContent = so != null ? qty + ' ' + ctx.sym + ' · ' + (e.verdict === 'SELL_OLD' ? 'sell old ' : 'market value ') + money(so) + ' · excludes fees and gas' : ''; }
       const when = (e.captured_at || '').replace('T', ' ').replace(/:\d\dZ$/, ' UTC');
       $('h-cap').textContent = (ctx.live ? 'live · ' : 'replay · ') + 'lookup captured ' + when + ' · ' + (e.credits_used ?? '?') + ' CMC credits · ' + (ctx.live ? Math.round(performance.now() - ctx.t0) + ' ms in your browser' : e.t_ms + ' ms');
     }
