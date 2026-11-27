@@ -131,7 +131,7 @@ def test_rule_order_examples():
     assert decide(Facts(**base, old_market="dead", ratio_state="P", ratio_route="event-date")).rule_id == "R9"
     assert decide(Facts(c2="verified", old_market="dead", new_market="dead")).rule_id == "R6"
     # a2a r13: when market-pairs still lists volume the quote does not count, WRITE OFF says so instead of "no live market"
-    note = "market-pairs still lists 5 counted pairs with $2,388 of 24 h volume between them, which the quote does not count"
+    note = "market-pairs still lists 5 pairs with $2,388 of 24 h volume between them, which the quote does not include"
     plain = decide(Facts(c2="verified", old_market="dead", new_market="dead"))
     split = decide(Facts(c2="verified", old_market="dead", new_market="dead", old_pairs_note=note))
     assert plain.reason.startswith(

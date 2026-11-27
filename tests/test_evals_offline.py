@@ -18,13 +18,11 @@ async def test_every_counted_case_and_variant_passes():
     # the reason line is what a judge reads beside PASS: no stammer in any of them (a2a r12: "ratio ratio quoted ...")
     stammer = [(r["case"], r["reason"]) for r in rows if " ratio ratio " in f" {r['reason']} "]
     assert not stammer, stammer
-    # the recorded RZUSD rows hold CMC's two endpoints disagreeing (quote: $0 of 24 h volume; market-pairs: 5 counted
+    # the recorded RZUSD rows hold CMC's two endpoints disagreeing (quote: $0 of 24 h volume; market-pairs: 5 unflagged
     # pairs with volume): the WRITE OFF they replay to must say so (a2a r13)
     rzusd = next(r for r in rows if r["case"] == "rzusd")
     assert rzusd["got"] == {"verdict": "WRITE_OFF", "rule_id": "R6"}
-    assert (
-        "market-pairs still lists 5 counted pairs with $4,441 of 24 h volume between them" in rzusd["reason"]
-    )
+    assert "market-pairs still lists 5 pairs with $4,441 of 24 h volume between them" in rzusd["reason"]
 
 
 async def test_injection_verdict_equals_clean_case_and_no_field_quotes_the_injection():

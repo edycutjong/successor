@@ -139,8 +139,29 @@ def test_missing_price_or_volume_is_unknown_not_dead():
     split = mk.assess({"quote": {"USD": {"price": 0.2135, "volume_24h": 0}}}, listed, [])
     assert (split.state, split.traded_pairs, round(split.traded_volume_24h, 2)) == ("dead", 5, 2388.46)
     assert split.pairs_note() == (
-        "market-pairs still lists 5 counted pairs with $2,388 of 24 h volume between them, which the quote does not count"
+        "market-pairs still lists 5 pairs with $2,388 of 24 h volume between them, none flagged as an outlier or "
+        "excluded, which the quote does not include"
     )
+
+    def one(volume: float) -> str:
+        only = {
+            "market_pairs": [
+                {"outlier_detected": 0, "exclusions": None, "quote": {"USD": {"volume_24h": volume}}}
+            ]
+        }
+        return mk.assess({"quote": {"USD": {"price": 0.5, "volume_24h": 0}}}, only, []).pairs_note()
+
+    assert one(49.2).startswith(
+        "market-pairs still lists 1 pair with $49.20 of 24 h volume on it, not flagged"
+    )
+    assert "with less than $0.01 of" in one(0.004) and "with $100 of" in one(
+        99.996
+    )  # never "$0.00" or "$100.00"
+    # a pair CMC itself excludes is not listed volume (REP's Indodax pair, 2026-11-22)
+    flagged = {
+        "market_pairs": [{"exclusions": ["price", "volume"], "quote": {"USD": {"volume_24h": 195.02}}}]
+    }
+    assert mk.assess({"quote": {"USD": {"price": 0.5, "volume_24h": 0}}}, flagged, []).pairs_note() == ""
     assert split.reason == "24 h volume is $0 on CMC's quote, so its price is stale; " + split.pairs_note()
     assert (
         mk.assess({"quote": {"USD": {"price": 0.2135, "volume_24h": 917.0}}}, listed, []).pairs_note() == ""

@@ -78,10 +78,11 @@ class Market:
         if self.state != "dead" or self.volume_24h != 0 or not self.traded_pairs:
             return ""
         n, v = self.traded_pairs, self.traded_volume_24h or 0.0
-        amount = f"${v:,.0f}" if v >= 100 else f"${v:,.2f}"
+        amount = "less than $0.01" if v < 0.005 else f"${v:,.0f}" if round(v, 2) >= 100 else f"${v:,.2f}"
         return (
-            f"market-pairs still lists {n} counted pair{'s' if n > 1 else ''} with {amount} of 24 h volume "
-            f"{'between them' if n > 1 else 'on it'}, which the quote does not count"
+            f"market-pairs still lists {n} pair{'s' if n > 1 else ''} with {amount} of 24 h volume "
+            f"{'between them, none' if n > 1 else 'on it, not'} flagged as an outlier or excluded, "
+            "which the quote does not include"
         )
 
 
